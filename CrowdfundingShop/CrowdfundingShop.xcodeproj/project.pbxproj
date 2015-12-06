@@ -1,0 +1,684 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0110AA5C1C0D8D03009A8660 /* PopularGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0110AA5A1C0D8D03009A8660 /* PopularGoodsCell.m */; };
+		0110AA5D1C0D8D03009A8660 /* PopularGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0110AA5B1C0D8D03009A8660 /* PopularGoodsCell.xib */; };
+		0111B9DF1C03540D00DDC2EA /* PersonalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0111B9DE1C03540D00DDC2EA /* PersonalView.xib */; };
+		0111B9E31C03543F00DDC2EA /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111B9E21C03543F00DDC2EA /* PersonalController.m */; };
+		0111B9E81C03548300DDC2EA /* ShopCartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0111B9E71C03548300DDC2EA /* ShopCartView.xib */; };
+		0111B9ED1C0354B100DDC2EA /* ShopCartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111B9EC1C0354B100DDC2EA /* ShopCartController.m */; };
+		0111B9F01C0354E700DDC2EA /* AllGoodsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0111B9EF1C0354E700DDC2EA /* AllGoodsView.xib */; };
+		0111B9F51C03550F00DDC2EA /* AllGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111B9F41C03550F00DDC2EA /* AllGoodsController.m */; };
+		0111B9FF1C0355C000DDC2EA /* AnnounceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0111B9FE1C0355C000DDC2EA /* AnnounceView.xib */; };
+		0111BA021C03564500DDC2EA /* AnnounceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA011C03564500DDC2EA /* AnnounceController.m */; };
+		0111BA141C03709700DDC2EA /* GoodsNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA131C03709700DDC2EA /* GoodsNavController.m */; };
+		0111BA171C0370AD00DDC2EA /* ShopNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA161C0370AD00DDC2EA /* ShopNavController.m */; };
+		0111BA1A1C0370D600DDC2EA /* PerNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA191C0370D600DDC2EA /* PerNavController.m */; };
+		0111BA1D1C0370EC00DDC2EA /* AnnNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA1C1C0370EC00DDC2EA /* AnnNavController.m */; };
+		0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA1F1C0371B000DDC2EA /* HomeNavController.m */; };
+		0111BA231C0372D700DDC2EA /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA221C0372D700DDC2EA /* MainTabBarController.m */; };
+		014A07711C148EE000EEBD78 /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 014A076E1C148EE000EEBD78 /* 3.jpg */; };
+		014A07721C148EE000EEBD78 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 014A076F1C148EE000EEBD78 /* 2.jpg */; };
+		014A07731C148EE000EEBD78 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 014A07701C148EE000EEBD78 /* 1.jpg */; };
+		014FEFAA1C06018300C247C5 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014FEFA91C06018300C247C5 /* LoginController.m */; };
+		014FEFAC1C0602C000C247C5 /* 登录.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 014FEFAB1C0602C000C247C5 /* 登录.PNG */; };
+		014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 014FEFAF1C060B9C00C247C5 /* ARLabel.m */; };
+		01782B721C05EF850028768F /* PerTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B711C05EF850028768F /* PerTableController.m */; };
+		01782B751C05FBDB0028768F /* CloudRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B741C05FBDB0028768F /* CloudRecordController.m */; };
+		017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F6BE01C02BE050040385A /* Plug_Controller.m */; };
+		017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 017F6BE21C02BE2D0040385A /* Main.storyboard */; };
+		01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CB8CD91C11A6AB00DB67C0 /* IndexController.m */; };
+		01D3419F1C029C9C000A32A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D3419E1C029C9C000A32A1 /* main.m */; };
+		01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D341A11C029C9C000A32A1 /* AppDelegate.m */; };
+		01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D341A91C029C9C000A32A1 /* Assets.xcassets */; };
+		09E54489D16DFEBC046E3C51 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5EDE4F39F0C4F8145C3E8A5 /* libPods.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0110AA591C0D8D03009A8660 /* PopularGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopularGoodsCell.h; sourceTree = "<group>"; };
+		0110AA5A1C0D8D03009A8660 /* PopularGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopularGoodsCell.m; sourceTree = "<group>"; };
+		0110AA5B1C0D8D03009A8660 /* PopularGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularGoodsCell.xib; sourceTree = "<group>"; };
+		0111B9DE1C03540D00DDC2EA /* PersonalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalView.xib; sourceTree = "<group>"; };
+		0111B9E11C03543F00DDC2EA /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
+		0111B9E21C03543F00DDC2EA /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
+		0111B9E71C03548300DDC2EA /* ShopCartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopCartView.xib; sourceTree = "<group>"; };
+		0111B9EB1C0354B100DDC2EA /* ShopCartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopCartController.h; sourceTree = "<group>"; };
+		0111B9EC1C0354B100DDC2EA /* ShopCartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopCartController.m; sourceTree = "<group>"; };
+		0111B9EF1C0354E700DDC2EA /* AllGoodsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllGoodsView.xib; sourceTree = "<group>"; };
+		0111B9F31C03550F00DDC2EA /* AllGoodsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllGoodsController.h; sourceTree = "<group>"; };
+		0111B9F41C03550F00DDC2EA /* AllGoodsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllGoodsController.m; sourceTree = "<group>"; };
+		0111B9FE1C0355C000DDC2EA /* AnnounceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnnounceView.xib; path = CrowdfundingShop/Classes/Main/Announce/View/AnnounceView.xib; sourceTree = SOURCE_ROOT; };
+		0111BA001C03564500DDC2EA /* AnnounceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnnounceController.h; path = CrowdfundingShop/Classes/Main/Announce/Controller/AnnounceController.h; sourceTree = SOURCE_ROOT; };
+		0111BA011C03564500DDC2EA /* AnnounceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnnounceController.m; path = CrowdfundingShop/Classes/Main/Announce/Controller/AnnounceController.m; sourceTree = SOURCE_ROOT; };
+		0111BA121C03709700DDC2EA /* GoodsNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsNavController.h; sourceTree = "<group>"; };
+		0111BA131C03709700DDC2EA /* GoodsNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsNavController.m; sourceTree = "<group>"; };
+		0111BA151C0370AD00DDC2EA /* ShopNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopNavController.h; sourceTree = "<group>"; };
+		0111BA161C0370AD00DDC2EA /* ShopNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopNavController.m; sourceTree = "<group>"; };
+		0111BA181C0370D600DDC2EA /* PerNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerNavController.h; sourceTree = "<group>"; };
+		0111BA191C0370D600DDC2EA /* PerNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerNavController.m; sourceTree = "<group>"; };
+		0111BA1B1C0370EC00DDC2EA /* AnnNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnnNavController.h; path = CrowdfundingShop/Classes/Main/Personal/Controller/AnnNavController.h; sourceTree = SOURCE_ROOT; };
+		0111BA1C1C0370EC00DDC2EA /* AnnNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnnNavController.m; path = CrowdfundingShop/Classes/Main/Personal/Controller/AnnNavController.m; sourceTree = SOURCE_ROOT; };
+		0111BA1E1C0371B000DDC2EA /* HomeNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeNavController.h; sourceTree = "<group>"; };
+		0111BA1F1C0371B000DDC2EA /* HomeNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeNavController.m; sourceTree = "<group>"; };
+		0111BA211C0372D700DDC2EA /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
+		0111BA221C0372D700DDC2EA /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
+		014A076E1C148EE000EEBD78 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
+		014A076F1C148EE000EEBD78 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
+		014A07701C148EE000EEBD78 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
+		014FEFA81C06018300C247C5 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
+		014FEFA91C06018300C247C5 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
+		014FEFAB1C0602C000C247C5 /* 登录.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "登录.PNG"; sourceTree = "<group>"; };
+		014FEFAE1C060B9C00C247C5 /* ARLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARLabel.h; sourceTree = "<group>"; };
+		014FEFAF1C060B9C00C247C5 /* ARLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARLabel.m; sourceTree = "<group>"; };
+		01782B701C05EF850028768F /* PerTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerTableController.h; sourceTree = "<group>"; };
+		01782B711C05EF850028768F /* PerTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerTableController.m; sourceTree = "<group>"; };
+		01782B731C05FBDB0028768F /* CloudRecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudRecordController.h; sourceTree = "<group>"; };
+		01782B741C05FBDB0028768F /* CloudRecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudRecordController.m; sourceTree = "<group>"; };
+		017F6BDF1C02BE050040385A /* Plug_Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plug_Controller.h; sourceTree = "<group>"; };
+		017F6BE01C02BE050040385A /* Plug_Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Plug_Controller.m; sourceTree = "<group>"; };
+		017F6BE21C02BE2D0040385A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		01CB8CD81C11A6AB00DB67C0 /* IndexController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexController.h; sourceTree = "<group>"; };
+		01CB8CD91C11A6AB00DB67C0 /* IndexController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndexController.m; sourceTree = "<group>"; };
+		01D3419A1C029C9C000A32A1 /* CrowdfundingShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrowdfundingShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		01D3419E1C029C9C000A32A1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		01D341A01C029C9C000A32A1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		01D341A11C029C9C000A32A1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		01D341A91C029C9C000A32A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		01D341AE1C029C9C000A32A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B652E5F27C3DB6697758CCD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		D5EDE4F39F0C4F8145C3E8A5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBE22145F38242CB9F8264B9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		01D341971C029C9C000A32A1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09E54489D16DFEBC046E3C51 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0111B9C51C0352A200DDC2EA /* Home(首页) */ = {
+			isa = PBXGroup;
+			children = (
+				0111BA061C03568200DDC2EA /* Controller(控制) */,
+				0111BA031C03566100DDC2EA /* View(视图) */,
+			);
+			name = "Home(首页)";
+			path = Home;
+			sourceTree = "<group>";
+		};
+		0111B9CA1C0352FA00DDC2EA /* Announce(最新揭晓) */ = {
+			isa = PBXGroup;
+			children = (
+				0111B9F61C03552300DDC2EA /* Controller(控制) */,
+				0111B9FA1C03557B00DDC2EA /* View(视图) */,
+			);
+			name = "Announce(最新揭晓)";
+			path = Announce;
+			sourceTree = "<group>";
+		};
+		0111B9D11C03534800DDC2EA /* AllGoods(所有商品) */ = {
+			isa = PBXGroup;
+			children = (
+				0111B9F11C0354F200DDC2EA /* Controller(控制) */,
+				0111B9EE1C0354C200DDC2EA /* View(视图) */,
+			);
+			name = "AllGoods(所有商品)";
+			path = AllGoods;
+			sourceTree = "<group>";
+		};
+		0111B9D51C03537C00DDC2EA /* ShopCart(购物车) */ = {
+			isa = PBXGroup;
+			children = (
+				0111B9E91C03548D00DDC2EA /* Controller(控制) */,
+				0111B9E41C03544A00DDC2EA /* View(视图) */,
+			);
+			name = "ShopCart(购物车)";
+			path = ShopCart;
+			sourceTree = "<group>";
+		};
+		0111B9D91C0353BC00DDC2EA /* Personal(个人中心) */ = {
+			isa = PBXGroup;
+			children = (
+				0111B9E01C03541900DDC2EA /* Controller(控制) */,
+				0111B9DD1C0353E200DDC2EA /* View(视图) */,
+			);
+			name = "Personal(个人中心)";
+			path = Personal;
+			sourceTree = "<group>";
+		};
+		0111B9DD1C0353E200DDC2EA /* View(视图) */ = {
+			isa = PBXGroup;
+			children = (
+				0111B9DE1C03540D00DDC2EA /* PersonalView.xib */,
+			);
+			name = "View(视图)";
+			path = View;
+			sourceTree = "<group>";
+		};
+		0111B9E01C03541900DDC2EA /* Controller(控制) */ = {
+			isa = PBXGroup;
+			children = (
+				014FEFA71C06015B00C247C5 /* Login(登录注册) */,
+				0111B9E11C03543F00DDC2EA /* PersonalController.h */,
+				0111B9E21C03543F00DDC2EA /* PersonalController.m */,
+				0111BA181C0370D600DDC2EA /* PerNavController.h */,
+				0111BA191C0370D600DDC2EA /* PerNavController.m */,
+				01782B701C05EF850028768F /* PerTableController.h */,
+				01782B711C05EF850028768F /* PerTableController.m */,
+				01782B731C05FBDB0028768F /* CloudRecordController.h */,
+				01782B741C05FBDB0028768F /* CloudRecordController.m */,
+			);
+			name = "Controller(控制)";
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0111B9E41C03544A00DDC2EA /* View(视图) */ = {
+			isa = PBXGroup;
+			children = (
+				0111B9E71C03548300DDC2EA /* ShopCartView.xib */,
+			);
+			name = "View(视图)";
+			path = View;
+			sourceTree = "<group>";
+		};
+		0111B9E91C03548D00DDC2EA /* Controller(控制) */ = {
+			isa = PBXGroup;
+			children = (
+				0111BA151C0370AD00DDC2EA /* ShopNavController.h */,
+				0111BA161C0370AD00DDC2EA /* ShopNavController.m */,
+				0111B9EB1C0354B100DDC2EA /* ShopCartController.h */,
+				0111B9EC1C0354B100DDC2EA /* ShopCartController.m */,
+			);
+			name = "Controller(控制)";
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0111B9EE1C0354C200DDC2EA /* View(视图) */ = {
+			isa = PBXGroup;
+			children = (
+				0111B9EF1C0354E700DDC2EA /* AllGoodsView.xib */,
+			);
+			name = "View(视图)";
+			path = View;
+			sourceTree = "<group>";
+		};
+		0111B9F11C0354F200DDC2EA /* Controller(控制) */ = {
+			isa = PBXGroup;
+			children = (
+				0111B9F31C03550F00DDC2EA /* AllGoodsController.h */,
+				0111B9F41C03550F00DDC2EA /* AllGoodsController.m */,
+				0111BA121C03709700DDC2EA /* GoodsNavController.h */,
+				0111BA131C03709700DDC2EA /* GoodsNavController.m */,
+			);
+			name = "Controller(控制)";
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0111B9F61C03552300DDC2EA /* Controller(控制) */ = {
+			isa = PBXGroup;
+			children = (
+				0111BA001C03564500DDC2EA /* AnnounceController.h */,
+				0111BA011C03564500DDC2EA /* AnnounceController.m */,
+				0111BA1B1C0370EC00DDC2EA /* AnnNavController.h */,
+				0111BA1C1C0370EC00DDC2EA /* AnnNavController.m */,
+			);
+			name = "Controller(控制)";
+			path = Announce/Controller;
+			sourceTree = "<group>";
+		};
+		0111B9FA1C03557B00DDC2EA /* View(视图) */ = {
+			isa = PBXGroup;
+			children = (
+				0111B9FE1C0355C000DDC2EA /* AnnounceView.xib */,
+			);
+			name = "View(视图)";
+			path = Announce/View;
+			sourceTree = "<group>";
+		};
+		0111BA031C03566100DDC2EA /* View(视图) */ = {
+			isa = PBXGroup;
+			children = (
+				0110AA591C0D8D03009A8660 /* PopularGoodsCell.h */,
+				0110AA5A1C0D8D03009A8660 /* PopularGoodsCell.m */,
+				0110AA5B1C0D8D03009A8660 /* PopularGoodsCell.xib */,
+			);
+			name = "View(视图)";
+			path = View;
+			sourceTree = "<group>";
+		};
+		0111BA061C03568200DDC2EA /* Controller(控制) */ = {
+			isa = PBXGroup;
+			children = (
+				014A076E1C148EE000EEBD78 /* 3.jpg */,
+				014A076F1C148EE000EEBD78 /* 2.jpg */,
+				014A07701C148EE000EEBD78 /* 1.jpg */,
+				0111BA1E1C0371B000DDC2EA /* HomeNavController.h */,
+				0111BA1F1C0371B000DDC2EA /* HomeNavController.m */,
+				01CB8CD81C11A6AB00DB67C0 /* IndexController.h */,
+				01CB8CD91C11A6AB00DB67C0 /* IndexController.m */,
+			);
+			name = "Controller(控制)";
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		014FEFA71C06015B00C247C5 /* Login(登录注册) */ = {
+			isa = PBXGroup;
+			children = (
+				014FEFAB1C0602C000C247C5 /* 登录.PNG */,
+				014FEFA81C06018300C247C5 /* LoginController.h */,
+				014FEFA91C06018300C247C5 /* LoginController.m */,
+			);
+			name = "Login(登录注册)";
+			path = Login;
+			sourceTree = "<group>";
+		};
+		014FEFAD1C060B9C00C247C5 /* ARLabel */ = {
+			isa = PBXGroup;
+			children = (
+				014FEFAE1C060B9C00C247C5 /* ARLabel.h */,
+				014FEFAF1C060B9C00C247C5 /* ARLabel.m */,
+			);
+			path = ARLabel;
+			sourceTree = "<group>";
+		};
+		017F6BD81C02BC200040385A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				017F6BDB1C02BD410040385A /* Main(主要) */,
+				017F6BDA1C02BCCA0040385A /* Plug-in(插件) */,
+				017F6BD91C02BC820040385A /* View(视图) */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		017F6BD91C02BC820040385A /* View(视图) */ = {
+			isa = PBXGroup;
+			children = (
+				017F6BE21C02BE2D0040385A /* Main.storyboard */,
+				0111BA211C0372D700DDC2EA /* MainTabBarController.h */,
+				0111BA221C0372D700DDC2EA /* MainTabBarController.m */,
+			);
+			name = "View(视图)";
+			path = View;
+			sourceTree = "<group>";
+		};
+		017F6BDA1C02BCCA0040385A /* Plug-in(插件) */ = {
+			isa = PBXGroup;
+			children = (
+				014FEFAD1C060B9C00C247C5 /* ARLabel */,
+				017F6BDF1C02BE050040385A /* Plug_Controller.h */,
+				017F6BE01C02BE050040385A /* Plug_Controller.m */,
+			);
+			name = "Plug-in(插件)";
+			path = "Plug-in";
+			sourceTree = "<group>";
+		};
+		017F6BDB1C02BD410040385A /* Main(主要) */ = {
+			isa = PBXGroup;
+			children = (
+				0111B9D91C0353BC00DDC2EA /* Personal(个人中心) */,
+				0111B9D51C03537C00DDC2EA /* ShopCart(购物车) */,
+				0111B9D11C03534800DDC2EA /* AllGoods(所有商品) */,
+				0111B9CA1C0352FA00DDC2EA /* Announce(最新揭晓) */,
+				0111B9C51C0352A200DDC2EA /* Home(首页) */,
+			);
+			name = "Main(主要)";
+			path = Main;
+			sourceTree = "<group>";
+		};
+		01D341911C029C9C000A32A1 = {
+			isa = PBXGroup;
+			children = (
+				01D3419C1C029C9C000A32A1 /* CrowdfundingShop */,
+				01D3419B1C029C9C000A32A1 /* Products */,
+				B2F0931D180D019C620FF29A /* Pods */,
+				7D2111B123D9A253A3763C4E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		01D3419B1C029C9C000A32A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				01D3419A1C029C9C000A32A1 /* CrowdfundingShop.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		01D3419C1C029C9C000A32A1 /* CrowdfundingShop */ = {
+			isa = PBXGroup;
+			children = (
+				017F6BD81C02BC200040385A /* Classes */,
+				01D341A01C029C9C000A32A1 /* AppDelegate.h */,
+				01D341A11C029C9C000A32A1 /* AppDelegate.m */,
+				01D341A91C029C9C000A32A1 /* Assets.xcassets */,
+				01D341AE1C029C9C000A32A1 /* Info.plist */,
+				01D3419D1C029C9C000A32A1 /* Supporting Files */,
+			);
+			path = CrowdfundingShop;
+			sourceTree = "<group>";
+		};
+		01D3419D1C029C9C000A32A1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				01D3419E1C029C9C000A32A1 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7D2111B123D9A253A3763C4E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D5EDE4F39F0C4F8145C3E8A5 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B2F0931D180D019C620FF29A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9B652E5F27C3DB6697758CCD /* Pods.debug.xcconfig */,
+				EBE22145F38242CB9F8264B9 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		01D341991C029C9C000A32A1 /* CrowdfundingShop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01D341B11C029C9C000A32A1 /* Build configuration list for PBXNativeTarget "CrowdfundingShop" */;
+			buildPhases = (
+				7ACDE237E7AEBE2263EF766A /* Check Pods Manifest.lock */,
+				01D341961C029C9C000A32A1 /* Sources */,
+				01D341971C029C9C000A32A1 /* Frameworks */,
+				01D341981C029C9C000A32A1 /* Resources */,
+				C657FB31EBA2DC28E34EADE0 /* Embed Pods Frameworks */,
+				5346088C4424E71A70F0BB7F /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CrowdfundingShop;
+			productName = CrowdfundingShop;
+			productReference = 01D3419A1C029C9C000A32A1 /* CrowdfundingShop.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		01D341921C029C9C000A32A1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "吴金林";
+				TargetAttributes = {
+					01D341991C029C9C000A32A1 = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = QN27745LJM;
+					};
+				};
+			};
+			buildConfigurationList = 01D341951C029C9C000A32A1 /* Build configuration list for PBXProject "CrowdfundingShop" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 01D341911C029C9C000A32A1;
+			productRefGroup = 01D3419B1C029C9C000A32A1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				01D341991C029C9C000A32A1 /* CrowdfundingShop */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		01D341981C029C9C000A32A1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				014A07721C148EE000EEBD78 /* 2.jpg in Resources */,
+				014FEFAC1C0602C000C247C5 /* 登录.PNG in Resources */,
+				0111B9E81C03548300DDC2EA /* ShopCartView.xib in Resources */,
+				0111B9F01C0354E700DDC2EA /* AllGoodsView.xib in Resources */,
+				0110AA5D1C0D8D03009A8660 /* PopularGoodsCell.xib in Resources */,
+				01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */,
+				017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */,
+				0111B9DF1C03540D00DDC2EA /* PersonalView.xib in Resources */,
+				014A07711C148EE000EEBD78 /* 3.jpg in Resources */,
+				014A07731C148EE000EEBD78 /* 1.jpg in Resources */,
+				0111B9FF1C0355C000DDC2EA /* AnnounceView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5346088C4424E71A70F0BB7F /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7ACDE237E7AEBE2263EF766A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C657FB31EBA2DC28E34EADE0 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		01D341961C029C9C000A32A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */,
+				01D3419F1C029C9C000A32A1 /* main.m in Sources */,
+				0111BA021C03564500DDC2EA /* AnnounceController.m in Sources */,
+				01782B721C05EF850028768F /* PerTableController.m in Sources */,
+				014FEFAA1C06018300C247C5 /* LoginController.m in Sources */,
+				017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */,
+				0111BA1A1C0370D600DDC2EA /* PerNavController.m in Sources */,
+				0111BA171C0370AD00DDC2EA /* ShopNavController.m in Sources */,
+				0111BA1D1C0370EC00DDC2EA /* AnnNavController.m in Sources */,
+				014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */,
+				0111B9F51C03550F00DDC2EA /* AllGoodsController.m in Sources */,
+				0110AA5C1C0D8D03009A8660 /* PopularGoodsCell.m in Sources */,
+				0111B9ED1C0354B100DDC2EA /* ShopCartController.m in Sources */,
+				0111BA141C03709700DDC2EA /* GoodsNavController.m in Sources */,
+				0111BA231C0372D700DDC2EA /* MainTabBarController.m in Sources */,
+				01782B751C05FBDB0028768F /* CloudRecordController.m in Sources */,
+				01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */,
+				0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */,
+				0111B9E31C03543F00DDC2EA /* PersonalController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		01D341AF1C029C9C000A32A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		01D341B01C029C9C000A32A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		01D341B21C029C9C000A32A1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B652E5F27C3DB6697758CCD /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				INFOPLIST_FILE = CrowdfundingShop/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.winainfo.CrowdfundingShop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		01D341B31C029C9C000A32A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EBE22145F38242CB9F8264B9 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				INFOPLIST_FILE = CrowdfundingShop/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.winainfo.CrowdfundingShop;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		01D341951C029C9C000A32A1 /* Build configuration list for PBXProject "CrowdfundingShop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01D341AF1C029C9C000A32A1 /* Debug */,
+				01D341B01C029C9C000A32A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01D341B11C029C9C000A32A1 /* Build configuration list for PBXNativeTarget "CrowdfundingShop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01D341B21C029C9C000A32A1 /* Debug */,
+				01D341B31C029C9C000A32A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 01D341921C029C9C000A32A1 /* Project object */;
+}
