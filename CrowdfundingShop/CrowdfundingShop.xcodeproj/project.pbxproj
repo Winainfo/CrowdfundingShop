@@ -23,6 +23,7 @@
 		0111BA1D1C0370EC00DDC2EA /* AnnNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA1C1C0370EC00DDC2EA /* AnnNavController.m */; };
 		0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA1F1C0371B000DDC2EA /* HomeNavController.m */; };
 		0111BA231C0372D700DDC2EA /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA221C0372D700DDC2EA /* MainTabBarController.m */; };
+		013B74FB1C14996000910A96 /* IMG_0020.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 013B74FA1C14996000910A96 /* IMG_0020.PNG */; };
 		014A07711C148EE000EEBD78 /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 014A076E1C148EE000EEBD78 /* 3.jpg */; };
 		014A07721C148EE000EEBD78 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 014A076F1C148EE000EEBD78 /* 2.jpg */; };
 		014A07731C148EE000EEBD78 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 014A07701C148EE000EEBD78 /* 1.jpg */; };
@@ -68,6 +69,7 @@
 		0111BA1F1C0371B000DDC2EA /* HomeNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeNavController.m; sourceTree = "<group>"; };
 		0111BA211C0372D700DDC2EA /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		0111BA221C0372D700DDC2EA /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
+		013B74FA1C14996000910A96 /* IMG_0020.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0020.PNG; sourceTree = "<group>"; };
 		014A076E1C148EE000EEBD78 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
 		014A076F1C148EE000EEBD78 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		014A07701C148EE000EEBD78 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 		0111BA061C03568200DDC2EA /* Controller(控制) */ = {
 			isa = PBXGroup;
 			children = (
+				013B74FA1C14996000910A96 /* IMG_0020.PNG */,
 				014A076E1C148EE000EEBD78 /* 3.jpg */,
 				014A076F1C148EE000EEBD78 /* 2.jpg */,
 				014A07701C148EE000EEBD78 /* 1.jpg */,
@@ -456,6 +459,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				014A07721C148EE000EEBD78 /* 2.jpg in Resources */,
+				013B74FB1C14996000910A96 /* IMG_0020.PNG in Resources */,
 				014FEFAC1C0602C000C247C5 /* 登录.PNG in Resources */,
 				0111B9E81C03548300DDC2EA /* ShopCartView.xib in Resources */,
 				0111B9F01C0354E700DDC2EA /* AllGoodsView.xib in Resources */,
