@@ -13,14 +13,11 @@
 		0111B9E31C03543F00DDC2EA /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111B9E21C03543F00DDC2EA /* PersonalController.m */; };
 		0111B9E81C03548300DDC2EA /* ShopCartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0111B9E71C03548300DDC2EA /* ShopCartView.xib */; };
 		0111B9ED1C0354B100DDC2EA /* ShopCartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111B9EC1C0354B100DDC2EA /* ShopCartController.m */; };
-		0111B9F01C0354E700DDC2EA /* AllGoodsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0111B9EF1C0354E700DDC2EA /* AllGoodsView.xib */; };
 		0111B9F51C03550F00DDC2EA /* AllGoodsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111B9F41C03550F00DDC2EA /* AllGoodsController.m */; };
-		0111B9FF1C0355C000DDC2EA /* AnnounceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0111B9FE1C0355C000DDC2EA /* AnnounceView.xib */; };
 		0111BA021C03564500DDC2EA /* AnnounceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA011C03564500DDC2EA /* AnnounceController.m */; };
 		0111BA141C03709700DDC2EA /* GoodsNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA131C03709700DDC2EA /* GoodsNavController.m */; };
 		0111BA171C0370AD00DDC2EA /* ShopNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA161C0370AD00DDC2EA /* ShopNavController.m */; };
 		0111BA1A1C0370D600DDC2EA /* PerNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA191C0370D600DDC2EA /* PerNavController.m */; };
-		0111BA1D1C0370EC00DDC2EA /* AnnNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA1C1C0370EC00DDC2EA /* AnnNavController.m */; };
 		0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA1F1C0371B000DDC2EA /* HomeNavController.m */; };
 		0111BA231C0372D700DDC2EA /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA221C0372D700DDC2EA /* MainTabBarController.m */; };
 		013B74FB1C14996000910A96 /* IMG_0020.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 013B74FA1C14996000910A96 /* IMG_0020.PNG */; };
@@ -34,6 +31,16 @@
 		01782B751C05FBDB0028768F /* CloudRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B741C05FBDB0028768F /* CloudRecordController.m */; };
 		017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F6BE01C02BE050040385A /* Plug_Controller.m */; };
 		017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 017F6BE21C02BE2D0040385A /* Main.storyboard */; };
+		018619E11C15DAE400EABF64 /* IMG_0048.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 018619E01C15DAE400EABF64 /* IMG_0048.PNG */; };
+		018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 018619E31C15DC8200EABF64 /* AllGoodsCell.m */; };
+		018619E61C15DC8200EABF64 /* AllGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 018619E41C15DC8200EABF64 /* AllGoodsCell.xib */; };
+		018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 018619E71C15DE5200EABF64 /* 20150427091614458.jpg */; };
+		019E096A1C17342A0022593A /* AnnNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 019E09691C17342A0022593A /* AnnNavController.m */; };
+		019E096D1C17343A0022593A /* IMG_0064.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 019E096B1C17343A0022593A /* IMG_0064.PNG */; };
+		019E096E1C17343A0022593A /* IMG_0065.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 019E096C1C17343A0022593A /* IMG_0065.PNG */; };
+		019E09721C173C730022593A /* NewGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 019E09701C173C730022593A /* NewGoodsCell.m */; };
+		019E09731C173C730022593A /* NewGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019E09711C173C730022593A /* NewGoodsCell.xib */; };
+		019E09751C1741C70022593A /* IMG_0066.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 019E09741C1741C70022593A /* IMG_0066.JPG */; };
 		01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CB8CD91C11A6AB00DB67C0 /* IndexController.m */; };
 		01D3419F1C029C9C000A32A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D3419E1C029C9C000A32A1 /* main.m */; };
 		01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D341A11C029C9C000A32A1 /* AppDelegate.m */; };
@@ -51,10 +58,8 @@
 		0111B9E71C03548300DDC2EA /* ShopCartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopCartView.xib; sourceTree = "<group>"; };
 		0111B9EB1C0354B100DDC2EA /* ShopCartController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopCartController.h; sourceTree = "<group>"; };
 		0111B9EC1C0354B100DDC2EA /* ShopCartController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopCartController.m; sourceTree = "<group>"; };
-		0111B9EF1C0354E700DDC2EA /* AllGoodsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllGoodsView.xib; sourceTree = "<group>"; };
 		0111B9F31C03550F00DDC2EA /* AllGoodsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllGoodsController.h; sourceTree = "<group>"; };
 		0111B9F41C03550F00DDC2EA /* AllGoodsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllGoodsController.m; sourceTree = "<group>"; };
-		0111B9FE1C0355C000DDC2EA /* AnnounceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnnounceView.xib; path = CrowdfundingShop/Classes/Main/Announce/View/AnnounceView.xib; sourceTree = SOURCE_ROOT; };
 		0111BA001C03564500DDC2EA /* AnnounceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnnounceController.h; path = CrowdfundingShop/Classes/Main/Announce/Controller/AnnounceController.h; sourceTree = SOURCE_ROOT; };
 		0111BA011C03564500DDC2EA /* AnnounceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnnounceController.m; path = CrowdfundingShop/Classes/Main/Announce/Controller/AnnounceController.m; sourceTree = SOURCE_ROOT; };
 		0111BA121C03709700DDC2EA /* GoodsNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsNavController.h; sourceTree = "<group>"; };
@@ -63,8 +68,6 @@
 		0111BA161C0370AD00DDC2EA /* ShopNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopNavController.m; sourceTree = "<group>"; };
 		0111BA181C0370D600DDC2EA /* PerNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerNavController.h; sourceTree = "<group>"; };
 		0111BA191C0370D600DDC2EA /* PerNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerNavController.m; sourceTree = "<group>"; };
-		0111BA1B1C0370EC00DDC2EA /* AnnNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnnNavController.h; path = CrowdfundingShop/Classes/Main/Personal/Controller/AnnNavController.h; sourceTree = SOURCE_ROOT; };
-		0111BA1C1C0370EC00DDC2EA /* AnnNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnnNavController.m; path = CrowdfundingShop/Classes/Main/Personal/Controller/AnnNavController.m; sourceTree = SOURCE_ROOT; };
 		0111BA1E1C0371B000DDC2EA /* HomeNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeNavController.h; sourceTree = "<group>"; };
 		0111BA1F1C0371B000DDC2EA /* HomeNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeNavController.m; sourceTree = "<group>"; };
 		0111BA211C0372D700DDC2EA /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
@@ -85,6 +88,19 @@
 		017F6BDF1C02BE050040385A /* Plug_Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plug_Controller.h; sourceTree = "<group>"; };
 		017F6BE01C02BE050040385A /* Plug_Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Plug_Controller.m; sourceTree = "<group>"; };
 		017F6BE21C02BE2D0040385A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		018619E01C15DAE400EABF64 /* IMG_0048.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0048.PNG; sourceTree = "<group>"; };
+		018619E21C15DC8200EABF64 /* AllGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllGoodsCell.h; sourceTree = "<group>"; };
+		018619E31C15DC8200EABF64 /* AllGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllGoodsCell.m; sourceTree = "<group>"; };
+		018619E41C15DC8200EABF64 /* AllGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllGoodsCell.xib; sourceTree = "<group>"; };
+		018619E71C15DE5200EABF64 /* 20150427091614458.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 20150427091614458.jpg; sourceTree = "<group>"; };
+		019E09681C17342A0022593A /* AnnNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnNavController.h; sourceTree = "<group>"; };
+		019E09691C17342A0022593A /* AnnNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnNavController.m; sourceTree = "<group>"; };
+		019E096B1C17343A0022593A /* IMG_0064.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0064.PNG; sourceTree = "<group>"; };
+		019E096C1C17343A0022593A /* IMG_0065.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0065.PNG; sourceTree = "<group>"; };
+		019E096F1C173C730022593A /* NewGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewGoodsCell.h; sourceTree = "<group>"; };
+		019E09701C173C730022593A /* NewGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGoodsCell.m; sourceTree = "<group>"; };
+		019E09711C173C730022593A /* NewGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewGoodsCell.xib; sourceTree = "<group>"; };
+		019E09741C1741C70022593A /* IMG_0066.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0066.JPG; sourceTree = "<group>"; };
 		01CB8CD81C11A6AB00DB67C0 /* IndexController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexController.h; sourceTree = "<group>"; };
 		01CB8CD91C11A6AB00DB67C0 /* IndexController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndexController.m; sourceTree = "<group>"; };
 		01D3419A1C029C9C000A32A1 /* CrowdfundingShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrowdfundingShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,7 +226,10 @@
 		0111B9EE1C0354C200DDC2EA /* View(视图) */ = {
 			isa = PBXGroup;
 			children = (
-				0111B9EF1C0354E700DDC2EA /* AllGoodsView.xib */,
+				018619E71C15DE5200EABF64 /* 20150427091614458.jpg */,
+				018619E21C15DC8200EABF64 /* AllGoodsCell.h */,
+				018619E31C15DC8200EABF64 /* AllGoodsCell.m */,
+				018619E41C15DC8200EABF64 /* AllGoodsCell.xib */,
 			);
 			name = "View(视图)";
 			path = View;
@@ -219,6 +238,7 @@
 		0111B9F11C0354F200DDC2EA /* Controller(控制) */ = {
 			isa = PBXGroup;
 			children = (
+				018619E01C15DAE400EABF64 /* IMG_0048.PNG */,
 				0111B9F31C03550F00DDC2EA /* AllGoodsController.h */,
 				0111B9F41C03550F00DDC2EA /* AllGoodsController.m */,
 				0111BA121C03709700DDC2EA /* GoodsNavController.h */,
@@ -231,22 +251,27 @@
 		0111B9F61C03552300DDC2EA /* Controller(控制) */ = {
 			isa = PBXGroup;
 			children = (
+				019E09741C1741C70022593A /* IMG_0066.JPG */,
+				019E096B1C17343A0022593A /* IMG_0064.PNG */,
+				019E096C1C17343A0022593A /* IMG_0065.PNG */,
+				019E09681C17342A0022593A /* AnnNavController.h */,
+				019E09691C17342A0022593A /* AnnNavController.m */,
 				0111BA001C03564500DDC2EA /* AnnounceController.h */,
 				0111BA011C03564500DDC2EA /* AnnounceController.m */,
-				0111BA1B1C0370EC00DDC2EA /* AnnNavController.h */,
-				0111BA1C1C0370EC00DDC2EA /* AnnNavController.m */,
 			);
 			name = "Controller(控制)";
-			path = Announce/Controller;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		0111B9FA1C03557B00DDC2EA /* View(视图) */ = {
 			isa = PBXGroup;
 			children = (
-				0111B9FE1C0355C000DDC2EA /* AnnounceView.xib */,
+				019E096F1C173C730022593A /* NewGoodsCell.h */,
+				019E09701C173C730022593A /* NewGoodsCell.m */,
+				019E09711C173C730022593A /* NewGoodsCell.xib */,
 			);
 			name = "View(视图)";
-			path = Announce/View;
+			path = View;
 			sourceTree = "<group>";
 		};
 		0111BA031C03566100DDC2EA /* View(视图) */ = {
@@ -431,7 +456,6 @@
 				TargetAttributes = {
 					01D341991C029C9C000A32A1 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = QN27745LJM;
 					};
 				};
 			};
@@ -460,16 +484,21 @@
 			files = (
 				014A07721C148EE000EEBD78 /* 2.jpg in Resources */,
 				013B74FB1C14996000910A96 /* IMG_0020.PNG in Resources */,
+				019E09731C173C730022593A /* NewGoodsCell.xib in Resources */,
 				014FEFAC1C0602C000C247C5 /* 登录.PNG in Resources */,
 				0111B9E81C03548300DDC2EA /* ShopCartView.xib in Resources */,
-				0111B9F01C0354E700DDC2EA /* AllGoodsView.xib in Resources */,
 				0110AA5D1C0D8D03009A8660 /* PopularGoodsCell.xib in Resources */,
+				018619E61C15DC8200EABF64 /* AllGoodsCell.xib in Resources */,
+				019E096E1C17343A0022593A /* IMG_0065.PNG in Resources */,
+				018619E11C15DAE400EABF64 /* IMG_0048.PNG in Resources */,
+				019E09751C1741C70022593A /* IMG_0066.JPG in Resources */,
 				01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */,
 				017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */,
 				0111B9DF1C03540D00DDC2EA /* PersonalView.xib in Resources */,
 				014A07711C148EE000EEBD78 /* 3.jpg in Resources */,
 				014A07731C148EE000EEBD78 /* 1.jpg in Resources */,
-				0111B9FF1C0355C000DDC2EA /* AnnounceView.xib in Resources */,
+				019E096D1C17343A0022593A /* IMG_0064.PNG in Resources */,
+				018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,16 +565,18 @@
 				017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */,
 				0111BA1A1C0370D600DDC2EA /* PerNavController.m in Sources */,
 				0111BA171C0370AD00DDC2EA /* ShopNavController.m in Sources */,
-				0111BA1D1C0370EC00DDC2EA /* AnnNavController.m in Sources */,
 				014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */,
 				0111B9F51C03550F00DDC2EA /* AllGoodsController.m in Sources */,
 				0110AA5C1C0D8D03009A8660 /* PopularGoodsCell.m in Sources */,
 				0111B9ED1C0354B100DDC2EA /* ShopCartController.m in Sources */,
 				0111BA141C03709700DDC2EA /* GoodsNavController.m in Sources */,
+				019E09721C173C730022593A /* NewGoodsCell.m in Sources */,
 				0111BA231C0372D700DDC2EA /* MainTabBarController.m in Sources */,
 				01782B751C05FBDB0028768F /* CloudRecordController.m in Sources */,
+				019E096A1C17342A0022593A /* AnnNavController.m in Sources */,
 				01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */,
 				0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */,
+				018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */,
 				0111B9E31C03543F00DDC2EA /* PersonalController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -639,6 +670,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CrowdfundingShop/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -653,6 +685,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CrowdfundingShop/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
