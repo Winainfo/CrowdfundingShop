@@ -27,6 +27,9 @@
 		014FEFAA1C06018300C247C5 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014FEFA91C06018300C247C5 /* LoginController.m */; };
 		014FEFAC1C0602C000C247C5 /* 登录.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 014FEFAB1C0602C000C247C5 /* 登录.PNG */; };
 		014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 014FEFAF1C060B9C00C247C5 /* ARLabel.m */; };
+		01652BBF1C19CFBD00310880 /* IMG_0076.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01652BBD1C19CFBD00310880 /* IMG_0076.PNG */; };
+		01652BC01C19CFBD00310880 /* IMG_0077.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01652BBE1C19CFBD00310880 /* IMG_0077.PNG */; };
+		01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01652BC21C19E1B700310880 /* GoodsDetailController.m */; };
 		01782B721C05EF850028768F /* PerTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B711C05EF850028768F /* PerTableController.m */; };
 		01782B751C05FBDB0028768F /* CloudRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B741C05FBDB0028768F /* CloudRecordController.m */; };
 		017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F6BE01C02BE050040385A /* Plug_Controller.m */; };
@@ -81,6 +84,10 @@
 		014FEFAB1C0602C000C247C5 /* 登录.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "登录.PNG"; sourceTree = "<group>"; };
 		014FEFAE1C060B9C00C247C5 /* ARLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARLabel.h; sourceTree = "<group>"; };
 		014FEFAF1C060B9C00C247C5 /* ARLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARLabel.m; sourceTree = "<group>"; };
+		01652BBD1C19CFBD00310880 /* IMG_0076.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0076.PNG; sourceTree = "<group>"; };
+		01652BBE1C19CFBD00310880 /* IMG_0077.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0077.PNG; sourceTree = "<group>"; };
+		01652BC11C19E1B700310880 /* GoodsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsDetailController.h; sourceTree = "<group>"; };
+		01652BC21C19E1B700310880 /* GoodsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailController.m; sourceTree = "<group>"; };
 		01782B701C05EF850028768F /* PerTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerTableController.h; sourceTree = "<group>"; };
 		01782B711C05EF850028768F /* PerTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerTableController.m; sourceTree = "<group>"; };
 		01782B731C05FBDB0028768F /* CloudRecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudRecordController.h; sourceTree = "<group>"; };
@@ -238,11 +245,15 @@
 		0111B9F11C0354F200DDC2EA /* Controller(控制) */ = {
 			isa = PBXGroup;
 			children = (
+				01652BBD1C19CFBD00310880 /* IMG_0076.PNG */,
+				01652BBE1C19CFBD00310880 /* IMG_0077.PNG */,
 				018619E01C15DAE400EABF64 /* IMG_0048.PNG */,
 				0111B9F31C03550F00DDC2EA /* AllGoodsController.h */,
 				0111B9F41C03550F00DDC2EA /* AllGoodsController.m */,
 				0111BA121C03709700DDC2EA /* GoodsNavController.h */,
 				0111BA131C03709700DDC2EA /* GoodsNavController.m */,
+				01652BC11C19E1B700310880 /* GoodsDetailController.h */,
+				01652BC21C19E1B700310880 /* GoodsDetailController.m */,
 			);
 			name = "Controller(控制)";
 			path = Controller;
@@ -492,10 +503,12 @@
 				019E096E1C17343A0022593A /* IMG_0065.PNG in Resources */,
 				018619E11C15DAE400EABF64 /* IMG_0048.PNG in Resources */,
 				019E09751C1741C70022593A /* IMG_0066.JPG in Resources */,
+				01652BBF1C19CFBD00310880 /* IMG_0076.PNG in Resources */,
 				01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */,
 				017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */,
 				0111B9DF1C03540D00DDC2EA /* PersonalView.xib in Resources */,
 				014A07711C148EE000EEBD78 /* 3.jpg in Resources */,
+				01652BC01C19CFBD00310880 /* IMG_0077.PNG in Resources */,
 				014A07731C148EE000EEBD78 /* 1.jpg in Resources */,
 				019E096D1C17343A0022593A /* IMG_0064.PNG in Resources */,
 				018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */,
@@ -578,6 +591,7 @@
 				0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */,
 				018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */,
 				0111B9E31C03543F00DDC2EA /* PersonalController.m in Sources */,
+				01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
