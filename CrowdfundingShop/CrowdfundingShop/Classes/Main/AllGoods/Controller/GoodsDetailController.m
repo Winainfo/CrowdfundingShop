@@ -7,12 +7,34 @@
 //
 
 #import "GoodsDetailController.h"
-
+#import "UITabBarController+ShowHideBar.h"
 @interface GoodsDetailController ()
-
+/**所有云购记录*/
+@property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell1;
+/**图文详情*/
+@property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell2;
+/**商品晒单*/
+@property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell3;
 @end
 
 @implementation GoodsDetailController
+//隐藏和显示底部标签栏
+-(void)viewWillAppear:(BOOL)animated
+{
+
+//    self.tableViewCell1.selectionStyle=UITableViewCellSelectionStyleDefault;
+//     self.tableViewCell2.selectionStyle=UITableViewCellSelectionStyleDefault;
+//     self.tableViewCell3.selectionStyle=UITableViewCellSelectionStyleDefault;
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    
+    self.tableViewCell1.selectionStyle=UITableViewCellSelectionStyleNone;
+//    self.tableViewCell2.selectionStyle=UITableViewCellSelectionStyleNone;
+//    self.tableViewCell3.selectionStyle=UITableViewCellSelectionStyleNone;
+    self.tabBarController.tabBar.hidden = NO;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,9 +49,10 @@
     /**头像圆角*/
     self.peopleImageView.layer.cornerRadius=30.0;
     self.peopleImageView.layer.masksToBounds=YES;
+    
+
+
 }
-
-
 
 /*
 #pragma mark - Table view data source

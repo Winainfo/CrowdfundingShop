@@ -1,19 +1,18 @@
 //
-//  CloudRecordController.m
+//  MyCloudRecordController.m
 //  CrowdfundingShop
 //  我的云购记录
-//  Created by 吴金林 on 15/11/25.
+//  Created by 吴金林 on 15/12/11.
 //  Copyright © 2015年 吴金林. All rights reserved.
 //
 
+#import "MyCloudRecordController.h"
 
-#import "CloudRecordController.h"
-
-@interface CloudRecordController ()
+@interface MyCloudRecordController ()
 
 @end
 
-@implementation CloudRecordController
+@implementation MyCloudRecordController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,5 +31,11 @@
 -(void)searchClick{
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 
 @end

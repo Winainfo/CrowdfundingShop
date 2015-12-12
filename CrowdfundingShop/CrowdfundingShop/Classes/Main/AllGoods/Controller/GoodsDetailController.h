@@ -38,4 +38,6 @@
 /**用户云购码*/
 @property (weak, nonatomic) IBOutlet ARLabel *numberLabel;
 
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
+
 @end

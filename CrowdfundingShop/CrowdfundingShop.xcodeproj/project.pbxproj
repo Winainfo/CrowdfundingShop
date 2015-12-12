@@ -20,6 +20,13 @@
 		0111BA1A1C0370D600DDC2EA /* PerNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA191C0370D600DDC2EA /* PerNavController.m */; };
 		0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA1F1C0371B000DDC2EA /* HomeNavController.m */; };
 		0111BA231C0372D700DDC2EA /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA221C0372D700DDC2EA /* MainTabBarController.m */; };
+		0126263B1C1AB98E00509985 /* IMG_0079.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 012626391C1AB98E00509985 /* IMG_0079.PNG */; };
+		0126263C1C1AB98E00509985 /* IMG_0080.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0126263A1C1AB98E00509985 /* IMG_0080.PNG */; };
+		012626401C1ABA7400509985 /* CloudRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0126263E1C1ABA7400509985 /* CloudRecordCell.m */; };
+		012626411C1ABA7400509985 /* CloudRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0126263F1C1ABA7400509985 /* CloudRecordCell.xib */; };
+		012626441C1AC2AF00509985 /* CloudRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 012626431C1AC2AF00509985 /* CloudRecordController.m */; };
+		012626471C1AC39600509985 /* MyCloudRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 012626461C1AC39600509985 /* MyCloudRecordController.m */; };
+		0126264A1C1ACE9900509985 /* DetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 012626491C1ACE9900509985 /* DetailController.m */; };
 		013B74FB1C14996000910A96 /* IMG_0020.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 013B74FA1C14996000910A96 /* IMG_0020.PNG */; };
 		014A07711C148EE000EEBD78 /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 014A076E1C148EE000EEBD78 /* 3.jpg */; };
 		014A07721C148EE000EEBD78 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 014A076F1C148EE000EEBD78 /* 2.jpg */; };
@@ -31,13 +38,15 @@
 		01652BC01C19CFBD00310880 /* IMG_0077.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01652BBE1C19CFBD00310880 /* IMG_0077.PNG */; };
 		01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01652BC21C19E1B700310880 /* GoodsDetailController.m */; };
 		01782B721C05EF850028768F /* PerTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B711C05EF850028768F /* PerTableController.m */; };
-		01782B751C05FBDB0028768F /* CloudRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B741C05FBDB0028768F /* CloudRecordController.m */; };
 		017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F6BE01C02BE050040385A /* Plug_Controller.m */; };
 		017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 017F6BE21C02BE2D0040385A /* Main.storyboard */; };
 		018619E11C15DAE400EABF64 /* IMG_0048.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 018619E01C15DAE400EABF64 /* IMG_0048.PNG */; };
 		018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 018619E31C15DC8200EABF64 /* AllGoodsCell.m */; };
 		018619E61C15DC8200EABF64 /* AllGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 018619E41C15DC8200EABF64 /* AllGoodsCell.xib */; };
 		018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 018619E71C15DE5200EABF64 /* 20150427091614458.jpg */; };
+		018A08AD1C1BECB1009C6BAD /* IMG_0087.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 018A08AB1C1BECB1009C6BAD /* IMG_0087.PNG */; };
+		018A08AE1C1BECB1009C6BAD /* IMG_0088.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 018A08AC1C1BECB1009C6BAD /* IMG_0088.PNG */; };
+		018A08B01C1BFE34009C6BAD /* IMG_0089.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 018A08AF1C1BFE34009C6BAD /* IMG_0089.PNG */; };
 		019E096A1C17342A0022593A /* AnnNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 019E09691C17342A0022593A /* AnnNavController.m */; };
 		019E096D1C17343A0022593A /* IMG_0064.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 019E096B1C17343A0022593A /* IMG_0064.PNG */; };
 		019E096E1C17343A0022593A /* IMG_0065.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 019E096C1C17343A0022593A /* IMG_0065.PNG */; };
@@ -48,6 +57,7 @@
 		01D3419F1C029C9C000A32A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D3419E1C029C9C000A32A1 /* main.m */; };
 		01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D341A11C029C9C000A32A1 /* AppDelegate.m */; };
 		01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D341A91C029C9C000A32A1 /* Assets.xcassets */; };
+		01F712891C1A617200D859A7 /* UITabBarController+ShowHideBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F712881C1A617200D859A7 /* UITabBarController+ShowHideBar.m */; };
 		09E54489D16DFEBC046E3C51 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5EDE4F39F0C4F8145C3E8A5 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +85,17 @@
 		0111BA1F1C0371B000DDC2EA /* HomeNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeNavController.m; sourceTree = "<group>"; };
 		0111BA211C0372D700DDC2EA /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		0111BA221C0372D700DDC2EA /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
+		012626391C1AB98E00509985 /* IMG_0079.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0079.PNG; sourceTree = "<group>"; };
+		0126263A1C1AB98E00509985 /* IMG_0080.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0080.PNG; sourceTree = "<group>"; };
+		0126263D1C1ABA7400509985 /* CloudRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudRecordCell.h; sourceTree = "<group>"; };
+		0126263E1C1ABA7400509985 /* CloudRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudRecordCell.m; sourceTree = "<group>"; };
+		0126263F1C1ABA7400509985 /* CloudRecordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CloudRecordCell.xib; sourceTree = "<group>"; };
+		012626421C1AC2AF00509985 /* CloudRecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudRecordController.h; sourceTree = "<group>"; };
+		012626431C1AC2AF00509985 /* CloudRecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudRecordController.m; sourceTree = "<group>"; };
+		012626451C1AC39600509985 /* MyCloudRecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCloudRecordController.h; sourceTree = "<group>"; };
+		012626461C1AC39600509985 /* MyCloudRecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCloudRecordController.m; sourceTree = "<group>"; };
+		012626481C1ACE9900509985 /* DetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailController.h; sourceTree = "<group>"; };
+		012626491C1ACE9900509985 /* DetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailController.m; sourceTree = "<group>"; };
 		013B74FA1C14996000910A96 /* IMG_0020.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0020.PNG; sourceTree = "<group>"; };
 		014A076E1C148EE000EEBD78 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
 		014A076F1C148EE000EEBD78 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
@@ -90,8 +111,6 @@
 		01652BC21C19E1B700310880 /* GoodsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailController.m; sourceTree = "<group>"; };
 		01782B701C05EF850028768F /* PerTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerTableController.h; sourceTree = "<group>"; };
 		01782B711C05EF850028768F /* PerTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerTableController.m; sourceTree = "<group>"; };
-		01782B731C05FBDB0028768F /* CloudRecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudRecordController.h; sourceTree = "<group>"; };
-		01782B741C05FBDB0028768F /* CloudRecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudRecordController.m; sourceTree = "<group>"; };
 		017F6BDF1C02BE050040385A /* Plug_Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plug_Controller.h; sourceTree = "<group>"; };
 		017F6BE01C02BE050040385A /* Plug_Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Plug_Controller.m; sourceTree = "<group>"; };
 		017F6BE21C02BE2D0040385A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -100,6 +119,9 @@
 		018619E31C15DC8200EABF64 /* AllGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllGoodsCell.m; sourceTree = "<group>"; };
 		018619E41C15DC8200EABF64 /* AllGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllGoodsCell.xib; sourceTree = "<group>"; };
 		018619E71C15DE5200EABF64 /* 20150427091614458.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 20150427091614458.jpg; sourceTree = "<group>"; };
+		018A08AB1C1BECB1009C6BAD /* IMG_0087.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0087.PNG; sourceTree = "<group>"; };
+		018A08AC1C1BECB1009C6BAD /* IMG_0088.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0088.PNG; sourceTree = "<group>"; };
+		018A08AF1C1BFE34009C6BAD /* IMG_0089.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0089.PNG; sourceTree = "<group>"; };
 		019E09681C17342A0022593A /* AnnNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnNavController.h; sourceTree = "<group>"; };
 		019E09691C17342A0022593A /* AnnNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnNavController.m; sourceTree = "<group>"; };
 		019E096B1C17343A0022593A /* IMG_0064.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0064.PNG; sourceTree = "<group>"; };
@@ -116,6 +138,8 @@
 		01D341A11C029C9C000A32A1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		01D341A91C029C9C000A32A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01D341AE1C029C9C000A32A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01F712871C1A617200D859A7 /* UITabBarController+ShowHideBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+ShowHideBar.h"; sourceTree = "<group>"; };
+		01F712881C1A617200D859A7 /* UITabBarController+ShowHideBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+ShowHideBar.m"; sourceTree = "<group>"; };
 		9B652E5F27C3DB6697758CCD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D5EDE4F39F0C4F8145C3E8A5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBE22145F38242CB9F8264B9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -202,8 +226,8 @@
 				0111BA191C0370D600DDC2EA /* PerNavController.m */,
 				01782B701C05EF850028768F /* PerTableController.h */,
 				01782B711C05EF850028768F /* PerTableController.m */,
-				01782B731C05FBDB0028768F /* CloudRecordController.h */,
-				01782B741C05FBDB0028768F /* CloudRecordController.m */,
+				012626451C1AC39600509985 /* MyCloudRecordController.h */,
+				012626461C1AC39600509985 /* MyCloudRecordController.m */,
 			);
 			name = "Controller(控制)";
 			path = Controller;
@@ -237,6 +261,9 @@
 				018619E21C15DC8200EABF64 /* AllGoodsCell.h */,
 				018619E31C15DC8200EABF64 /* AllGoodsCell.m */,
 				018619E41C15DC8200EABF64 /* AllGoodsCell.xib */,
+				0126263D1C1ABA7400509985 /* CloudRecordCell.h */,
+				0126263E1C1ABA7400509985 /* CloudRecordCell.m */,
+				0126263F1C1ABA7400509985 /* CloudRecordCell.xib */,
 			);
 			name = "View(视图)";
 			path = View;
@@ -245,6 +272,11 @@
 		0111B9F11C0354F200DDC2EA /* Controller(控制) */ = {
 			isa = PBXGroup;
 			children = (
+				018A08AF1C1BFE34009C6BAD /* IMG_0089.PNG */,
+				018A08AB1C1BECB1009C6BAD /* IMG_0087.PNG */,
+				018A08AC1C1BECB1009C6BAD /* IMG_0088.PNG */,
+				012626391C1AB98E00509985 /* IMG_0079.PNG */,
+				0126263A1C1AB98E00509985 /* IMG_0080.PNG */,
 				01652BBD1C19CFBD00310880 /* IMG_0076.PNG */,
 				01652BBE1C19CFBD00310880 /* IMG_0077.PNG */,
 				018619E01C15DAE400EABF64 /* IMG_0048.PNG */,
@@ -254,6 +286,12 @@
 				0111BA131C03709700DDC2EA /* GoodsNavController.m */,
 				01652BC11C19E1B700310880 /* GoodsDetailController.h */,
 				01652BC21C19E1B700310880 /* GoodsDetailController.m */,
+				01F712871C1A617200D859A7 /* UITabBarController+ShowHideBar.h */,
+				01F712881C1A617200D859A7 /* UITabBarController+ShowHideBar.m */,
+				012626421C1AC2AF00509985 /* CloudRecordController.h */,
+				012626431C1AC2AF00509985 /* CloudRecordController.m */,
+				012626481C1ACE9900509985 /* DetailController.h */,
+				012626491C1ACE9900509985 /* DetailController.m */,
 			);
 			name = "Controller(控制)";
 			path = Controller;
@@ -496,21 +534,27 @@
 				014A07721C148EE000EEBD78 /* 2.jpg in Resources */,
 				013B74FB1C14996000910A96 /* IMG_0020.PNG in Resources */,
 				019E09731C173C730022593A /* NewGoodsCell.xib in Resources */,
+				0126263B1C1AB98E00509985 /* IMG_0079.PNG in Resources */,
 				014FEFAC1C0602C000C247C5 /* 登录.PNG in Resources */,
 				0111B9E81C03548300DDC2EA /* ShopCartView.xib in Resources */,
 				0110AA5D1C0D8D03009A8660 /* PopularGoodsCell.xib in Resources */,
 				018619E61C15DC8200EABF64 /* AllGoodsCell.xib in Resources */,
+				018A08B01C1BFE34009C6BAD /* IMG_0089.PNG in Resources */,
 				019E096E1C17343A0022593A /* IMG_0065.PNG in Resources */,
 				018619E11C15DAE400EABF64 /* IMG_0048.PNG in Resources */,
 				019E09751C1741C70022593A /* IMG_0066.JPG in Resources */,
 				01652BBF1C19CFBD00310880 /* IMG_0076.PNG in Resources */,
+				018A08AD1C1BECB1009C6BAD /* IMG_0087.PNG in Resources */,
 				01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */,
 				017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */,
+				012626411C1ABA7400509985 /* CloudRecordCell.xib in Resources */,
 				0111B9DF1C03540D00DDC2EA /* PersonalView.xib in Resources */,
 				014A07711C148EE000EEBD78 /* 3.jpg in Resources */,
 				01652BC01C19CFBD00310880 /* IMG_0077.PNG in Resources */,
+				018A08AE1C1BECB1009C6BAD /* IMG_0088.PNG in Resources */,
 				014A07731C148EE000EEBD78 /* 1.jpg in Resources */,
 				019E096D1C17343A0022593A /* IMG_0064.PNG in Resources */,
+				0126263C1C1AB98E00509985 /* IMG_0080.PNG in Resources */,
 				018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -572,12 +616,16 @@
 			files = (
 				01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */,
 				01D3419F1C029C9C000A32A1 /* main.m in Sources */,
+				012626401C1ABA7400509985 /* CloudRecordCell.m in Sources */,
 				0111BA021C03564500DDC2EA /* AnnounceController.m in Sources */,
+				01F712891C1A617200D859A7 /* UITabBarController+ShowHideBar.m in Sources */,
 				01782B721C05EF850028768F /* PerTableController.m in Sources */,
 				014FEFAA1C06018300C247C5 /* LoginController.m in Sources */,
 				017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */,
 				0111BA1A1C0370D600DDC2EA /* PerNavController.m in Sources */,
 				0111BA171C0370AD00DDC2EA /* ShopNavController.m in Sources */,
+				0126264A1C1ACE9900509985 /* DetailController.m in Sources */,
+				012626441C1AC2AF00509985 /* CloudRecordController.m in Sources */,
 				014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */,
 				0111B9F51C03550F00DDC2EA /* AllGoodsController.m in Sources */,
 				0110AA5C1C0D8D03009A8660 /* PopularGoodsCell.m in Sources */,
@@ -585,10 +633,10 @@
 				0111BA141C03709700DDC2EA /* GoodsNavController.m in Sources */,
 				019E09721C173C730022593A /* NewGoodsCell.m in Sources */,
 				0111BA231C0372D700DDC2EA /* MainTabBarController.m in Sources */,
-				01782B751C05FBDB0028768F /* CloudRecordController.m in Sources */,
 				019E096A1C17342A0022593A /* AnnNavController.m in Sources */,
 				01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */,
 				0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */,
+				012626471C1AC39600509985 /* MyCloudRecordController.m in Sources */,
 				018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */,
 				0111B9E31C03543F00DDC2EA /* PersonalController.m in Sources */,
 				01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */,
