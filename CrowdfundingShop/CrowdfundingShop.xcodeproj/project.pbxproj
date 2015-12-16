@@ -20,6 +20,10 @@
 		0111BA1A1C0370D600DDC2EA /* PerNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA191C0370D600DDC2EA /* PerNavController.m */; };
 		0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA1F1C0371B000DDC2EA /* HomeNavController.m */; };
 		0111BA231C0372D700DDC2EA /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0111BA221C0372D700DDC2EA /* MainTabBarController.m */; };
+		011E374A1C1E5DA30032FB13 /* IMG_0098.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 011E37491C1E5DA30032FB13 /* IMG_0098.PNG */; };
+		011E374E1C1E5F960032FB13 /* SelectCloudNumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 011E374C1C1E5F960032FB13 /* SelectCloudNumCell.m */; };
+		011E374F1C1E5F960032FB13 /* SelectCloudNumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 011E374D1C1E5F960032FB13 /* SelectCloudNumCell.xib */; };
+		011E37521C1E64830032FB13 /* SelectCloudNumController.m in Sources */ = {isa = PBXBuildFile; fileRef = 011E37511C1E64830032FB13 /* SelectCloudNumController.m */; };
 		0126263B1C1AB98E00509985 /* IMG_0079.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 012626391C1AB98E00509985 /* IMG_0079.PNG */; };
 		0126263C1C1AB98E00509985 /* IMG_0080.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0126263A1C1AB98E00509985 /* IMG_0080.PNG */; };
 		012626401C1ABA7400509985 /* CloudRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0126263E1C1ABA7400509985 /* CloudRecordCell.m */; };
@@ -34,9 +38,20 @@
 		014FEFAA1C06018300C247C5 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014FEFA91C06018300C247C5 /* LoginController.m */; };
 		014FEFAC1C0602C000C247C5 /* 登录.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 014FEFAB1C0602C000C247C5 /* 登录.PNG */; };
 		014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 014FEFAF1C060B9C00C247C5 /* ARLabel.m */; };
+		015B58B91C213E83008EF7A1 /* GoodsSortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 015B58B71C213E83008EF7A1 /* GoodsSortCell.m */; };
+		015B58BA1C213E83008EF7A1 /* GoodsSortCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 015B58B81C213E83008EF7A1 /* GoodsSortCell.xib */; };
 		01652BBF1C19CFBD00310880 /* IMG_0076.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01652BBD1C19CFBD00310880 /* IMG_0076.PNG */; };
 		01652BC01C19CFBD00310880 /* IMG_0077.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01652BBE1C19CFBD00310880 /* IMG_0077.PNG */; };
 		01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01652BC21C19E1B700310880 /* GoodsDetailController.m */; };
+		01747DFC1C1D54270051086C /* CloudNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01747DFA1C1D54270051086C /* CloudNumberCell.m */; };
+		01747DFD1C1D54270051086C /* CloudNumberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01747DFB1C1D54270051086C /* CloudNumberCell.xib */; };
+		01747E061C1D5ADD0051086C /* DidAnnounceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01747E051C1D5ADD0051086C /* DidAnnounceController.m */; };
+		01747E091C1D65E20051086C /* IMG_0093.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01747E071C1D65E20051086C /* IMG_0093.PNG */; };
+		01747E0A1C1D65E20051086C /* IMG_0094.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01747E081C1D65E20051086C /* IMG_0094.PNG */; };
+		01747E0D1C1D68660051086C /* CloudNumberController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01747E0C1C1D68660051086C /* CloudNumberController.m */; };
+		01747E101C1D6BA60051086C /* InAnnounceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01747E0F1C1D6BA60051086C /* InAnnounceController.m */; };
+		01747E141C1D76CC0051086C /* ComputeDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01747E121C1D76CC0051086C /* ComputeDetailCell.m */; };
+		01747E151C1D76CC0051086C /* ComputeDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01747E131C1D76CC0051086C /* ComputeDetailCell.xib */; };
 		01782B721C05EF850028768F /* PerTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B711C05EF850028768F /* PerTableController.m */; };
 		017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F6BE01C02BE050040385A /* Plug_Controller.m */; };
 		017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 017F6BE21C02BE2D0040385A /* Main.storyboard */; };
@@ -57,6 +72,11 @@
 		01D3419F1C029C9C000A32A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D3419E1C029C9C000A32A1 /* main.m */; };
 		01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D341A11C029C9C000A32A1 /* AppDelegate.m */; };
 		01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D341A91C029C9C000A32A1 /* Assets.xcassets */; };
+		01D3B72D1C1FDC8600C86772 /* IMG_0108.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01D3B72C1C1FDC8600C86772 /* IMG_0108.PNG */; };
+		01D3B7311C1FDE0E00C86772 /* GoodsCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D3B72F1C1FDE0E00C86772 /* GoodsCategoryCell.m */; };
+		01D3B7321C1FDE0E00C86772 /* GoodsCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D3B7301C1FDE0E00C86772 /* GoodsCategoryCell.xib */; };
+		01D3B7641C1FF3A500C86772 /* GoodsCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D3B7631C1FF3A500C86772 /* GoodsCategoryController.m */; };
+		01E96BA91C1DC5C3006ED4CD /* ComputeDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E96BA81C1DC5C3006ED4CD /* ComputeDetailController.m */; };
 		01F712891C1A617200D859A7 /* UITabBarController+ShowHideBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F712881C1A617200D859A7 /* UITabBarController+ShowHideBar.m */; };
 		09E54489D16DFEBC046E3C51 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D5EDE4F39F0C4F8145C3E8A5 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -85,6 +105,12 @@
 		0111BA1F1C0371B000DDC2EA /* HomeNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeNavController.m; sourceTree = "<group>"; };
 		0111BA211C0372D700DDC2EA /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarController.h; sourceTree = "<group>"; };
 		0111BA221C0372D700DDC2EA /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarController.m; sourceTree = "<group>"; };
+		011E37491C1E5DA30032FB13 /* IMG_0098.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0098.PNG; sourceTree = "<group>"; };
+		011E374B1C1E5F960032FB13 /* SelectCloudNumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectCloudNumCell.h; sourceTree = "<group>"; };
+		011E374C1C1E5F960032FB13 /* SelectCloudNumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectCloudNumCell.m; sourceTree = "<group>"; };
+		011E374D1C1E5F960032FB13 /* SelectCloudNumCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectCloudNumCell.xib; sourceTree = "<group>"; };
+		011E37501C1E64830032FB13 /* SelectCloudNumController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectCloudNumController.h; sourceTree = "<group>"; };
+		011E37511C1E64830032FB13 /* SelectCloudNumController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectCloudNumController.m; sourceTree = "<group>"; };
 		012626391C1AB98E00509985 /* IMG_0079.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0079.PNG; sourceTree = "<group>"; };
 		0126263A1C1AB98E00509985 /* IMG_0080.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0080.PNG; sourceTree = "<group>"; };
 		0126263D1C1ABA7400509985 /* CloudRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudRecordCell.h; sourceTree = "<group>"; };
@@ -105,10 +131,27 @@
 		014FEFAB1C0602C000C247C5 /* 登录.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "登录.PNG"; sourceTree = "<group>"; };
 		014FEFAE1C060B9C00C247C5 /* ARLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARLabel.h; sourceTree = "<group>"; };
 		014FEFAF1C060B9C00C247C5 /* ARLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARLabel.m; sourceTree = "<group>"; };
+		015B58B61C213E83008EF7A1 /* GoodsSortCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsSortCell.h; sourceTree = "<group>"; };
+		015B58B71C213E83008EF7A1 /* GoodsSortCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsSortCell.m; sourceTree = "<group>"; };
+		015B58B81C213E83008EF7A1 /* GoodsSortCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoodsSortCell.xib; sourceTree = "<group>"; };
 		01652BBD1C19CFBD00310880 /* IMG_0076.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0076.PNG; sourceTree = "<group>"; };
 		01652BBE1C19CFBD00310880 /* IMG_0077.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0077.PNG; sourceTree = "<group>"; };
 		01652BC11C19E1B700310880 /* GoodsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsDetailController.h; sourceTree = "<group>"; };
 		01652BC21C19E1B700310880 /* GoodsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailController.m; sourceTree = "<group>"; };
+		01747DF91C1D54270051086C /* CloudNumberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudNumberCell.h; sourceTree = "<group>"; };
+		01747DFA1C1D54270051086C /* CloudNumberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudNumberCell.m; sourceTree = "<group>"; };
+		01747DFB1C1D54270051086C /* CloudNumberCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CloudNumberCell.xib; sourceTree = "<group>"; };
+		01747E041C1D5ADD0051086C /* DidAnnounceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DidAnnounceController.h; sourceTree = "<group>"; };
+		01747E051C1D5ADD0051086C /* DidAnnounceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DidAnnounceController.m; sourceTree = "<group>"; };
+		01747E071C1D65E20051086C /* IMG_0093.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0093.PNG; sourceTree = "<group>"; };
+		01747E081C1D65E20051086C /* IMG_0094.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0094.PNG; sourceTree = "<group>"; };
+		01747E0B1C1D68660051086C /* CloudNumberController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudNumberController.h; sourceTree = "<group>"; };
+		01747E0C1C1D68660051086C /* CloudNumberController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudNumberController.m; sourceTree = "<group>"; };
+		01747E0E1C1D6BA60051086C /* InAnnounceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAnnounceController.h; sourceTree = "<group>"; };
+		01747E0F1C1D6BA60051086C /* InAnnounceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAnnounceController.m; sourceTree = "<group>"; };
+		01747E111C1D76CC0051086C /* ComputeDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComputeDetailCell.h; sourceTree = "<group>"; };
+		01747E121C1D76CC0051086C /* ComputeDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComputeDetailCell.m; sourceTree = "<group>"; };
+		01747E131C1D76CC0051086C /* ComputeDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComputeDetailCell.xib; sourceTree = "<group>"; };
 		01782B701C05EF850028768F /* PerTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerTableController.h; sourceTree = "<group>"; };
 		01782B711C05EF850028768F /* PerTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerTableController.m; sourceTree = "<group>"; };
 		017F6BDF1C02BE050040385A /* Plug_Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plug_Controller.h; sourceTree = "<group>"; };
@@ -138,6 +181,14 @@
 		01D341A11C029C9C000A32A1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		01D341A91C029C9C000A32A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01D341AE1C029C9C000A32A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01D3B72C1C1FDC8600C86772 /* IMG_0108.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0108.PNG; sourceTree = "<group>"; };
+		01D3B72E1C1FDE0E00C86772 /* GoodsCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsCategoryCell.h; sourceTree = "<group>"; };
+		01D3B72F1C1FDE0E00C86772 /* GoodsCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsCategoryCell.m; sourceTree = "<group>"; };
+		01D3B7301C1FDE0E00C86772 /* GoodsCategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GoodsCategoryCell.xib; sourceTree = "<group>"; };
+		01D3B7621C1FF3A500C86772 /* GoodsCategoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsCategoryController.h; sourceTree = "<group>"; };
+		01D3B7631C1FF3A500C86772 /* GoodsCategoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsCategoryController.m; sourceTree = "<group>"; };
+		01E96BA71C1DC5C3006ED4CD /* ComputeDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComputeDetailController.h; sourceTree = "<group>"; };
+		01E96BA81C1DC5C3006ED4CD /* ComputeDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComputeDetailController.m; sourceTree = "<group>"; };
 		01F712871C1A617200D859A7 /* UITabBarController+ShowHideBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+ShowHideBar.h"; sourceTree = "<group>"; };
 		01F712881C1A617200D859A7 /* UITabBarController+ShowHideBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+ShowHideBar.m"; sourceTree = "<group>"; };
 		9B652E5F27C3DB6697758CCD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -264,6 +315,18 @@
 				0126263D1C1ABA7400509985 /* CloudRecordCell.h */,
 				0126263E1C1ABA7400509985 /* CloudRecordCell.m */,
 				0126263F1C1ABA7400509985 /* CloudRecordCell.xib */,
+				01747DF91C1D54270051086C /* CloudNumberCell.h */,
+				01747DFA1C1D54270051086C /* CloudNumberCell.m */,
+				01747DFB1C1D54270051086C /* CloudNumberCell.xib */,
+				01747E111C1D76CC0051086C /* ComputeDetailCell.h */,
+				01747E121C1D76CC0051086C /* ComputeDetailCell.m */,
+				01747E131C1D76CC0051086C /* ComputeDetailCell.xib */,
+				011E374B1C1E5F960032FB13 /* SelectCloudNumCell.h */,
+				011E374C1C1E5F960032FB13 /* SelectCloudNumCell.m */,
+				011E374D1C1E5F960032FB13 /* SelectCloudNumCell.xib */,
+				015B58B61C213E83008EF7A1 /* GoodsSortCell.h */,
+				015B58B71C213E83008EF7A1 /* GoodsSortCell.m */,
+				015B58B81C213E83008EF7A1 /* GoodsSortCell.xib */,
 			);
 			name = "View(视图)";
 			path = View;
@@ -272,6 +335,9 @@
 		0111B9F11C0354F200DDC2EA /* Controller(控制) */ = {
 			isa = PBXGroup;
 			children = (
+				011E37491C1E5DA30032FB13 /* IMG_0098.PNG */,
+				01747E071C1D65E20051086C /* IMG_0093.PNG */,
+				01747E081C1D65E20051086C /* IMG_0094.PNG */,
 				018A08AF1C1BFE34009C6BAD /* IMG_0089.PNG */,
 				018A08AB1C1BECB1009C6BAD /* IMG_0087.PNG */,
 				018A08AC1C1BECB1009C6BAD /* IMG_0088.PNG */,
@@ -292,6 +358,16 @@
 				012626431C1AC2AF00509985 /* CloudRecordController.m */,
 				012626481C1ACE9900509985 /* DetailController.h */,
 				012626491C1ACE9900509985 /* DetailController.m */,
+				01747E041C1D5ADD0051086C /* DidAnnounceController.h */,
+				01747E051C1D5ADD0051086C /* DidAnnounceController.m */,
+				01747E0B1C1D68660051086C /* CloudNumberController.h */,
+				01747E0C1C1D68660051086C /* CloudNumberController.m */,
+				01747E0E1C1D6BA60051086C /* InAnnounceController.h */,
+				01747E0F1C1D6BA60051086C /* InAnnounceController.m */,
+				01E96BA71C1DC5C3006ED4CD /* ComputeDetailController.h */,
+				01E96BA81C1DC5C3006ED4CD /* ComputeDetailController.m */,
+				011E37501C1E64830032FB13 /* SelectCloudNumController.h */,
+				011E37511C1E64830032FB13 /* SelectCloudNumController.m */,
 			);
 			name = "Controller(控制)";
 			path = Controller;
@@ -300,6 +376,7 @@
 		0111B9F61C03552300DDC2EA /* Controller(控制) */ = {
 			isa = PBXGroup;
 			children = (
+				01D3B72C1C1FDC8600C86772 /* IMG_0108.PNG */,
 				019E09741C1741C70022593A /* IMG_0066.JPG */,
 				019E096B1C17343A0022593A /* IMG_0064.PNG */,
 				019E096C1C17343A0022593A /* IMG_0065.PNG */,
@@ -307,6 +384,8 @@
 				019E09691C17342A0022593A /* AnnNavController.m */,
 				0111BA001C03564500DDC2EA /* AnnounceController.h */,
 				0111BA011C03564500DDC2EA /* AnnounceController.m */,
+				01D3B7621C1FF3A500C86772 /* GoodsCategoryController.h */,
+				01D3B7631C1FF3A500C86772 /* GoodsCategoryController.m */,
 			);
 			name = "Controller(控制)";
 			path = Controller;
@@ -318,6 +397,9 @@
 				019E096F1C173C730022593A /* NewGoodsCell.h */,
 				019E09701C173C730022593A /* NewGoodsCell.m */,
 				019E09711C173C730022593A /* NewGoodsCell.xib */,
+				01D3B72E1C1FDE0E00C86772 /* GoodsCategoryCell.h */,
+				01D3B72F1C1FDE0E00C86772 /* GoodsCategoryCell.m */,
+				01D3B7301C1FDE0E00C86772 /* GoodsCategoryCell.xib */,
 			);
 			name = "View(视图)";
 			path = View;
@@ -531,19 +613,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D3B7321C1FDE0E00C86772 /* GoodsCategoryCell.xib in Resources */,
 				014A07721C148EE000EEBD78 /* 2.jpg in Resources */,
 				013B74FB1C14996000910A96 /* IMG_0020.PNG in Resources */,
+				01747DFD1C1D54270051086C /* CloudNumberCell.xib in Resources */,
 				019E09731C173C730022593A /* NewGoodsCell.xib in Resources */,
+				01D3B72D1C1FDC8600C86772 /* IMG_0108.PNG in Resources */,
+				01747E0A1C1D65E20051086C /* IMG_0094.PNG in Resources */,
 				0126263B1C1AB98E00509985 /* IMG_0079.PNG in Resources */,
+				015B58BA1C213E83008EF7A1 /* GoodsSortCell.xib in Resources */,
 				014FEFAC1C0602C000C247C5 /* 登录.PNG in Resources */,
 				0111B9E81C03548300DDC2EA /* ShopCartView.xib in Resources */,
 				0110AA5D1C0D8D03009A8660 /* PopularGoodsCell.xib in Resources */,
 				018619E61C15DC8200EABF64 /* AllGoodsCell.xib in Resources */,
 				018A08B01C1BFE34009C6BAD /* IMG_0089.PNG in Resources */,
+				01747E091C1D65E20051086C /* IMG_0093.PNG in Resources */,
 				019E096E1C17343A0022593A /* IMG_0065.PNG in Resources */,
 				018619E11C15DAE400EABF64 /* IMG_0048.PNG in Resources */,
 				019E09751C1741C70022593A /* IMG_0066.JPG in Resources */,
 				01652BBF1C19CFBD00310880 /* IMG_0076.PNG in Resources */,
+				01747E151C1D76CC0051086C /* ComputeDetailCell.xib in Resources */,
 				018A08AD1C1BECB1009C6BAD /* IMG_0087.PNG in Resources */,
 				01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */,
 				017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */,
@@ -553,8 +642,10 @@
 				01652BC01C19CFBD00310880 /* IMG_0077.PNG in Resources */,
 				018A08AE1C1BECB1009C6BAD /* IMG_0088.PNG in Resources */,
 				014A07731C148EE000EEBD78 /* 1.jpg in Resources */,
+				011E374F1C1E5F960032FB13 /* SelectCloudNumCell.xib in Resources */,
 				019E096D1C17343A0022593A /* IMG_0064.PNG in Resources */,
 				0126263C1C1AB98E00509985 /* IMG_0080.PNG in Resources */,
+				011E374A1C1E5DA30032FB13 /* IMG_0098.PNG in Resources */,
 				018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -614,19 +705,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				011E37521C1E64830032FB13 /* SelectCloudNumController.m in Sources */,
 				01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */,
 				01D3419F1C029C9C000A32A1 /* main.m in Sources */,
+				01747DFC1C1D54270051086C /* CloudNumberCell.m in Sources */,
+				01D3B7311C1FDE0E00C86772 /* GoodsCategoryCell.m in Sources */,
 				012626401C1ABA7400509985 /* CloudRecordCell.m in Sources */,
 				0111BA021C03564500DDC2EA /* AnnounceController.m in Sources */,
 				01F712891C1A617200D859A7 /* UITabBarController+ShowHideBar.m in Sources */,
 				01782B721C05EF850028768F /* PerTableController.m in Sources */,
+				01747E141C1D76CC0051086C /* ComputeDetailCell.m in Sources */,
+				01E96BA91C1DC5C3006ED4CD /* ComputeDetailController.m in Sources */,
 				014FEFAA1C06018300C247C5 /* LoginController.m in Sources */,
 				017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */,
 				0111BA1A1C0370D600DDC2EA /* PerNavController.m in Sources */,
+				01D3B7641C1FF3A500C86772 /* GoodsCategoryController.m in Sources */,
+				01747E061C1D5ADD0051086C /* DidAnnounceController.m in Sources */,
 				0111BA171C0370AD00DDC2EA /* ShopNavController.m in Sources */,
+				015B58B91C213E83008EF7A1 /* GoodsSortCell.m in Sources */,
 				0126264A1C1ACE9900509985 /* DetailController.m in Sources */,
 				012626441C1AC2AF00509985 /* CloudRecordController.m in Sources */,
 				014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */,
+				01747E101C1D6BA60051086C /* InAnnounceController.m in Sources */,
 				0111B9F51C03550F00DDC2EA /* AllGoodsController.m in Sources */,
 				0110AA5C1C0D8D03009A8660 /* PopularGoodsCell.m in Sources */,
 				0111B9ED1C0354B100DDC2EA /* ShopCartController.m in Sources */,
@@ -637,7 +737,9 @@
 				01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */,
 				0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */,
 				012626471C1AC39600509985 /* MyCloudRecordController.m in Sources */,
+				01747E0D1C1D68660051086C /* CloudNumberController.m in Sources */,
 				018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */,
+				011E374E1C1E5F960032FB13 /* SelectCloudNumCell.m in Sources */,
 				0111B9E31C03543F00DDC2EA /* PersonalController.m in Sources */,
 				01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */,
 			);

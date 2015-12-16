@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ComputeDetailCell" id="KGk-i7-Jjw" customClass="ComputeDetailCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="29.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-12-13 16:28:47.549" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="BZ3-2B-ciF" customClass="ARLabel">
+                        <rect key="frame" x="10" y="6" width="122" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="cg8-Eq-af4"/>
+                            <constraint firstAttribute="width" constant="122" id="nby-1o-Lm3"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="162847264" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="dVp-n4-d3F" customClass="ARLabel">
+                        <rect key="frame" x="180" y="6" width="65" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="CZa-mh-GvK"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.98823529409999999" green="0.40000000000000002" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="这是亏死人的" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="2VH-Cn-mBz" customClass="ARLabel">
+                        <rect key="frame" x="245" y="6" width="65" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="135-YN-uzl"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O5i-lV-D1p" userLabel="lineView">
+                        <rect key="frame" x="0.0" y="29" width="320" height="0.5"/>
+                        <color key="backgroundColor" red="0.74117647060000003" green="0.74117647060000003" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="aN4-Tc-4Ee"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="dVp-n4-d3F" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="6uS-Ef-qKL"/>
+                    <constraint firstAttribute="trailing" secondItem="2VH-Cn-mBz" secondAttribute="trailing" constant="10" id="Aq7-GJ-fOO"/>
+                    <constraint firstAttribute="trailing" secondItem="O5i-lV-D1p" secondAttribute="trailing" id="BWB-J3-cU9"/>
+                    <constraint firstAttribute="bottom" secondItem="O5i-lV-D1p" secondAttribute="bottom" id="DaO-k8-acd"/>
+                    <constraint firstItem="BZ3-2B-ciF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="EyV-lX-IQH"/>
+                    <constraint firstItem="2VH-Cn-mBz" firstAttribute="leading" secondItem="dVp-n4-d3F" secondAttribute="trailing" id="HSA-ar-7xZ"/>
+                    <constraint firstItem="BZ3-2B-ciF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="M9I-5d-RPn"/>
+                    <constraint firstItem="2VH-Cn-mBz" firstAttribute="width" secondItem="dVp-n4-d3F" secondAttribute="width" id="bqv-FA-vle"/>
+                    <constraint firstItem="O5i-lV-D1p" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="c09-7M-Y9Y"/>
+                    <constraint firstItem="2VH-Cn-mBz" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fje-wX-lHa"/>
+                    <constraint firstItem="dVp-n4-d3F" firstAttribute="leading" secondItem="BZ3-2B-ciF" secondAttribute="trailing" constant="48" id="gVy-yj-xJ2"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="numLabel" destination="dVp-n4-d3F" id="lTX-xT-ivA"/>
+                <outlet property="peopleNameLabel" destination="2VH-Cn-mBz" id="nvU-zc-kXs"/>
+                <outlet property="timeLabel" destination="BZ3-2B-ciF" id="UQy-j2-8dJ"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -19,10 +19,8 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20150427091614458.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="MRH-SP-2Qt">
                                 <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
-                                <animations/>
                             </imageView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="80" id="AdS-lu-9wf"/>
@@ -35,7 +33,6 @@
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fsu-Ny-bhg" userLabel="line">
                         <rect key="frame" x="0.0" y="102" width="320" height="0.5"/>
-                        <animations/>
                         <color key="backgroundColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="0.5" id="h8l-JI-hoE"/>
@@ -43,7 +40,6 @@
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="获得者：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YQd-a8-kyz" customClass="ARLabel">
                         <rect key="frame" x="100" y="11" width="56" height="21"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="Pbp-XB-KWx"/>
                             <constraint firstAttribute="width" constant="56" id="cEz-i2-3eL"/>
@@ -54,7 +50,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="不给我中就是骗..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DtK-rO-twq" customClass="ARLabel">
                         <rect key="frame" x="161" y="11" width="111" height="21"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="OhH-3p-g62"/>
                         </constraints>
@@ -64,7 +59,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本云参与：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFC-Ak-nEH" customClass="ARLabel">
                         <rect key="frame" x="100" y="35" width="56" height="15"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="5lb-3w-slc"/>
                             <constraint firstAttribute="width" constant="56" id="Bc7-3y-HbK"/>
@@ -75,7 +69,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品价值：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1VV-Jr-yKA" customClass="ARLabel">
                         <rect key="frame" x="100" y="52" width="56" height="15"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="POL-j5-Nma"/>
                             <constraint firstAttribute="width" constant="56" id="hEQ-1H-nP5"/>
@@ -86,7 +79,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="揭晓时间：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jgl-bB-bPk" customClass="ARLabel">
                         <rect key="frame" x="100" y="68" width="56" height="15"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="56" id="NrZ-Nn-Uko"/>
                             <constraint firstAttribute="height" constant="15" id="iCE-b5-g89"/>
@@ -97,7 +89,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20人次" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rpv-0M-ywl" customClass="ARLabel">
                         <rect key="frame" x="161" y="35" width="42" height="15"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="8zc-ie-vCh"/>
                         </constraints>
@@ -107,7 +98,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥ 28.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8bD-lR-ejr" customClass="ARLabel">
                         <rect key="frame" x="161" y="52" width="42" height="15"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="0xc-qA-qJw"/>
                         </constraints>
@@ -117,7 +107,6 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-12-08 22:35:12.427" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8tg-Cz-6Ys" customClass="ARLabel">
                         <rect key="frame" x="161" y="68" width="135" height="15"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="GaQ-OE-YcK"/>
                         </constraints>
@@ -127,14 +116,12 @@
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_0066.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="pMI-um-Les">
                         <rect key="frame" x="265" y="17" width="50" height="50"/>
-                        <animations/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="3H6-l0-tlt"/>
                             <constraint firstAttribute="height" constant="50" id="iEF-BN-gzx"/>
                         </constraints>
                     </imageView>
                 </subviews>
-                <animations/>
                 <constraints>
                     <constraint firstItem="IFC-Ak-nEH" firstAttribute="top" secondItem="YQd-a8-kyz" secondAttribute="bottom" constant="2.5" id="00u-A0-J9X"/>
                     <constraint firstItem="DtK-rO-twq" firstAttribute="leading" secondItem="YQd-a8-kyz" secondAttribute="trailing" constant="5" id="2Fx-TK-BkV"/>
@@ -165,7 +152,6 @@
                     <constraint firstItem="Fsu-Ny-bhg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="tL6-zc-aC6"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="faceImageView" destination="pMI-um-Les" id="6VM-2v-13m"/>
                 <outlet property="goodsImageView" destination="MRH-SP-2Qt" id="zMs-7r-JRG"/>

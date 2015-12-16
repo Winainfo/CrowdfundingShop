@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface AllGoodsController : UIViewController
-
+#import "ARLabel.h"
+@interface AllGoodsController : UIViewController{
+    NSIndexPath    *_lastIndexPath;
+    NSIndexPath    *_sortIndexPath;
+}
+/**分类名称*/
+@property (weak, nonatomic) IBOutlet UIButton *categoryBtn;
+/**排序*/
+@property (weak, nonatomic) IBOutlet UIButton *sortBtn;
+@property (retain,nonatomic) NSString *name;
+@property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @end
