@@ -40,7 +40,7 @@
     self.goodsImageView.layer.borderColor=[[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1.0]CGColor];
     /**圆角*/
     [[self.goodsImageView layer]setCornerRadius:2.0];
-    self.detailBtn.layer.cornerRadius=2.0;
+    self.detailBtn.layer.cornerRadius=4.0;
     self.peopleImageView.layer.cornerRadius=25.0;
     self.peopleImageView.layer.masksToBounds=YES;
     //注册Cell
