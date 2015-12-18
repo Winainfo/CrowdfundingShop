@@ -47,7 +47,7 @@
     //为导航栏视图添加搜索栏
     _mySearchBar = [HWSearchBar searchBar];
     _mySearchBar.width =300;
-    _mySearchBar.height = 25;
+    _mySearchBar.height = 30;
     self.navigationItem.titleView = _mySearchBar;
     //设置搜索栏的代理
     _mySearchBar.delegate=self;
@@ -68,31 +68,17 @@
     [self.hitoryTable registerNib:nib forCellReuseIdentifier:@"HistoryTableViewCell"];
     self.hisArr=@[@"iPhone6S",@"奥迪",@"充值卡"];
     [self setExtraCellLineHidden:self.hitoryTable];
-
-    //监听文本输入框的改变
-    //1.拿到通知中心
-    NSNotificationCenter *center=[NSNotificationCenter defaultCenter];
-    //2.注册监听
-    [center addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.mySearchBar];
-    
-    [self.mySearchBar addTarget:self action:@selector(textChange) forControlEvents:UIControlEventTouchUpInside];
 }
 
 
--(void)dealloc
-{
-    //移除监听
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+#pragma mark textField监听
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    self.myView.hidden=NO;
+    self.myScrollView.hidden=YES;
+    self.canleBtn.hidden=NO;
+    _flag=NO;
+    return NO;
 }
-
-/**
- *  文本改变事件
- */
--(void)textChange{
-    //1.同时改变文本值，登录才可用
-    NSLog(@"aaaaa");
-}
-
 
 //返回
 -(void)backClick{
