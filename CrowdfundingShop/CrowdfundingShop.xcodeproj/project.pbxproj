@@ -74,6 +74,14 @@
 		019E09721C173C730022593A /* NewGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 019E09701C173C730022593A /* NewGoodsCell.m */; };
 		019E09731C173C730022593A /* NewGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019E09711C173C730022593A /* NewGoodsCell.xib */; };
 		019E09751C1741C70022593A /* IMG_0066.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 019E09741C1741C70022593A /* IMG_0066.JPG */; };
+		01B7AC771C23E62700D09565 /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B7AC711C23E62700D09565 /* HistoryTableViewCell.m */; };
+		01B7AC781C23E62700D09565 /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B7AC721C23E62700D09565 /* HistoryTableViewCell.xib */; };
+		01B7AC791C23E62700D09565 /* HWSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B7AC741C23E62700D09565 /* HWSearchBar.m */; };
+		01B7AC7A1C23E62700D09565 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B7AC761C23E62700D09565 /* UIView+Extension.m */; };
+		01B7AC811C23F01300D09565 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B7AC7D1C23F01300D09565 /* DB.m */; };
+		01B7AC821C23F01300D09565 /* HistoryClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B7AC7F1C23F01300D09565 /* HistoryClass.m */; };
+		01B7AC831C23F01300D09565 /* HITORY.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 01B7AC801C23F01300D09565 /* HITORY.sqlite */; };
+		01B7AC851C23F5EA00D09565 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B7AC841C23F5EA00D09565 /* libsqlite3.0.tbd */; };
 		01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CB8CD91C11A6AB00DB67C0 /* IndexController.m */; };
 		01D3419F1C029C9C000A32A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D3419E1C029C9C000A32A1 /* main.m */; };
 		01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D341A11C029C9C000A32A1 /* AppDelegate.m */; };
@@ -193,6 +201,19 @@
 		019E09701C173C730022593A /* NewGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGoodsCell.m; sourceTree = "<group>"; };
 		019E09711C173C730022593A /* NewGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewGoodsCell.xib; sourceTree = "<group>"; };
 		019E09741C1741C70022593A /* IMG_0066.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0066.JPG; sourceTree = "<group>"; };
+		01B7AC701C23E62700D09565 /* HistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewCell.h; sourceTree = "<group>"; };
+		01B7AC711C23E62700D09565 /* HistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewCell.m; sourceTree = "<group>"; };
+		01B7AC721C23E62700D09565 /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
+		01B7AC731C23E62700D09565 /* HWSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWSearchBar.h; sourceTree = "<group>"; };
+		01B7AC741C23E62700D09565 /* HWSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWSearchBar.m; sourceTree = "<group>"; };
+		01B7AC751C23E62700D09565 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		01B7AC761C23E62700D09565 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		01B7AC7C1C23F01300D09565 /* DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DB.h; sourceTree = "<group>"; };
+		01B7AC7D1C23F01300D09565 /* DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DB.m; sourceTree = "<group>"; };
+		01B7AC7E1C23F01300D09565 /* HistoryClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryClass.h; sourceTree = "<group>"; };
+		01B7AC7F1C23F01300D09565 /* HistoryClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryClass.m; sourceTree = "<group>"; };
+		01B7AC801C23F01300D09565 /* HITORY.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = HITORY.sqlite; sourceTree = "<group>"; };
+		01B7AC841C23F5EA00D09565 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		01CB8CD81C11A6AB00DB67C0 /* IndexController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexController.h; sourceTree = "<group>"; };
 		01CB8CD91C11A6AB00DB67C0 /* IndexController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndexController.m; sourceTree = "<group>"; };
 		01D3419A1C029C9C000A32A1 /* CrowdfundingShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrowdfundingShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -227,6 +248,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01B7AC851C23F5EA00D09565 /* libsqlite3.0.tbd in Frameworks */,
 				09E54489D16DFEBC046E3C51 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,6 +259,7 @@
 		0111B9C51C0352A200DDC2EA /* Home(首页) */ = {
 			isa = PBXGroup;
 			children = (
+				01B7AC6F1C23E5CE00D09565 /* SearchViewModel */,
 				0111BA061C03568200DDC2EA /* Controller(控制) */,
 				0111BA031C03566100DDC2EA /* View(视图) */,
 			);
@@ -528,6 +551,7 @@
 		017F6BDB1C02BD410040385A /* Main(主要) */ = {
 			isa = PBXGroup;
 			children = (
+				01B7AC7B1C23EFE200D09565 /* DataBase */,
 				0111B9D91C0353BC00DDC2EA /* Personal(个人中心) */,
 				0111B9D51C03537C00DDC2EA /* ShopCart(购物车) */,
 				0111B9D11C03534800DDC2EA /* AllGoods(所有商品) */,
@@ -536,6 +560,32 @@
 			);
 			name = "Main(主要)";
 			path = Main;
+			sourceTree = "<group>";
+		};
+		01B7AC6F1C23E5CE00D09565 /* SearchViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				01B7AC701C23E62700D09565 /* HistoryTableViewCell.h */,
+				01B7AC711C23E62700D09565 /* HistoryTableViewCell.m */,
+				01B7AC721C23E62700D09565 /* HistoryTableViewCell.xib */,
+				01B7AC731C23E62700D09565 /* HWSearchBar.h */,
+				01B7AC741C23E62700D09565 /* HWSearchBar.m */,
+				01B7AC751C23E62700D09565 /* UIView+Extension.h */,
+				01B7AC761C23E62700D09565 /* UIView+Extension.m */,
+			);
+			path = SearchViewModel;
+			sourceTree = "<group>";
+		};
+		01B7AC7B1C23EFE200D09565 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				01B7AC7C1C23F01300D09565 /* DB.h */,
+				01B7AC7D1C23F01300D09565 /* DB.m */,
+				01B7AC7E1C23F01300D09565 /* HistoryClass.h */,
+				01B7AC7F1C23F01300D09565 /* HistoryClass.m */,
+				01B7AC801C23F01300D09565 /* HITORY.sqlite */,
+			);
+			path = DataBase;
 			sourceTree = "<group>";
 		};
 		01D341911C029C9C000A32A1 = {
@@ -580,6 +630,7 @@
 		7D2111B123D9A253A3763C4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				01B7AC841C23F5EA00D09565 /* libsqlite3.0.tbd */,
 				D5EDE4F39F0C4F8145C3E8A5 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -686,6 +737,7 @@
 				01652BC01C19CFBD00310880 /* IMG_0077.PNG in Resources */,
 				01F876A21C22937300FF0801 /* 12345.png in Resources */,
 				015B58BD1C215D4E008EF7A1 /* IMG_0115.PNG in Resources */,
+				01B7AC831C23F01300D09565 /* HITORY.sqlite in Resources */,
 				018A08AE1C1BECB1009C6BAD /* IMG_0088.PNG in Resources */,
 				014A07731C148EE000EEBD78 /* 1.jpg in Resources */,
 				011E374F1C1E5F960032FB13 /* SelectCloudNumCell.xib in Resources */,
@@ -694,6 +746,7 @@
 				0126263C1C1AB98E00509985 /* IMG_0080.PNG in Resources */,
 				011E374A1C1E5DA30032FB13 /* IMG_0098.PNG in Resources */,
 				01F876981C22515500FF0801 /* IMG_0118.PNG in Resources */,
+				01B7AC781C23E62700D09565 /* HistoryTableViewCell.xib in Resources */,
 				018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -755,6 +808,7 @@
 			files = (
 				01F876A01C22857000FF0801 /* SearchWordController.m in Sources */,
 				018628201C21B75B003C9C21 /* ShareOrderDetailController.m in Sources */,
+				01B7AC7A1C23E62700D09565 /* UIView+Extension.m in Sources */,
 				011E37521C1E64830032FB13 /* SelectCloudNumController.m in Sources */,
 				01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */,
 				01D3419F1C029C9C000A32A1 /* main.m in Sources */,
@@ -775,6 +829,7 @@
 				015B58B91C213E83008EF7A1 /* GoodsSortCell.m in Sources */,
 				0126264A1C1ACE9900509985 /* DetailController.m in Sources */,
 				012626441C1AC2AF00509985 /* CloudRecordController.m in Sources */,
+				01B7AC811C23F01300D09565 /* DB.m in Sources */,
 				014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */,
 				01747E101C1D6BA60051086C /* InAnnounceController.m in Sources */,
 				0111B9F51C03550F00DDC2EA /* AllGoodsController.m in Sources */,
@@ -785,11 +840,14 @@
 				019E09721C173C730022593A /* NewGoodsCell.m in Sources */,
 				01F8769C1C226A3E00FF0801 /* SearchWordCell.m in Sources */,
 				0111BA231C0372D700DDC2EA /* MainTabBarController.m in Sources */,
+				01B7AC771C23E62700D09565 /* HistoryTableViewCell.m in Sources */,
 				019E096A1C17342A0022593A /* AnnNavController.m in Sources */,
 				01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */,
 				0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */,
 				012626471C1AC39600509985 /* MyCloudRecordController.m in Sources */,
+				01B7AC791C23E62700D09565 /* HWSearchBar.m in Sources */,
 				01747E0D1C1D68660051086C /* CloudNumberController.m in Sources */,
+				01B7AC821C23F01300D09565 /* HistoryClass.m in Sources */,
 				018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */,
 				011E374E1C1E5F960032FB13 /* SelectCloudNumCell.m in Sources */,
 				0111B9E31C03543F00DDC2EA /* PersonalController.m in Sources */,
