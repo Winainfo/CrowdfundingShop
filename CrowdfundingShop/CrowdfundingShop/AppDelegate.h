@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#define UmengAppkey @"5678b900e0f55a807e00388d"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

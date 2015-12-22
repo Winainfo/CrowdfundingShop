@@ -9,6 +9,7 @@
 #import "AnnounceController.h"
 #import "NewGoodsCell.h"
 #import "GoodsCategoryCell.h"
+#import "DetailController.h"
 @interface AnnounceController ()<UITableViewDataSource,UITableViewDelegate>
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -137,6 +138,11 @@
         self.categoryTableView.hidden=YES;
         self.myTableView.hidden=NO;
         _flag=NO;
+    }else{
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+        [self.navigationController pushViewController:detailController animated:YES];
     }
 }
 /**

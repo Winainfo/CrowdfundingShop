@@ -43,5 +43,12 @@
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
+/**
+ *  分享
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)shareClick:(UIButton *)sender {
+}
 
 @end

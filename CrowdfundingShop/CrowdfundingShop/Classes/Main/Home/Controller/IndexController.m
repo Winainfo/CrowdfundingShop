@@ -9,6 +9,8 @@
 #import "IndexController.h"
 #import "PopularGoodsCell.h"
 #import "goodsViewCell.h"
+#import "AppDelegate.h"
+#import "DetailController.h"
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
@@ -37,17 +39,10 @@
 - (void)viewDidLoad {
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Menlo" size:16.0],NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.title=@"一元云购";
+    self.title=@"欢乐夺宝";
     CGRect table=self.mytableView.frame;
     table.size.height=800;
     self.mytableView.frame=table;
-//    //导航栏右侧按钮
-//    UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
-//    [rightBtn setImage:[UIImage imageNamed:@"iconfont-search"] forState:UIControlStateNormal];
-//    rightBtn.frame=CGRectMake(-5, 5, 30, 30);
-//    [rightBtn addTarget:self action:@selector(searchClick) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *right=[[UIBarButtonItem alloc]initWithCustomView:rightBtn];
-//    self.navigationItem.rightBarButtonItem=right;
     //注册Cell
     [self.myCollectionView registerClass:[PopularGoodsCell class] forCellWithReuseIdentifier:@"PopularGoodsCell"];
     //即将揭晓
@@ -114,9 +109,24 @@
 {
     return UIEdgeInsetsMake(0,0,0,0);
 }
-
-
-//图片滚动
+/**
+ *  点击时间
+ *
+ *  @param collectionView <#collectionView description#>
+ *  @param indexPath      <#indexPath description#>
+ */
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
+    //设置故事板为第一启动
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+    [self.navigationController pushViewController:detailController animated:YES];
+}
+#pragma mark 图片滚动
+/**
+ *  图片滚动
+ *
+ *  @return <#return value description#>
+ */
 -(void)Carousel
 {
     //设置显示文本内容的大小
@@ -144,9 +154,6 @@
     int currentpage=(int)(self.myScrollView.contentOffset.x/kScreenWidth+1)%3;
     [self.myScrollView setContentOffset:CGPointMake(currentpage*kScreenWidth, 0)];//控制偏移量
 }
-
-
-
 /*设置标题头的宽度*/
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -233,4 +240,5 @@
     [self.btnView addSubview:self.moveView];//将视图添加到self.btnView上
     
 }
+
 @end

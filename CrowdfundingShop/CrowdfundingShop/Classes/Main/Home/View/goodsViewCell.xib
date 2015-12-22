@@ -126,6 +126,6 @@
     </objects>
     <resources>
         <image name="20150427091614458.jpg" width="200" height="200"/>
-        <image name="shopCat" width="16" height="16"/>
+        <image name="shopCat" width="32" height="32"/>
     </resources>
 </document>

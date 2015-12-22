@@ -10,6 +10,7 @@
 #import "AllGoodsCell.h"
 #import "GoodsCategoryCell.h"
 #import "GoodsSortCell.h"
+#import "DetailController.h"
 @interface AllGoodsController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (assign,nonatomic)BOOL flag;
@@ -228,6 +229,11 @@
         self.sortTableView.hidden=YES;
         self.myTableView.hidden=NO;
         _flag1=NO;
+    }else{
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+        [self.navigationController pushViewController:detailController animated:YES];
     }
 }
 
