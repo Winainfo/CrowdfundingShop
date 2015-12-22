@@ -1,14 +1,14 @@
 //
-//  PopularGoodsCell.m
+//  goodsViewCell.m
 //  CrowdfundingShop
 //
-//  Created by 吴金林 on 15/12/1.
+//  Created by 吴金林 on 15/12/20.
 //  Copyright © 2015年 吴金林. All rights reserved.
 //
 
-#import "PopularGoodsCell.h"
+#import "goodsViewCell.h"
 
-@implementation PopularGoodsCell
+@implementation goodsViewCell
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -16,8 +16,8 @@
     if (self)
     {
         // 初始化时加载collectionCell.xib文件
-        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"PopularGoodsCell" owner:self options:nil];
-
+        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"goodsViewCell" owner:self options:nil];
+        
         // 如果路径不存在，return nil
         if (arrayOfViews.count < 1)
         {
@@ -35,9 +35,7 @@
 }
 
 - (void)awakeFromNib {
-    /**设置圆角*/
-    self.timeLabel.layer.cornerRadius=8.0;
-    self.timeLabel.layer.masksToBounds=YES;
+    // Initialization code
 }
 
 @end

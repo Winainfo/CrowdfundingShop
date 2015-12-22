@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <UMSocial.h>
 @interface AppDelegate ()
 
 @end
@@ -15,11 +16,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//    //设置故事板为第一启动
-//    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    TabController *tabController=[storyboard instantiateViewControllerWithIdentifier:@"1yygTabBar"];
-//    HomeController *homeController=[storyboard instantiateViewControllerWithIdentifier:@"HomeView"];
-    
+    //设置友盟AppKey
+    [UMSocialData setAppKey:@"5678b900e0f55a807e00388d"];
     return YES;
 }
 

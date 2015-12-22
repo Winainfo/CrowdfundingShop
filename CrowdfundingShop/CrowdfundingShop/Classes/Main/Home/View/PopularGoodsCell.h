@@ -14,23 +14,12 @@
  */
 @property (weak, nonatomic) IBOutlet UIImageView *goodsImageView;
 /**
- *  价格
+ *  商品名字
  */
-@property (weak, nonatomic) IBOutlet ARLabel *priceLabel;
+@property (weak, nonatomic) IBOutlet ARLabel *goodsNameLabel;
 /**
- *  已参与
+ *  时间
  */
-@property (weak, nonatomic) IBOutlet ARLabel *peopleLabel1;
-/**
- *  总需人次
- */
-@property (weak, nonatomic) IBOutlet ARLabel *peopleLabel2;
-/**
- *  剩余人次
- */
-@property (weak, nonatomic) IBOutlet ARLabel *peopleLabel3;
-/**
- *  进度条
- */
-@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
+@property (weak, nonatomic) IBOutlet ARLabel *timeLabel;
+
 @end

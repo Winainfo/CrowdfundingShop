@@ -5,17 +5,20 @@ PODS:
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
+  - UMengSocial (4.4)
 
 DEPENDENCIES:
   - AFNetworking
   - EGOCache
   - MBProgressHUD
   - SDWebImage (~> 3.7)
+  - UMengSocial (~> 4.3)
 
 SPEC CHECKSUMS:
   AFNetworking: 560d6b9394bf2f80c1efac9141e0d36739e0ff6d
   EGOCache: f0295dbe041156acabd39021354ad1045ee49e72
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  UMengSocial: aba7296602310385114d82c255539a7bef3b7ab0
 
 COCOAPODS: 0.39.0

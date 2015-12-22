@@ -9,6 +9,7 @@
 #import "ShareOrderController.h"
 #import "ShareOrderCell.h"
 #import "GoodsSortCell.h"
+#import "ShareOrderDetailView.h"
 @interface ShareOrderController ()
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -151,6 +152,11 @@
         self.sortTableView.hidden=YES;
         self.myTableView.hidden=NO;
         _flag=NO;
+    }else{
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ShareOrderDetailView *shareOrderDetailView=[storyboard instantiateViewControllerWithIdentifier:@"ShareOrderDetailView"];
+        [self.navigationController pushViewController:shareOrderDetailView animated:YES];
     }
 }
 /**
