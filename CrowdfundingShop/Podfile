@@ -1,5 +1,4 @@
 platform :ios,'7.1'
-pod 'AFNetworking'
 pod 'MBProgressHUD'
 pod 'SDWebImage', '~>3.7'
 pod 'EGOCache'

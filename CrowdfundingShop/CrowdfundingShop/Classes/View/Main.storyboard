@@ -439,12 +439,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Trc-13-pTt">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <connections>
-                                    <segue destination="bkf-z4-m0j" kind="embed" id="Mt5-ac-eFq"/>
-                                </connections>
-                            </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d5U-Ax-tWg" userLabel="BottomView">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <subviews>
@@ -522,6 +516,12 @@
                                     <constraint firstItem="vhS-md-KF1" firstAttribute="centerY" secondItem="DrL-9g-qmT" secondAttribute="centerY" id="zaz-kL-iOn"/>
                                 </constraints>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Trc-13-pTt">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <connections>
+                                    <segue destination="bkf-z4-m0j" kind="embed" id="Mt5-ac-eFq"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -2014,7 +2014,7 @@
                                                         <constraint firstAttribute="width" constant="39" id="o77-nq-faH"/>
                                                     </constraints>
                                                     <color key="pageIndicatorTintColor" red="0.74117647060000003" green="0.74117647060000003" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="currentPageIndicatorTintColor" red="0.27058823529411763" green="0.66666666666666663" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="currentPageIndicatorTintColor" red="1" green="0.20000000000000001" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 </pageControl>
                                             </subviews>
                                             <constraints>
@@ -2063,6 +2063,9 @@
                                                     <rect key="frame" x="175" y="5" width="50" height="50"/>
                                                     <state key="normal" backgroundImage="homepage_record_unselect"/>
                                                     <state key="selected" backgroundImage="homepage_record_select"/>
+                                                    <connections>
+                                                        <action selector="clickBtn:" destination="2RH-fH-aks" eventType="touchUpInside" id="hFp-tM-hju"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="云购记录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qyN-1E-4xO" customClass="ARLabel">
                                                     <rect key="frame" x="180" y="55" width="40" height="17"/>
@@ -4469,8 +4472,8 @@
         <image name="零食天地" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="khB-jX-qBn"/>
-        <segue reference="TXV-66-Gy7"/>
+        <segue reference="bKk-DI-Wea"/>
         <segue reference="8CL-Dy-9ea"/>
+        <segue reference="TXV-66-Gy7"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>AFNetworking.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>EGOCache.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,17 +27,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>19CCE699875C1536FF941F83D792CA33</key>
+		<key>4FCBEDF74A294270DA63FEEC77148A33</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3165B85B1C4B742CE455B2802F103DDA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>36AA67F977B2068A8EBA7189D29652C8</key>
+		<key>6B27C193DFF23B268C8CEFA79BAC3A83</key>
 		<dict>
 			<key>primary</key>
 			<true/>

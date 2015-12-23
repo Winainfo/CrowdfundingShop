@@ -11,6 +11,8 @@
 #import "goodsViewCell.h"
 #import "AppDelegate.h"
 #import "DetailController.h"
+#import "RequestData.h"
+#import <UIImageView+WebCache.h>
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
@@ -32,6 +34,10 @@
 
 @property(retain,nonatomic)UIView *btnView;
 @property(retain,nonatomic)UIView *moveView;
+
+//滚动广告图片的tag值
+@property (retain,nonatomic) NSMutableArray *scrollImageTags;
+@property (retain,nonatomic) NSArray *imageArray;
 @end
 
 @implementation IndexController
@@ -51,13 +57,125 @@
     [self.groomCollectionView registerClass:[goodsViewCell class] forCellWithReuseIdentifier:@"goodsViewCell"];
     //限购专区
     [self.limitCollectionView registerClass:[goodsViewCell class] forCellWithReuseIdentifier:@"goodsViewCell"];
-    //添加代理
+    //代理
     self.myScrollView.delegate=self;
     //页面控制的当前页
     self.myPageControl.currentPage = 0;
     //滚动视图
-    [self Carousel];
+    [self scrollViewAdv];
 
+}
+#pragma mark 图片滚动
+/**
+ *  请求数据
+ */
+-(void)scrollViewAdv
+{
+    //获取首页广告图片数组
+    NSDictionary *prama = [NSDictionary dictionaryWithObjectsAndKeys: nil];
+    [RequestData slides:prama FinishCallbackBlock:^(NSDictionary * data) {
+        self.imageArray=data[@"listItems"];
+        //设置滚动视图的包含的视图大小和图片
+        [self scrollViewWithFrame:self.myScrollView.frame andImages:self.imageArray];
+        //设置定时滚动
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(scrollAdView) userInfo:nil repeats:YES];
+    }];
+}
+
+-(void)scrollViewWithFrame:(CGRect)frame andImages:(NSArray *)images
+{
+    self.myScrollView.showsHorizontalScrollIndicator = NO;
+    self.myScrollView.showsVerticalScrollIndicator = NO;
+    self.myScrollView.pagingEnabled = YES;
+    //不显示边框外视图
+    self.myScrollView.bounces= NO;
+    self.myScrollView.contentSize = CGSizeMake(self.myScrollView.frame.size.width*images.count, self.myScrollView.frame.size.height);
+    self.myPageControl.numberOfPages = images.count;
+    //为滚动视图添加图片
+    for (int i=0; i<images.count; i++) {
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"%@",images[i][@"src"]];
+//        //获取图片的ID存入tag值数组
+//        [self.scrollImageTags addObject:images[i][@"id"]];
+        
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(i*frame.size.width, 0, frame.size.width, frame.size.height)];
+        [imageV sd_setImageWithURL:imgUrl];
+        [self.myScrollView addSubview:imageV];
+        
+        //为图片添加Tag值
+        imageV.tag = (int)([self.scrollImageTags[i] intValue]+100);
+        imageV.userInteractionEnabled = YES;
+        UITapGestureRecognizer *scrollTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(scrollViewClick)];
+        [imageV addGestureRecognizer:scrollTap];
+        
+        
+    }
+}
+
+//定时器自动滚动广告
+- (void)scrollAdView
+{
+    int currentNum=(self.myScrollView.contentOffset.x/self.myScrollView.frame.size.width+1);
+    if (currentNum == self.imageArray.count) {
+        currentNum = 0;
+    }
+    self.myScrollView.contentOffset=CGPointMake(self.myScrollView.frame.size.width*currentNum,0);
+    self.myPageControl.currentPage = currentNum;
+    
+}
+
+#pragma mark 手动拖动的代理
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    int page = scrollView.contentOffset.x/self.myScrollView.frame.size.width;
+    self.myPageControl.currentPage=page;
+}
+
+/**
+ *  图片滚动
+ *
+ *  @return <#return value description#>
+ */
+-(void)Carousel
+{
+    //设置显示文本内容的大小
+    self.myScrollView.contentSize=CGSizeMake(kScreenWidth*3, 150);
+    //添加要显示的图片
+    for(int i=1;i<4;i++)
+    {
+        UIImageView *imgv=[[UIImageView alloc]initWithFrame:CGRectMake((i-1)*kScreenWidth, 0,kScreenWidth, 150)];
+        imgv.image=[UIImage imageNamed:[NSString stringWithFormat:@"1.jpg"]];
+        self.myScrollView.pagingEnabled=YES;
+        self.myScrollView.showsVerticalScrollIndicator=NO;
+        self.myScrollView.showsHorizontalScrollIndicator=NO;
+        //添加到滚动视图
+        [self.myScrollView addSubview:imgv];
+        
+    }
+    [self.view addSubview:self.myScrollView];
+    //创建定时器对象
+    self.time=[NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(gun:) userInfo:nil repeats:YES];
+}
+
+/**
+ *  横幅滚动
+ *
+ *  @param sender <#sender description#>
+ */
+-(void)gun:(id)sender{
+    self.myPageControl.currentPage=self.myScrollView.contentOffset.x/kScreenWidth;//获取当前页
+    int currentpage=(int)(self.myScrollView.contentOffset.x/kScreenWidth+1)%3;
+    [self.myScrollView setContentOffset:CGPointMake(currentpage*kScreenWidth, 0)];//控制偏移量
+}
+
+
+/**
+ *  点击滚动视图图片进入详情页
+ */
+-(void)scrollViewClick
+{
 }
 
 #pragma mark 实现代理方法
@@ -110,7 +228,7 @@
     return UIEdgeInsetsMake(0,0,0,0);
 }
 /**
- *  点击时间
+ *  点击事件
  *
  *  @param collectionView <#collectionView description#>
  *  @param indexPath      <#indexPath description#>
@@ -121,39 +239,8 @@
     DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
     [self.navigationController pushViewController:detailController animated:YES];
 }
-#pragma mark 图片滚动
-/**
- *  图片滚动
- *
- *  @return <#return value description#>
- */
--(void)Carousel
-{
-    //设置显示文本内容的大小
-    self.myScrollView.contentSize=CGSizeMake(kScreenWidth*3, 150);
-    //添加要显示的图片
-    for(int i=1;i<4;i++)
-    {
-        UIImageView *imgv=[[UIImageView alloc]initWithFrame:CGRectMake((i-1)*kScreenWidth, 0,kScreenWidth, 150)];
-        imgv.image=[UIImage imageNamed:[NSString stringWithFormat:@"1.jpg"]];
-        self.myScrollView.pagingEnabled=YES;
-        self.myScrollView.showsVerticalScrollIndicator=NO;
-        self.myScrollView.showsHorizontalScrollIndicator=NO;
-        //添加到滚动视图
-        [self.myScrollView addSubview:imgv];
-        
-    }
-    [self.view addSubview:self.myScrollView];
-    //创建定时器对象
-    self.time=[NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(gun:) userInfo:nil repeats:YES];
-}
 
-//横幅滚动
--(void)gun:(id)sender{
-    self.myPageControl.currentPage=self.myScrollView.contentOffset.x/kScreenWidth;//获取当前页
-    int currentpage=(int)(self.myScrollView.contentOffset.x/kScreenWidth+1)%3;
-    [self.myScrollView setContentOffset:CGPointMake(currentpage*kScreenWidth, 0)];//控制偏移量
-}
+#pragma mark 表头
 /*设置标题头的宽度*/
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -239,6 +326,12 @@
     
     [self.btnView addSubview:self.moveView];//将视图添加到self.btnView上
     
+}
+- (IBAction)clickBtn:(id)sender {
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"13827777608",@"user",@"123456",@"password", nil];
+    [RequestData lgin:params FinishCallbackBlock:^(NSDictionary *data) {
+        NSLog(@"-----%@",data);
+    }];
 }
 
 @end
