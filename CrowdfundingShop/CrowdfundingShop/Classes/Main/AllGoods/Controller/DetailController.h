@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailController : UIViewController
-
+/**商品ID*/
+@property (retain,nonatomic) NSString *goodsID;
 @end

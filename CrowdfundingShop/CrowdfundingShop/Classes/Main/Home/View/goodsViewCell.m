@@ -35,7 +35,8 @@
 }
 
 - (void)awakeFromNib {
-    // Initialization code
+    //更改进度条高度
+    self.progressView.transform=CGAffineTransformMakeScale(1.0f, 2.0f);
 }
 
 @end

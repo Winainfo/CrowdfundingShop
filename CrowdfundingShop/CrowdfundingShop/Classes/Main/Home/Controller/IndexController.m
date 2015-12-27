@@ -23,8 +23,12 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
 /**即将揭晓*/
 @property (weak, nonatomic) IBOutlet UICollectionView *goodsCollectionView;
+/**即将揭晓数组*/
+@property (retain,nonatomic) NSArray *revealedArray;
 /**人气推荐*/
 @property (weak, nonatomic) IBOutlet UICollectionView *groomCollectionView;
+/**人气推荐数组*/
+@property (retain,nonatomic) NSArray *groomArray;
 /**限购专区*/
 @property (weak, nonatomic) IBOutlet UICollectionView *limitCollectionView;
 
@@ -63,8 +67,43 @@
     self.myPageControl.currentPage = 0;
     //滚动视图
     [self scrollViewAdv];
-
+    //即将揭晓数据请求
+    [self requestData:@"1" andpageSize:@"8"];
+    //人气推荐数据请求
+    [self requestHotData:@"1" andpageSize:@"8"];
 }
+
+#pragma mark 数据请求
+/**
+ *  请求即将揭晓商品
+ */
+-(void)requestData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData beginRevealed:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.revealedArray=data[@"content"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.goodsCollectionView reloadData];
+        });
+    }];
+}
+/**
+ *  请求人气商品
+ *
+ *  @param pageindex 当前页
+ *  @param pagesize  当前有几条
+ */
+-(void)requestHotData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData hotGoods:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.groomArray=data[@"content"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.groomCollectionView reloadData];
+        });
+    }];
+}
+
 #pragma mark 图片滚动
 /**
  *  请求数据
@@ -74,7 +113,7 @@
     //获取首页广告图片数组
     NSDictionary *prama = [NSDictionary dictionaryWithObjectsAndKeys: nil];
     [RequestData slides:prama FinishCallbackBlock:^(NSDictionary * data) {
-        self.imageArray=data[@"listItems"];
+        self.imageArray=data[@"content"][@"listItems"];
         //设置滚动视图的包含的视图大小和图片
         [self scrollViewWithFrame:self.myScrollView.frame andImages:self.imageArray];
         //设置定时滚动
@@ -185,11 +224,11 @@
     if(collectionView==self.myCollectionView){
         return 6;
     }else if(collectionView==self.groomCollectionView){ //人气推荐
-        return 4;
+        return self.groomArray.count;
     } else if(collectionView==self.limitCollectionView){ //限购专区
         return 2;
     }else{
-        return 6;
+        return self.revealedArray.count; //即将揭晓
     }
     
 }
@@ -202,9 +241,45 @@
         return cell;
     }else if(collectionView==self.goodsCollectionView){ //即将揭晓
         goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
+        /**商品名称*/
+        cell.goodsTitle.text=self.revealedArray[indexPath.row][@"title"];
+        /**总人数*/
+        cell.numLabel1.text=self.revealedArray[indexPath.row][@"zongrenshu"];
+        /**参与人数*/
+        cell.numLabel2.text=self.revealedArray[indexPath.row][@"shenyurenshu"];
+        /**商品id*/
+        cell.goodsID.text=self.revealedArray[indexPath.row][@"id"];
+        /**商品图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"http://www.god-store.com/statics/uploads/%@",self.revealedArray[indexPath.row][@"thumb"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [cell.goodsImageView sd_setImageWithURL:imgUrl];
+        /**进度条*/
+        float curreNum=[self.revealedArray[indexPath.row][@"canyurenshu"] floatValue];
+        float countNum=[self.revealedArray[indexPath.row][@"zongrenshu"] floatValue];
+        cell.progressView.progress=curreNum/countNum;
         return cell;
     }else if(collectionView==self.groomCollectionView){//人气推荐
         goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
+        /**商品名称*/
+        cell.goodsTitle.text=self.groomArray[indexPath.row][@"title"];
+        /**总人数*/
+        cell.numLabel1.text=self.groomArray[indexPath.row][@"zongrenshu"];
+        /**参与人数*/
+        cell.numLabel2.text=self.groomArray[indexPath.row][@"shenyurenshu"];
+        /**商品id*/
+        cell.goodsID.text=self.groomArray[indexPath.row][@"id"];
+        /**商品图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"http://www.god-store.com/statics/uploads/%@",self.groomArray[indexPath.row][@"thumb"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [cell.goodsImageView sd_setImageWithURL:imgUrl];
+        /**进度条*/
+        float curreNum=[self.groomArray[indexPath.row][@"canyurenshu"] floatValue];
+        float countNum=[self.groomArray[indexPath.row][@"zongrenshu"] floatValue];
+        cell.progressView.progress=curreNum/countNum;
         return cell;
     }else if(collectionView==self.limitCollectionView){//限购专区
         goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
@@ -234,10 +309,31 @@
  *  @param indexPath      <#indexPath description#>
  */
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
-    //设置故事板为第一启动
-    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
-    [self.navigationController pushViewController:detailController animated:YES];
+    if (collectionView==self.myCollectionView) {
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+        detailController.goodsID=@"21";
+        [self.navigationController pushViewController:detailController animated:YES];
+    }else if(collectionView==self.goodsCollectionView){ //即将揭晓
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+        detailController.goodsID=self.revealedArray[indexPath.row][@"id"];
+        [self.navigationController pushViewController:detailController animated:YES];
+    }else if(collectionView==self.groomCollectionView){//人气推荐
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+        detailController.goodsID=self.groomArray[indexPath.row][@"id"];
+        [self.navigationController pushViewController:detailController animated:YES];
+    }else if(collectionView==self.limitCollectionView){//限购专区
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+        detailController.goodsID=@"21";
+        [self.navigationController pushViewController:detailController animated:YES];
+    }
 }
 
 #pragma mark 表头

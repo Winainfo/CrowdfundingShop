@@ -40,4 +40,8 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
+/**商品ID*/
+@property (retain,nonatomic) NSString *gID;
+@property (retain,nonatomic) NSString *type;
+
 @end

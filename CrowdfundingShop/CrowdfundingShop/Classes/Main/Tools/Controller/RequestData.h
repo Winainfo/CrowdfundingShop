@@ -30,4 +30,32 @@
  *  @param block 返回块值
  */
 +(void)slides:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+/**
+ *   所有商品
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)allGoods:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+/**
+ *   即将揭晓
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)beginRevealed:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+/**
+ *   人气商品
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)hotGoods:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+/**
+ *   商品详情
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)goodsDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
 @end

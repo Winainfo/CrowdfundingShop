@@ -1,30 +1,34 @@
 //
-//  DetailController.m
+//  BalanceController.m
 //  CrowdfundingShop
-//
-//  Created by 吴金林 on 15/12/11.
+//  结算
+//  Created by 吴金林 on 15/12/28.
 //  Copyright © 2015年 吴金林. All rights reserved.
 //
 
-#import "DetailController.h"
+#import "BalanceController.h"
 
-@interface DetailController ()
-/**立即购买*/
-@property (weak, nonatomic) IBOutlet UIButton *buyGoodsBtn;
-/**添加购物车*/
-@property (weak, nonatomic) IBOutlet UIButton *addCarBtn;
-/**进行中*/
-@property (weak, nonatomic) IBOutlet UIButton *runGoodsBtn;
+@interface BalanceController ()
+/**结算按钮*/
+@property (weak, nonatomic) IBOutlet UIButton *balanceBtn;
 
 @end
 
-@implementation DetailController
-
+@implementation BalanceController
+//隐藏和显示底部标签栏
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Menlo" size:16.0],NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.title=@"商品详情";
+    self.title=@"结算";
     //导航栏左侧按钮
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setImage:[UIImage imageNamed:@"navbar_back"] forState:UIControlStateNormal];
@@ -33,29 +37,13 @@
     [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *left=[[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem=left;
-    //设置圆角
-    self.buyGoodsBtn.layer.cornerRadius=4.0;
-    self.addCarBtn.layer.cornerRadius=4.0;
-    self.runGoodsBtn.layer.cornerRadius=4.0;
+    /**设置圆角*/
+    self.balanceBtn.layer.cornerRadius=4.0;
+    self.balanceBtn.layer.masksToBounds=YES;
 }
-
 //返回
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-/**
- *  该方法在视图跳转时被触发
- *
- *  @param segue  <#segue description#>
- *  @param sender <#sender description#>
- */
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"goodsDetail"]) {
-        id theSegue=segue.destinationViewController;
-        [theSegue setValue:self.goodsID forKey:@"gID"];
-        [theSegue setValue:@"123" forKey:@"type"];
-    }
-}
 @end

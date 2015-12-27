@@ -8,6 +8,8 @@
 
 #import "GoodsDetailController.h"
 #import "UITabBarController+ShowHideBar.h"
+#import "RequestData.h"
+#import <UIImageView+WebCache.h>
 @interface GoodsDetailController ()
 /**所有云购记录*/
 @property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell1;
@@ -15,24 +17,19 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell2;
 /**商品晒单*/
 @property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell3;
+
 @end
 
 @implementation GoodsDetailController
 //隐藏和显示底部标签栏
 -(void)viewWillAppear:(BOOL)animated
 {
-
-//    self.tableViewCell1.selectionStyle=UITableViewCellSelectionStyleDefault;
-//     self.tableViewCell2.selectionStyle=UITableViewCellSelectionStyleDefault;
-//     self.tableViewCell3.selectionStyle=UITableViewCellSelectionStyleDefault;
     self.tabBarController.tabBar.hidden = YES;
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     
     self.tableViewCell1.selectionStyle=UITableViewCellSelectionStyleNone;
-//    self.tableViewCell2.selectionStyle=UITableViewCellSelectionStyleNone;
-//    self.tableViewCell3.selectionStyle=UITableViewCellSelectionStyleNone;
     self.tabBarController.tabBar.hidden = NO;
 }
 
@@ -49,73 +46,42 @@
     /**头像圆角*/
     self.peopleImageView.layer.cornerRadius=30.0;
     self.peopleImageView.layer.masksToBounds=YES;
-    
-
-
+    NSLog(@"传过来的id:%@,%@",self.gID,self.type);
+    /**数据请求*/
+    [self requestData:self.gID];
 }
+#pragma mark 数据请求
+/**
+ *  商品详情
+ *
+ *  @param goodsId <#goodsId description#>
+ */
+-(void)requestData:(NSString *)goodsId{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:goodsId,@"goodsId",nil];
+    [RequestData goodsDetail:params FinishCallbackBlock:^(NSDictionary *data) {
+//        NSLog(@"%@",data[@"content"]);
+        /**商品名字*/
+        self.goodsNameLabel.text=data[@"content"][@"title"];
+        /**商品描述*/
+        self.goodsDescLabel.text=data[@"content"][@"title2"];
+        /**参与人次*/
+        self.goodsLabel1.text=data[@"content"][@"canyurenshu"];
+        /**总需人次*/
+        self.goodsLabel2.text=data[@"content"][@"zongrenshu"];
+        /**剩余人次*/
+        self.goodsLabel3.text=data[@"content"][@"shenyurenshu"];
+        /**商品图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"http://www.god-store.com/statics/uploads/%@",data[@"content"][@"thumb"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [self.goodsImageView sd_setImageWithURL:imgUrl];
+        /**进度条*/
+        float curreNum=[data[@"content"][@"canyurenshu"] floatValue];
+        float countNum=[data[@"content"][@"zongrenshu"] floatValue];
+        self.goodsProgressView.progress=curreNum/countNum;
 
-/*
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 0;
+    }];
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
