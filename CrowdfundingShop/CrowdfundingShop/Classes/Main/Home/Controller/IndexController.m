@@ -113,7 +113,7 @@
     //获取首页广告图片数组
     NSDictionary *prama = [NSDictionary dictionaryWithObjectsAndKeys: nil];
     [RequestData slides:prama FinishCallbackBlock:^(NSDictionary * data) {
-        self.imageArray=data[@"content"][@"listItems"];
+        self.imageArray=data[@"content"];
         //设置滚动视图的包含的视图大小和图片
         [self scrollViewWithFrame:self.myScrollView.frame andImages:self.imageArray];
         //设置定时滚动
