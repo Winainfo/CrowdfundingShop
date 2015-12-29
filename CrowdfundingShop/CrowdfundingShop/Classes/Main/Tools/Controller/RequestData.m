@@ -152,6 +152,27 @@
     }];
 }
 /**
+ *   最新揭晓
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)newAnnounced:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSLog(@"%@",params);
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/get_lottery_list/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"最新揭晓商品请求成功-----%@",responseObject);
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"最新揭晓商品请求失败-%@",error);
+    }];
+}
+/**
  *  商品详情
  *
  *  @param data  <#data description#>

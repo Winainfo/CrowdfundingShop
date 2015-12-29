@@ -224,8 +224,7 @@
  *  @param tableView <#tableView description#>
  *  @param indexPath <#indexPath description#>
  */
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(tableView==self.categoryTableView){
         //取出上次出现的 checkmark 的所在行
         GoodsCategoryCell *cellLast = [tableView cellForRowAtIndexPath:_lastIndexPath];

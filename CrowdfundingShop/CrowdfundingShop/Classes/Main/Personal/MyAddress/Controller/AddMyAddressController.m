@@ -1,25 +1,26 @@
 //
-//  Register1Controller.m
+//  AddMyAddressController.m
 //  CrowdfundingShop
 //
-//  Created by 吴金林 on 15/12/29.
+//  Created by 吴金林 on 15/12/30.
 //  Copyright © 2015年 吴金林. All rights reserved.
 //
 
-#import "Register1Controller.h"
+#import "AddMyAddressController.h"
 
-@interface Register1Controller ()
+@interface AddMyAddressController ()
+@property (weak, nonatomic) IBOutlet UIButton *setBtn;
 @property (assign,nonatomic) BOOL flag;
 @end
 
-@implementation Register1Controller
+@implementation AddMyAddressController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Menlo" size:16.0],NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.title=@"注册";
-    //导航栏右侧按钮
+    self.title=@"添加收货地址";
+    //导航栏左侧按钮
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setImage:[UIImage imageNamed:@"navbar_back"] forState:UIControlStateNormal];
     [leftBtn setImage:[UIImage imageNamed:@"navbar_back"] forState:UIControlStateSelected];
@@ -27,29 +28,31 @@
     [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *left=[[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem=left;
-    /**圆角*/
-    self.nextBtn.layer.cornerRadius=2.0;
-    self.nextBtn.layer.masksToBounds=YES;
+    //导航栏右侧按钮
+    UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeSystem];
+    rightBtn.frame=CGRectMake(-5, 5, 30, 30);
+    [rightBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    UIBarButtonItem *right=[[UIBarButtonItem alloc]initWithCustomView:rightBtn];
+    self.navigationItem.rightBarButtonItem=right;
 }
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-- (IBAction)selectClick:(UIButton *)sender {
+/**
+ *  设为默认地址
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)setClick:(UIButton *)sender {
     UIButton *btn = (UIButton *)sender;
     switch (btn.tag) {
         case 100:
             if (_flag) {
-                [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"login_protocal_select"] forState:UIControlStateNormal];
-                self.nextBtn.backgroundColor=[UIColor colorWithRed:220.0/255.0 green:50.0/255.0 blue:84.0/255.0 alpha:1];
-                [self.nextBtn.titleLabel setTextColor:[UIColor whiteColor]];
-                self.nextBtn.userInteractionEnabled=YES;
+                [self.setBtn setBackgroundImage:[UIImage imageNamed:@"address_default_select"] forState:UIControlStateNormal];
                 _flag=NO;
             }else{
-                [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"login_protocal_unselect"] forState:UIControlStateNormal];
-                self.nextBtn.backgroundColor=[UIColor colorWithRed:238.0/255.0 green:238.0/255.0 blue:238.0/255.0 alpha:1];
-                [self.nextBtn.titleLabel setTextColor:[UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1]];
-                self.nextBtn.userInteractionEnabled=NO;
+                [self.setBtn setBackgroundImage:[UIImage imageNamed:@"address_default_unselect"] forState:UIControlStateNormal];
                 _flag=YES;
             }
             break;
@@ -57,7 +60,6 @@
         default:
             break;
     }
-
 }
 
 @end

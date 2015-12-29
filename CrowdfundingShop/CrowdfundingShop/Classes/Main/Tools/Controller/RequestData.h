@@ -58,4 +58,11 @@
  *  @param block 返回块值
  */
 +(void)goodsDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+/**
+ *   最新揭晓
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)newAnnounced:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
 @end

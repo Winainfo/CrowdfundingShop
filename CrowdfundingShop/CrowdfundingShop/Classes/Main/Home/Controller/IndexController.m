@@ -20,7 +20,10 @@
 @property (strong, nonatomic) IBOutlet UITableView *mytableView;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *noticeCell;//公告
+/**最新揭晓*/
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
+/**最新揭晓数组*/
+@property (retain,nonatomic) NSArray *announcedArray;
 /**即将揭晓*/
 @property (weak, nonatomic) IBOutlet UICollectionView *goodsCollectionView;
 /**即将揭晓数组*/
@@ -71,6 +74,8 @@
     [self requestData:@"1" andpageSize:@"8"];
     //人气推荐数据请求
     [self requestHotData:@"1" andpageSize:@"8"];
+    //最新揭晓数据请求
+    [self requestAnnouncedData:@"1" andpageSize:@"6"];
 }
 
 #pragma mark 数据请求
@@ -100,6 +105,22 @@
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.groomCollectionView reloadData];
+        });
+    }];
+}
+/**
+ *  请求最新揭晓商品
+ *
+ *  @param pageindex 当前页
+ *  @param pagesize  当前有几条
+ */
+-(void)requestAnnouncedData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData newAnnounced:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.announcedArray=data[@"content"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myCollectionView reloadData];
         });
     }];
 }
@@ -222,7 +243,7 @@
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if(collectionView==self.myCollectionView){
-        return 6;
+        return self.announcedArray.count;
     }else if(collectionView==self.groomCollectionView){ //人气推荐
         return self.groomArray.count;
     } else if(collectionView==self.limitCollectionView){ //限购专区
@@ -238,6 +259,14 @@
     
     if (collectionView==self.myCollectionView) {
         PopularGoodsCell *cell = (PopularGoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PopularGoodsCell" forIndexPath:indexPath];
+        /**商品名字*/
+        cell.goodsNameLabel.text=self.announcedArray[indexPath.row][@"title"];
+        /**商品图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"http://www.god-store.com/statics/uploads/%@",self.announcedArray[indexPath.row][@"thumb"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [cell.goodsImageView sd_setImageWithURL:imgUrl];
         return cell;
     }else if(collectionView==self.goodsCollectionView){ //即将揭晓
         goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
