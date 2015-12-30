@@ -160,7 +160,7 @@
         
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
-        UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(i*frame.size.width, 0, frame.size.width, frame.size.height)];
+        UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(i*frame.size.width, 0, kScreenWidth, frame.size.height)];
         [imageV sd_setImageWithURL:imgUrl];
         [self.myScrollView addSubview:imageV];
         
