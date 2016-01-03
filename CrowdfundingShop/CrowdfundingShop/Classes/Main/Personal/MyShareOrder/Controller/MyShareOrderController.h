@@ -1,5 +1,5 @@
 //
-//  ConsumeController.h
+//  MyShareOrderController.h
 //  CrowdfundingShop
 //
 //  Created by 吴金林 on 15/12/30.
@@ -7,5 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface ConsumeController : UIViewController
+
+@interface MyShareOrderController : UIViewController
+
 @end

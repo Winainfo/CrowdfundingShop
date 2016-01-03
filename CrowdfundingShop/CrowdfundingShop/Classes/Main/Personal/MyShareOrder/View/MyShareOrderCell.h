@@ -1,5 +1,5 @@
 //
-//  AccessGoodsCell.h
+//  MyShareOrderCell.h
 //  CrowdfundingShop
 //
 //  Created by 吴金林 on 15/12/30.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ARLabel.h"
-@interface AccessGoodsCell : UITableViewCell
+@interface MyShareOrderCell : UITableViewCell
 /**商品图片*/
 @property (weak, nonatomic) IBOutlet UIImageView *goodsImageView;
 /**商品标题*/

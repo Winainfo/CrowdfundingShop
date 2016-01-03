@@ -72,11 +72,27 @@
 		01782B721C05EF850028768F /* PerTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B711C05EF850028768F /* PerTableController.m */; };
 		017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F6BE01C02BE050040385A /* Plug_Controller.m */; };
 		017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 017F6BE21C02BE2D0040385A /* Main.storyboard */; };
+		017FA8011C33D26300B4AA6F /* MyShareOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FA8001C33D26300B4AA6F /* MyShareOrderController.m */; };
+		017FA8051C33D27700B4AA6F /* MyShareOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FA8031C33D27700B4AA6F /* MyShareOrderCell.m */; };
+		017FA8061C33D27700B4AA6F /* MyShareOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 017FA8041C33D27700B4AA6F /* MyShareOrderCell.xib */; };
 		0185F0E91C2A3CB500A75980 /* RequestData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0185F0E81C2A3CB500A75980 /* RequestData.m */; };
 		018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 018619E31C15DC8200EABF64 /* AllGoodsCell.m */; };
 		018619E61C15DC8200EABF64 /* AllGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 018619E41C15DC8200EABF64 /* AllGoodsCell.xib */; };
 		018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 018619E71C15DE5200EABF64 /* 20150427091614458.jpg */; };
 		0186281D1C21B54F003C9C21 /* IMG_0116.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 0186281C1C21B54F003C9C21 /* IMG_0116.PNG */; };
+		019703A61C39196500A53526 /* RFSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 019703A51C39196500A53526 /* RFSegmentView.m */; };
+		019703AD1C391FB400A53526 /* LXDSegmentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 019703A91C391FB400A53526 /* LXDSegmentControl.m */; };
+		019703AE1C391FB400A53526 /* LXDSegmentControlConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 019703AB1C391FB400A53526 /* LXDSegmentControlConfiguration.m */; };
+		019703B81C3940D800A53526 /* VOContentLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 019703B11C3940D800A53526 /* VOContentLayer.m */; };
+		019703B91C3940D800A53526 /* VOIndicatorAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 019703B31C3940D800A53526 /* VOIndicatorAnimation.m */; };
+		019703BA1C3940D800A53526 /* VOSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 019703B51C3940D800A53526 /* VOSegment.m */; };
+		019703BB1C3940D800A53526 /* VOSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 019703B71C3940D800A53526 /* VOSegmentedControl.m */; };
+		019C1DE81C3978C0000A0778 /* DoShareOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 019C1DE61C3978C0000A0778 /* DoShareOrderCell.m */; };
+		019C1DE91C3978C0000A0778 /* DoShareOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019C1DE71C3978C0000A0778 /* DoShareOrderCell.xib */; };
+		019C1DED1C398067000A0778 /* DoMyCouldRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 019C1DEB1C398067000A0778 /* DoMyCouldRecordCell.m */; };
+		019C1DEE1C398067000A0778 /* DoMyCouldRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019C1DEC1C398067000A0778 /* DoMyCouldRecordCell.xib */; };
+		019C1DF51C39911B000A0778 /* SeetingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 019C1DF41C39911B000A0778 /* SeetingController.m */; };
+		019C1DF81C399321000A0778 /* SeetingTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 019C1DF71C399321000A0778 /* SeetingTableController.m */; };
 		019E096A1C17342A0022593A /* AnnNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 019E09691C17342A0022593A /* AnnNavController.m */; };
 		019E09721C173C730022593A /* NewGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 019E09701C173C730022593A /* NewGoodsCell.m */; };
 		019E09731C173C730022593A /* NewGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019E09711C173C730022593A /* NewGoodsCell.xib */; };
@@ -238,6 +254,11 @@
 		017F6BDF1C02BE050040385A /* Plug_Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plug_Controller.h; sourceTree = "<group>"; };
 		017F6BE01C02BE050040385A /* Plug_Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Plug_Controller.m; sourceTree = "<group>"; };
 		017F6BE21C02BE2D0040385A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		017FA7FF1C33D26300B4AA6F /* MyShareOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShareOrderController.h; sourceTree = "<group>"; };
+		017FA8001C33D26300B4AA6F /* MyShareOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyShareOrderController.m; sourceTree = "<group>"; };
+		017FA8021C33D27700B4AA6F /* MyShareOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShareOrderCell.h; sourceTree = "<group>"; };
+		017FA8031C33D27700B4AA6F /* MyShareOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyShareOrderCell.m; sourceTree = "<group>"; };
+		017FA8041C33D27700B4AA6F /* MyShareOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyShareOrderCell.xib; sourceTree = "<group>"; };
 		0185F0E71C2A3CB500A75980 /* RequestData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestData.h; sourceTree = "<group>"; };
 		0185F0E81C2A3CB500A75980 /* RequestData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestData.m; sourceTree = "<group>"; };
 		018619E21C15DC8200EABF64 /* AllGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllGoodsCell.h; sourceTree = "<group>"; };
@@ -245,6 +266,32 @@
 		018619E41C15DC8200EABF64 /* AllGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllGoodsCell.xib; sourceTree = "<group>"; };
 		018619E71C15DE5200EABF64 /* 20150427091614458.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 20150427091614458.jpg; sourceTree = "<group>"; };
 		0186281C1C21B54F003C9C21 /* IMG_0116.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0116.PNG; sourceTree = "<group>"; };
+		019703A41C39196500A53526 /* RFSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFSegmentView.h; sourceTree = "<group>"; };
+		019703A51C39196500A53526 /* RFSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFSegmentView.m; sourceTree = "<group>"; };
+		019703A81C391FB400A53526 /* LXDSegmentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXDSegmentControl.h; sourceTree = "<group>"; };
+		019703A91C391FB400A53526 /* LXDSegmentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXDSegmentControl.m; sourceTree = "<group>"; };
+		019703AA1C391FB400A53526 /* LXDSegmentControlConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXDSegmentControlConfiguration.h; sourceTree = "<group>"; };
+		019703AB1C391FB400A53526 /* LXDSegmentControlConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXDSegmentControlConfiguration.m; sourceTree = "<group>"; };
+		019703AC1C391FB400A53526 /* LXDSegmentControlDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXDSegmentControlDefine.h; sourceTree = "<group>"; };
+		019703B01C3940D800A53526 /* VOContentLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOContentLayer.h; sourceTree = "<group>"; };
+		019703B11C3940D800A53526 /* VOContentLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOContentLayer.m; sourceTree = "<group>"; };
+		019703B21C3940D800A53526 /* VOIndicatorAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOIndicatorAnimation.h; sourceTree = "<group>"; };
+		019703B31C3940D800A53526 /* VOIndicatorAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOIndicatorAnimation.m; sourceTree = "<group>"; };
+		019703B41C3940D800A53526 /* VOSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOSegment.h; sourceTree = "<group>"; };
+		019703B51C3940D800A53526 /* VOSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOSegment.m; sourceTree = "<group>"; };
+		019703B61C3940D800A53526 /* VOSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VOSegmentedControl.h; sourceTree = "<group>"; };
+		019703B71C3940D800A53526 /* VOSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VOSegmentedControl.m; sourceTree = "<group>"; };
+		019A572C1C3448F200A37EE6 /* SegmentView-Prefix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SegmentView-Prefix.h"; sourceTree = "<group>"; };
+		019C1DE51C3978C0000A0778 /* DoShareOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoShareOrderCell.h; sourceTree = "<group>"; };
+		019C1DE61C3978C0000A0778 /* DoShareOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoShareOrderCell.m; sourceTree = "<group>"; };
+		019C1DE71C3978C0000A0778 /* DoShareOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DoShareOrderCell.xib; sourceTree = "<group>"; };
+		019C1DEA1C398067000A0778 /* DoMyCouldRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoMyCouldRecordCell.h; sourceTree = "<group>"; };
+		019C1DEB1C398067000A0778 /* DoMyCouldRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoMyCouldRecordCell.m; sourceTree = "<group>"; };
+		019C1DEC1C398067000A0778 /* DoMyCouldRecordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DoMyCouldRecordCell.xib; sourceTree = "<group>"; };
+		019C1DF31C39911B000A0778 /* SeetingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeetingController.h; sourceTree = "<group>"; };
+		019C1DF41C39911B000A0778 /* SeetingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeetingController.m; sourceTree = "<group>"; };
+		019C1DF61C399321000A0778 /* SeetingTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeetingTableController.h; sourceTree = "<group>"; };
+		019C1DF71C399321000A0778 /* SeetingTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeetingTableController.m; sourceTree = "<group>"; };
 		019E09681C17342A0022593A /* AnnNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnNavController.h; sourceTree = "<group>"; };
 		019E09691C17342A0022593A /* AnnNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnNavController.m; sourceTree = "<group>"; };
 		019E096F1C173C730022593A /* NewGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewGoodsCell.h; sourceTree = "<group>"; };
@@ -400,6 +447,8 @@
 		0111B9D91C0353BC00DDC2EA /* Personal(个人中心) */ = {
 			isa = PBXGroup;
 			children = (
+				019C1DEF1C3990C8000A0778 /* Setting(设置) */,
+				017FA7FB1C33D1FC00B4AA6F /* MyShareOrder(我的晒单) */,
 				01FD4FC31C33B78B005D4125 /* AccessGoods(获得的商品) */,
 				01B797101C3385B40076BA01 /* Consume(消费明细) */,
 				0136CE461C32E78E00BDF538 /* MyAddress(我的地址) */,
@@ -629,6 +678,9 @@
 				0130F6331C322EC300D2CDFD /* MyCouldRecordCell.h */,
 				0130F6341C322EC300D2CDFD /* MyCouldRecordCell.m */,
 				0130F6351C322EC300D2CDFD /* MyCouldRecordCell.xib */,
+				019C1DEA1C398067000A0778 /* DoMyCouldRecordCell.h */,
+				019C1DEB1C398067000A0778 /* DoMyCouldRecordCell.m */,
+				019C1DEC1C398067000A0778 /* DoMyCouldRecordCell.xib */,
 			);
 			name = "View(视图)";
 			path = View;
@@ -744,6 +796,9 @@
 		017F6BDA1C02BCCA0040385A /* Plug-in(插件) */ = {
 			isa = PBXGroup;
 			children = (
+				019703AF1C3940D800A53526 /* VOSegmentedControl */,
+				019703A71C391FB400A53526 /* segmentControl */,
+				019703A31C39196500A53526 /* RFSegmentView */,
 				01ACDE581C2A6D9700A9466B /* AFNetworking */,
 				014FEFAD1C060B9C00C247C5 /* ARLabel */,
 				017F6BDF1C02BE050040385A /* Plug_Controller.h */,
@@ -766,6 +821,106 @@
 			);
 			name = "Main(主要)";
 			path = Main;
+			sourceTree = "<group>";
+		};
+		017FA7FB1C33D1FC00B4AA6F /* MyShareOrder(我的晒单) */ = {
+			isa = PBXGroup;
+			children = (
+				017FA7FD1C33D21E00B4AA6F /* Controller(控制) */,
+				017FA7FE1C33D22D00B4AA6F /* View(视图) */,
+			);
+			name = "MyShareOrder(我的晒单)";
+			path = MyShareOrder;
+			sourceTree = "<group>";
+		};
+		017FA7FD1C33D21E00B4AA6F /* Controller(控制) */ = {
+			isa = PBXGroup;
+			children = (
+				017FA7FF1C33D26300B4AA6F /* MyShareOrderController.h */,
+				017FA8001C33D26300B4AA6F /* MyShareOrderController.m */,
+			);
+			name = "Controller(控制)";
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		017FA7FE1C33D22D00B4AA6F /* View(视图) */ = {
+			isa = PBXGroup;
+			children = (
+				017FA8021C33D27700B4AA6F /* MyShareOrderCell.h */,
+				017FA8031C33D27700B4AA6F /* MyShareOrderCell.m */,
+				017FA8041C33D27700B4AA6F /* MyShareOrderCell.xib */,
+				019C1DE51C3978C0000A0778 /* DoShareOrderCell.h */,
+				019C1DE61C3978C0000A0778 /* DoShareOrderCell.m */,
+				019C1DE71C3978C0000A0778 /* DoShareOrderCell.xib */,
+			);
+			name = "View(视图)";
+			path = View;
+			sourceTree = "<group>";
+		};
+		019703A31C39196500A53526 /* RFSegmentView */ = {
+			isa = PBXGroup;
+			children = (
+				019703A41C39196500A53526 /* RFSegmentView.h */,
+				019703A51C39196500A53526 /* RFSegmentView.m */,
+			);
+			path = RFSegmentView;
+			sourceTree = "<group>";
+		};
+		019703A71C391FB400A53526 /* segmentControl */ = {
+			isa = PBXGroup;
+			children = (
+				019703A81C391FB400A53526 /* LXDSegmentControl.h */,
+				019703A91C391FB400A53526 /* LXDSegmentControl.m */,
+				019703AA1C391FB400A53526 /* LXDSegmentControlConfiguration.h */,
+				019703AB1C391FB400A53526 /* LXDSegmentControlConfiguration.m */,
+				019703AC1C391FB400A53526 /* LXDSegmentControlDefine.h */,
+			);
+			path = segmentControl;
+			sourceTree = "<group>";
+		};
+		019703AF1C3940D800A53526 /* VOSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				019703B01C3940D800A53526 /* VOContentLayer.h */,
+				019703B11C3940D800A53526 /* VOContentLayer.m */,
+				019703B21C3940D800A53526 /* VOIndicatorAnimation.h */,
+				019703B31C3940D800A53526 /* VOIndicatorAnimation.m */,
+				019703B41C3940D800A53526 /* VOSegment.h */,
+				019703B51C3940D800A53526 /* VOSegment.m */,
+				019703B61C3940D800A53526 /* VOSegmentedControl.h */,
+				019703B71C3940D800A53526 /* VOSegmentedControl.m */,
+			);
+			path = VOSegmentedControl;
+			sourceTree = "<group>";
+		};
+		019C1DEF1C3990C8000A0778 /* Setting(设置) */ = {
+			isa = PBXGroup;
+			children = (
+				019C1DF11C3990EB000A0778 /* Controller(控制) */,
+				019C1DF21C3990F9000A0778 /* View(视图) */,
+			);
+			name = "Setting(设置)";
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		019C1DF11C3990EB000A0778 /* Controller(控制) */ = {
+			isa = PBXGroup;
+			children = (
+				019C1DF31C39911B000A0778 /* SeetingController.h */,
+				019C1DF41C39911B000A0778 /* SeetingController.m */,
+				019C1DF61C399321000A0778 /* SeetingTableController.h */,
+				019C1DF71C399321000A0778 /* SeetingTableController.m */,
+			);
+			name = "Controller(控制)";
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		019C1DF21C3990F9000A0778 /* View(视图) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "View(视图)";
+			path = View;
 			sourceTree = "<group>";
 		};
 		01ACDE581C2A6D9700A9466B /* AFNetworking */ = {
@@ -889,6 +1044,7 @@
 			isa = PBXGroup;
 			children = (
 				01D3419E1C029C9C000A32A1 /* main.m */,
+				019A572C1C3448F200A37EE6 /* SegmentView-Prefix.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1007,6 +1163,7 @@
 				01FD4FC21C33B03F005D4125 /* RechargeCell.xib in Resources */,
 				01DC45141C31A669006E478F /* IMG_0216.PNG in Resources */,
 				01D3B7321C1FDE0E00C86772 /* GoodsCategoryCell.xib in Resources */,
+				019C1DE91C3978C0000A0778 /* DoShareOrderCell.xib in Resources */,
 				014A07721C148EE000EEBD78 /* 2.jpg in Resources */,
 				015B58C31C215EB9008EF7A1 /* ShareOrderCell.xib in Resources */,
 				0186281D1C21B54F003C9C21 /* IMG_0116.PNG in Resources */,
@@ -1032,11 +1189,13 @@
 				01AB379C1C2707EE0065C902 /* goodsViewCell.xib in Resources */,
 				018619E61C15DC8200EABF64 /* AllGoodsCell.xib in Resources */,
 				019E09751C1741C70022593A /* IMG_0066.JPG in Resources */,
+				017FA8061C33D27700B4AA6F /* MyShareOrderCell.xib in Resources */,
 				01747E151C1D76CC0051086C /* ComputeDetailCell.xib in Resources */,
 				01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */,
 				0136CE4D1C32E81C00BDF538 /* MyAddressCell.xib in Resources */,
 				017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */,
 				012626411C1ABA7400509985 /* CloudRecordCell.xib in Resources */,
+				019C1DEE1C398067000A0778 /* DoMyCouldRecordCell.xib in Resources */,
 				0136CE441C32E13800BDF538 /* IMG_0191.PNG in Resources */,
 				0111B9DF1C03540D00DDC2EA /* PersonalView.xib in Resources */,
 				0130F6371C322EC300D2CDFD /* MyCouldRecordCell.xib in Resources */,
@@ -1114,10 +1273,12 @@
 				01F876A01C22857000FF0801 /* SearchWordController.m in Sources */,
 				01AB379B1C2707EE0065C902 /* goodsViewCell.m in Sources */,
 				01B797191C3386410076BA01 /* ConsumeCell.m in Sources */,
+				019703BB1C3940D800A53526 /* VOSegmentedControl.m in Sources */,
 				01B7AC7A1C23E62700D09565 /* UIView+Extension.m in Sources */,
 				01DC45171C31A90B006E478F /* Register1Controller.m in Sources */,
 				0185F0E91C2A3CB500A75980 /* RequestData.m in Sources */,
 				011E37521C1E64830032FB13 /* SelectCloudNumController.m in Sources */,
+				019C1DF51C39911B000A0778 /* SeetingController.m in Sources */,
 				01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */,
 				01D3419F1C029C9C000A32A1 /* main.m in Sources */,
 				01747DFC1C1D54270051086C /* CloudNumberCell.m in Sources */,
@@ -1137,6 +1298,7 @@
 				01E96BA91C1DC5C3006ED4CD /* ComputeDetailController.m in Sources */,
 				014FEFAA1C06018300C247C5 /* LoginController.m in Sources */,
 				017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */,
+				019703BA1C3940D800A53526 /* VOSegment.m in Sources */,
 				0111BA1A1C0370D600DDC2EA /* PerNavController.m in Sources */,
 				01747E061C1D5ADD0051086C /* DidAnnounceController.m in Sources */,
 				0111BA171C0370AD00DDC2EA /* ShopNavController.m in Sources */,
@@ -1151,9 +1313,13 @@
 				01747E101C1D6BA60051086C /* InAnnounceController.m in Sources */,
 				0111B9F51C03550F00DDC2EA /* AllGoodsController.m in Sources */,
 				015B58C21C215EB9008EF7A1 /* ShareOrderCell.m in Sources */,
+				019703B81C3940D800A53526 /* VOContentLayer.m in Sources */,
+				019C1DE81C3978C0000A0778 /* DoShareOrderCell.m in Sources */,
 				01ACDE721C2A6D9700A9466B /* AFURLRequestSerialization.m in Sources */,
 				0132802E1C2800C100339038 /* ShareOrderDetailView.m in Sources */,
+				019703AD1C391FB400A53526 /* LXDSegmentControl.m in Sources */,
 				01ACDE731C2A6D9700A9466B /* AFURLResponseSerialization.m in Sources */,
+				019703B91C3940D800A53526 /* VOIndicatorAnimation.m in Sources */,
 				0110AA5C1C0D8D03009A8660 /* PopularGoodsCell.m in Sources */,
 				01B24F5C1C3058D800D2104E /* BalanceTableController.m in Sources */,
 				01FD4FCD1C33B806005D4125 /* AccessGoodsController.m in Sources */,
@@ -1166,25 +1332,31 @@
 				01ACDE6F1C2A6D9700A9466B /* AFNetworkReachabilityManager.m in Sources */,
 				01F8769C1C226A3E00FF0801 /* SearchWordCell.m in Sources */,
 				0111BA231C0372D700DDC2EA /* MainTabBarController.m in Sources */,
+				019703A61C39196500A53526 /* RFSegmentView.m in Sources */,
 				01B7AC771C23E62700D09565 /* HistoryTableViewCell.m in Sources */,
 				019E096A1C17342A0022593A /* AnnNavController.m in Sources */,
 				013280211C27CCCE00339038 /* CommentaryController.m in Sources */,
 				01C8622D1C25C28E0075BD7F /* goodsHeaderView.m in Sources */,
 				01FD4FC91C33B7DD005D4125 /* AccessGoodsCell.m in Sources */,
+				017FA8011C33D26300B4AA6F /* MyShareOrderController.m in Sources */,
 				01ACDE6C1C2A6D9700A9466B /* AFHTTPRequestOperation.m in Sources */,
 				01ACDE701C2A6D9700A9466B /* AFSecurityPolicy.m in Sources */,
 				01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */,
+				019703AE1C391FB400A53526 /* LXDSegmentControlConfiguration.m in Sources */,
 				01FD4FBD1C33A950005D4125 /* ConsumeController.m in Sources */,
+				017FA8051C33D27700B4AA6F /* MyShareOrderCell.m in Sources */,
 				0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */,
 				0136CE4C1C32E81C00BDF538 /* MyAddressCell.m in Sources */,
 				01B7AC791C23E62700D09565 /* HWSearchBar.m in Sources */,
 				01ACDE741C2A6D9700A9466B /* AFURLSessionManager.m in Sources */,
 				01747E0D1C1D68660051086C /* CloudNumberController.m in Sources */,
+				019C1DED1C398067000A0778 /* DoMyCouldRecordCell.m in Sources */,
 				01B7AC821C23F01300D09565 /* HistoryClass.m in Sources */,
 				018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */,
 				011E374E1C1E5F960032FB13 /* SelectCloudNumCell.m in Sources */,
 				0111B9E31C03543F00DDC2EA /* PersonalController.m in Sources */,
 				0130F6361C322EC300D2CDFD /* MyCouldRecordCell.m in Sources */,
+				019C1DF81C399321000A0778 /* SeetingTableController.m in Sources */,
 				01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1216,6 +1388,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1258,6 +1431,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;

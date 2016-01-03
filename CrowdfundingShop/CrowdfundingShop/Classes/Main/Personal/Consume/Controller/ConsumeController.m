@@ -10,14 +10,11 @@
 #import "ConsumeCell.h"
 #import "RechargeCell.h"
 #import "ARLabel.h"
+#import "LXDSegmentControl.h"
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
-@interface ConsumeController ()
-/**充值明细*/
-@property (weak, nonatomic) IBOutlet UIButton *rechargeBtn;
-/**消费明细*/
-@property (weak, nonatomic) IBOutlet UIButton *consumeBtn;
+@interface ConsumeController ()<LXDSegmentControlDelegate>
 /**充值明细表*/
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 /**消费明细表*/
@@ -52,11 +49,6 @@
     [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *left=[[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem=left;
-    
-    self.consumeBtn.layer.borderWidth=1.0;
-    self.consumeBtn.layer.borderColor=[[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1]CGColor];
-    self.consumeBtn.layer.cornerRadius=2.0;
-    self.rechargeBtn.layer.cornerRadius=2.0;
     //创建xib文件对象
     UINib *nib=[UINib nibWithNibName:@"ConsumeCell" bundle:[NSBundle mainBundle]];
     //注册到表格视图
@@ -153,9 +145,21 @@
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    self.recharView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 115)];
+    self.recharView.backgroundColor=[UIColor whiteColor];
+    CGRect frame = CGRectMake(40, 10, 240.f, 30.f);
+    NSArray * items = @[@"消费明细", @"充值明细"];
+    LXDSegmentControlConfiguration * select = [LXDSegmentControlConfiguration configurationWithControlType: LXDSegmentControlTypeSelectBlock items: items];
+    select.currentIndex=1;
+    select.cornerColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
+    select.backgroundColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
+    select.itemBackgroundColor=[UIColor whiteColor];
+    select.itemSelectedColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
+    select.itemTextColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
+    select.cornerWidth=0.5f;
+    LXDSegmentControl * selectControl = [LXDSegmentControl segmentControlWithFrame: frame configuration: select delegate: self];
     if (tableView==self.myTableView) {
         /**充值明细表头*/
-        self.recharView=[[UIView alloc]initWithFrame:CGRectMake(10, 0, kScreenWidth, 115)];
         self.lineview1=[[UIView alloc]initWithFrame:CGRectMake(0, 50, kScreenWidth, 0.5)];
         self.lineview1.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
         [self.recharView addSubview:self.lineview1];
@@ -190,12 +194,9 @@
         self.lineview3=[[UIView alloc]initWithFrame:CGRectMake(0, self.recharView.frame.size.height, kScreenWidth, 0.5)];
         self.lineview3.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
         [self.recharView addSubview:self.lineview3];
-        return self.recharView;
     }else if(tableView==self.rechargeTableView){
         static NSString *cellStr=@"RechargeCell";
         RechargeCell *cell=[self.rechargeTableView dequeueReusableCellWithIdentifier:cellStr];
-        self.recharView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 115)];
-        self.recharView.backgroundColor=[UIColor whiteColor];
         self.lineview1=[[UIView alloc]initWithFrame:CGRectMake(0, 50, kScreenWidth, 0.5)];
         self.lineview1.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
         [self.recharView addSubview:self.lineview1];
@@ -225,14 +226,23 @@
         self.lineview3=[[UIView alloc]initWithFrame:CGRectMake(0, self.recharView.frame.size.height, kScreenWidth, 0.5)];
         self.lineview3.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
         [self.recharView addSubview:self.lineview3];
-        return self.recharView;
     }
-    return nil;
+    [self.recharView addSubview:selectControl];
+    return self.recharView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
     return 115;
-    
 }
 
+#pragma mark - LXDSegmentControlDelegate
+- (void)segmentControl:(LXDSegmentControl *)segmentControl didSelectAtIndex:(NSUInteger)index
+{
+    if (index==0) {
+        self.myTableView.hidden=NO;
+        self.rechargeTableView.hidden=YES;
+    }else if(index==1){
+        self.myTableView.hidden=YES;
+        self.rechargeTableView.hidden=NO;
+    }
+}
 @end

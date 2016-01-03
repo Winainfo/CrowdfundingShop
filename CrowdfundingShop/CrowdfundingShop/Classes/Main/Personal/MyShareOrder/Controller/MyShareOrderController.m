@@ -1,31 +1,32 @@
 //
-//  MyCouldRecordController.m
+//  MyShareOrderController.m
 //  CrowdfundingShop
 //
-//  Created by 吴金林 on 15/12/29.
+//  Created by 吴金林 on 15/12/30.
 //  Copyright © 2015年 吴金林. All rights reserved.
 //
 
-#import "MyCouldRecordController.h"
-#import "MyCouldRecordCell.h"
-#import "DoMyCouldRecordCell.h"
+#import "MyShareOrderController.h"
+#import "MyShareOrderCell.h"
+#import "DoShareOrderCell.h"
 #import "LXDSegmentControl.h"
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
-@interface MyCouldRecordController ()<LXDSegmentControlDelegate>
+@interface MyShareOrderController ()<LXDSegmentControlDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
-@property (weak, nonatomic) IBOutlet UITableView *doMyTableView;
 
+@property (weak, nonatomic) IBOutlet UITableView *shareOrderTableView;
 @end
 
-@implementation MyCouldRecordController
+@implementation MyShareOrderController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Menlo" size:16.0],NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.title=@"我的夺宝记录";
+    self.title=@"我的晒单";
     //导航栏右侧按钮
     UIButton *leftBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     [leftBtn setImage:[UIImage imageNamed:@"navbar_back"] forState:UIControlStateNormal];
@@ -35,20 +36,22 @@
     UIBarButtonItem *left=[[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem=left;
     //创建xib文件对象
-    UINib *nib=[UINib nibWithNibName:@"MyCouldRecordCell" bundle:[NSBundle mainBundle]];
+    UINib *nib=[UINib nibWithNibName:@"MyShareOrderCell" bundle:[NSBundle mainBundle]];
     //注册到表格视图
-    [self.myTableView  registerNib:nib forCellReuseIdentifier:@"MyCouldRecordCell"];
+    [self.myTableView  registerNib:nib forCellReuseIdentifier:@"MyShareOrderCell"];
     [self setExtraCellLineHidden:self.myTableView];
     //创建xib文件对象
-    UINib *nib1=[UINib nibWithNibName:@"DoMyCouldRecordCell" bundle:[NSBundle mainBundle]];
+    UINib *nib1=[UINib nibWithNibName:@"DoShareOrderCell" bundle:[NSBundle mainBundle]];
     //注册到表格视图
-    [self.doMyTableView  registerNib:nib1 forCellReuseIdentifier:@"DoMyCouldRecordCell"];
-    [self setExtraCellLineHidden:self.doMyTableView];
+    [self.shareOrderTableView  registerNib:nib1 forCellReuseIdentifier:@"DoShareOrderCell"];
+    [self setExtraCellLineHidden:self.shareOrderTableView];
 }
+/**
+ *  返回
+ */
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 /**
  *  去掉多余的分割线
  *
@@ -73,9 +76,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView==self.myTableView) {
-        return 6;
+        return 3;
     }else{
-        return 6;
+     return 3;
     }
 }
 /**
@@ -88,24 +91,25 @@
  */
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView==self.myTableView) {
-        static NSString *cellStr=@"MyCouldRecordCell";
-        MyCouldRecordCell *cell=[self.myTableView dequeueReusableCellWithIdentifier:cellStr];
+        static NSString *cellStr=@"MyShareOrderCell";
+        MyShareOrderCell *cell=[self.myTableView dequeueReusableCellWithIdentifier:cellStr];
         if (cell==nil) {
-            cell=[[MyCouldRecordCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
+            cell=[[MyShareOrderCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
         return cell;
     }else{
-        static NSString *cellStr=@"DoMyCouldRecordCell";
-        DoMyCouldRecordCell *cell=[self.doMyTableView dequeueReusableCellWithIdentifier:cellStr];
+        static NSString *cellStr=@"DoShareOrderCell";
+        DoShareOrderCell *cell=[self.shareOrderTableView dequeueReusableCellWithIdentifier:cellStr];
         if (cell==nil) {
-            cell=[[DoMyCouldRecordCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
+            cell=[[DoShareOrderCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
         return cell;
     }
+    return nil;
 }
 /**
  *  设置单元格高度
@@ -115,16 +119,23 @@
  *
  *  @return <#return value description#>
  */
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 97;
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 96;
+}
+/**
+ *  点击事件
+ *
+ *  @param tableView <#tableView description#>
+ *  @param indexPath <#indexPath description#>
+ */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 }
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
     view.backgroundColor=[UIColor whiteColor];
     CGRect frame = CGRectMake(40, 5, 240.f, 30.f);
-    NSArray * items = @[@"已揭晓", @"进行中"];
+    NSArray * items = @[@"消费明细", @"充值明细"];
     LXDSegmentControlConfiguration * select = [LXDSegmentControlConfiguration configurationWithControlType: LXDSegmentControlTypeSelectBlock items: items];
     select.currentIndex=1;
     select.cornerColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
@@ -143,25 +154,15 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 40;
 }
-
-/**
- *  点击事件
- *
- *  @param tableView <#tableView description#>
- *  @param indexPath <#indexPath description#>
- */
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-}
 #pragma mark - LXDSegmentControlDelegate
 - (void)segmentControl:(LXDSegmentControl *)segmentControl didSelectAtIndex:(NSUInteger)index
 {
     if (index==0) {
-        self.myTableView.hidden=NO;
-        self.doMyTableView.hidden=YES;
-    }else if(index==1){
         self.myTableView.hidden=YES;
-        self.doMyTableView.hidden=NO;
+        self.shareOrderTableView.hidden=NO;
+    }else if(index==1){
+        self.myTableView.hidden=NO;
+        self.shareOrderTableView.hidden=YES;
     }
 }
-
 @end

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyShareOrderCell" rowHeight="96" id="8qW-7E-3QN" customClass="MyShareOrderCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8qW-7E-3QN" id="kWb-sL-hVP">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="95.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Canon.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="LdN-Z2-jLM">
+                        <rect key="frame" x="10" y="8" width="80" height="80"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="80" id="FAJ-RD-oHJ"/>
+                            <constraint firstAttribute="width" constant="80" id="OwT-59-ZIl"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(第1期)苹果（Apple）iPhone 6s Plus 16G版 4G手机5.5英寸Retina HD显示，指尖一按， 3D Touch就" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAx-8f-Dsh" customClass="ARLabel">
+                        <rect key="frame" x="97" y="8" width="203" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="36" id="SwW-p6-0qe"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="幸运号码：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rcn-B8-XcS" customClass="ARLabel">
+                        <rect key="frame" x="97" y="47" width="60" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="Ybg-KA-CEp"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10001393" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJV-U1-TvL" customClass="ARLabel">
+                        <rect key="frame" x="162" y="47" width="57" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="LHo-Hg-dy1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.86274509799999999" green="0.1960784314" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="揭晓时间：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wv8-bB-gr6" customClass="ARLabel">
+                        <rect key="frame" x="97" y="68" width="60" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="YPs-Bf-IhY"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-12-23 22:00:00.000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="noy-g9-Kc2" customClass="ARLabel">
+                        <rect key="frame" x="162" y="68" width="147.5" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="Ixw-0t-lJt"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M5p-yZ-w8I" userLabel="lineView">
+                        <rect key="frame" x="0.0" y="95" width="320" height="0.5"/>
+                        <color key="backgroundColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="AOV-qz-VAs"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="noy-g9-Kc2" firstAttribute="leading" secondItem="wv8-bB-gr6" secondAttribute="trailing" constant="5" id="2MX-Zk-PnK"/>
+                    <constraint firstItem="fJV-U1-TvL" firstAttribute="leading" secondItem="Rcn-B8-XcS" secondAttribute="trailing" constant="5" id="2qi-jH-DeP"/>
+                    <constraint firstItem="Rcn-B8-XcS" firstAttribute="top" secondItem="iAx-8f-Dsh" secondAttribute="bottom" constant="3" id="4aj-T6-asW"/>
+                    <constraint firstItem="LdN-Z2-jLM" firstAttribute="leading" secondItem="kWb-sL-hVP" secondAttribute="leading" constant="10" id="86H-jx-qJw"/>
+                    <constraint firstItem="wv8-bB-gr6" firstAttribute="top" secondItem="Rcn-B8-XcS" secondAttribute="bottom" constant="3" id="Gjj-Eo-8Ta"/>
+                    <constraint firstItem="noy-g9-Kc2" firstAttribute="top" secondItem="fJV-U1-TvL" secondAttribute="bottom" constant="3" id="HJm-hc-WsJ"/>
+                    <constraint firstItem="M5p-yZ-w8I" firstAttribute="leading" secondItem="kWb-sL-hVP" secondAttribute="leading" id="IE0-tC-eyB"/>
+                    <constraint firstItem="wv8-bB-gr6" firstAttribute="leading" secondItem="LdN-Z2-jLM" secondAttribute="trailing" constant="7" id="IuP-Rf-pgj"/>
+                    <constraint firstItem="LdN-Z2-jLM" firstAttribute="centerY" secondItem="kWb-sL-hVP" secondAttribute="centerY" id="Jut-Fr-vIi"/>
+                    <constraint firstAttribute="bottom" secondItem="M5p-yZ-w8I" secondAttribute="bottom" id="Lbq-HV-isH"/>
+                    <constraint firstAttribute="trailing" secondItem="M5p-yZ-w8I" secondAttribute="trailing" id="Sul-5i-Cc6"/>
+                    <constraint firstItem="iAx-8f-Dsh" firstAttribute="top" secondItem="kWb-sL-hVP" secondAttribute="top" constant="8" id="TXk-b4-PhP"/>
+                    <constraint firstItem="iAx-8f-Dsh" firstAttribute="leading" secondItem="LdN-Z2-jLM" secondAttribute="trailing" constant="7" id="XGi-lW-vyc"/>
+                    <constraint firstAttribute="trailing" secondItem="iAx-8f-Dsh" secondAttribute="trailing" constant="20" id="e3I-0x-ywc"/>
+                    <constraint firstItem="fJV-U1-TvL" firstAttribute="top" secondItem="iAx-8f-Dsh" secondAttribute="bottom" constant="3" id="gCU-SL-z75"/>
+                    <constraint firstItem="Rcn-B8-XcS" firstAttribute="leading" secondItem="LdN-Z2-jLM" secondAttribute="trailing" constant="7" id="oq8-qy-ybO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="goodsImageView" destination="LdN-Z2-jLM" id="3Ks-WS-pv2"/>
+                <outlet property="goodsTitleLabel" destination="iAx-8f-Dsh" id="jn8-4R-S9G"/>
+                <outlet property="numLabel" destination="fJV-U1-TvL" id="qgf-Wr-hX4"/>
+                <outlet property="timeLabel" destination="noy-g9-Kc2" id="4ih-Mh-H6U"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Canon.jpg" width="400" height="400"/>
+    </resources>
+</document>

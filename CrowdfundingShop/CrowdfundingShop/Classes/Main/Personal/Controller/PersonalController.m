@@ -8,7 +8,9 @@
 
 #import "PersonalController.h"
 #import "ARLabel.h"
-@interface PersonalController ()
+#import "RFSegmentView.h"
+#import "SeetingController.h"
+@interface PersonalController ()<RFSegmentViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 /**用户头像*/
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
@@ -41,7 +43,7 @@
     [rightBtn setImage:[UIImage imageNamed:@"MyCloud_setting_select"] forState:UIControlStateNormal];
     [rightBtn setImage:[UIImage imageNamed:@"MyCloud_setting_select"] forState:UIControlStateSelected];
     rightBtn.frame=CGRectMake(-5, 5, 21, 21);
-    [rightBtn addTarget:self action:@selector(searchClick) forControlEvents:UIControlEventTouchUpInside];
+    [rightBtn addTarget:self action:@selector(seetingClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *right=[[UIBarButtonItem alloc]initWithCustomView:rightBtn];
     self.navigationItem.rightBarButtonItem=right;
     /**圆角*/
@@ -53,8 +55,11 @@
     self.rechargeBtn.layer.masksToBounds=YES;
 }
 
--(void)searchClick{
-    
+-(void)seetingClick{
+    //设置故事板为第一启动
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SeetingController *seetingController=[storyboard instantiateViewControllerWithIdentifier:@"SeetingView"];
+    [self.navigationController pushViewController:seetingController animated:YES];
 }
 
 @end
