@@ -9,7 +9,7 @@
 #import "RequestData.h"
 #import "AFNetworking.h"
 #import <EGOCache.h>
-#define URL @"http://www.god-store.com"
+#define URL @"http://wn.winainfo.com"
 @implementation RequestData
 /**
  *  字典转字符串工具类

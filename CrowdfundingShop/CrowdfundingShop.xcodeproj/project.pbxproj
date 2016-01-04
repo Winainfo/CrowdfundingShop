@@ -140,6 +140,28 @@
 		01F8769D1C226A3E00FF0801 /* SearchWordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F8769B1C226A3E00FF0801 /* SearchWordCell.xib */; };
 		01F876A01C22857000FF0801 /* SearchWordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F8769F1C22857000FF0801 /* SearchWordController.m */; };
 		01F876A21C22937300FF0801 /* 12345.png in Resources */ = {isa = PBXBuildFile; fileRef = 01F876A11C22937300FF0801 /* 12345.png */; };
+		01FA8E0E1C3AB70C00E7E00B /* IMG_0248.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E0C1C3AB70C00E7E00B /* IMG_0248.PNG */; };
+		01FA8E0F1C3AB70C00E7E00B /* IMG_0249.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E0D1C3AB70C00E7E00B /* IMG_0249.PNG */; };
+		01FA8E121C3ABEE100E7E00B /* PersonalProfilesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E111C3ABEE100E7E00B /* PersonalProfilesController.m */; };
+		01FA8E161C3AC32100E7E00B /* IMG_0253.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E131C3AC32100E7E00B /* IMG_0253.PNG */; };
+		01FA8E171C3AC32100E7E00B /* IMG_0251.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E141C3AC32100E7E00B /* IMG_0251.PNG */; };
+		01FA8E181C3AC32100E7E00B /* IMG_0252.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E151C3AC32100E7E00B /* IMG_0252.PNG */; };
+		01FA8E1B1C3AC51E00E7E00B /* UpdateNicknameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E1A1C3AC51E00E7E00B /* UpdateNicknameController.m */; };
+		01FA8E1E1C3ACA6900E7E00B /* UpdateQQNumberController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E1D1C3ACA6900E7E00B /* UpdateQQNumberController.m */; };
+		01FA8E211C3ACCCB00E7E00B /* UpdateAutographController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E201C3ACCCB00E7E00B /* UpdateAutographController.m */; };
+		01FA8E241C3AD1E600E7E00B /* SafetySettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E231C3AD1E600E7E00B /* SafetySettingController.m */; };
+		01FA8E2A1C3AD39E00E7E00B /* IMG_0255.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E251C3AD39E00E7E00B /* IMG_0255.PNG */; };
+		01FA8E2B1C3AD39E00E7E00B /* IMG_0254.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E261C3AD39E00E7E00B /* IMG_0254.PNG */; };
+		01FA8E2C1C3AD39E00E7E00B /* IMG_0257.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E271C3AD39E00E7E00B /* IMG_0257.PNG */; };
+		01FA8E2D1C3AD39E00E7E00B /* IMG_0256.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E281C3AD39E00E7E00B /* IMG_0256.PNG */; };
+		01FA8E2E1C3AD39E00E7E00B /* IMG_0258.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E291C3AD39E00E7E00B /* IMG_0258.PNG */; };
+		01FA8E311C3ADBC100E7E00B /* UpdatePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E301C3ADBC100E7E00B /* UpdatePasswordController.m */; };
+		01FA8E341C3AE66600E7E00B /* VerifyEmailController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E331C3AE66600E7E00B /* VerifyEmailController1.m */; };
+		01FA8E371C3AE67300E7E00B /* VerifyEmailController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E361C3AE67300E7E00B /* VerifyEmailController2.m */; };
+		01FA8E3A1C3AE67D00E7E00B /* VerifyEmailController3.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E391C3AE67D00E7E00B /* VerifyEmailController3.m */; };
+		01FA8E3D1C3AE68B00E7E00B /* VerifyPhoneController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E3C1C3AE68B00E7E00B /* VerifyPhoneController1.m */; };
+		01FA8E401C3AE69300E7E00B /* VerifyPhoneController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E3F1C3AE69300E7E00B /* VerifyPhoneController2.m */; };
+		01FA8E431C3AE69F00E7E00B /* VerifyPhoneController3.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E421C3AE69F00E7E00B /* VerifyPhoneController3.m */; };
 		01FD4FBD1C33A950005D4125 /* ConsumeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FD4FBC1C33A950005D4125 /* ConsumeController.m */; };
 		01FD4FC11C33B03F005D4125 /* RechargeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FD4FBF1C33B03F005D4125 /* RechargeCell.m */; };
 		01FD4FC21C33B03F005D4125 /* RechargeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01FD4FC01C33B03F005D4125 /* RechargeCell.xib */; };
@@ -373,6 +395,40 @@
 		01F8769E1C22857000FF0801 /* SearchWordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWordController.h; sourceTree = "<group>"; };
 		01F8769F1C22857000FF0801 /* SearchWordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchWordController.m; sourceTree = "<group>"; };
 		01F876A11C22937300FF0801 /* 12345.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 12345.png; sourceTree = "<group>"; };
+		01FA8E0C1C3AB70C00E7E00B /* IMG_0248.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0248.PNG; sourceTree = "<group>"; };
+		01FA8E0D1C3AB70C00E7E00B /* IMG_0249.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0249.PNG; sourceTree = "<group>"; };
+		01FA8E101C3ABEE100E7E00B /* PersonalProfilesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfilesController.h; sourceTree = "<group>"; };
+		01FA8E111C3ABEE100E7E00B /* PersonalProfilesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfilesController.m; sourceTree = "<group>"; };
+		01FA8E131C3AC32100E7E00B /* IMG_0253.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0253.PNG; sourceTree = "<group>"; };
+		01FA8E141C3AC32100E7E00B /* IMG_0251.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0251.PNG; sourceTree = "<group>"; };
+		01FA8E151C3AC32100E7E00B /* IMG_0252.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0252.PNG; sourceTree = "<group>"; };
+		01FA8E191C3AC51E00E7E00B /* UpdateNicknameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateNicknameController.h; sourceTree = "<group>"; };
+		01FA8E1A1C3AC51E00E7E00B /* UpdateNicknameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateNicknameController.m; sourceTree = "<group>"; };
+		01FA8E1C1C3ACA6900E7E00B /* UpdateQQNumberController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateQQNumberController.h; sourceTree = "<group>"; };
+		01FA8E1D1C3ACA6900E7E00B /* UpdateQQNumberController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateQQNumberController.m; sourceTree = "<group>"; };
+		01FA8E1F1C3ACCCB00E7E00B /* UpdateAutographController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateAutographController.h; sourceTree = "<group>"; };
+		01FA8E201C3ACCCB00E7E00B /* UpdateAutographController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateAutographController.m; sourceTree = "<group>"; };
+		01FA8E221C3AD1E600E7E00B /* SafetySettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafetySettingController.h; sourceTree = "<group>"; };
+		01FA8E231C3AD1E600E7E00B /* SafetySettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SafetySettingController.m; sourceTree = "<group>"; };
+		01FA8E251C3AD39E00E7E00B /* IMG_0255.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0255.PNG; sourceTree = "<group>"; };
+		01FA8E261C3AD39E00E7E00B /* IMG_0254.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0254.PNG; sourceTree = "<group>"; };
+		01FA8E271C3AD39E00E7E00B /* IMG_0257.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0257.PNG; sourceTree = "<group>"; };
+		01FA8E281C3AD39E00E7E00B /* IMG_0256.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0256.PNG; sourceTree = "<group>"; };
+		01FA8E291C3AD39E00E7E00B /* IMG_0258.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0258.PNG; sourceTree = "<group>"; };
+		01FA8E2F1C3ADBC100E7E00B /* UpdatePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdatePasswordController.h; sourceTree = "<group>"; };
+		01FA8E301C3ADBC100E7E00B /* UpdatePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdatePasswordController.m; sourceTree = "<group>"; };
+		01FA8E321C3AE66600E7E00B /* VerifyEmailController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyEmailController1.h; sourceTree = "<group>"; };
+		01FA8E331C3AE66600E7E00B /* VerifyEmailController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyEmailController1.m; sourceTree = "<group>"; };
+		01FA8E351C3AE67300E7E00B /* VerifyEmailController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyEmailController2.h; sourceTree = "<group>"; };
+		01FA8E361C3AE67300E7E00B /* VerifyEmailController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyEmailController2.m; sourceTree = "<group>"; };
+		01FA8E381C3AE67D00E7E00B /* VerifyEmailController3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyEmailController3.h; sourceTree = "<group>"; };
+		01FA8E391C3AE67D00E7E00B /* VerifyEmailController3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyEmailController3.m; sourceTree = "<group>"; };
+		01FA8E3B1C3AE68B00E7E00B /* VerifyPhoneController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyPhoneController1.h; sourceTree = "<group>"; };
+		01FA8E3C1C3AE68B00E7E00B /* VerifyPhoneController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyPhoneController1.m; sourceTree = "<group>"; };
+		01FA8E3E1C3AE69300E7E00B /* VerifyPhoneController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyPhoneController2.h; sourceTree = "<group>"; };
+		01FA8E3F1C3AE69300E7E00B /* VerifyPhoneController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyPhoneController2.m; sourceTree = "<group>"; };
+		01FA8E411C3AE69F00E7E00B /* VerifyPhoneController3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyPhoneController3.h; sourceTree = "<group>"; };
+		01FA8E421C3AE69F00E7E00B /* VerifyPhoneController3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VerifyPhoneController3.m; sourceTree = "<group>"; };
 		01FD4FBB1C33A950005D4125 /* ConsumeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsumeController.h; sourceTree = "<group>"; };
 		01FD4FBC1C33A950005D4125 /* ConsumeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsumeController.m; sourceTree = "<group>"; };
 		01FD4FBE1C33B03F005D4125 /* RechargeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechargeCell.h; sourceTree = "<group>"; };
@@ -896,6 +952,16 @@
 		019C1DEF1C3990C8000A0778 /* Setting(设置) */ = {
 			isa = PBXGroup;
 			children = (
+				01FA8E251C3AD39E00E7E00B /* IMG_0255.PNG */,
+				01FA8E261C3AD39E00E7E00B /* IMG_0254.PNG */,
+				01FA8E271C3AD39E00E7E00B /* IMG_0257.PNG */,
+				01FA8E281C3AD39E00E7E00B /* IMG_0256.PNG */,
+				01FA8E291C3AD39E00E7E00B /* IMG_0258.PNG */,
+				01FA8E131C3AC32100E7E00B /* IMG_0253.PNG */,
+				01FA8E141C3AC32100E7E00B /* IMG_0251.PNG */,
+				01FA8E151C3AC32100E7E00B /* IMG_0252.PNG */,
+				01FA8E0C1C3AB70C00E7E00B /* IMG_0248.PNG */,
+				01FA8E0D1C3AB70C00E7E00B /* IMG_0249.PNG */,
 				019C1DF11C3990EB000A0778 /* Controller(控制) */,
 				019C1DF21C3990F9000A0778 /* View(视图) */,
 			);
@@ -910,6 +976,30 @@
 				019C1DF41C39911B000A0778 /* SeetingController.m */,
 				019C1DF61C399321000A0778 /* SeetingTableController.h */,
 				019C1DF71C399321000A0778 /* SeetingTableController.m */,
+				01FA8E101C3ABEE100E7E00B /* PersonalProfilesController.h */,
+				01FA8E111C3ABEE100E7E00B /* PersonalProfilesController.m */,
+				01FA8E191C3AC51E00E7E00B /* UpdateNicknameController.h */,
+				01FA8E1A1C3AC51E00E7E00B /* UpdateNicknameController.m */,
+				01FA8E1C1C3ACA6900E7E00B /* UpdateQQNumberController.h */,
+				01FA8E1D1C3ACA6900E7E00B /* UpdateQQNumberController.m */,
+				01FA8E1F1C3ACCCB00E7E00B /* UpdateAutographController.h */,
+				01FA8E201C3ACCCB00E7E00B /* UpdateAutographController.m */,
+				01FA8E221C3AD1E600E7E00B /* SafetySettingController.h */,
+				01FA8E231C3AD1E600E7E00B /* SafetySettingController.m */,
+				01FA8E2F1C3ADBC100E7E00B /* UpdatePasswordController.h */,
+				01FA8E301C3ADBC100E7E00B /* UpdatePasswordController.m */,
+				01FA8E321C3AE66600E7E00B /* VerifyEmailController1.h */,
+				01FA8E331C3AE66600E7E00B /* VerifyEmailController1.m */,
+				01FA8E351C3AE67300E7E00B /* VerifyEmailController2.h */,
+				01FA8E361C3AE67300E7E00B /* VerifyEmailController2.m */,
+				01FA8E381C3AE67D00E7E00B /* VerifyEmailController3.h */,
+				01FA8E391C3AE67D00E7E00B /* VerifyEmailController3.m */,
+				01FA8E3B1C3AE68B00E7E00B /* VerifyPhoneController1.h */,
+				01FA8E3C1C3AE68B00E7E00B /* VerifyPhoneController1.m */,
+				01FA8E3E1C3AE69300E7E00B /* VerifyPhoneController2.h */,
+				01FA8E3F1C3AE69300E7E00B /* VerifyPhoneController2.m */,
+				01FA8E411C3AE69F00E7E00B /* VerifyPhoneController3.h */,
+				01FA8E421C3AE69F00E7E00B /* VerifyPhoneController3.m */,
 			);
 			name = "Controller(控制)";
 			path = Controller;
@@ -1160,6 +1250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01FA8E0E1C3AB70C00E7E00B /* IMG_0248.PNG in Resources */,
 				01FD4FC21C33B03F005D4125 /* RechargeCell.xib in Resources */,
 				01DC45141C31A669006E478F /* IMG_0216.PNG in Resources */,
 				01D3B7321C1FDE0E00C86772 /* GoodsCategoryCell.xib in Resources */,
@@ -1169,8 +1260,10 @@
 				0186281D1C21B54F003C9C21 /* IMG_0116.PNG in Resources */,
 				01747DFD1C1D54270051086C /* CloudNumberCell.xib in Resources */,
 				019E09731C173C730022593A /* NewGoodsCell.xib in Resources */,
+				01FA8E0F1C3AB70C00E7E00B /* IMG_0249.PNG in Resources */,
 				0130F62C1C32278600D2CDFD /* IMG_0217.PNG in Resources */,
 				015B58BA1C213E83008EF7A1 /* GoodsSortCell.xib in Resources */,
+				01FA8E2C1C3AD39E00E7E00B /* IMG_0257.PNG in Resources */,
 				01B24F541C303DC100D2104E /* shopCartCell.xib in Resources */,
 				015B58BE1C215D4E008EF7A1 /* IMG_0114.PNG in Resources */,
 				01BC2E701C2562D200B8831C /* IMG_0134.PNG in Resources */,
@@ -1186,13 +1279,18 @@
 				01FD4FCF1C33BA5E005D4125 /* 1234.png in Resources */,
 				01F8769D1C226A3E00FF0801 /* SearchWordCell.xib in Resources */,
 				0110AA5D1C0D8D03009A8660 /* PopularGoodsCell.xib in Resources */,
+				01FA8E161C3AC32100E7E00B /* IMG_0253.PNG in Resources */,
 				01AB379C1C2707EE0065C902 /* goodsViewCell.xib in Resources */,
+				01FA8E2B1C3AD39E00E7E00B /* IMG_0254.PNG in Resources */,
 				018619E61C15DC8200EABF64 /* AllGoodsCell.xib in Resources */,
 				019E09751C1741C70022593A /* IMG_0066.JPG in Resources */,
 				017FA8061C33D27700B4AA6F /* MyShareOrderCell.xib in Resources */,
 				01747E151C1D76CC0051086C /* ComputeDetailCell.xib in Resources */,
+				01FA8E2D1C3AD39E00E7E00B /* IMG_0256.PNG in Resources */,
+				01FA8E181C3AC32100E7E00B /* IMG_0252.PNG in Resources */,
 				01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */,
 				0136CE4D1C32E81C00BDF538 /* MyAddressCell.xib in Resources */,
+				01FA8E2A1C3AD39E00E7E00B /* IMG_0255.PNG in Resources */,
 				017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */,
 				012626411C1ABA7400509985 /* CloudRecordCell.xib in Resources */,
 				019C1DEE1C398067000A0778 /* DoMyCouldRecordCell.xib in Resources */,
@@ -1200,6 +1298,7 @@
 				0111B9DF1C03540D00DDC2EA /* PersonalView.xib in Resources */,
 				0130F6371C322EC300D2CDFD /* MyCouldRecordCell.xib in Resources */,
 				014A07711C148EE000EEBD78 /* 3.jpg in Resources */,
+				01FA8E171C3AC32100E7E00B /* IMG_0251.PNG in Resources */,
 				01F876A21C22937300FF0801 /* 12345.png in Resources */,
 				015B58BD1C215D4E008EF7A1 /* IMG_0115.PNG in Resources */,
 				013280261C27CD0B00339038 /* CommentaryCell.xib in Resources */,
@@ -1211,6 +1310,7 @@
 				01B7AC781C23E62700D09565 /* HistoryTableViewCell.xib in Resources */,
 				0136CE451C32E13800BDF538 /* IMG_0192.PNG in Resources */,
 				01FD4FCA1C33B7DD005D4125 /* AccessGoodsCell.xib in Resources */,
+				01FA8E2E1C3AD39E00E7E00B /* IMG_0258.PNG in Resources */,
 				018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1289,6 +1389,7 @@
 				0111BA021C03564500DDC2EA /* AnnounceController.m in Sources */,
 				01F712891C1A617200D859A7 /* UITabBarController+ShowHideBar.m in Sources */,
 				0136CE501C32E82F00BDF538 /* MyAddressController.m in Sources */,
+				01FA8E311C3ADBC100E7E00B /* UpdatePasswordController.m in Sources */,
 				01FD4FC11C33B03F005D4125 /* RechargeCell.m in Sources */,
 				0136CE561C32FC9A00BDF538 /* AddMyAddressController.m in Sources */,
 				015B58C61C216BCB008EF7A1 /* ShareOrderController.m in Sources */,
@@ -1299,34 +1400,43 @@
 				014FEFAA1C06018300C247C5 /* LoginController.m in Sources */,
 				017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */,
 				019703BA1C3940D800A53526 /* VOSegment.m in Sources */,
+				01FA8E121C3ABEE100E7E00B /* PersonalProfilesController.m in Sources */,
 				0111BA1A1C0370D600DDC2EA /* PerNavController.m in Sources */,
 				01747E061C1D5ADD0051086C /* DidAnnounceController.m in Sources */,
 				0111BA171C0370AD00DDC2EA /* ShopNavController.m in Sources */,
 				0130F6321C322E9C00D2CDFD /* MyCouldRecordController.m in Sources */,
 				015B58B91C213E83008EF7A1 /* GoodsSortCell.m in Sources */,
 				0126264A1C1ACE9900509985 /* DetailController.m in Sources */,
+				01FA8E431C3AE69F00E7E00B /* VerifyPhoneController3.m in Sources */,
 				012626441C1AC2AF00509985 /* CloudRecordController.m in Sources */,
+				01FA8E371C3AE67300E7E00B /* VerifyEmailController2.m in Sources */,
 				01B7AC811C23F01300D09565 /* DB.m in Sources */,
 				01DC451A1C31A915006E478F /* Register2Controller.m in Sources */,
 				01ACDE6E1C2A6D9700A9466B /* AFHTTPSessionManager.m in Sources */,
+				01FA8E401C3AE69300E7E00B /* VerifyPhoneController2.m in Sources */,
 				014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */,
 				01747E101C1D6BA60051086C /* InAnnounceController.m in Sources */,
 				0111B9F51C03550F00DDC2EA /* AllGoodsController.m in Sources */,
 				015B58C21C215EB9008EF7A1 /* ShareOrderCell.m in Sources */,
 				019703B81C3940D800A53526 /* VOContentLayer.m in Sources */,
+				01FA8E341C3AE66600E7E00B /* VerifyEmailController1.m in Sources */,
 				019C1DE81C3978C0000A0778 /* DoShareOrderCell.m in Sources */,
 				01ACDE721C2A6D9700A9466B /* AFURLRequestSerialization.m in Sources */,
 				0132802E1C2800C100339038 /* ShareOrderDetailView.m in Sources */,
+				01FA8E1B1C3AC51E00E7E00B /* UpdateNicknameController.m in Sources */,
 				019703AD1C391FB400A53526 /* LXDSegmentControl.m in Sources */,
 				01ACDE731C2A6D9700A9466B /* AFURLResponseSerialization.m in Sources */,
 				019703B91C3940D800A53526 /* VOIndicatorAnimation.m in Sources */,
+				01FA8E3D1C3AE68B00E7E00B /* VerifyPhoneController1.m in Sources */,
 				0110AA5C1C0D8D03009A8660 /* PopularGoodsCell.m in Sources */,
+				01FA8E3A1C3AE67D00E7E00B /* VerifyEmailController3.m in Sources */,
 				01B24F5C1C3058D800D2104E /* BalanceTableController.m in Sources */,
 				01FD4FCD1C33B806005D4125 /* AccessGoodsController.m in Sources */,
 				01ACDE711C2A6D9700A9466B /* AFURLConnectionOperation.m in Sources */,
 				0111B9ED1C0354B100DDC2EA /* ShopCartController.m in Sources */,
 				0111BA141C03709700DDC2EA /* GoodsNavController.m in Sources */,
 				0132802B1C27F69200339038 /* ShareOrderDetailController.m in Sources */,
+				01FA8E1E1C3ACA6900E7E00B /* UpdateQQNumberController.m in Sources */,
 				019E09721C173C730022593A /* NewGoodsCell.m in Sources */,
 				01B24F531C303DC100D2104E /* shopCartCell.m in Sources */,
 				01ACDE6F1C2A6D9700A9466B /* AFNetworkReachabilityManager.m in Sources */,
@@ -1353,8 +1463,10 @@
 				019C1DED1C398067000A0778 /* DoMyCouldRecordCell.m in Sources */,
 				01B7AC821C23F01300D09565 /* HistoryClass.m in Sources */,
 				018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */,
+				01FA8E241C3AD1E600E7E00B /* SafetySettingController.m in Sources */,
 				011E374E1C1E5F960032FB13 /* SelectCloudNumCell.m in Sources */,
 				0111B9E31C03543F00DDC2EA /* PersonalController.m in Sources */,
+				01FA8E211C3ACCCB00E7E00B /* UpdateAutographController.m in Sources */,
 				0130F6361C322EC300D2CDFD /* MyCouldRecordCell.m in Sources */,
 				019C1DF81C399321000A0778 /* SeetingTableController.m in Sources */,
 				01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */,
