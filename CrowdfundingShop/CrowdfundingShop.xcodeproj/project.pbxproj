@@ -62,6 +62,7 @@
 		015B58C31C215EB9008EF7A1 /* ShareOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 015B58C11C215EB9008EF7A1 /* ShareOrderCell.xib */; };
 		015B58C61C216BCB008EF7A1 /* ShareOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015B58C51C216BCB008EF7A1 /* ShareOrderController.m */; };
 		01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01652BC21C19E1B700310880 /* GoodsDetailController.m */; };
+		0172A0DE1C3BCD0F000DA4DB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0172A0DD1C3BCD0F000DA4DB /* AVFoundation.framework */; };
 		01747DFC1C1D54270051086C /* CloudNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01747DFA1C1D54270051086C /* CloudNumberCell.m */; };
 		01747DFD1C1D54270051086C /* CloudNumberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01747DFB1C1D54270051086C /* CloudNumberCell.xib */; };
 		01747E061C1D5ADD0051086C /* DidAnnounceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01747E051C1D5ADD0051086C /* DidAnnounceController.m */; };
@@ -72,10 +73,18 @@
 		01782B721C05EF850028768F /* PerTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B711C05EF850028768F /* PerTableController.m */; };
 		017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F6BE01C02BE050040385A /* Plug_Controller.m */; };
 		017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 017F6BE21C02BE2D0040385A /* Main.storyboard */; };
+		017F75BA1C3C2BAE0047B260 /* KTSelectPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 017F75B51C3C2BAE0047B260 /* KTSelectPickerView.xib */; };
+		017F75BB1C3C2BAE0047B260 /* KTSelectDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F75B71C3C2BAE0047B260 /* KTSelectDatePicker.m */; };
+		017F75BC1C3C2BAE0047B260 /* KTSelectPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F75B91C3C2BAE0047B260 /* KTSelectPickerView.m */; };
 		017FA8011C33D26300B4AA6F /* MyShareOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FA8001C33D26300B4AA6F /* MyShareOrderController.m */; };
 		017FA8051C33D27700B4AA6F /* MyShareOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FA8031C33D27700B4AA6F /* MyShareOrderCell.m */; };
 		017FA8061C33D27700B4AA6F /* MyShareOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 017FA8041C33D27700B4AA6F /* MyShareOrderCell.xib */; };
 		0185F0E91C2A3CB500A75980 /* RequestData.m in Sources */ = {isa = PBXBuildFile; fileRef = 0185F0E81C2A3CB500A75980 /* RequestData.m */; };
+		01860E671C3C1CE8007A462A /* china_Province_city_zone(1). in Resources */ = {isa = PBXBuildFile; fileRef = 01860E5E1C3C1CE8007A462A /* china_Province_city_zone(1). */; };
+		01860E681C3C1CE8007A462A /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 01860E601C3C1CE8007A462A /* City.m */; };
+		01860E691C3C1CE8007A462A /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 01860E621C3C1CE8007A462A /* DBManager.m */; };
+		01860E6A1C3C1CE8007A462A /* Province.m in Sources */ = {isa = PBXBuildFile; fileRef = 01860E641C3C1CE8007A462A /* Province.m */; };
+		01860E6B1C3C1CE8007A462A /* UIView+RGSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 01860E661C3C1CE8007A462A /* UIView+RGSize.m */; };
 		018619E51C15DC8200EABF64 /* AllGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 018619E31C15DC8200EABF64 /* AllGoodsCell.m */; };
 		018619E61C15DC8200EABF64 /* AllGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 018619E41C15DC8200EABF64 /* AllGoodsCell.xib */; };
 		018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 018619E71C15DE5200EABF64 /* 20150427091614458.jpg */; };
@@ -259,6 +268,7 @@
 		015B58C51C216BCB008EF7A1 /* ShareOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareOrderController.m; sourceTree = "<group>"; };
 		01652BC11C19E1B700310880 /* GoodsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsDetailController.h; sourceTree = "<group>"; };
 		01652BC21C19E1B700310880 /* GoodsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailController.m; sourceTree = "<group>"; };
+		0172A0DD1C3BCD0F000DA4DB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		01747DF91C1D54270051086C /* CloudNumberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudNumberCell.h; sourceTree = "<group>"; };
 		01747DFA1C1D54270051086C /* CloudNumberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudNumberCell.m; sourceTree = "<group>"; };
 		01747DFB1C1D54270051086C /* CloudNumberCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CloudNumberCell.xib; sourceTree = "<group>"; };
@@ -276,6 +286,11 @@
 		017F6BDF1C02BE050040385A /* Plug_Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plug_Controller.h; sourceTree = "<group>"; };
 		017F6BE01C02BE050040385A /* Plug_Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Plug_Controller.m; sourceTree = "<group>"; };
 		017F6BE21C02BE2D0040385A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		017F75B51C3C2BAE0047B260 /* KTSelectPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KTSelectPickerView.xib; sourceTree = "<group>"; };
+		017F75B61C3C2BAE0047B260 /* KTSelectDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSelectDatePicker.h; sourceTree = "<group>"; };
+		017F75B71C3C2BAE0047B260 /* KTSelectDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSelectDatePicker.m; sourceTree = "<group>"; };
+		017F75B81C3C2BAE0047B260 /* KTSelectPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSelectPickerView.h; sourceTree = "<group>"; };
+		017F75B91C3C2BAE0047B260 /* KTSelectPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSelectPickerView.m; sourceTree = "<group>"; };
 		017FA7FF1C33D26300B4AA6F /* MyShareOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShareOrderController.h; sourceTree = "<group>"; };
 		017FA8001C33D26300B4AA6F /* MyShareOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyShareOrderController.m; sourceTree = "<group>"; };
 		017FA8021C33D27700B4AA6F /* MyShareOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyShareOrderCell.h; sourceTree = "<group>"; };
@@ -283,6 +298,15 @@
 		017FA8041C33D27700B4AA6F /* MyShareOrderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyShareOrderCell.xib; sourceTree = "<group>"; };
 		0185F0E71C2A3CB500A75980 /* RequestData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestData.h; sourceTree = "<group>"; };
 		0185F0E81C2A3CB500A75980 /* RequestData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestData.m; sourceTree = "<group>"; };
+		01860E5E1C3C1CE8007A462A /* china_Province_city_zone(1). */ = {isa = PBXFileReference; lastKnownFileType = file; path = "china_Province_city_zone(1)."; sourceTree = "<group>"; };
+		01860E5F1C3C1CE8007A462A /* City.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
+		01860E601C3C1CE8007A462A /* City.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = City.m; sourceTree = "<group>"; };
+		01860E611C3C1CE8007A462A /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		01860E621C3C1CE8007A462A /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		01860E631C3C1CE8007A462A /* Province.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Province.h; sourceTree = "<group>"; };
+		01860E641C3C1CE8007A462A /* Province.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Province.m; sourceTree = "<group>"; };
+		01860E651C3C1CE8007A462A /* UIView+RGSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RGSize.h"; sourceTree = "<group>"; };
+		01860E661C3C1CE8007A462A /* UIView+RGSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RGSize.m"; sourceTree = "<group>"; };
 		018619E21C15DC8200EABF64 /* AllGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllGoodsCell.h; sourceTree = "<group>"; };
 		018619E31C15DC8200EABF64 /* AllGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllGoodsCell.m; sourceTree = "<group>"; };
 		018619E41C15DC8200EABF64 /* AllGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllGoodsCell.xib; sourceTree = "<group>"; };
@@ -451,6 +475,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0172A0DE1C3BCD0F000DA4DB /* AVFoundation.framework in Frameworks */,
 				01B7AC851C23F5EA00D09565 /* libsqlite3.0.tbd in Frameworks */,
 				09E54489D16DFEBC046E3C51 /* libPods.a in Frameworks */,
 			);
@@ -852,6 +877,8 @@
 		017F6BDA1C02BCCA0040385A /* Plug-in(插件) */ = {
 			isa = PBXGroup;
 			children = (
+				017F75B41C3C2B7C0047B260 /* SelectDatePicker */,
+				01860E5D1C3C1CB6007A462A /* UIPicker */,
 				019703AF1C3940D800A53526 /* VOSegmentedControl */,
 				019703A71C391FB400A53526 /* segmentControl */,
 				019703A31C39196500A53526 /* RFSegmentView */,
@@ -877,6 +904,18 @@
 			);
 			name = "Main(主要)";
 			path = Main;
+			sourceTree = "<group>";
+		};
+		017F75B41C3C2B7C0047B260 /* SelectDatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				017F75B51C3C2BAE0047B260 /* KTSelectPickerView.xib */,
+				017F75B61C3C2BAE0047B260 /* KTSelectDatePicker.h */,
+				017F75B71C3C2BAE0047B260 /* KTSelectDatePicker.m */,
+				017F75B81C3C2BAE0047B260 /* KTSelectPickerView.h */,
+				017F75B91C3C2BAE0047B260 /* KTSelectPickerView.m */,
+			);
+			path = SelectDatePicker;
 			sourceTree = "<group>";
 		};
 		017FA7FB1C33D1FC00B4AA6F /* MyShareOrder(我的晒单) */ = {
@@ -911,6 +950,22 @@
 			);
 			name = "View(视图)";
 			path = View;
+			sourceTree = "<group>";
+		};
+		01860E5D1C3C1CB6007A462A /* UIPicker */ = {
+			isa = PBXGroup;
+			children = (
+				01860E5E1C3C1CE8007A462A /* china_Province_city_zone(1). */,
+				01860E5F1C3C1CE8007A462A /* City.h */,
+				01860E601C3C1CE8007A462A /* City.m */,
+				01860E611C3C1CE8007A462A /* DBManager.h */,
+				01860E621C3C1CE8007A462A /* DBManager.m */,
+				01860E631C3C1CE8007A462A /* Province.h */,
+				01860E641C3C1CE8007A462A /* Province.m */,
+				01860E651C3C1CE8007A462A /* UIView+RGSize.h */,
+				01860E661C3C1CE8007A462A /* UIView+RGSize.m */,
+			);
+			path = UIPicker;
 			sourceTree = "<group>";
 		};
 		019703A31C39196500A53526 /* RFSegmentView */ = {
@@ -1175,6 +1230,7 @@
 		7D2111B123D9A253A3763C4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0172A0DD1C3BCD0F000DA4DB /* AVFoundation.framework */,
 				01B7AC841C23F5EA00D09565 /* libsqlite3.0.tbd */,
 				D5EDE4F39F0C4F8145C3E8A5 /* libPods.a */,
 			);
@@ -1277,6 +1333,7 @@
 				01FD4FD11C33BD29005D4125 /* Canon.jpg in Resources */,
 				0136CE411C32E13800BDF538 /* IMG_0188.PNG in Resources */,
 				01FD4FCF1C33BA5E005D4125 /* 1234.png in Resources */,
+				01860E671C3C1CE8007A462A /* china_Province_city_zone(1). in Resources */,
 				01F8769D1C226A3E00FF0801 /* SearchWordCell.xib in Resources */,
 				0110AA5D1C0D8D03009A8660 /* PopularGoodsCell.xib in Resources */,
 				01FA8E161C3AC32100E7E00B /* IMG_0253.PNG in Resources */,
@@ -1312,6 +1369,7 @@
 				01FD4FCA1C33B7DD005D4125 /* AccessGoodsCell.xib in Resources */,
 				01FA8E2E1C3AD39E00E7E00B /* IMG_0258.PNG in Resources */,
 				018619E81C15DE5200EABF64 /* 20150427091614458.jpg in Resources */,
+				017F75BA1C3C2BAE0047B260 /* KTSelectPickerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1373,12 +1431,15 @@
 				01F876A01C22857000FF0801 /* SearchWordController.m in Sources */,
 				01AB379B1C2707EE0065C902 /* goodsViewCell.m in Sources */,
 				01B797191C3386410076BA01 /* ConsumeCell.m in Sources */,
+				01860E6A1C3C1CE8007A462A /* Province.m in Sources */,
 				019703BB1C3940D800A53526 /* VOSegmentedControl.m in Sources */,
 				01B7AC7A1C23E62700D09565 /* UIView+Extension.m in Sources */,
 				01DC45171C31A90B006E478F /* Register1Controller.m in Sources */,
 				0185F0E91C2A3CB500A75980 /* RequestData.m in Sources */,
 				011E37521C1E64830032FB13 /* SelectCloudNumController.m in Sources */,
+				017F75BC1C3C2BAE0047B260 /* KTSelectPickerView.m in Sources */,
 				019C1DF51C39911B000A0778 /* SeetingController.m in Sources */,
+				017F75BB1C3C2BAE0047B260 /* KTSelectDatePicker.m in Sources */,
 				01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */,
 				01D3419F1C029C9C000A32A1 /* main.m in Sources */,
 				01747DFC1C1D54270051086C /* CloudNumberCell.m in Sources */,
@@ -1391,8 +1452,10 @@
 				0136CE501C32E82F00BDF538 /* MyAddressController.m in Sources */,
 				01FA8E311C3ADBC100E7E00B /* UpdatePasswordController.m in Sources */,
 				01FD4FC11C33B03F005D4125 /* RechargeCell.m in Sources */,
+				01860E691C3C1CE8007A462A /* DBManager.m in Sources */,
 				0136CE561C32FC9A00BDF538 /* AddMyAddressController.m in Sources */,
 				015B58C61C216BCB008EF7A1 /* ShareOrderController.m in Sources */,
+				01860E681C3C1CE8007A462A /* City.m in Sources */,
 				01782B721C05EF850028768F /* PerTableController.m in Sources */,
 				01B24F591C30584400D2104E /* BalanceController.m in Sources */,
 				01747E141C1D76CC0051086C /* ComputeDetailCell.m in Sources */,
@@ -1457,6 +1520,7 @@
 				017FA8051C33D27700B4AA6F /* MyShareOrderCell.m in Sources */,
 				0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */,
 				0136CE4C1C32E81C00BDF538 /* MyAddressCell.m in Sources */,
+				01860E6B1C3C1CE8007A462A /* UIView+RGSize.m in Sources */,
 				01B7AC791C23E62700D09565 /* HWSearchBar.m in Sources */,
 				01ACDE741C2A6D9700A9466B /* AFURLSessionManager.m in Sources */,
 				01747E0D1C1D68660051086C /* CloudNumberController.m in Sources */,

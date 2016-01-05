@@ -1894,12 +1894,22 @@
                                                         <constraint firstAttribute="height" constant="50" id="sa6-0Q-Wpp"/>
                                                     </constraints>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IpX-7a-kLg">
+                                                    <rect key="frame" x="0.0" y="0.0" width="237" height="70"/>
+                                                    <connections>
+                                                        <action selector="updateHeadClick:" destination="B1V-RX-B6A" eventType="touchUpInside" id="xxd-DS-Aw4"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="IpX-7a-kLg" firstAttribute="leading" secondItem="pet-Q6-glS" secondAttribute="leading" id="9oL-d8-oKa"/>
+                                                <constraint firstAttribute="bottom" secondItem="IpX-7a-kLg" secondAttribute="bottom" id="Fea-Bc-pQ9"/>
                                                 <constraint firstItem="PSL-ps-l4k" firstAttribute="centerY" secondItem="pet-Q6-glS" secondAttribute="centerY" id="O5p-Ma-CcA"/>
+                                                <constraint firstItem="IpX-7a-kLg" firstAttribute="top" secondItem="pet-Q6-glS" secondAttribute="top" id="P66-t3-YmB"/>
                                                 <constraint firstAttribute="trailing" secondItem="PSL-ps-l4k" secondAttribute="trailing" id="Xiu-2c-edY"/>
                                                 <constraint firstItem="HaD-al-zeU" firstAttribute="centerY" secondItem="pet-Q6-glS" secondAttribute="centerY" id="lLd-A2-8QJ"/>
                                                 <constraint firstItem="HaD-al-zeU" firstAttribute="leading" secondItem="pet-Q6-glS" secondAttribute="leading" constant="10" id="ocu-si-a8I"/>
+                                                <constraint firstAttribute="trailing" secondItem="IpX-7a-kLg" secondAttribute="trailing" constant="50" id="zcj-jT-Wnb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1973,9 +1983,19 @@
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="maU-BO-5oE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="49.5"/>
+                                                    <connections>
+                                                        <action selector="updateSexClick:" destination="B1V-RX-B6A" eventType="touchUpInside" id="3u2-vM-GSF"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="maU-BO-5oE" firstAttribute="top" secondItem="MwH-Y2-AnW" secondAttribute="top" id="09r-5q-TGr"/>
+                                                <constraint firstItem="maU-BO-5oE" firstAttribute="leading" secondItem="MwH-Y2-AnW" secondAttribute="leading" id="5pC-XJ-Ndm"/>
                                                 <constraint firstAttribute="trailing" secondItem="3DE-4c-aE4" secondAttribute="trailing" id="Gbx-8n-27H"/>
+                                                <constraint firstAttribute="bottom" secondItem="maU-BO-5oE" secondAttribute="bottom" id="bKg-6T-7mJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="maU-BO-5oE" secondAttribute="trailing" id="e7F-nR-YTY"/>
                                                 <constraint firstItem="u6K-sQ-jsp" firstAttribute="centerY" secondItem="MwH-Y2-AnW" secondAttribute="centerY" id="hvu-5a-5T7"/>
                                                 <constraint firstItem="u6K-sQ-jsp" firstAttribute="leading" secondItem="MwH-Y2-AnW" secondAttribute="leading" constant="10" id="ifr-D0-9GN"/>
                                                 <constraint firstItem="3DE-4c-aE4" firstAttribute="centerY" secondItem="MwH-Y2-AnW" secondAttribute="centerY" id="zHQ-81-9U8"/>
@@ -1989,6 +2009,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NdQ-10-E3b">
+                                                    <rect key="frame" x="0.0" y="0.0" width="287" height="49.5"/>
+                                                    <connections>
+                                                        <action selector="chooseDateTime:" destination="B1V-RX-B6A" eventType="touchUpInside" id="W5h-Am-W4F"/>
+                                                    </connections>
+                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="生日" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMs-dT-kLi" customClass="ARLabel">
                                                     <rect key="frame" x="10" y="15" width="28" height="21"/>
                                                     <constraints>
@@ -2019,7 +2045,11 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="hAN-il-ZHM" firstAttribute="centerY" secondItem="sEE-o1-O4H" secondAttribute="centerY" id="2IL-ae-lAF"/>
+                                                <constraint firstAttribute="bottom" secondItem="NdQ-10-E3b" secondAttribute="bottom" id="9Aw-3R-V2k"/>
                                                 <constraint firstItem="f3M-MJ-dMi" firstAttribute="centerY" secondItem="sEE-o1-O4H" secondAttribute="centerY" id="AHl-QA-FOr"/>
+                                                <constraint firstItem="NdQ-10-E3b" firstAttribute="top" secondItem="sEE-o1-O4H" secondAttribute="top" id="Lu7-4e-3Zy"/>
+                                                <constraint firstItem="NdQ-10-E3b" firstAttribute="leading" secondItem="sEE-o1-O4H" secondAttribute="leading" id="Nce-6R-n8k"/>
+                                                <constraint firstAttribute="trailing" secondItem="NdQ-10-E3b" secondAttribute="trailing" id="Rab-O1-gKa"/>
                                                 <constraint firstItem="f3M-MJ-dMi" firstAttribute="leading" secondItem="wMs-dT-kLi" secondAttribute="trailing" id="S2E-Sm-0oD"/>
                                                 <constraint firstItem="wMs-dT-kLi" firstAttribute="centerY" secondItem="sEE-o1-O4H" secondAttribute="centerY" id="i1H-vy-leT"/>
                                                 <constraint firstItem="wMs-dT-kLi" firstAttribute="leading" secondItem="sEE-o1-O4H" secondAttribute="leading" constant="10" id="oht-Is-btY"/>
@@ -2104,12 +2134,22 @@
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9v8-e0-WsQ">
+                                                    <rect key="frame" x="0.0" y="0.5" width="287" height="49.5"/>
+                                                    <connections>
+                                                        <action selector="chooseCity:" destination="B1V-RX-B6A" eventType="touchUpInside" id="uSx-nh-iTD"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="FmP-Zg-sHh" firstAttribute="centerY" secondItem="p1s-xP-xDN" secondAttribute="centerY" id="09P-uU-5mb"/>
                                                 <constraint firstAttribute="trailing" secondItem="3fG-hh-74n" secondAttribute="trailing" id="59y-DO-48N"/>
                                                 <constraint firstItem="3fG-hh-74n" firstAttribute="centerY" secondItem="p1s-xP-xDN" secondAttribute="centerY" id="9nK-XO-SrF"/>
+                                                <constraint firstItem="9v8-e0-WsQ" firstAttribute="top" secondItem="p1s-xP-xDN" secondAttribute="top" id="Fad-ny-odH"/>
+                                                <constraint firstAttribute="trailing" secondItem="9v8-e0-WsQ" secondAttribute="trailing" id="Xm3-8D-Sz6"/>
+                                                <constraint firstItem="9v8-e0-WsQ" firstAttribute="leading" secondItem="p1s-xP-xDN" secondAttribute="leading" id="dYz-eb-7fj"/>
                                                 <constraint firstItem="FmP-Zg-sHh" firstAttribute="leading" secondItem="p1s-xP-xDN" secondAttribute="leading" constant="10" id="qnC-X2-SAn"/>
+                                                <constraint firstAttribute="bottom" secondItem="9v8-e0-WsQ" secondAttribute="bottom" id="zou-Aj-hz8"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -2138,11 +2178,21 @@
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bS6-ah-GOa">
+                                                    <rect key="frame" x="0.0" y="0.5" width="287" height="49.5"/>
+                                                    <connections>
+                                                        <action selector="chooseCity:" destination="B1V-RX-B6A" eventType="touchUpInside" id="jpq-8m-qd8"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="bS6-ah-GOa" firstAttribute="leading" secondItem="7tU-Eu-81E" secondAttribute="leading" id="0Lh-r9-otr"/>
                                                 <constraint firstItem="RGy-Ts-dar" firstAttribute="leading" secondItem="7tU-Eu-81E" secondAttribute="leading" constant="10" id="45d-gj-92l"/>
+                                                <constraint firstItem="bS6-ah-GOa" firstAttribute="top" secondItem="7tU-Eu-81E" secondAttribute="top" id="O9c-iW-98u"/>
+                                                <constraint firstAttribute="bottom" secondItem="bS6-ah-GOa" secondAttribute="bottom" id="Pd5-Kg-Hmt"/>
                                                 <constraint firstAttribute="trailing" secondItem="SX1-Yz-76x" secondAttribute="trailing" id="d9l-bQ-sLp"/>
                                                 <constraint firstItem="SX1-Yz-76x" firstAttribute="centerY" secondItem="7tU-Eu-81E" secondAttribute="centerY" id="s8l-D4-0Wp"/>
+                                                <constraint firstAttribute="trailing" secondItem="bS6-ah-GOa" secondAttribute="trailing" id="vW1-Hk-EZu"/>
                                                 <constraint firstItem="RGy-Ts-dar" firstAttribute="centerY" secondItem="7tU-Eu-81E" secondAttribute="centerY" id="w2l-VW-uTT"/>
                                             </constraints>
                                         </tableViewCellContentView>

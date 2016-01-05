@@ -9,6 +9,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FSMediaPicker-FSMediaPicker.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FSMediaPicker.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -27,17 +37,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4FCBEDF74A294270DA63FEEC77148A33</key>
+		<key>12F37C207F460E6418ED266D6929BA09</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6B27C193DFF23B268C8CEFA79BAC3A83</key>
+		<key>7982B2134360934BB6E874828DC3E86B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>A08AEFDC024D13A4C5F909784AEE8C56</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B238B97A063BBF4A8381D92F8122FE5E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FC59F7E34083F38E7EED4D4D6B6AA33A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="KTSelectPickerView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="230"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KuH-El-ZEX">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j3n-ma-Jzd">
+                            <rect key="frame" x="0.0" y="0.0" width="159.5" height="50"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="取消">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZ3-I2-tLn">
+                            <rect key="frame" x="160" y="0.0" width="159.5" height="50"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
+                            <state key="normal" title="完成">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
+                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TBA-J9-fD9" userLabel="竖线">
+                            <rect key="frame" x="159" y="0.0" width="1" height="50"/>
+                            <color key="backgroundColor" red="0.87058823529411766" green="0.87058823529411766" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="1" id="e14-Vd-GYP"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="htE-uL-WQJ" userLabel="横线">
+                            <rect key="frame" x="0.0" y="49" width="320" height="1"/>
+                            <color key="backgroundColor" red="0.87058823529411766" green="0.87058823529411766" blue="0.87058823529411766" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="bXg-A1-8fx"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="DZ3-I2-tLn" firstAttribute="leading" secondItem="TBA-J9-fD9" secondAttribute="trailing" id="2v3-l4-kbw"/>
+                        <constraint firstItem="j3n-ma-Jzd" firstAttribute="top" secondItem="KuH-El-ZEX" secondAttribute="top" id="6CN-cg-qPh"/>
+                        <constraint firstAttribute="centerX" secondItem="TBA-J9-fD9" secondAttribute="centerX" id="6DX-LT-Rbw"/>
+                        <constraint firstAttribute="bottom" secondItem="DZ3-I2-tLn" secondAttribute="bottom" id="Cbo-Id-52p"/>
+                        <constraint firstItem="j3n-ma-Jzd" firstAttribute="leading" secondItem="KuH-El-ZEX" secondAttribute="leading" id="D3u-wP-ptI"/>
+                        <constraint firstItem="DZ3-I2-tLn" firstAttribute="top" secondItem="KuH-El-ZEX" secondAttribute="top" id="DYd-dJ-QEQ"/>
+                        <constraint firstAttribute="bottom" secondItem="htE-uL-WQJ" secondAttribute="bottom" id="KSV-8a-mx9"/>
+                        <constraint firstAttribute="trailing" secondItem="htE-uL-WQJ" secondAttribute="trailing" id="N5s-jn-CZE"/>
+                        <constraint firstAttribute="bottom" secondItem="TBA-J9-fD9" secondAttribute="bottom" id="OPR-eI-bdk"/>
+                        <constraint firstAttribute="bottom" secondItem="j3n-ma-Jzd" secondAttribute="bottom" id="OYC-s7-Hzb"/>
+                        <constraint firstAttribute="height" constant="50" id="U8q-Cq-G71"/>
+                        <constraint firstAttribute="trailing" secondItem="DZ3-I2-tLn" secondAttribute="trailing" id="X9j-wm-ktP"/>
+                        <constraint firstItem="TBA-J9-fD9" firstAttribute="leading" secondItem="j3n-ma-Jzd" secondAttribute="trailing" id="bl8-i9-uuv"/>
+                        <constraint firstItem="TBA-J9-fD9" firstAttribute="top" secondItem="KuH-El-ZEX" secondAttribute="top" id="c6C-Zg-CgI"/>
+                        <constraint firstItem="htE-uL-WQJ" firstAttribute="leading" secondItem="KuH-El-ZEX" secondAttribute="leading" id="pAY-5E-v7p"/>
+                    </constraints>
+                </view>
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="H50-HS-hWf">
+                    <rect key="frame" x="0.0" y="50" width="320" height="180"/>
+                    <date key="date" timeIntervalSinceReferenceDate="466065242.315786">
+                        <!--2015-10-09 06:34:02 +0000-->
+                    </date>
+                </datePicker>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="H50-HS-hWf" secondAttribute="trailing" id="FS6-nk-dE0"/>
+                <constraint firstItem="KuH-El-ZEX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Tak-F0-dvZ"/>
+                <constraint firstItem="KuH-El-ZEX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VsN-IF-V0U"/>
+                <constraint firstItem="H50-HS-hWf" firstAttribute="top" secondItem="KuH-El-ZEX" secondAttribute="bottom" id="WHD-YO-sHp"/>
+                <constraint firstAttribute="trailing" secondItem="KuH-El-ZEX" secondAttribute="trailing" id="YHA-uC-can"/>
+                <constraint firstAttribute="bottom" secondItem="H50-HS-hWf" secondAttribute="bottom" id="bfQ-nC-YmY"/>
+                <constraint firstItem="H50-HS-hWf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="kcG-ck-knC"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="cancleBtn" destination="j3n-ma-Jzd" id="ctz-na-3f4"/>
+                <outlet property="confirmBtn" destination="DZ3-I2-tLn" id="AMD-RX-oh2"/>
+                <outlet property="datePicker" destination="H50-HS-hWf" id="gbS-8p-NK6"/>
+                <outlet property="lineHeight" destination="bXg-A1-8fx" id="qV3-YF-3MW"/>
+                <outlet property="lineWidth" destination="e14-Vd-GYP" id="FPR-i3-vEg"/>
+            </connections>
+            <point key="canvasLocation" x="351" y="431"/>
+        </view>
+    </objects>
+</document>
