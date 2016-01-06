@@ -65,4 +65,12 @@
  *  @param block 返回块值
  */
 +(void)newAnnounced:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+
+/**
+ *   登录
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)login:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
 @end

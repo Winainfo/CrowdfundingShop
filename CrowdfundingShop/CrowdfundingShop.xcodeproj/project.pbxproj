@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0105173B1C3CF684006766EC /* AccountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0105173A1C3CF684006766EC /* AccountModel.m */; };
+		0105173E1C3D1C1D006766EC /* AccountTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0105173D1C3D1C1D006766EC /* AccountTool.m */; };
 		0110AA5C1C0D8D03009A8660 /* PopularGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0110AA5A1C0D8D03009A8660 /* PopularGoodsCell.m */; };
 		0110AA5D1C0D8D03009A8660 /* PopularGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0110AA5B1C0D8D03009A8660 /* PopularGoodsCell.xib */; };
 		0111B9DF1C03540D00DDC2EA /* PersonalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0111B9DE1C03540D00DDC2EA /* PersonalView.xib */; };
@@ -52,7 +54,6 @@
 		014A07721C148EE000EEBD78 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 014A076F1C148EE000EEBD78 /* 2.jpg */; };
 		014A07731C148EE000EEBD78 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 014A07701C148EE000EEBD78 /* 1.jpg */; };
 		014FEFAA1C06018300C247C5 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014FEFA91C06018300C247C5 /* LoginController.m */; };
-		014FEFAC1C0602C000C247C5 /* 登录.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 014FEFAB1C0602C000C247C5 /* 登录.PNG */; };
 		014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 014FEFAF1C060B9C00C247C5 /* ARLabel.m */; };
 		015B58B91C213E83008EF7A1 /* GoodsSortCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 015B58B71C213E83008EF7A1 /* GoodsSortCell.m */; };
 		015B58BA1C213E83008EF7A1 /* GoodsSortCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 015B58B81C213E83008EF7A1 /* GoodsSortCell.xib */; };
@@ -183,6 +184,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		010517391C3CF684006766EC /* AccountModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountModel.h; sourceTree = "<group>"; };
+		0105173A1C3CF684006766EC /* AccountModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountModel.m; sourceTree = "<group>"; };
+		0105173C1C3D1C1D006766EC /* AccountTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTool.h; sourceTree = "<group>"; };
+		0105173D1C3D1C1D006766EC /* AccountTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTool.m; sourceTree = "<group>"; };
 		0110AA591C0D8D03009A8660 /* PopularGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopularGoodsCell.h; sourceTree = "<group>"; };
 		0110AA5A1C0D8D03009A8660 /* PopularGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopularGoodsCell.m; sourceTree = "<group>"; };
 		0110AA5B1C0D8D03009A8660 /* PopularGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopularGoodsCell.xib; sourceTree = "<group>"; };
@@ -253,7 +258,6 @@
 		014A07701C148EE000EEBD78 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		014FEFA81C06018300C247C5 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		014FEFA91C06018300C247C5 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
-		014FEFAB1C0602C000C247C5 /* 登录.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "登录.PNG"; sourceTree = "<group>"; };
 		014FEFAE1C060B9C00C247C5 /* ARLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARLabel.h; sourceTree = "<group>"; };
 		014FEFAF1C060B9C00C247C5 /* ARLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARLabel.m; sourceTree = "<group>"; };
 		015B58B61C213E83008EF7A1 /* GoodsSortCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsSortCell.h; sourceTree = "<group>"; };
@@ -484,6 +488,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		010517371C3CF650006766EC /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				0105173C1C3D1C1D006766EC /* AccountTool.h */,
+				0105173D1C3D1C1D006766EC /* AccountTool.m */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		010517381C3CF668006766EC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				010517391C3CF684006766EC /* AccountModel.h */,
+				0105173A1C3CF684006766EC /* AccountModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		0111B9C51C0352A200DDC2EA /* Home(首页) */ = {
 			isa = PBXGroup;
 			children = (
@@ -822,7 +844,8 @@
 		014FEFA71C06015B00C247C5 /* Login(登录注册) */ = {
 			isa = PBXGroup;
 			children = (
-				014FEFAB1C0602C000C247C5 /* 登录.PNG */,
+				010517381C3CF668006766EC /* Model */,
+				010517371C3CF650006766EC /* Tool */,
 				014FEFA81C06018300C247C5 /* LoginController.h */,
 				014FEFA91C06018300C247C5 /* LoginController.m */,
 				01DC45151C31A90B006E478F /* Register1Controller.h */,
@@ -1327,7 +1350,6 @@
 				0136CE421C32E13800BDF538 /* IMG_0189.PNG in Resources */,
 				01B7971A1C3386410076BA01 /* ConsumeCell.xib in Resources */,
 				0132801E1C27CCAC00339038 /* IMG_0149.PNG in Resources */,
-				014FEFAC1C0602C000C247C5 /* 登录.PNG in Resources */,
 				0136CE401C32E13800BDF538 /* IMG_0187.PNG in Resources */,
 				0136CE431C32E13800BDF538 /* IMG_0190.PNG in Resources */,
 				01FD4FD11C33BD29005D4125 /* Canon.jpg in Resources */,
@@ -1511,12 +1533,14 @@
 				013280211C27CCCE00339038 /* CommentaryController.m in Sources */,
 				01C8622D1C25C28E0075BD7F /* goodsHeaderView.m in Sources */,
 				01FD4FC91C33B7DD005D4125 /* AccessGoodsCell.m in Sources */,
+				0105173E1C3D1C1D006766EC /* AccountTool.m in Sources */,
 				017FA8011C33D26300B4AA6F /* MyShareOrderController.m in Sources */,
 				01ACDE6C1C2A6D9700A9466B /* AFHTTPRequestOperation.m in Sources */,
 				01ACDE701C2A6D9700A9466B /* AFSecurityPolicy.m in Sources */,
 				01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */,
 				019703AE1C391FB400A53526 /* LXDSegmentControlConfiguration.m in Sources */,
 				01FD4FBD1C33A950005D4125 /* ConsumeController.m in Sources */,
+				0105173B1C3CF684006766EC /* AccountModel.m in Sources */,
 				017FA8051C33D27700B4AA6F /* MyShareOrderCell.m in Sources */,
 				0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */,
 				0136CE4C1C32E81C00BDF538 /* MyAddressCell.m in Sources */,

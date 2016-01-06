@@ -7,11 +7,16 @@
 //
 
 #import "LoginController.h"
+#import "RequestData.h"
+#import "PersonalController.h"
 
 @interface LoginController ()
 /**登录按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
-
+/**账号*/
+@property (weak, nonatomic) IBOutlet UITextField *userTextField;
+/**密码*/
+@property (weak, nonatomic) IBOutlet UITextField *pwdTextField;
 @end
 
 @implementation LoginController
@@ -37,6 +42,62 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark 数据请求
+/**
+ *  请求登录
+ */
+-(void)requestData:(NSString *)user andpassword:(NSString *)pwd{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:user,@"user",pwd,@"password",nil];
+    [RequestData login:params FinishCallbackBlock:^(NSDictionary *data) {
+        
+//        NSString *code=data[@"code"];
+        int code=[data[@"code"] intValue];
+        NSLog(@"%d",code);
+        if (code==0) {
+            //存储账号信息
+            AccountModel *account=[AccountModel new];
+            account.uid=data[@"content"][@"uid"];
+            account.username=data[@"content"][@"username"];
+            account.email=data[@"content"][@"email"];
+            account.mobile=data[@"content"][@"mobile"];
+            account.user_ip=data[@"content"][@"user_ip"];
+            account.img=data[@"content"][@"img"];
+            account.qianming=data[@"content"][@"qianming"];
+            account.groupid=data[@"content"][@"groupid"];
+            account.addgroup=data[@"content"][@"addgroup"];
+            account.money=data[@"content"][@"money"];
+            account.emailcode=data[@"content"][@"emailcode"];
+            account.mobilecode=data[@"content"][@"mobilecode"];
+            account.passcode=data[@"content"][@"passcode"];
+            account.reg_key=data[@"content"][@"reg_key"];
+            account.score=data[@"content"][@"score"];
+            account.jingyan=data[@"content"][@"jingyan"];
+            account.yaoqing=data[@"content"][@"yaoqing"];
+            account.band=data[@"content"][@"band"];
+            account.time=data[@"content"][@"time"];
+            account.login_time=data[@"content"][@"login_time"];
+            account.sign_in_time=data[@"content"][@"sign_in_time"];
+            account.sign_in_date=data[@"content"][@"sign_in_date"];
+            account.sign_in_time_all=data[@"content"][@"sign_in_time_all"];
+            account.auto_user=data[@"content"][@"auto_user"];
+            [AccountTool saveAccount:account];
+            //设置故事板为第一启动
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            PersonalController *personalController=[storyboard instantiateViewControllerWithIdentifier:@"PersonalView"];
+            [self.navigationController pushViewController:personalController animated:YES];
+        }else{
+           
+        }
+    }];
+}
+/**
+ *  登录
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)loginClick:(UIButton *)sender {
+    [self requestData:self.userTextField.text andpassword:self.pwdTextField.text];
+}
 
 
 @end

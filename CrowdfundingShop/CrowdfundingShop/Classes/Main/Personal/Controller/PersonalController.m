@@ -10,8 +10,16 @@
 #import "ARLabel.h"
 #import "RFSegmentView.h"
 #import "SeetingController.h"
+#import "AccountTool.h"
+#import <UIImageView+WebCache.h>
+#define URL @"http://wn.winainfo.com/statics/uploads/"
 @interface PersonalController ()<RFSegmentViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
+/**未登陆*/
+@property (weak, nonatomic) IBOutlet UIView *noLoginView;
+/**已登陆*/
+@property (weak, nonatomic) IBOutlet UIView *loginView;
+
 /**用户头像*/
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 /**用户帐号*/
@@ -32,7 +40,6 @@
 @end
 
 @implementation PersonalController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
@@ -53,6 +60,36 @@
     self.userImageView.layer.masksToBounds=YES;
     self.rechargeBtn.layer.cornerRadius=2.0;
     self.rechargeBtn.layer.masksToBounds=YES;
+    //判断是否有登录
+    [self flagLogin];
+    
+}
+
+/**
+ *  判断是否有登录
+ */
+-(void)flagLogin
+{
+    //沙盒路径
+    AccountModel *account=[AccountTool account];
+    if(account)
+    {
+        self.loginView.hidden=NO;
+        self.noLoginView.hidden=YES;
+        self.userPhoneLabel.text=account.username;
+        self.experienceLabel.text=account.jingyan;
+        self.scoreLabel.text=account.score;
+        self.moneyLabel.text=account.money;
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,account.img];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [self.userImageView sd_setImageWithURL:imgUrl];
+    }else
+    {
+        self.loginView.hidden=YES;
+        self.noLoginView.hidden=NO;
+    }
 }
 
 -(void)seetingClick{

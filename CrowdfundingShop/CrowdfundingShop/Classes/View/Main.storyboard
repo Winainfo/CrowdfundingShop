@@ -1256,7 +1256,7 @@
         <!--Personal(个人中心)-->
         <scene sceneID="rYR-wJ-dmN">
             <objects>
-                <viewController storyboardIdentifier="Personal" title="personal" id="GrP-Am-Qao" userLabel="Personal(个人中心)" customClass="PersonalController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PersonalView" title="personal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GrP-Am-Qao" userLabel="Personal(个人中心)" customClass="PersonalController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ayp-a8-2sT"/>
                         <viewControllerLayoutGuide type="bottom" id="jUn-sa-OXX"/>
@@ -1461,7 +1461,9 @@
                         <outlet property="gradesImageView" destination="QbQ-mI-rsL" id="NJt-Sp-mNG"/>
                         <outlet property="gradesLabel" destination="9tT-kb-u80" id="qFJ-j9-Bm8"/>
                         <outlet property="loginBtn" destination="6gS-Tz-4MI" id="ygK-qa-IiG"/>
+                        <outlet property="loginView" destination="luX-CI-SM0" id="oYY-5M-pl1"/>
                         <outlet property="moneyLabel" destination="ewO-kn-M3k" id="WsQ-Uh-lwl"/>
+                        <outlet property="noLoginView" destination="guq-ra-mkq" id="YdD-0W-VmZ"/>
                         <outlet property="rechargeBtn" destination="hKO-ae-Shv" id="uBX-jr-bvA"/>
                         <outlet property="scoreLabel" destination="TOq-sC-syj" id="zX9-BY-wSi"/>
                         <outlet property="userImageView" destination="MxG-C4-dQ7" id="uMX-mA-q6a"/>
@@ -1550,6 +1552,9 @@
                                 <state key="normal" title="登录">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginClick:" destination="DJG-xb-Wwk" eventType="touchUpInside" id="vYn-ik-i7m"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_line" translatesAutoresizingMaskIntoConstraints="NO" id="amu-FY-Txb">
                                 <rect key="frame" x="158.5" y="270" width="1.5" height="20"/>
@@ -1617,6 +1622,8 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="loginBtn" destination="s5D-eS-BAK" id="6zf-tF-xj6"/>
+                        <outlet property="pwdTextField" destination="V1M-fh-8Ak" id="Bbe-mB-n4h"/>
+                        <outlet property="userTextField" destination="flB-Zg-b59" id="Y2K-hy-qxt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vIs-wk-ttQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
