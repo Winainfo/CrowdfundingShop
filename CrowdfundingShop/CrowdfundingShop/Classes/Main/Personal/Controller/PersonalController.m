@@ -8,17 +8,19 @@
 
 #import "PersonalController.h"
 #import "ARLabel.h"
-#import "RFSegmentView.h"
 #import "SeetingController.h"
 #import "AccountTool.h"
 #import <UIImageView+WebCache.h>
 #define URL @"http://wn.winainfo.com/statics/uploads/"
-@interface PersonalController ()<RFSegmentViewDelegate>
+@interface PersonalController ()
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 /**未登陆*/
 @property (weak, nonatomic) IBOutlet UIView *noLoginView;
+@property (weak, nonatomic) IBOutlet UIView *weidengluView;
+
 /**已登陆*/
 @property (weak, nonatomic) IBOutlet UIView *loginView;
+@property (weak, nonatomic) IBOutlet UIView *yidengluView;
 
 /**用户头像*/
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
@@ -40,6 +42,9 @@
 @end
 
 @implementation PersonalController
+-(void)viewWillAppear:(BOOL)animated{
+    [self.navigationItem setHidesBackButton:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
@@ -75,7 +80,9 @@
     if(account)
     {
         self.loginView.hidden=NO;
+        self.yidengluView.hidden=NO;
         self.noLoginView.hidden=YES;
+        self.weidengluView.hidden=YES;
         self.userPhoneLabel.text=account.username;
         self.experienceLabel.text=account.jingyan;
         self.scoreLabel.text=account.score;
@@ -88,7 +95,9 @@
     }else
     {
         self.loginView.hidden=YES;
+        self.yidengluView.hidden=YES;
         self.noLoginView.hidden=NO;
+        self.weidengluView.hidden=NO;
     }
 }
 

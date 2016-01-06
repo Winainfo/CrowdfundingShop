@@ -10,11 +10,16 @@
 #import "ShareOrderCell.h"
 #import "GoodsSortCell.h"
 #import "ShareOrderDetailView.h"
+#import "RequestData.h"
+#import <UIImageView+WebCache.h>
+#define URL @"http://wn.winainfo.com/statics/uploads/"
 @interface ShareOrderController ()
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @property (weak, nonatomic) IBOutlet UITableView *sortTableView;
 @property (retain,nonatomic)NSArray *sortNameArray;
+/**晒单*/
+@property (retain,nonatomic)NSArray *shareArray;
 @end
 
 @implementation ShareOrderController
@@ -53,6 +58,22 @@
     [self setExtraCellLineHidden:self.sortTableView];
     //分类名字
     self.sortNameArray= @[ @"最新晒单", @"人气晒单", @"评论最多"];
+    //即将揭晓数据请求
+    [self requestData:@"1" andpageSize:@"8"];
+}
+#pragma mark 数据请求
+/**
+ *  请求即将揭晓商品
+ */
+-(void)requestData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData shareOrder:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.shareArray=data[@"content"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myTableView reloadData];
+        });
+    }];
 }
 /**
  *  返回
@@ -87,7 +108,7 @@
     if(tableView==self.sortTableView){
         return self.sortNameArray.count;
     }
-    return 10;
+    return _shareArray.count;
 }
 /**
  *  设置单元格内容
@@ -125,6 +146,16 @@
     if (cell==nil) {
         cell=[[ShareOrderCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
     }
+    cell.titleLabel.text=_shareArray[indexPath.row][@"sd_title"];
+    cell.contentLabel.text=_shareArray[indexPath.row][@"sd_content"];
+    cell.praiseLabel.text=_shareArray[indexPath.row][@"sd_zhan"];
+    cell.commentaryLabel.text=_shareArray[indexPath.row][@"sd_ping"];
+//    /**商品图片*/
+//    //拼接图片网址·
+//    NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,self.announcedArray[indexPath.row][@"thumb"]];
+//    //转换成url
+//    NSURL *imgUrl = [NSURL URLWithString:urlStr];
+//    [cell sd_setImageWithURL:imgUrl];
     //取消Cell选中时背景
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;

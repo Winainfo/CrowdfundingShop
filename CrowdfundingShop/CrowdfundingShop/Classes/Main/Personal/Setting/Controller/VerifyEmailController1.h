@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface VerifyEmailController1 : UIViewController
-
+@property(retain,nonatomic)NSString *email;
 @end

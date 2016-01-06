@@ -73,4 +73,11 @@
  *  @param block 返回块值
  */
 +(void)login:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+/**
+ *   晒单
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)shareOrder:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
 @end

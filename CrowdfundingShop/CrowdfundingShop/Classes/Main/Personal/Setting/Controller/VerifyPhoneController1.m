@@ -9,7 +9,6 @@
 #import "VerifyPhoneController1.h"
 #import "ARLabel.h"
 @interface VerifyPhoneController1 ()
-@property(retain,nonatomic) NSString *phone;
 /**手机号*/
 @property (weak, nonatomic) IBOutlet ARLabel *phoneLabel;
 /**验证码*/

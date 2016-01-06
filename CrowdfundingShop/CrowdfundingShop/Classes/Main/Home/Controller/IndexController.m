@@ -449,15 +449,8 @@
 {
     self.moveView=[[UIView alloc]initWithFrame:CGRectMake(0,self.btnView.frame.size.height-3,(self.btnView.frame.size.width/3.0),3)];//设置位置及尺寸
     self.moveView.backgroundColor=[UIColor colorWithRed:239.0/255.0 green:31.0/255.0 blue:48.0/255.0 alpha:1];//设置背景颜色
-    
     [self.btnView addSubview:self.moveView];//将视图添加到self.btnView上
     
-}
-- (IBAction)clickBtn:(id)sender {
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"13827777608",@"user",@"123456",@"password", nil];
-    [RequestData lgin:params FinishCallbackBlock:^(NSDictionary *data) {
-        NSLog(@"-----%@",data);
-    }];
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "UITabBarController+ShowHideBar.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
+#define URL @"http://wn.winainfo.com/statics/uploads/"
 @interface GoodsDetailController ()
 /**所有云购记录*/
 @property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell1;
@@ -17,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell2;
 /**商品晒单*/
 @property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell3;
-
+@property (retain,nonatomic)NSDictionary *goodsDictionary;
 @end
 
 @implementation GoodsDetailController
@@ -46,7 +47,6 @@
     /**头像圆角*/
     self.peopleImageView.layer.cornerRadius=30.0;
     self.peopleImageView.layer.masksToBounds=YES;
-    NSLog(@"传过来的id:%@,%@",self.gID,self.type);
     /**数据请求*/
     [self requestData:self.gID];
 }
@@ -59,7 +59,7 @@
 -(void)requestData:(NSString *)goodsId{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:goodsId,@"goodsId",nil];
     [RequestData goodsDetail:params FinishCallbackBlock:^(NSDictionary *data) {
-//        NSLog(@"%@",data[@"content"]);
+        self.goodsDictionary=data[@"content"];
         /**商品名字*/
         self.goodsNameLabel.text=data[@"content"][@"title"];
         /**商品描述*/
@@ -72,7 +72,7 @@
         self.goodsLabel3.text=data[@"content"][@"shenyurenshu"];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"http://www.god-store.com/statics/uploads/%@",data[@"content"][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,data[@"content"][@"thumb"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [self.goodsImageView sd_setImageWithURL:imgUrl];
@@ -80,8 +80,25 @@
         float curreNum=[data[@"content"][@"canyurenshu"] floatValue];
         float countNum=[data[@"content"][@"zongrenshu"] floatValue];
         self.goodsProgressView.progress=curreNum/countNum;
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myTableView reloadData];
+        });
 
     }];
 }
-
+/**
+ *  该方法在视图跳转时被触发
+ *
+ *  @param segue  <#segue description#>
+ *  @param sender <#sender description#>
+ */
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSLog(@"%@",self.goodsDictionary[@"cateid"]);
+    if ([segue.identifier isEqualToString:@"contentDetail"]) {
+        id theSegue=segue.destinationViewController;
+        [theSegue setValue:self.goodsDictionary[@"content"] forKey:@"content"];
+    }
+}
 @end

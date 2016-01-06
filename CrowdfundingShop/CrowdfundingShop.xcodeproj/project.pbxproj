@@ -136,6 +136,7 @@
 		01BC2E701C2562D200B8831C /* IMG_0134.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01BC2E6F1C2562D200B8831C /* IMG_0134.PNG */; };
 		01C8622D1C25C28E0075BD7F /* goodsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C8622C1C25C28E0075BD7F /* goodsHeaderView.m */; };
 		01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CB8CD91C11A6AB00DB67C0 /* IndexController.m */; };
+		01D1AF081C3D7EF60074DD16 /* ContentDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D1AF071C3D7EF60074DD16 /* ContentDetailController.m */; };
 		01D3419F1C029C9C000A32A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D3419E1C029C9C000A32A1 /* main.m */; };
 		01D341A21C029C9C000A32A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D341A11C029C9C000A32A1 /* AppDelegate.m */; };
 		01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D341A91C029C9C000A32A1 /* Assets.xcassets */; };
@@ -399,6 +400,8 @@
 		01C8622C1C25C28E0075BD7F /* goodsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = goodsHeaderView.m; sourceTree = "<group>"; };
 		01CB8CD81C11A6AB00DB67C0 /* IndexController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexController.h; sourceTree = "<group>"; };
 		01CB8CD91C11A6AB00DB67C0 /* IndexController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndexController.m; sourceTree = "<group>"; };
+		01D1AF061C3D7EF60074DD16 /* ContentDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentDetailController.h; sourceTree = "<group>"; };
+		01D1AF071C3D7EF60074DD16 /* ContentDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentDetailController.m; sourceTree = "<group>"; };
 		01D3419A1C029C9C000A32A1 /* CrowdfundingShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrowdfundingShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01D3419E1C029C9C000A32A1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		01D341A01C029C9C000A32A1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -666,6 +669,8 @@
 				01E96BA81C1DC5C3006ED4CD /* ComputeDetailController.m */,
 				011E37501C1E64830032FB13 /* SelectCloudNumController.h */,
 				011E37511C1E64830032FB13 /* SelectCloudNumController.m */,
+				01D1AF061C3D7EF60074DD16 /* ContentDetailController.h */,
+				01D1AF071C3D7EF60074DD16 /* ContentDetailController.m */,
 			);
 			name = "Controller(控制)";
 			path = Controller;
@@ -1543,6 +1548,7 @@
 				0105173B1C3CF684006766EC /* AccountModel.m in Sources */,
 				017FA8051C33D27700B4AA6F /* MyShareOrderCell.m in Sources */,
 				0111BA201C0371B000DDC2EA /* HomeNavController.m in Sources */,
+				01D1AF081C3D7EF60074DD16 /* ContentDetailController.m in Sources */,
 				0136CE4C1C32E81C00BDF538 /* MyAddressCell.m in Sources */,
 				01860E6B1C3C1CE8007A462A /* UIView+RGSize.m in Sources */,
 				01B7AC791C23E62700D09565 /* HWSearchBar.m in Sources */,

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface VerifyPhoneController1 : UIViewController
-
+@property (retain,nonatomic)NSString *phone;
 @end

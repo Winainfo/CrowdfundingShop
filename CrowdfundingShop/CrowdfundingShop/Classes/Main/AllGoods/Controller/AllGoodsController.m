@@ -13,6 +13,7 @@
 #import "DetailController.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
+#define URL @"http://wn.winainfo.com/statics/uploads/"
 @interface AllGoodsController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (assign,nonatomic)BOOL flag;
@@ -143,7 +144,7 @@
         cell.goodsLabel3.text=self.allGoodsArray[indexPath.row][@"shenyurenshu"];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"http://www.god-store.com/statics/uploads/%@",self.allGoodsArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,self.allGoodsArray[indexPath.row][@"thumb"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
@@ -269,6 +270,7 @@
         //设置故事板为第一启动
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
         DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+        detailController.goodsID=_allGoodsArray[indexPath.row][@"id"];
         [self.navigationController pushViewController:detailController animated:YES];
     }
 }

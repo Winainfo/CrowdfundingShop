@@ -8,6 +8,7 @@
 
 #import "UpdatePasswordController.h"
 #import "ARLabel.h"
+#import "AccountTool.h"
 @interface UpdatePasswordController ()
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 /**账号*/
@@ -50,6 +51,18 @@
     [self setExtraCellLineHidden:self.myTableView];
     self.saveBtn.layer.cornerRadius=4.0;
     self.saveBtn.layer.masksToBounds=YES;
+    [self flagLogin];
+}
+/**
+ *  判断是否有登录
+ */
+-(void)flagLogin
+{
+    //沙盒路径
+    AccountModel *account=[AccountTool account];
+    self.accountNumberLabel.text=account.mobile;
+    NSString *phoneString = [self.accountNumberLabel.text substringWithRange:NSMakeRange(5,4)];
+    self.accountNumberLabel.text=[self.accountNumberLabel.text stringByReplacingOccurrencesOfString:phoneString withString:@"****"];
 }
 /**
  *  返回

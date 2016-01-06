@@ -9,7 +9,6 @@
 #import "VerifyEmailController1.h"
 #import "ARLabel.h"
 @interface VerifyEmailController1 ()
-@property(retain,nonatomic)NSString *email;
 /**邮箱号*/
 @property (weak, nonatomic) IBOutlet ARLabel *emailLabel;
 /**验证码*/

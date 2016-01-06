@@ -218,6 +218,27 @@
     }];
 }
 /**
+ *   晒单
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)shareOrder:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSLog(@"%@",params);
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/index/shaidan/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"晒单请求成功-----%@",responseObject);
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"晒单请求失败-%@",error);
+    }];
+}
+/**
  *  将传入的二进制数据转为字符串后将content字段删除
  *  @param data 包含content字段的二进制数据
  *  @return 不包含content字段的二进制数据
