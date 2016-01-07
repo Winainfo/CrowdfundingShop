@@ -134,7 +134,6 @@
 		01B7AC831C23F01300D09565 /* HITORY.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 01B7AC801C23F01300D09565 /* HITORY.sqlite */; };
 		01B7AC851C23F5EA00D09565 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 01B7AC841C23F5EA00D09565 /* libsqlite3.0.tbd */; };
 		01BC2E701C2562D200B8831C /* IMG_0134.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01BC2E6F1C2562D200B8831C /* IMG_0134.PNG */; };
-		01C8622D1C25C28E0075BD7F /* goodsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C8622C1C25C28E0075BD7F /* goodsHeaderView.m */; };
 		01CB8CDA1C11A6AB00DB67C0 /* IndexController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CB8CD91C11A6AB00DB67C0 /* IndexController.m */; };
 		01D1AF081C3D7EF60074DD16 /* ContentDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D1AF071C3D7EF60074DD16 /* ContentDetailController.m */; };
 		01D3419F1C029C9C000A32A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D3419E1C029C9C000A32A1 /* main.m */; };
@@ -396,8 +395,6 @@
 		01B7AC801C23F01300D09565 /* HITORY.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = HITORY.sqlite; sourceTree = "<group>"; };
 		01B7AC841C23F5EA00D09565 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		01BC2E6F1C2562D200B8831C /* IMG_0134.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0134.PNG; sourceTree = "<group>"; };
-		01C8622B1C25C28E0075BD7F /* goodsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = goodsHeaderView.h; sourceTree = "<group>"; };
-		01C8622C1C25C28E0075BD7F /* goodsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = goodsHeaderView.m; sourceTree = "<group>"; };
 		01CB8CD81C11A6AB00DB67C0 /* IndexController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexController.h; sourceTree = "<group>"; };
 		01CB8CD91C11A6AB00DB67C0 /* IndexController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndexController.m; sourceTree = "<group>"; };
 		01D1AF061C3D7EF60074DD16 /* ContentDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentDetailController.h; sourceTree = "<group>"; };
@@ -715,8 +712,6 @@
 				01F876991C226A3E00FF0801 /* SearchWordCell.h */,
 				01F8769A1C226A3E00FF0801 /* SearchWordCell.m */,
 				01F8769B1C226A3E00FF0801 /* SearchWordCell.xib */,
-				01C8622B1C25C28E0075BD7F /* goodsHeaderView.h */,
-				01C8622C1C25C28E0075BD7F /* goodsHeaderView.m */,
 				01AB37981C2707EE0065C902 /* goodsViewCell.h */,
 				01AB37991C2707EE0065C902 /* goodsViewCell.m */,
 				01AB379A1C2707EE0065C902 /* goodsViewCell.xib */,
@@ -1537,7 +1532,6 @@
 				01B7AC771C23E62700D09565 /* HistoryTableViewCell.m in Sources */,
 				019E096A1C17342A0022593A /* AnnNavController.m in Sources */,
 				013280211C27CCCE00339038 /* CommentaryController.m in Sources */,
-				01C8622D1C25C28E0075BD7F /* goodsHeaderView.m in Sources */,
 				01FD4FC91C33B7DD005D4125 /* AccessGoodsCell.m in Sources */,
 				0105173E1C3D1C1D006766EC /* AccountTool.m in Sources */,
 				017FA8011C33D26300B4AA6F /* MyShareOrderController.m in Sources */,

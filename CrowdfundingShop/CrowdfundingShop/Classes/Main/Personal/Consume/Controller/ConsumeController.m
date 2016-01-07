@@ -147,7 +147,9 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     self.recharView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 115)];
     self.recharView.backgroundColor=[UIColor whiteColor];
-    CGRect frame = CGRectMake(40, 10, 240.f, 30.f);
+    UIView *view1=[[UIView alloc]initWithFrame:CGRectMake(0,0, kScreenWidth, 40)];
+    [self.recharView addSubview:view1];
+    CGRect frame = CGRectMake(40, 5, 240.f, 30.f);
     NSArray * items = @[@"消费明细", @"充值明细"];
     LXDSegmentControlConfiguration * select = [LXDSegmentControlConfiguration configurationWithControlType: LXDSegmentControlTypeSelectBlock items: items];
     select.currentIndex=1;
@@ -158,9 +160,10 @@
     select.itemTextColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
     select.cornerWidth=0.5f;
     LXDSegmentControl * selectControl = [LXDSegmentControl segmentControlWithFrame: frame configuration: select delegate: self];
+    selectControl.center=view1.center;
     if (tableView==self.myTableView) {
         /**充值明细表头*/
-        self.lineview1=[[UIView alloc]initWithFrame:CGRectMake(0, 50, kScreenWidth, 0.5)];
+        self.lineview1=[[UIView alloc]initWithFrame:CGRectMake(0, 43, kScreenWidth, 0.5)];
         self.lineview1.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
         [self.recharView addSubview:self.lineview1];
         self.consume=[[UILabel alloc] initWithFrame:CGRectMake(96,57, 75, 21)];
@@ -227,7 +230,7 @@
         self.lineview3.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
         [self.recharView addSubview:self.lineview3];
     }
-    [self.recharView addSubview:selectControl];
+    [view1 addSubview:selectControl];
     return self.recharView;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

@@ -17,13 +17,6 @@
  */
 +(NSString*)getJsonStr:(NSDictionary*)dic;
 /**
- *  登录接口
- *
- *  @param data  传入字典
- *  @param block 返回块值
- */
-+(void)lgin:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
-/**
  *   幻灯片
  *
  *  @param data  传入字典

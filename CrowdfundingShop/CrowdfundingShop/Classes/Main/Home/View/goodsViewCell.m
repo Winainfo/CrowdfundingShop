@@ -7,7 +7,9 @@
 //
 
 #import "goodsViewCell.h"
-
+//获得当前屏幕宽高点数（非像素）
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 @implementation goodsViewCell
 
 - (id)initWithFrame:(CGRect)frame

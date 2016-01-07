@@ -135,9 +135,8 @@
     UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
     view.backgroundColor=[UIColor whiteColor];
     CGRect frame = CGRectMake(40, 5, 240.f, 30.f);
-    NSArray * items = @[@"消费明细", @"充值明细"];
+    NSArray * items = @[@"已晒单", @"未晒单"];
     LXDSegmentControlConfiguration * select = [LXDSegmentControlConfiguration configurationWithControlType: LXDSegmentControlTypeSelectBlock items: items];
-    select.currentIndex=1;
     select.cornerColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
     select.backgroundColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
     select.itemBackgroundColor=[UIColor whiteColor];
@@ -145,6 +144,7 @@
     select.itemTextColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
     select.cornerWidth=0.5f;
     LXDSegmentControl * selectControl = [LXDSegmentControl segmentControlWithFrame: frame configuration: select delegate: self];
+    selectControl.center=view.center;
     [view addSubview:selectControl];
     UIView *lineview1=[[UIView alloc]initWithFrame:CGRectMake(0, view.frame.size.height, kScreenWidth, 0.5)];
     lineview1.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];

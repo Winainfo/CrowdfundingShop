@@ -17,9 +17,20 @@
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
+//判断设备
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+
+#define IS_IPHONE_4_OR_LESS (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
+#define IS_IPHONE_5 (IS_IPHONE && SCREEN_MAX_LENGTH == 568.0)
+#define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
+#define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 @interface IndexController ()<UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *mytableView;
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewWidth;
 @property (weak, nonatomic) IBOutlet UITableViewCell *noticeCell;//公告
 /**最新揭晓*/
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
@@ -42,10 +53,17 @@
 
 @property(retain,nonatomic)UIView *btnView;
 @property(retain,nonatomic)UIView *moveView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView1;
 
 //滚动广告图片的tag值
 @property (retain,nonatomic) NSMutableArray *scrollImageTags;
 @property (retain,nonatomic) NSArray *imageArray;
+
+//约束
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingConstraint1;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingConstraint2;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingConstraint3;
+
 @end
 
 @implementation IndexController
@@ -78,7 +96,25 @@
     //最新揭晓数据请求
     [self requestAnnouncedData:@"1" andpageSize:@"6"];
 }
-
+/**
+ *  更新约束
+ */
+-(void)updateViewConstraints{
+    [super updateViewConstraints];
+    self.viewWidth.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*2;
+    if (IS_IPHONE_6P) {
+        float scale=320.0/414.0;
+        self.leadingConstraint1.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
+        self.leadingConstraint2.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
+        self.leadingConstraint3.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
+    }
+    if (IS_IPHONE_6) {
+        float scale=320.0/375.0;
+        self.leadingConstraint1.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
+        self.leadingConstraint2.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
+        self.leadingConstraint3.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
+    }
+}
 #pragma mark 数据请求
 /**
  *  请求即将揭晓商品
@@ -137,7 +173,7 @@
     [RequestData slides:prama FinishCallbackBlock:^(NSDictionary * data) {
         self.imageArray=data[@"content"];
         //设置滚动视图的包含的视图大小和图片
-        [self scrollViewWithFrame:self.myScrollView.frame andImages:self.imageArray];
+        [self scrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, 150) andImages:self.imageArray];
         //设置定时滚动
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(scrollAdView) userInfo:nil repeats:YES];
     }];
@@ -332,6 +368,14 @@
 {
     return UIEdgeInsetsMake(0,0,0,0);
 }
+//定义每个Item 的大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (collectionView==self.myCollectionView) {
+        return CGSizeMake(108, 148);
+    }
+    return CGSizeMake(kScreenWidth/2.0, 222);
+}
 /**
  *  点击事件
  *
@@ -387,10 +431,10 @@
         [view addSubview:self.btnView];
         //分割线
         UIView *lineview=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 0.5)];
-        lineview.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
+        lineview.backgroundColor=[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1];
         [view addSubview:lineview];
         UIView *lineview2=[[UIView alloc]initWithFrame:CGRectMake(0, view.frame.size.height, kScreenWidth, 0.5)];
-        lineview2.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
+        lineview2.backgroundColor=[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1];
         [view addSubview:lineview2];
          [self creatMoveView];
         return view;

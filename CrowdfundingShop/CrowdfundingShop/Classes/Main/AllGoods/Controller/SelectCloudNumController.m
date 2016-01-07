@@ -9,12 +9,34 @@
 #import "SelectCloudNumController.h"
 #import "SelectCloudNumCell.h"
 @interface SelectCloudNumController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+//获得当前屏幕宽高点数（非像素）
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
+//判断设备
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+
+#define IS_IPHONE_4_OR_LESS (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
+#define IS_IPHONE_5 (IS_IPHONE && SCREEN_MAX_LENGTH == 568.0)
+#define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
+#define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
 
 @end
 
 @implementation SelectCloudNumController
-
+//隐藏和显示底部标签栏
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
@@ -80,6 +102,15 @@
 -(BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
+}
+//定义每个Item 的大小
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (IS_IPHONE_6P) {
+        return CGSizeMake(kScreenWidth/4.0, 45);
+    }
+   return CGSizeMake(kScreenWidth/3.0, 45);
+    
 }
 
 @end
