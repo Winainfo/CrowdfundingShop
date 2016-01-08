@@ -95,7 +95,6 @@
  */
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"%@",self.goodsDictionary[@"cateid"]);
     if ([segue.identifier isEqualToString:@"contentDetail"]) {
         id theSegue=segue.destinationViewController;
         [theSegue setValue:self.goodsDictionary[@"content"] forKey:@"content"];

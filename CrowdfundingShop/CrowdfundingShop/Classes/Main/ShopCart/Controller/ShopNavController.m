@@ -7,23 +7,34 @@
 //
 
 #import "ShopNavController.h"
-
+#import "AccountTool.h"
 @interface ShopNavController ()
 
 @end
 
 @implementation ShopNavController
-
+-(void)viewWillAppear:(BOOL)animated{
+//    [self flagLogin];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+/**
+ *  判断是否有登录
+ */
+-(void)flagLogin
+{
+    //沙盒路径
+    AccountModel *account=[AccountTool account];
+    if(account)
+    {
+        [self.tabBarItem setBadgeValue:@"2"];
+    }else
+    {
+        [self.tabBarItem setBadgeValue:nil];
+    }
 }
-
 /*
 #pragma mark - Navigation
 

@@ -94,10 +94,12 @@
     }else {
         BOOL blDele= [fileManager removeItemAtPath:uniquePath error:nil];
         if (blDele) {
-            //设置故事板为第一启动
-            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            PersonalController *personalController=[storyboard instantiateViewControllerWithIdentifier:@"PersonalView"];
-            [self.navigationController pushViewController:personalController animated:YES];
+            //popToViewController
+            for (UIViewController *temp in self.navigationController.viewControllers) {
+                if ([temp isKindOfClass:[PersonalController class]]) {
+                    [self.navigationController popToViewController:temp animated:YES];
+                }
+            }
             NSLog(@"dele success");
         }else {
             NSLog(@"dele fail");

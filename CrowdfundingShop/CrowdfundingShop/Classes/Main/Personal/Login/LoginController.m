@@ -9,8 +9,10 @@
 #import "LoginController.h"
 #import "RequestData.h"
 #import "PersonalController.h"
+#import "ShopCartController.h"
 
 @interface LoginController ()
+@property (retain,nonatomic) NSString *type;
 /**登录按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 /**账号*/
@@ -20,7 +22,15 @@
 @end
 
 @implementation LoginController
-
+//隐藏和显示底部标签栏
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
@@ -81,10 +91,25 @@
             account.sign_in_time_all=data[@"content"][@"sign_in_time_all"];
             account.auto_user=data[@"content"][@"auto_user"];
             [AccountTool saveAccount:account];
-            //设置故事板为第一启动
-            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            PersonalController *personalController=[storyboard instantiateViewControllerWithIdentifier:@"PersonalView"];
-            [self.navigationController pushViewController:personalController animated:YES];
+            if ([self.type isEqualToString:@"shopCart"]) {
+                //popToViewController
+                for (UIViewController *temp in self.navigationController.viewControllers) {
+                    if ([temp isKindOfClass:[ShopCartController class]]) {
+                        [self.navigationController popToViewController:temp animated:YES];
+                    }
+                }
+            }else{
+                //popToViewController
+                for (UIViewController *temp in self.navigationController.viewControllers) {
+                    if ([temp isKindOfClass:[PersonalController class]]) {
+                        [self.navigationController popToViewController:temp animated:YES];
+                    }
+                }
+            }
+//            //设置故事板为第一启动
+//            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//            PersonalController *personalController=[storyboard instantiateViewControllerWithIdentifier:@"PersonalView"];
+//            [self.navigationController pushViewController:personalController animated:YES];
         }else{
            
         }

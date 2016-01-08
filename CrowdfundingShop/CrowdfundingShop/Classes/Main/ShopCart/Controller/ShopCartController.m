@@ -8,6 +8,11 @@
 
 #import "ShopCartController.h"
 #import "shopCartCell.h"
+#import "AllGoodsController.h"
+#import "AccountTool.h"
+#import "GoodsNavController.h"
+#import <UIImageView+WebCache.h>
+#define URL @"http://wn.winainfo.com/statics/uploads/"
 @interface ShopCartController ()
 /**未登陆View*/
 @property (weak, nonatomic) IBOutlet UIView *view1;
@@ -22,7 +27,13 @@
 @end
 
 @implementation ShopCartController
-
+-(void)viewWillAppear:(BOOL)animated{
+        [self flagLogin];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+   [self flagLogin];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
@@ -32,9 +43,9 @@
     UINib *nib=[UINib nibWithNibName:@"shopCartCell" bundle:[NSBundle mainBundle]];
     //注册到表格视图
     [self.myTableView  registerNib:nib forCellReuseIdentifier:@"shopCartCell"];
-    //    self.myTableView.separatorStyle=NO;
     [self setExtraCellLineHidden:self.myTableView];
-
+    //图标右上角内容
+    self.tabBarItem.badgeValue=@"5";
 }
 /**
  *  去掉多余的分割线
@@ -46,6 +57,25 @@
     UIView *view =[ [UIView alloc]init];
     view.backgroundColor = [UIColor clearColor];
     [tableView setTableFooterView:view];
+}
+/**
+ *  判断是否有登录
+ */
+-(void)flagLogin
+{
+    //沙盒路径
+    AccountModel *account=[AccountTool account];
+    if(account)
+    {
+        self.view1.hidden=YES;
+        self.view2.hidden=NO;
+        self.view3.hidden=YES;
+    }else
+    {
+        self.view1.hidden=NO;
+        self.view2.hidden=YES;
+        self.view3.hidden=YES;
+    }
 }
 #pragma mark 实现table代理
 /**
@@ -109,6 +139,19 @@
 
 }
 
+/**
+ *  该方法在视图跳转时被触发
+ *
+ *  @param segue  <#segue description#>
+ *  @param sender <#sender description#>
+ */
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"shopCart"]) {
+        id theSegue=segue.destinationViewController;
+        [theSegue setValue:@"shopCart" forKey:@"type"];
+    }
+}
 
 
 @end

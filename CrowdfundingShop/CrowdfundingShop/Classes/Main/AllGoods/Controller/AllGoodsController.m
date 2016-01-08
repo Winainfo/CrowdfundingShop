@@ -12,6 +12,7 @@
 #import "GoodsSortCell.h"
 #import "DetailController.h"
 #import "RequestData.h"
+
 #import <UIImageView+WebCache.h>
 #define URL @"http://wn.winainfo.com/statics/uploads/"
 @interface AllGoodsController ()<UITableViewDataSource,UITableViewDelegate>
@@ -31,7 +32,9 @@
 @end
 
 @implementation AllGoodsController
-
+-(void)viewWillAppear:(BOOL)animated{
+    [self.navigationItem setHidesBackButton:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]

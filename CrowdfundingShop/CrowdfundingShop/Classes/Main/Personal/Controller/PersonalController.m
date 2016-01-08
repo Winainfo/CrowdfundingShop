@@ -44,6 +44,8 @@
 @implementation PersonalController
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationItem setHidesBackButton:YES];
+    //判断是否有登录
+    [self flagLogin];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -65,9 +67,6 @@
     self.userImageView.layer.masksToBounds=YES;
     self.rechargeBtn.layer.cornerRadius=2.0;
     self.rechargeBtn.layer.masksToBounds=YES;
-    //判断是否有登录
-    [self flagLogin];
-    
 }
 
 /**
