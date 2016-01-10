@@ -13,7 +13,7 @@
 #import "DetailController.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
-#define URL @"http://wn.winainfo.com/statics/uploads/"
+#define URL @"http://120.55.112.80/statics/uploads/"
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
@@ -496,5 +496,6 @@
     [self.btnView addSubview:self.moveView];//将视图添加到self.btnView上
     
 }
+
 
 @end

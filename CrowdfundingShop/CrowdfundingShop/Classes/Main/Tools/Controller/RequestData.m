@@ -9,7 +9,7 @@
 #import "RequestData.h"
 #import "AFNetworking.h"
 #import <EGOCache.h>
-#define URL @"http://wn.winainfo.com"
+#define URL @"http://120.55.112.80"
 @implementation RequestData
 /**
  *  字典转字符串工具类
@@ -57,7 +57,7 @@
             NSString *data =  [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding]; //把网络数据转换成字符串
             NSDictionary *dictionary=[self dictionaryWithJsonString:data];//把字符串转换成字典
             [[EGOCache globalCache]setObject:dictionary forKey:forkey withTimeoutInterval:24*60*60];
-//            NSLog(@"请求成功-----%@",dictionary);
+            NSLog(@"请求成功-----%@",dictionary);
             block(dictionary);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //            NSLog(@"请求失败-%@",error);
@@ -183,7 +183,7 @@
     NSDictionary *params=@{@"user":data[@"user"],@"password":data[@"password"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/userlogin/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"登录请求成功-----%@",responseObject);
+        NSLog(@"登录请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //        NSLog(@"登录请求失败-%@",error);
@@ -207,6 +207,90 @@
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //        NSLog(@"晒单请求失败-%@",error);
+    }];
+}
+/**
+ *   购物车数量
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)shopCartNum:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+//    NSDictionary *params=@{@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/cartnum/",URL];
+    [mgr GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"购物车数量请求成功-----%@",responseObject);
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //        NSLog(@"晒单请求失败-%@",error);
+    }];
+}
+/**
+ *   添加购物车
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)addShopCart:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"ShopId":data[@"ShopId"],@"ShopNum":data[@"ShopNum"],@"cartbs":@"10"};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/addShopCart/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"添加购物车请求成功-----%@",responseObject);
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //        NSLog(@"晒单请求失败-%@",error);
+    }];
+}
+
+
+/**
+ *   检测用户是否已注册
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)checkName:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"user":data[@"user"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/checkname/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSLog(@"添加购物车请求成功-----%@",responseObject);
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //        NSLog(@"晒单请求失败-%@",error);
+    }];
+}
+
+/**
+ *   搜索接口
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)search:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block
+{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"keyword":data[@"keyword"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/search/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //        NSLog(@"所有商品请求成功-----%@",responseObject);
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //        NSLog(@"所有商品请求失败-%@",error);
     }];
 }
 /**

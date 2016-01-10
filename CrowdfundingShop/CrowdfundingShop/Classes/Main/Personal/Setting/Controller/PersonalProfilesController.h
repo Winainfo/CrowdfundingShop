@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ARLabel.h"
+
 @interface PersonalProfilesController : UITableViewController
 /**用户头像*/
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
@@ -25,4 +26,5 @@
 @property (weak, nonatomic) IBOutlet ARLabel *userHometownLabel;
 /**个性签名*/
 @property (weak, nonatomic) IBOutlet ARLabel *userAutographLabel;
+
 @end

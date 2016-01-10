@@ -55,13 +55,6 @@
                         <color key="progressTintColor" red="0.9882352941176471" green="0.70196078431372544" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="trackTintColor" red="0.99215686270000003" green="0.90196078430000004" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
                     </progressView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shopCat" translatesAutoresizingMaskIntoConstraints="NO" id="AW4-HR-2Uh">
-                        <rect key="frame" x="116" y="181" width="23" height="23"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="23" id="Mhq-fW-594"/>
-                            <constraint firstAttribute="height" constant="23" id="Zhg-O1-aNK"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="剩余：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EpX-9v-Gcv" customClass="ARLabel">
                         <rect key="frame" x="10" y="196" width="33" height="18"/>
                         <constraints>
@@ -104,11 +97,23 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mmf-lK-GOz">
+                        <rect key="frame" x="116" y="181" width="23" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="23" id="L52-Ma-qm0"/>
+                            <constraint firstAttribute="width" constant="23" id="NlS-ou-ypy"/>
+                        </constraints>
+                        <state key="normal" image="shopCat"/>
+                        <connections>
+                            <action selector="addShopCart:" destination="gTV-IL-0wX" eventType="touchUpInside" id="cII-uQ-WAO"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Yj2-SJ-9RL" secondAttribute="bottom" constant="4" id="1If-uw-hSg"/>
+                <constraint firstItem="ubW-yV-3Zh" firstAttribute="top" secondItem="mmf-lK-GOz" secondAttribute="bottom" constant="17" id="1dP-jE-lw2"/>
                 <constraint firstItem="EAp-Xe-4Qq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="2rf-2n-bOm"/>
                 <constraint firstItem="Dhz-B0-8Pr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="3xD-rw-UWW"/>
                 <constraint firstAttribute="trailing" secondItem="hcS-Xa-owl" secondAttribute="trailing" constant="10" id="4VP-rj-fqB"/>
@@ -127,16 +132,16 @@
                 <constraint firstItem="Qh9-Md-SWf" firstAttribute="leading" secondItem="EpX-9v-Gcv" secondAttribute="trailing" id="j0l-8S-RqM"/>
                 <constraint firstItem="Dhz-B0-8Pr" firstAttribute="top" secondItem="hcS-Xa-owl" secondAttribute="bottom" constant="5" id="jOO-AK-47j"/>
                 <constraint firstItem="Zkc-ce-uLH" firstAttribute="leading" secondItem="cgi-ER-iUA" secondAttribute="trailing" id="mv3-46-zxe"/>
-                <constraint firstItem="AW4-HR-2Uh" firstAttribute="top" secondItem="Dhz-B0-8Pr" secondAttribute="bottom" constant="13" id="nWA-mb-v16"/>
                 <constraint firstItem="Gg9-sS-55n" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="neh-9C-Lnp"/>
-                <constraint firstItem="Gg9-sS-55n" firstAttribute="leading" secondItem="AW4-HR-2Uh" secondAttribute="trailing" constant="20" id="qyf-hi-kit"/>
                 <constraint firstItem="cgi-ER-iUA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="rL2-Zz-10F"/>
                 <constraint firstItem="Zkc-ce-uLH" firstAttribute="top" secondItem="Dhz-B0-8Pr" secondAttribute="bottom" constant="3" id="tQN-yc-dH1"/>
+                <constraint firstItem="Gg9-sS-55n" firstAttribute="leading" secondItem="mmf-lK-GOz" secondAttribute="trailing" constant="20" id="xXy-4Z-n22"/>
                 <constraint firstAttribute="bottom" secondItem="ubW-yV-3Zh" secondAttribute="bottom" id="xvc-cW-4EN"/>
                 <constraint firstItem="EpX-9v-Gcv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="yox-53-pls"/>
                 <constraint firstAttribute="trailing" secondItem="Gg9-sS-55n" secondAttribute="trailing" id="zfn-bK-zUa"/>
             </constraints>
             <connections>
+                <outlet property="addBtn" destination="mmf-lK-GOz" id="nTx-Ki-ESc"/>
                 <outlet property="goodsID" destination="Yj2-SJ-9RL" id="dfF-TX-ga7"/>
                 <outlet property="goodsImageView" destination="hcS-Xa-owl" id="gk0-yX-B8B"/>
                 <outlet property="goodsTitle" destination="Dhz-B0-8Pr" id="ie3-zU-dCF"/>
@@ -147,7 +152,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="20150427091614458.jpg" width="200" height="200"/>
+        <image name="20150427091614458.jpg" width="14" height="14"/>
         <image name="shopCat" width="32" height="32"/>
     </resources>
 </document>

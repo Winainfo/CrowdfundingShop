@@ -73,4 +73,33 @@
  *  @param block 返回块值
  */
 +(void)shareOrder:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+/**
+ *   购物车数量
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)shopCartNum:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+/**
+ *   添加购物车
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)addShopCart:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+/**
+ *   检测用户是否已注册
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)checkName:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
+
+/**
+ *   搜索接口
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)search:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
 @end

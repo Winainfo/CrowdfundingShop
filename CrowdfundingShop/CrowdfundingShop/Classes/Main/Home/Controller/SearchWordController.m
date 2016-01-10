@@ -11,7 +11,7 @@
 #import "HWSearchBar.h"
 #import "HistoryTableViewCell.h"
 #import "HistoryClass.h"
-
+#import "RequestData.h"
 @interface SearchWordController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 @property (nonatomic,assign)BOOL flag;
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
@@ -66,10 +66,9 @@
     //注册自定义搜索历史单元格
     UINib *nib = [UINib nibWithNibName:@"HistoryTableViewCell" bundle:[NSBundle mainBundle]];
     [self.hitoryTable registerNib:nib forCellReuseIdentifier:@"HistoryTableViewCell"];
-    self.hisArr=@[@"iPhone6S",@"奥迪",@"充值卡"];
+    self.hisArr=@[@"iPhone",@"奥迪",@"充值卡"];
     [self setExtraCellLineHidden:self.hitoryTable];
 }
-
 
 #pragma mark textField监听
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
@@ -151,7 +150,11 @@
 //点击历史记录，跳转到分类结果页
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    HistoryClass *history = self.hisArr[(self.hisArr.count-1-indexPath.row)];
+    HistoryTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:cell.foodName.text,@"keyword",@"1",@"pageIndex",@"5",@"pageSize",nil];
+    [RequestData search:params FinishCallbackBlock:^(NSDictionary *data) {
+        NSLog(@"%@",data);
+    }];
 }
 
 #pragma 实现数据源协议中一些关于编辑操作方法

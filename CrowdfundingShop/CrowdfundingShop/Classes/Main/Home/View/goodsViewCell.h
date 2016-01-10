@@ -21,5 +21,9 @@
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
 /**商品ID*/
 @property (weak, nonatomic) IBOutlet UILabel *goodsID;
+/**添加*/
+@property (weak, nonatomic) IBOutlet UIButton *addBtn;
+
+
 
 @end

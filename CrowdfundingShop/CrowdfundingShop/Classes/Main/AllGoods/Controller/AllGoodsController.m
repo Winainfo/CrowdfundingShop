@@ -14,7 +14,7 @@
 #import "RequestData.h"
 
 #import <UIImageView+WebCache.h>
-#define URL @"http://wn.winainfo.com/statics/uploads/"
+#define URL @"http://120.55.112.80/statics/uploads/"
 @interface AllGoodsController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (assign,nonatomic)BOOL flag;

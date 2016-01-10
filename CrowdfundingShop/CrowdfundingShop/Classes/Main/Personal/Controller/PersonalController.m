@@ -10,6 +10,7 @@
 #import "ARLabel.h"
 #import "SeetingController.h"
 #import "AccountTool.h"
+#import "RequestData.h"
 #import <UIImageView+WebCache.h>
 #define URL @"http://wn.winainfo.com/statics/uploads/"
 @interface PersonalController ()
@@ -68,7 +69,11 @@
     self.rechargeBtn.layer.cornerRadius=2.0;
     self.rechargeBtn.layer.masksToBounds=YES;
 }
-
+-(void)shopCartNum{
+    [RequestData shopCartNum:nil FinishCallbackBlock:^(NSDictionary *data) {
+        
+    }];
+}
 /**
  *  判断是否有登录
  */
@@ -78,6 +83,7 @@
     AccountModel *account=[AccountTool account];
     if(account)
     {
+        [self shopCartNum];
         self.loginView.hidden=NO;
         self.yidengluView.hidden=NO;
         self.noLoginView.hidden=YES;
