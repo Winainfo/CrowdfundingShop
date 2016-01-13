@@ -1,7 +1,7 @@
 //
 //  GoodsDetailController.m
 //  CrowdfundingShop
-//
+//  正在揭晓
 //  Created by 吴金林 on 15/12/11.
 //  Copyright © 2015年 吴金林. All rights reserved.
 //
@@ -30,7 +30,6 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     
-    self.tableViewCell1.selectionStyle=UITableViewCellSelectionStyleNone;
     self.tabBarController.tabBar.hidden = NO;
 }
 
@@ -59,32 +58,37 @@
 -(void)requestData:(NSString *)goodsId{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:goodsId,@"goodsId",nil];
     [RequestData goodsDetail:params FinishCallbackBlock:^(NSDictionary *data) {
-        self.goodsDictionary=data[@"content"];
-        /**商品名字*/
-        self.goodsNameLabel.text=data[@"content"][@"title"];
-        /**商品描述*/
-        self.goodsDescLabel.text=data[@"content"][@"title2"];
-        /**参与人次*/
-        self.goodsLabel1.text=data[@"content"][@"canyurenshu"];
-        /**总需人次*/
-        self.goodsLabel2.text=data[@"content"][@"zongrenshu"];
-        /**剩余人次*/
-        self.goodsLabel3.text=data[@"content"][@"shenyurenshu"];
-        /**商品图片*/
-        //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,data[@"content"][@"thumb"]];
-        //转换成url
-        NSURL *imgUrl = [NSURL URLWithString:urlStr];
-        [self.goodsImageView sd_setImageWithURL:imgUrl];
-        /**进度条*/
-        float curreNum=[data[@"content"][@"canyurenshu"] floatValue];
-        float countNum=[data[@"content"][@"zongrenshu"] floatValue];
-        self.goodsProgressView.progress=curreNum/countNum;
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.myTableView reloadData];
-        });
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            self.goodsDictionary=data[@"content"];
+            /**商品名字*/
+            self.goodsNameLabel.text=data[@"content"][@"title"];
+            /**商品描述*/
+            self.goodsDescLabel.text=data[@"content"][@"title2"];
+            /**参与人次*/
+            self.goodsLabel1.text=data[@"content"][@"canyurenshu"];
+            /**总需人次*/
+            self.goodsLabel2.text=data[@"content"][@"zongrenshu"];
+            /**剩余人次*/
+            self.goodsLabel3.text=data[@"content"][@"shenyurenshu"];
+            /**商品图片*/
+            //拼接图片网址·
+            NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,data[@"content"][@"thumb"]];
+            //转换成url
+            NSURL *imgUrl = [NSURL URLWithString:urlStr];
+            [self.goodsImageView sd_setImageWithURL:imgUrl];
+            /**进度条*/
+            float curreNum=[data[@"content"][@"canyurenshu"] floatValue];
+            float countNum=[data[@"content"][@"zongrenshu"] floatValue];
+            self.goodsProgressView.progress=curreNum/countNum;
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
 
+        }else{
+            NSLog(@"sss");
+        }
     }];
 }
 /**

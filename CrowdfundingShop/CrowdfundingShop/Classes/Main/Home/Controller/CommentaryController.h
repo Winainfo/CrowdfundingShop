@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "CommentaryCell.h"
 @interface CommentaryController : UIViewController
-
+@property (retain,nonatomic)NSString *sd_id;
 @end

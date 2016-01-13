@@ -11,9 +11,10 @@
 #import "GoodsSortCell.h"
 #import "ShareOrderDetailView.h"
 #import "RequestData.h"
+#import "CommentaryController.h"
 #import <UIImageView+WebCache.h>
-#define URL @"http://wn.winainfo.com/statics/uploads/"
-@interface ShareOrderController ()
+#define URL @"http://120.55.112.80/statics/uploads/"
+@interface ShareOrderController ()<UIScrollViewDelegate,CartCellDelegate>
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @property (weak, nonatomic) IBOutlet UITableView *sortTableView;
@@ -146,16 +147,48 @@
     if (cell==nil) {
         cell=[[ShareOrderCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
     }
+    cell.idLabel.text=_shareArray[indexPath.row][@"sd_id"];
     cell.titleLabel.text=_shareArray[indexPath.row][@"sd_title"];
     cell.contentLabel.text=_shareArray[indexPath.row][@"sd_content"];
     cell.praiseLabel.text=_shareArray[indexPath.row][@"sd_zhan"];
     cell.commentaryLabel.text=_shareArray[indexPath.row][@"sd_ping"];
-//    /**商品图片*/
-//    //拼接图片网址·
-//    NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,self.announcedArray[indexPath.row][@"thumb"]];
-//    //转换成url
-//    NSURL *imgUrl = [NSURL URLWithString:urlStr];
-//    [cell sd_setImageWithURL:imgUrl];
+    //时间戳转换时间
+    NSString *str=_shareArray[indexPath.row][@"sd_time"];//时间戳
+    NSTimeInterval time=[str doubleValue];
+    NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
+    //实例化一个NSDateFormatter对象
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
+    cell.timeLabel.text=currentDateStr;
+    /**晒单图片*/
+    NSArray *imageArray=_shareArray[indexPath.row][@"sd_photolist"];
+    cell.goodsImageScroll.contentSize=CGSizeMake(cell.goodsImageScroll.frame.size.width, cell.goodsImageScroll.frame.size.height);
+    cell.goodsImageScroll.delegate=self;
+    cell.delegate=self;
+    for (int i=0; i<imageArray.count; i++) {
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,imageArray[i]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake((i*100)+5, 0, 94, 94)];
+        imageV.layer.borderWidth=0.5;
+        imageV.layer.borderColor=[[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1]CGColor];
+        [imageV sd_setImageWithURL:imgUrl];
+        [cell.goodsImageScroll addSubview:imageV];
+    }
+//    //获取头像和用户名
+//     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:_shareArray[indexPath.row][@"sd_userid"],@"uid",nil];
+//    [RequestData userDetail:params FinishCallbackBlock:^(NSDictionary *data) {
+//        [cell.peopleName setTitle:data[@"content"][@"username"] forState:UIControlStateNormal];
+//        //拼接图片网址·
+//        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,data[@"content"][@"img"]];
+//        //转换成url
+//        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+//        [cell.peopleImageView sd_setImageWithURL:imgUrl];
+//    }];
+
     //取消Cell选中时背景
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
@@ -187,6 +220,8 @@
         //设置故事板为第一启动
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
         ShareOrderDetailView *shareOrderDetailView=[storyboard instantiateViewControllerWithIdentifier:@"ShareOrderDetailView"];
+        shareOrderDetailView.sd_id=_shareArray[indexPath.row][@"sd_id"];
+        shareOrderDetailView.dic=_shareArray[indexPath.row];
         [self.navigationController pushViewController:shareOrderDetailView animated:YES];
     }
 }
@@ -226,5 +261,28 @@
     }
 }
 
-
+#pragma mark -- 实现代理事件
+/**
+ *  实现加代理事件
+ *
+ *  @param cell 当前单元格
+ *  @param flag 按钮标识，100为点赞，101为评论
+ */
+-(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag andS_id:(NSString *)sid{
+    switch (flag) {
+        case 1001:{
+            //设置故事板为第一启动
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            CommentaryController *controller=[storyboard instantiateViewControllerWithIdentifier:@"commentaryView"];
+            controller.sd_id=sid;
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+            break;
+        case 1002:
+            NSLog(@"去分享");
+            break;
+        default:
+            break;
+    }
+}
 @end

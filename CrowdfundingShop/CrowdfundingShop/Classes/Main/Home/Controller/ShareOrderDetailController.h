@@ -25,6 +25,11 @@
 @property (weak, nonatomic) IBOutlet ARLabel *timeLabel;
 /**晒单图片*/
 @property (weak, nonatomic) IBOutlet UIImageView *goodsImageView;
-/**评论*/
+/**晒单内容*/
+@property (weak, nonatomic) IBOutlet UITextView *contentTextView;
+/**评论条数*/
+@property (weak, nonatomic) IBOutlet ARLabel *numberLabel;
 
+@property (retain,nonatomic)NSString *sd_id;
+@property (retain,nonatomic)NSDictionary *dic;
 @end

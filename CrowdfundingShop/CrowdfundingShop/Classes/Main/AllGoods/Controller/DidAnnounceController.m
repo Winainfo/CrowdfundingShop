@@ -9,6 +9,9 @@
 #import "DidAnnounceController.h"
 #import "CloudNumberCell.h"
 #import "ARLabel.h"
+#import "RequestData.h"
+#import <UIImageView+WebCache.h>
+#define URL @"http://120.55.112.80/statics/uploads/"
 @interface DidAnnounceController ()
 
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
@@ -30,6 +33,8 @@
 @property (weak, nonatomic) IBOutlet ARLabel *countLabel;
 /**计算详情*/
 @property (weak, nonatomic) IBOutlet UIButton *detailBtn;
+
+@property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @end
 
 @implementation DidAnnounceController
@@ -44,9 +49,39 @@
     self.peopleImageView.layer.cornerRadius=25.0;
     self.peopleImageView.layer.masksToBounds=YES;
     //注册Cell
-    [self.myCollectionView registerClass:[CloudNumberCell class] forCellWithReuseIdentifier:@"CloudNumberCell"];
+    [self.myCollectionView registerClass:[CloudNumberCell class]  forCellWithReuseIdentifier:@"CloudNumberCell"];
+//    [self requestData:self.gID];
 }
 
+#pragma mark 数据请求
+/**
+ *  商品详情
+ *
+ *  @param goodsId <#goodsId description#>
+ */
+-(void)requestData:(NSString *)goodsId{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:goodsId,@"goodsId",nil];
+    [RequestData goodsDetail:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            /**揭晓时间*/
+            self.time1Label.text=data[@"content"][@"q_end_time"];
+            /**商品图片*/
+            //拼接图片网址·
+            NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,data[@"content"][@"thumb"]];
+            //转换成url
+            NSURL *imgUrl = [NSURL URLWithString:urlStr];
+            [self.goodsImageView sd_setImageWithURL:imgUrl];
+            //        //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }else{
+            
+        }
+        
+    }];
+}
 
 
 #pragma mark 实现代理方法

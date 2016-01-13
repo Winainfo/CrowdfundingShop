@@ -13,9 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *buyGoodsBtn;
 /**添加购物车*/
 @property (weak, nonatomic) IBOutlet UIButton *addCarBtn;
-/**进行中*/
-@property (weak, nonatomic) IBOutlet UIButton *runGoodsBtn;
-
+@property (retain,nonatomic) NSString *flag;
 @end
 
 @implementation DetailController
@@ -36,7 +34,6 @@
     //设置圆角
     self.buyGoodsBtn.layer.cornerRadius=4.0;
     self.addCarBtn.layer.cornerRadius=4.0;
-    self.runGoodsBtn.layer.cornerRadius=4.0;
 }
 
 //返回
@@ -55,7 +52,6 @@
     if ([segue.identifier isEqualToString:@"goodsDetail"]) {
         id theSegue=segue.destinationViewController;
         [theSegue setValue:self.goodsID forKey:@"gID"];
-        [theSegue setValue:@"123" forKey:@"type"];
     }
 }
 @end

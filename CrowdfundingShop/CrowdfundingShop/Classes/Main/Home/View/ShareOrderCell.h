@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ARLabel.h"
+#import "ShareInfoModel.h"
+//添加代理，用于评论和点赞的实现
+@protocol CartCellDelegate <NSObject>
+
+-(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag andS_id:(NSString *)sid;
+
+@end
 @interface ShareOrderCell : UITableViewCell
 /**用户头像*/
 @property (weak, nonatomic) IBOutlet UIImageView *peopleImageView;
@@ -25,5 +32,11 @@
 @property (weak, nonatomic) IBOutlet ARLabel *praiseLabel;
 /**评论数*/
 @property (weak, nonatomic) IBOutlet ARLabel *commentaryLabel;
+@property (weak, nonatomic) IBOutlet UIButton *dianzaBtn;
 
+@property (weak, nonatomic) IBOutlet UILabel *idLabel;
+
+@property(assign,nonatomic)id<CartCellDelegate>delegate;
+//赋值
+-(void)addTheValue:(ShareInfoModel *)shareModel;
 @end

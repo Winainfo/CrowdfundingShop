@@ -36,8 +36,8 @@
 
 - (void)awakeFromNib {
     /**设置圆角*/
-    self.timeLabel.layer.cornerRadius=8.0;
-    self.timeLabel.layer.masksToBounds=YES;
+    self.timeView.layer.cornerRadius=8.0;
+    self.timeView.layer.masksToBounds=YES;
 }
 
 @end

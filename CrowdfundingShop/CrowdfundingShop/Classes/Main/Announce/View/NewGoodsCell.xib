@@ -97,7 +97,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥ 28.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8bD-lR-ejr" customClass="ARLabel">
-                        <rect key="frame" x="161" y="52" width="42" height="15"/>
+                        <rect key="frame" x="161" y="52" width="84" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="0xc-qA-qJw"/>
                         </constraints>
@@ -134,7 +134,7 @@
                     <constraint firstItem="rpv-0M-ywl" firstAttribute="top" secondItem="DtK-rO-twq" secondAttribute="bottom" constant="3" id="BWp-I8-CwZ"/>
                     <constraint firstItem="YQd-a8-kyz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11.5" id="I9X-jA-Zqm"/>
                     <constraint firstItem="8tg-Cz-6Ys" firstAttribute="top" secondItem="8bD-lR-ejr" secondAttribute="bottom" constant="1" id="LNS-KL-16K"/>
-                    <constraint firstItem="pMI-um-Les" firstAttribute="leading" secondItem="8bD-lR-ejr" secondAttribute="trailing" constant="62" id="Lnm-CG-fY5"/>
+                    <constraint firstItem="pMI-um-Les" firstAttribute="leading" secondItem="8bD-lR-ejr" secondAttribute="trailing" constant="20" id="Lnm-CG-fY5"/>
                     <constraint firstItem="pMI-um-Les" firstAttribute="leading" secondItem="rpv-0M-ywl" secondAttribute="trailing" constant="62" id="M98-ZP-Reb"/>
                     <constraint firstItem="YQd-a8-kyz" firstAttribute="leading" secondItem="uqw-o5-aOU" secondAttribute="trailing" constant="10" id="O9X-Rv-i81"/>
                     <constraint firstItem="8bD-lR-ejr" firstAttribute="top" secondItem="rpv-0M-ywl" secondAttribute="bottom" constant="2" id="Rv8-xJ-e8M"/>

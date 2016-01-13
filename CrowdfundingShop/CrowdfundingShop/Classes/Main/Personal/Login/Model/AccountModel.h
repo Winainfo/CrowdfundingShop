@@ -59,4 +59,8 @@
 @property(retain,nonatomic) NSString *sign_in_time_all;
 /***/
 @property(retain,nonatomic) NSString *auto_user;
+/**用户等级*/
+@property(retain,nonatomic) NSString *yungoudj;
+/**等级图标*/
+@property(retain,nonatomic) NSString *icon;
 @end

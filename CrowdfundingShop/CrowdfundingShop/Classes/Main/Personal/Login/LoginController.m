@@ -10,9 +10,10 @@
 #import "RequestData.h"
 #import "PersonalController.h"
 #import "ShopCartController.h"
+#import "CommentaryController.h"
 
 @interface LoginController ()
-@property (retain,nonatomic) NSString *type;
+
 /**登录按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 /**账号*/
@@ -90,11 +91,20 @@
             account.sign_in_date=data[@"content"][@"sign_in_date"];
             account.sign_in_time_all=data[@"content"][@"sign_in_time_all"];
             account.auto_user=data[@"content"][@"auto_user"];
+            account.yungoudj=data[@"content"][@"yungoudj"];
+            account.icon=data[@"content"][@"icon"];
             [AccountTool saveAccount:account];
             if ([self.type isEqualToString:@"shopCart"]) {
                 //popToViewController
                 for (UIViewController *temp in self.navigationController.viewControllers) {
                     if ([temp isKindOfClass:[ShopCartController class]]) {
+                        [self.navigationController popToViewController:temp animated:YES];
+                    }
+                }
+            }else if([self.type isEqualToString:@"commentary"]){
+                //popToViewController
+                for (UIViewController *temp in self.navigationController.viewControllers) {
+                    if ([temp isKindOfClass:[CommentaryController class]]) {
                         [self.navigationController popToViewController:temp animated:YES];
                     }
                 }

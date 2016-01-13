@@ -7,14 +7,20 @@
 //
 
 #import "CommentaryController.h"
+#import "RequestData.h"
+#import "AccountTool.h"
+#import "LoginController.h"
 #import <QuartzCore/QuartzCore.h>
-@interface CommentaryController ()
+#import <MBProgressHUD.h>
+@interface CommentaryController ()<UITextFieldDelegate,MBProgressHUDDelegate>{
+    MBProgressHUD *HUD;
+    AccountModel *account;
+}
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 /**评论框*/
 @property (weak, nonatomic) IBOutlet UITextField *contentTextField;
 /**评论数组*/
 @property(retain,nonatomic) NSArray *contentArray;
-
 @property (nonatomic, strong) UITableViewCell *prototypeCell;
 @end
 
@@ -46,6 +52,27 @@
     [self setExtraCellLineHidden:self.myTableView];
     self.contentArray=@[@"1asdfad",@"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",@"1ad"];
     self.prototypeCell=[self.myTableView dequeueReusableCellWithIdentifier:@"CommentaryCell"];
+    self.contentTextField.delegate=self;
+}
+#pragma mark 数据请求
+/**
+ *  请求即将揭晓商品
+ */
+-(void)requestData:(NSString *)sd_id andpageIndex:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData reviewListSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [self.navigationController.view addSubview:HUD];
+        HUD.mode = MBProgressHUDModeAnnularDeterminate;
+        HUD.delegate = self;
+        HUD.labelText = @"加载中...";
+        [HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
+        self.contentArray=data[@"content"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myTableView reloadData];
+        });
+    }];
 }
 /**
  *  返回
@@ -128,6 +155,71 @@
     frame.size.height=labelSize.height+60;
     cell.frame=frame;
     return cell.frame.size.height;
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    //沙盒路径
+    account=[AccountTool account];
+    if ([self.contentTextField.text length]>2) {
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",self.sd_id,@"sdhf_id",self.contentTextField.text,@"sdhf_content",nil];
+        [RequestData reviewSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+            NSLog(@"%@",data);
+           HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+            [self.navigationController.view addSubview:HUD];
+            HUD.delegate = self;
+            HUD.labelText = @"提交中...";
+            [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }];
+        self.contentTextField.text=@"";
+        [self.contentTextField resignFirstResponder];
+    }else{
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        
+        // Configure for text only and offset down
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"内容为空或不够3位";
+        hud.frame=CGRectMake(100, 300, 20, 10);
+//        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:2];
+    }
+    return YES;
+}
+#pragma mark - Execution code
+
+- (void)myTask {
+    // Do something usefull in here instead of sleeping ...
+    sleep(3);
+}
+
+- (void)myProgressTask {
+    // This just increases the progress indicator in a loop
+    float progress = 0.0f;
+    while (progress < 1.0f) {
+        progress += 0.01f;
+        HUD.progress = progress;
+        usleep(50000);
+    }
+}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    //沙盒路径
+    account=[AccountTool account];
+    if (textField.tag!=1009) {
+        return YES;
+    }else if(account){
+        return YES;
+    }else{
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LoginController *controller=[storyboard instantiateViewControllerWithIdentifier:@"loginView"];
+        controller.type=@"commentary";
+        [self.navigationController pushViewController:controller animated:YES];
+        return NO;
+    }
 }
 
 

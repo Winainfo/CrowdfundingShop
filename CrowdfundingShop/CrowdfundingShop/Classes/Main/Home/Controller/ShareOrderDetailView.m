@@ -7,11 +7,19 @@
 //
 
 #import "ShareOrderDetailView.h"
+#import "ARLabel.h"
+#import "RequestData.h"
+#import "CommentaryController.h"
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 @interface ShareOrderDetailView ()
+/**点赞*/
+@property (weak, nonatomic) IBOutlet ARLabel *dianZanLabel;
+/**评论*/
+@property (weak, nonatomic) IBOutlet ARLabel *pinglunLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *dianzanBtn;
 @end
 
 @implementation ShareOrderDetailView
@@ -36,6 +44,20 @@
     [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *left=[[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem=left;
+    [self requestData];
+}
+#pragma mark 数据源
+-(void)requestData{
+    if (self.dic!=NULL) {
+        self.dianZanLabel.text=self.dic[@"sd_zhan"];
+        self.pinglunLabel.text=self.dic[@"sd_ping"];
+    }else{
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.sd_id,@"sd_id",nil];
+        [RequestData shareOrderDetail:params FinishCallbackBlock:^(NSDictionary *data) {
+            self.dianZanLabel.text=data[@"content"][@"sd_zhan"];
+            self.pinglunLabel.text=data[@"content"][@"sd_ping"];
+        }];
+    }
 }
 /**
  *  返回
@@ -49,6 +71,47 @@
  *  @param sender <#sender description#>
  */
 - (IBAction)shareClick:(UIButton *)sender {
+}
+/**
+ *  点赞
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)dianClick:(UIButton *)sender {
+    int i= [self.dianZanLabel.text intValue];
+    self.dianZanLabel.text=[NSString stringWithFormat:@"%i",++i];
+    self.dianzanBtn.enabled=NO;
+    [self.dianzanBtn setImage:[UIImage imageNamed:@"share_order_heart_select"] forState:UIControlStateNormal];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.sd_id,@"sd_id",nil];
+    [RequestData dianZanSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+    }];
+}
+/**
+ *  评论
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)pingClick:(id)sender {
+    //设置故事板为第一启动
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    CommentaryController *controller=[storyboard instantiateViewControllerWithIdentifier:@"commentaryView"];
+    controller.sd_id=self.sd_id;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+/**
+ *  该方法在视图跳转时被触发
+ *
+ *  @param segue  <#segue description#>
+ *  @param sender <#sender description#>
+ */
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"shareOrderDetailView"]) {
+        id theSegue=segue.destinationViewController;
+        [theSegue setValue:self.sd_id forKey:@"sd_id"];
+        [theSegue setValue:self.dic forKey:@"dic"];
+    }
 }
 
 @end

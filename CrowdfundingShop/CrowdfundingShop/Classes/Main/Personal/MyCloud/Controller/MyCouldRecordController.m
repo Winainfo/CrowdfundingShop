@@ -10,12 +10,21 @@
 #import "MyCouldRecordCell.h"
 #import "DoMyCouldRecordCell.h"
 #import "LXDSegmentControl.h"
+#import "RequestData.h"
+#import "AccountTool.h"
+#import <UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
+#define URL @"http://120.55.112.80/statics/uploads/"
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
-@interface MyCouldRecordController ()<LXDSegmentControlDelegate>
+@interface MyCouldRecordController ()<LXDSegmentControlDelegate>{
+    AccountModel *account;
+}
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @property (weak, nonatomic) IBOutlet UITableView *doMyTableView;
+@property (retain,nonatomic) NSArray *didArray;
+@property (retain,nonatomic) NSArray *inArray;
 
 @end
 
@@ -44,6 +53,37 @@
     //注册到表格视图
     [self.doMyTableView  registerNib:nib1 forCellReuseIdentifier:@"DoMyCouldRecordCell"];
     [self setExtraCellLineHidden:self.doMyTableView];
+    [self didAnnounceServer:@"1" andpageSize:@"6"];
+    [self inAnnounceServer:@"1" andpageSize:@"6"];
+}
+#pragma mark 数据源
+/**
+ *  已揭晓
+ */
+-(void)didAnnounceServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    account=[AccountTool account];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData myRecordSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.didArray=data[@"content"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myTableView reloadData];
+        });
+    }];
+}
+/**
+ *  进行中
+ */
+-(void)inAnnounceServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    account=[AccountTool account];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData myRecordSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.inArray=data[@"content"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.doMyTableView reloadData];
+        });
+    }];
 }
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
@@ -73,9 +113,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView==self.myTableView) {
-        return 6;
+        return _didArray.count;
     }else{
-        return 6;
+        return _inArray.count;
     }
 }
 /**
@@ -95,6 +135,14 @@
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        cell.goodsTitleLabel.text=_didArray[indexPath.row][@"shopname"];
+        cell.timeLabel.text=_didArray[indexPath.row][@"q_end_time"];
+        /**商品图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,_didArray[indexPath.row][@"thumb"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [cell.goodsImageView sd_setImageWithURL:imgUrl];
         return cell;
     }else{
         static NSString *cellStr=@"DoMyCouldRecordCell";
@@ -104,6 +152,21 @@
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        cell.goodsLabel.text=_inArray[indexPath.row][@"shopname"];
+        cell.goodsLabel1.text=_inArray[indexPath.row][@"canyurenshu"];
+        cell.goodsLabel2.text=_inArray[indexPath.row][@"zongrenshu"];
+        cell.goodsLabel3.text=_inArray[indexPath.row][@"shenyurenshu"];
+        cell.goodsPriceLabel.text=[NSString stringWithFormat:@"¥%@",_inArray[indexPath.row][@"money"]];
+        /**进度条*/
+        float curreNum=[_inArray[indexPath.row][@"canyurenshu"] floatValue];
+        float countNum=[_inArray[indexPath.row][@"zongrenshu"] floatValue];
+        cell.ProgressView.progress=curreNum/countNum;
+        /**商品图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,_inArray[indexPath.row][@"thumb"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [cell.goodsImageView sd_setImageWithURL:imgUrl];
         return cell;
     }
 }

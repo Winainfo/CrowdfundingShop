@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
@@ -28,7 +29,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" title="大奖不到手我就剁手"/>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2014-06-24 09:05" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="equ-r8-Mla" customClass="ARLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="equ-r8-Mla" customClass="ARLabel">
                         <rect key="frame" x="181" y="10" width="108" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="QOK-kv-ze8"/>
@@ -37,8 +38,8 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="云购让你时时有惊喜" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hG3-Ee-ish" customClass="ARLabel">
-                        <rect key="frame" x="65" y="30" width="126" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hG3-Ee-ish" customClass="ARLabel">
+                        <rect key="frame" x="65" y="30" width="0.0" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="6Wf-le-z07"/>
                         </constraints>
@@ -53,7 +54,7 @@
                             <constraint firstAttribute="height" constant="0.5" id="kiS-2K-3ci"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一次知道一元云购是同事晒出了自己在云购上种的奖品，从来不相信天下会掉馅饼的我，抱着半信半疑的态..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c4n-tx-0dq" customClass="ARLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c4n-tx-0dq" customClass="ARLabel">
                         <rect key="frame" x="10" y="80" width="300" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="VdU-Gc-2j3"/>
@@ -82,6 +83,9 @@
                             <constraint firstAttribute="height" constant="14" id="EG9-9V-3NI"/>
                         </constraints>
                         <state key="normal" image="share_order_heart_unselect"/>
+                        <connections>
+                            <action selector="dianza:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="z54-Zk-FM6"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wib-jE-9a9" customClass="ARLabel">
                         <rect key="frame" x="66" y="228" width="6" height="16"/>
@@ -92,13 +96,16 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jsC-Y2-A7J">
+                    <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jsC-Y2-A7J">
                         <rect key="frame" x="153" y="229" width="14" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="HHe-FI-pkJ"/>
                             <constraint firstAttribute="width" constant="14" id="Stw-Ic-8W1"/>
                         </constraints>
                         <state key="normal" image="share_order_cmt_unselect"/>
+                        <connections>
+                            <action selector="pinglun:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DDv-oN-XlR"/>
+                        </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="buZ-Zr-fDU" customClass="ARLabel">
                         <rect key="frame" x="169" y="228" width="6" height="16"/>
@@ -109,7 +116,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMQ-vr-aWE">
+                    <button opaque="NO" tag="1002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMQ-vr-aWE">
                         <rect key="frame" x="256" y="229" width="14" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="Sfa-wb-WrV"/>
@@ -124,6 +131,16 @@
                             <constraint firstAttribute="height" constant="0.5" id="E6y-rM-lvm"/>
                         </constraints>
                     </view>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NZk-WQ-buF">
+                        <rect key="frame" x="119" y="226" width="11" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Tu0-91-vEx"/>
+                            <constraint firstAttribute="width" constant="11" id="hhS-f7-AK1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="B5M-PZ-IhX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="1mx-Kt-qjO"/>
@@ -138,6 +155,7 @@
                     <constraint firstItem="Wib-jE-9a9" firstAttribute="top" secondItem="eju-pO-PmF" secondAttribute="bottom" constant="10.5" id="Ikt-wm-K3e"/>
                     <constraint firstItem="hG3-Ee-ish" firstAttribute="top" secondItem="equ-r8-Mla" secondAttribute="bottom" constant="2" id="MTd-JE-XPL"/>
                     <constraint firstAttribute="trailing" secondItem="M5w-gp-EhM" secondAttribute="trailing" constant="10" id="NmL-qQ-PH9"/>
+                    <constraint firstItem="NZk-WQ-buF" firstAttribute="leading" secondItem="Wib-jE-9a9" secondAttribute="trailing" constant="47" id="Rkw-5A-jGY"/>
                     <constraint firstItem="jsC-Y2-A7J" firstAttribute="top" secondItem="eju-pO-PmF" secondAttribute="bottom" constant="11.5" id="RnS-Mp-dy9"/>
                     <constraint firstAttribute="bottom" secondItem="Wib-jE-9a9" secondAttribute="bottom" constant="11.5" id="SWE-yi-Hqs"/>
                     <constraint firstItem="jsC-Y2-A7J" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="SjT-7D-W5u"/>
@@ -146,6 +164,7 @@
                     <constraint firstItem="buZ-Zr-fDU" firstAttribute="leading" secondItem="jsC-Y2-A7J" secondAttribute="trailing" constant="2" id="W2q-Y0-BMZ"/>
                     <constraint firstItem="M5w-gp-EhM" firstAttribute="top" secondItem="vWm-N5-uEh" secondAttribute="bottom" constant="15" id="WAK-y0-3vR"/>
                     <constraint firstItem="equ-r8-Mla" firstAttribute="leading" secondItem="gJW-xr-h4Z" secondAttribute="trailing" constant="8" id="WUV-ie-R2n"/>
+                    <constraint firstItem="NZk-WQ-buF" firstAttribute="top" secondItem="eju-pO-PmF" secondAttribute="bottom" constant="8.5" id="YJj-iV-Bm6"/>
                     <constraint firstItem="vWm-N5-uEh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Z4u-Ry-HnU"/>
                     <constraint firstItem="eju-pO-PmF" firstAttribute="top" secondItem="Kvk-WM-aJ6" secondAttribute="bottom" constant="5" id="Z6B-t5-fuF"/>
                     <constraint firstItem="eju-pO-PmF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Znt-46-iPv"/>
@@ -172,7 +191,9 @@
             <connections>
                 <outlet property="commentaryLabel" destination="buZ-Zr-fDU" id="73w-A4-Wft"/>
                 <outlet property="contentLabel" destination="c4n-tx-0dq" id="mrJ-Vv-zdS"/>
+                <outlet property="dianzaBtn" destination="LeE-0H-XqB" id="5Dd-k9-xFU"/>
                 <outlet property="goodsImageScroll" destination="Kvk-WM-aJ6" id="GF5-6a-2HX"/>
+                <outlet property="idLabel" destination="NZk-WQ-buF" id="Pmr-zV-gG1"/>
                 <outlet property="peopleImageView" destination="vWm-N5-uEh" id="H2L-h2-QmS"/>
                 <outlet property="peopleName" destination="gJW-xr-h4Z" id="dcc-Cw-I40"/>
                 <outlet property="praiseLabel" destination="Wib-jE-9a9" id="9Ph-6y-ya4"/>

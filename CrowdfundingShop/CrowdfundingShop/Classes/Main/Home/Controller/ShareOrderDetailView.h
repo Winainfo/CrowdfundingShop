@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ShareOrderDetailView : UIViewController
-
+@property (retain,nonatomic)NSString *sd_id;
+@property (retain,nonatomic)NSDictionary *dic;
 @end

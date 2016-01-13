@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import <IQKeyboardManager.h>
+#import <PgySDK/PgyManager.h>
+#import <PgyUpdate/PgyUpdateManager.h>
 @interface AppDelegate ()
 
 @end
@@ -15,8 +18,25 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //键盘收起
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    //控制整个功能是否启用
+    manager.enable = YES;
+    //控制点击背景是否收起键盘
+    manager.shouldResignOnTouchOutside = YES;
+    //控制键盘上的工具条文字颜色是否用户自定义
+    manager.shouldToolbarUsesTextFieldTintColor = NO;
+    //控制是否显示键盘上的工具条
+    manager.enableAutoToolbar = YES;
 //    //设置友盟AppKey
 //    [UMSocialData setAppKey:UmengAppkey];
+    //蒲公英
+    //启动基本SDK
+    [[PgyManager sharedPgyManager] startManagerWithAppId:@"b8e4b0ea3fd7099599ff77a78eec37a8"];
+    //启动更新检查SDK
+    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"b8e4b0ea3fd7099599ff77a78eec37a8"];
+    //微信支付
+//    [WXApi registerApp:@"wx8c4af72cf9c77cb3" withDescription:@"一元商城"];
     return YES;
 }
 

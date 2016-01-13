@@ -12,7 +12,7 @@
 #import "GoodsSortCell.h"
 #import "DetailController.h"
 #import "RequestData.h"
-
+#import <MJRefresh.h>
 #import <UIImageView+WebCache.h>
 #define URL @"http://120.55.112.80/statics/uploads/"
 @interface AllGoodsController ()<UITableViewDataSource,UITableViewDelegate>
@@ -30,7 +30,7 @@
 /**所有商品数组*/
 @property (retain,nonatomic)NSArray *allGoodsArray;
 @end
-
+int page=8;
 @implementation AllGoodsController
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationItem setHidesBackButton:YES];
@@ -63,8 +63,47 @@
     self.sortNameArray=@[@"即将揭晓",@"人气",@"价值(由高到低)",@"价值(由低到高)",@"最新"];
     /**所有商品数据源*/
     [self requestData:@"" andSort:@"" andIndex:@"1" andpagesize:@"8"];
+      page=page+8;
+    //上拉加载
+    [self pushRefresh];
+    //下拉刷新
+    [self pullRefresh];
 }
-
+/**
+ *  下拉刷新
+ */
+-(void)pullRefresh{
+    self.myTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"",@"sort",@"1",@"pageIndex",@"8",@"pageSize",nil];
+        [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
+            self.allGoodsArray=data[@"content"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+                // 结束刷新
+                [self.myTableView.mj_header endRefreshing];
+            });
+        }];
+    }];
+    // 设置自动切换透明度(在导航栏下面自动隐藏)
+    self.myTableView.mj_header.automaticallyChangeAlpha = YES;
+}
+/**
+ *  上拉加载
+ */
+-(void)pushRefresh{
+     NSString *pageSize=[NSString stringWithFormat:@"%i",page];
+    self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"",@"sort",@"1",@"pageIndex",pageSize,@"pageSize",nil];
+        [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
+            self.allGoodsArray=data[@"content"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+                // 结束刷新
+                [self.myTableView.mj_footer endRefreshing];
+            });
+        }];
+    }];
+}
 
 #pragma mark 数据请求
 /**

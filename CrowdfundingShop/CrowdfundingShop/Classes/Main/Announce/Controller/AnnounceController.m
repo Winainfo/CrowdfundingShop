@@ -10,6 +10,12 @@
 #import "NewGoodsCell.h"
 #import "GoodsCategoryCell.h"
 #import "DetailController.h"
+#import "RequestData.h"
+#import "DidAnnounceView.h"
+#import "InAnnounceView.h"
+#import <UIImageView+WebCache.h>
+#import <MJRefresh.h>
+#define URL @"http://120.55.112.80/statics/uploads/"
 @interface AnnounceController ()<UITableViewDataSource,UITableViewDelegate>
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -17,7 +23,11 @@
 @property (retain,nonatomic)NSArray *categoryNameArray;
 @property (retain,nonatomic)NSArray *unselectImageArray;
 @property (retain,nonatomic)NSArray *selectImageArray;
-
+/**最新揭晓数组*/
+@property (retain,nonatomic) NSArray *announcedArray;
+/**用户数组*/
+@property (retain,nonatomic) NSMutableArray *userNameArray;
+@property (retain,nonatomic) NSArray *array;
 @end
 
 @implementation AnnounceController
@@ -42,7 +52,46 @@
     self.categoryNameArray= @[ @"全部分类", @"手机数码", @"电脑办公", @"家用电器", @"化妆个性" , @"钟表首饰" , @"其他商品" ];
     self.unselectImageArray=@[@"category_2130837504_unselect",@"category_2130837505_unselect",@"category_2130837507_unselect",@"category_2130837506_unselect",@"category_2130837509_unselect",@"category_2130837508_unselect",@"category_2130837510_unselect"];
     self.selectImageArray=@[@"category_2130837504_select",@"category_2130837505_select",@"category_2130837507_select",@"category_2130837506_select",@"category_2130837509_select",@"category_2130837508_select",@"category_2130837510_select"];
+    //最新揭晓数据请求
+    [self requestAnnouncedData:@"1" andpageSize:@"6"];
+    
+//    self.myTableView.tableHeaderView=[MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//        [self requestAnnouncedData:@"2" andpageSize:@"3"];
+//    }];
 }
+/**
+ *  请求最新揭晓商品
+ *
+ *  @param pageindex 当前页
+ *  @param pagesize  当前有几条
+ */
+-(void)requestAnnouncedData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData newAnnounced:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.announcedArray=data[@"content"];
+        //声明空间
+        self.userNameArray=[[NSMutableArray alloc]initWithCapacity:self.announcedArray.count];
+//        获取用户名
+        for (int i=0; i<self.announcedArray.count; i++) {
+            NSDictionary *params1=[NSDictionary dictionaryWithObjectsAndKeys:self.announcedArray[i][@"q_uid"],@"uid",nil];
+            [RequestData userDetail:params1 FinishCallbackBlock:^(NSDictionary *block) {
+                int code=[block[@"code"] intValue];
+                NSDictionary *dic;
+                if (code==0) {
+                   dic=[NSDictionary dictionaryWithObjectsAndKeys:block[@"content"][@"username"],@"name", nil];
+                }else{
+                   dic=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"name", nil];
+                }
+                [self.userNameArray addObject:dic];
+            }];
+        }
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myTableView reloadData];
+        });
+    }];
+}
+
 /**
  *  去掉多余的分割线
  *
@@ -69,7 +118,8 @@
     if(tableView==self.categoryTableView){
         return self.categoryNameArray.count;
     }
-    return 20;
+              NSLog(@"%@",self.userNameArray);
+    return self.announcedArray.count;
 }
 /**
  *  设置单元格内容
@@ -81,7 +131,6 @@
  */
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if(tableView==self.categoryTableView){
         static NSString *cellStr=@"GoodsCategoryCell";
         GoodsCategoryCell *cell=[tableView dequeueReusableCellWithIdentifier:cellStr];
@@ -111,6 +160,31 @@
     }
     //取消Cell选中时背景
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    //姓名
+//    cell.nameLabel.text=self.announcedArray[indexPath.row][@""];
+    cell.priceLabel.text=[NSString stringWithFormat:@"¥%@",self.announcedArray[indexPath.row][@"money"]];
+    cell.numLabel.text=self.announcedArray[indexPath.row][@"gonumber"];
+    cell.timeLabel.text=self.announcedArray[indexPath.row][@"q_end_time"];
+    /**商品图片*/
+    //拼接图片网址·
+    NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,self.announcedArray[indexPath.row][@"thumb"]];
+    //转换成url
+    NSURL *imgUrl = [NSURL URLWithString:urlStr];
+    [cell.goodsImageView sd_setImageWithURL:imgUrl];
+    /**商品图片*/
+    //拼接图片网址·
+    NSString *urlStr1 =[NSString stringWithFormat:@"%@%@",URL,self.announcedArray[indexPath.row][@"userphoto"]];
+    //转换成url
+    NSURL *imgUrl1 = [NSURL URLWithString:urlStr1];
+    [cell.faceImageView sd_setImageWithURL:imgUrl1];
+    //用户名
+//    NSLog(@"----%@",self.array);
+//    cell.nameLabel.text=self.array[indexPath.row][@"name"];
+//    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:_announcedArray[indexPath.row][@"q_uid"],@"uid",nil];
+//    [RequestData userDetail:params FinishCallbackBlock:^(NSDictionary *data) {
+////        [cell.nameLabel.text setTitle:data[@"content"][@"username"] forState:UIControlStateNormal];
+//        cell.nameLabel.text=data[@"content"][@"username"];
+//    }];
     return cell;
 }
 
@@ -139,10 +213,19 @@
         self.myTableView.hidden=NO;
         _flag=NO;
     }else{
-        //设置故事板为第一启动
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
-        [self.navigationController pushViewController:detailController animated:YES];
+        if([self.announcedArray[indexPath.row][@"q_showtime"] isEqualToString:@"N"]){
+            //设置故事板为第一启动
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            DidAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"didAnnounceView"];
+            controller.goodsID=self.announcedArray[indexPath.row][@"sid"];
+            [self.navigationController pushViewController:controller animated:YES];
+        }else{
+            //设置故事板为第一启动
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            InAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"inAnnounceView"];
+            controller.goodsID=self.announcedArray[indexPath.row][@"sid"];
+            [self.navigationController pushViewController:controller animated:YES];
+        }
     }
 }
 /**

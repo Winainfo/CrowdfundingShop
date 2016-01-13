@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface InAnnounceController : UITableViewController
-
+/**商品ID*/
+@property (retain,nonatomic) NSString *gID;
 @end

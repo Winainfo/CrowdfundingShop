@@ -11,8 +11,12 @@
 #import "goodsViewCell.h"
 #import "AppDelegate.h"
 #import "DetailController.h"
+#import "DidAnnounceView.h"
+#import "InAnnounceView.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
+#import <MJRefresh.h>
 #define URL @"http://120.55.112.80/statics/uploads/"
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
@@ -28,7 +32,10 @@
 #define IS_IPHONE_5 (IS_IPHONE && SCREEN_MAX_LENGTH == 568.0)
 #define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
-@interface IndexController ()<UIScrollViewDelegate>
+@interface IndexController ()<UIScrollViewDelegate,MZTimerLabelDelegate,MBProgressHUDDelegate>{
+    MZTimerLabel *timerExample3;
+    MBProgressHUD *HUD;
+}
 @property (strong, nonatomic) IBOutlet UITableView *mytableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewWidth;
 @property (weak, nonatomic) IBOutlet UITableViewCell *noticeCell;//公告
@@ -39,7 +46,7 @@
 /**即将揭晓*/
 @property (weak, nonatomic) IBOutlet UICollectionView *goodsCollectionView;
 /**即将揭晓数组*/
-@property (retain,nonatomic) NSArray *revealedArray;
+@property (retain,nonatomic) NSMutableArray *revealedArray;
 /**人气推荐*/
 @property (weak, nonatomic) IBOutlet UICollectionView *groomCollectionView;
 /**人气推荐数组*/
@@ -59,10 +66,7 @@
 @property (retain,nonatomic) NSMutableArray *scrollImageTags;
 @property (retain,nonatomic) NSArray *imageArray;
 
-//约束
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingConstraint1;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingConstraint2;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *leadingConstraint3;
+//倒计时
 
 @end
 
@@ -94,26 +98,66 @@
     //人气推荐数据请求
     [self requestHotData:@"1" andpageSize:@"8"];
     //最新揭晓数据请求
-    [self requestAnnouncedData:@"1" andpageSize:@"6"];
+    [self requestAnnouncedData];
+    //定时触发数据
+    NSTimer *timer=[NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(requestAnnouncedData) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    self.revealedArray=[[NSMutableArray alloc]initWithCapacity:0];
+//    [self example21];
 }
+#pragma mark UICollectionView 上下拉刷新
+- (void)example21
+{
+    __unsafe_unretained __typeof(self) weakSelf = self;
+    
+    // 下拉刷新
+    self.goodsCollectionView.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//        // 增加5条假数据
+//        for (int i = 0; i<10; i++) {
+//            [weakSelf.colors insertObject:MJRandomColor atIndex:0];
+//        }
+        [weakSelf requestData:@"1" andpageSize:@"8"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.goodsCollectionView reloadData];
+            // 结束刷新
+            [weakSelf.goodsCollectionView.mj_header endRefreshing];
+        });
+    }];
+    [self.goodsCollectionView.mj_header beginRefreshing];
+    
+    // 上拉刷新
+    self.goodsCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        
+        // 增加8条数据
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"2",@"pageIndex",@"8",@"pageSize",nil];
+        
+        [RequestData beginRevealed:params FinishCallbackBlock:^(NSDictionary *data) {
+            
+            NSArray *array=data[@"content"];
+            [self.revealedArray addObjectsFromArray:array];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.goodsCollectionView reloadData];
+            });
+        }];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.goodsCollectionView reloadData];
+            // 结束刷新
+            [weakSelf.goodsCollectionView.mj_footer endRefreshing];
+        });
+        }];
+    // 默认先隐藏footer
+    self.goodsCollectionView.mj_footer.hidden = YES;
+}
+
 /**
  *  更新约束
  */
 -(void)updateViewConstraints{
     [super updateViewConstraints];
     self.viewWidth.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*2;
-    if (IS_IPHONE_6P) {
-        float scale=320.0/414.0;
-        self.leadingConstraint1.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
-        self.leadingConstraint2.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
-        self.leadingConstraint3.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
-    }
-    if (IS_IPHONE_6) {
-        float scale=320.0/375.0;
-        self.leadingConstraint1.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
-        self.leadingConstraint2.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
-        self.leadingConstraint3.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*scale;
-    }
 }
 #pragma mark 数据请求
 /**
@@ -121,7 +165,9 @@
  */
 -(void)requestData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    
     [RequestData beginRevealed:params FinishCallbackBlock:^(NSDictionary *data) {
+        
         self.revealedArray=data[@"content"];
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -151,9 +197,16 @@
  *  @param pageindex 当前页
  *  @param pagesize  当前有几条
  */
--(void)requestAnnouncedData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+-(void)requestAnnouncedData{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"pageIndex",@"6",@"pageSize",nil];
+    NSLog(@"请求%@",params);
     [RequestData newAnnounced:params FinishCallbackBlock:^(NSDictionary *data) {
+        //加载
+//        HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+//        [self.navigationController.view addSubview:HUD];
+//        HUD.delegate = self;
+//        HUD.labelText = @"加载中...";
+//        [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
         self.announcedArray=data[@"content"];
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -304,6 +357,12 @@
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
+        //倒计时
+        cell.timeLabel.timerType=MZTimerLabelTypeTimer;
+        cell.timeLabel.timeFormat=@"mm:ss:SS";
+        [cell.timeLabel setCountDownTime:180];
+        cell.timeLabel.delegate=self;
+        [cell.timeLabel start];
         return cell;
     }else if(collectionView==self.goodsCollectionView){ //即将揭晓
         goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
@@ -384,11 +443,20 @@
  */
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
     if (collectionView==self.myCollectionView) {
-        //设置故事板为第一启动
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
-        detailController.goodsID=@"21";
-        [self.navigationController pushViewController:detailController animated:YES];
+        if([self.announcedArray[indexPath.row][@"q_showtime"] isEqualToString:@"N"]){
+            //设置故事板为第一启动
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            DidAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"didAnnounceView"];
+            controller.goodsID=self.announcedArray[indexPath.row][@"sid"];
+            [self.navigationController pushViewController:controller animated:YES];
+        }else{
+            //设置故事板为第一启动
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            InAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"inAnnounceView"];
+            controller.goodsID=self.announcedArray[indexPath.row][@"sid"];
+            [self.navigationController pushViewController:controller animated:YES];
+        }
+        
     }else if(collectionView==self.goodsCollectionView){ //即将揭晓
         //设置故事板为第一启动
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -496,6 +564,19 @@
     [self.btnView addSubview:self.moveView];//将视图添加到self.btnView上
     
 }
+#pragma mark - Execution code
 
-
+- (void)myTask {
+    // Do something usefull in here instead of sleeping ...
+    sleep(3);
+}
+- (void)myProgressTask {
+    // This just increases the progress indicator in a loop
+    float progress = 0.0f;
+    while (progress < 1.0f) {
+        progress += 0.01f;
+        HUD.progress = progress;
+        usleep(50000);
+    }
+}
 @end

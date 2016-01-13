@@ -11,15 +11,26 @@
 #import "RechargeCell.h"
 #import "ARLabel.h"
 #import "LXDSegmentControl.h"
+#import "RequestData.h"
+#import "AccountTool.h"
+#import <UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
+#define URL @"http://120.55.112.80/statics/uploads/"
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
-@interface ConsumeController ()<LXDSegmentControlDelegate>
+@interface ConsumeController ()<LXDSegmentControlDelegate>{
+    AccountModel *account;
+}
+
 /**充值明细表*/
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 /**消费明细表*/
 @property (weak, nonatomic) IBOutlet UITableView *rechargeTableView;
-
+/**充值数组*/
+@property (retain,nonatomic) NSArray *rechargeArray;
+/**消费数组*/
+@property (retain,nonatomic) NSArray *consumeArray;
 //表头
 @property (retain,nonatomic) UIView *recharView;
 /**总金额*/
@@ -31,6 +42,7 @@
 @property (retain,nonatomic) UIView *lineview1;
 @property (retain,nonatomic) UIView *lineview2;
 @property (retain,nonatomic) UIView *lineview3;
+@property (retain,nonatomic) UILabel *consumeMoney;
 @end
 
 @implementation ConsumeController
@@ -59,6 +71,41 @@
     //注册到表格视图
     [self.rechargeTableView registerNib:nib1 forCellReuseIdentifier:@"RechargeCell"];
     [self setExtraCellLineHidden:self.rechargeTableView];
+    [self consumeServer:@"1" andpageSize:@"20"];
+}
+#pragma mark 数据源
+/**
+ *  充值明细
+ */
+-(void)rechargeServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    account=[AccountTool account];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData myRechargeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.rechargeArray=data[@"content"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myTableView reloadData];
+        });
+    }];
+}
+/**
+ * 消费明细
+ */
+-(void)consumeServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    account=[AccountTool account];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData myConsumeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.consumeArray=data[@"content"];
+        int money=0;
+        for (int i=0; i<self.consumeArray.count; i++) {
+            money+=[self.consumeArray[i][@"money"] intValue];
+        }
+        self.consumeMoney.text=[NSString stringWithFormat:@"%i",money];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.rechargeTableView reloadData];
+        });
+    }];
 }
 /**
  *  返回
@@ -90,9 +137,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView==self.myTableView) {
-        return 2;
+        return self.rechargeArray.count;
     }
-    return 3;
+    return self.consumeArray.count;
 }
 /**
  *  设置单元格内容
@@ -111,6 +158,9 @@
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
+//        cell.timeLabel.text=_rechargeArray[indexPath.row][@""];
+//        cell.moneyLabel.text=_rechargeArray[indexPath.row][@""];
+//        cell.channelLabel.text=_rechargeArray[indexPath.row][@""];
         return cell;
     }else if(tableView==self.rechargeTableView){
         static NSString *cellStr=@"RechargeCell";
@@ -120,6 +170,8 @@
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        cell.timeLabel.text=_consumeArray[indexPath.row][@"time"];
+        cell.moneyLabel.text=[NSString stringWithFormat:@"¥%@",_consumeArray[indexPath.row][@"money"]];
         return cell;
     }
     return nil;
@@ -150,7 +202,7 @@
     UIView *view1=[[UIView alloc]initWithFrame:CGRectMake(0,0, kScreenWidth, 40)];
     [self.recharView addSubview:view1];
     CGRect frame = CGRectMake(40, 5, 240.f, 30.f);
-    NSArray * items = @[@"消费明细", @"充值明细"];
+    NSArray * items = @[@"充值明细", @"消费明细"];
     LXDSegmentControlConfiguration * select = [LXDSegmentControlConfiguration configurationWithControlType: LXDSegmentControlTypeSelectBlock items: items];
     select.currentIndex=1;
     select.cornerColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
@@ -209,10 +261,10 @@
         self.consume.font=[UIFont fontWithName:@"Menlo" size:14];
         [self.recharView addSubview:self.consume];
         self.moneyLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.consume.frame.origin.x+self.consume.frame.size.width+5,57, 75, 21)];
-        self.moneyLabel.text=@"¥11.00";
-        self.moneyLabel.textColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
-        self.moneyLabel.font=[UIFont fontWithName:@"Menlo" size:14];
-        [self.recharView addSubview:self.moneyLabel];
+        self.consumeMoney.text=@"¥11.00";
+        self.consumeMoney.textColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
+        self.consumeMoney.font=[UIFont fontWithName:@"Menlo" size:14];
+        [self.recharView addSubview:self.consumeMoney];
         self.lineview2=[[UIView alloc]initWithFrame:CGRectMake(0, 85, kScreenWidth, 0.5)];
         self.lineview2.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
         [self.recharView addSubview:self.lineview2];

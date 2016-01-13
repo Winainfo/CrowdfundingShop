@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ARLabel.h"
+#import <MZTimerLabel.h>
 @interface PopularGoodsCell : UICollectionViewCell
 /**
  *  商品图片
@@ -20,6 +21,7 @@
 /**
  *  时间
  */
-@property (weak, nonatomic) IBOutlet ARLabel *timeLabel;
+@property (weak, nonatomic) IBOutlet MZTimerLabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UIView *timeView;
 
 @end

@@ -10,13 +10,23 @@
 #import "MyShareOrderCell.h"
 #import "DoShareOrderCell.h"
 #import "LXDSegmentControl.h"
+#import "RequestData.h"
+#import "AccountTool.h"
+#import <UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
+#define URL @"http://120.55.112.80/statics/uploads/"
 //获得当前屏幕宽高点数（非像素）
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kScreenWidth  [UIScreen mainScreen].bounds.size.width
-@interface MyShareOrderController ()<LXDSegmentControlDelegate>
+@interface MyShareOrderController ()<LXDSegmentControlDelegate>{
+    AccountModel *account;
+}
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
-
 @property (weak, nonatomic) IBOutlet UITableView *shareOrderTableView;
+/**已晒单数组*/
+@property (retain,nonatomic)NSArray *doArray;
+/**未晒单数组*/
+@property (retain,nonatomic)NSArray *goodsArray;
 @end
 
 @implementation MyShareOrderController
@@ -45,6 +55,36 @@
     //注册到表格视图
     [self.shareOrderTableView  registerNib:nib1 forCellReuseIdentifier:@"DoShareOrderCell"];
     [self setExtraCellLineHidden:self.shareOrderTableView];
+    [self doShareServer:@"1" andpageSize:@"6"];
+}
+#pragma mark 数据源
+/**
+ *  已晒单
+ */
+-(void)doShareServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    account=[AccountTool account];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData myShareSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.doArray=data[@"content"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.shareOrderTableView reloadData];
+        });
+    }];
+}
+/**
+ *  未晒单
+ */
+-(void)shareServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    account=[AccountTool account];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    [RequestData myShareSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        self.goodsArray=data[@"content"];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myTableView reloadData];
+        });
+    }];
 }
 /**
  *  返回
@@ -76,9 +116,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView==self.myTableView) {
-        return 3;
+        return self.goodsArray.count;
     }else{
-     return 3;
+     return self.doArray.count;
     }
 }
 /**
@@ -107,6 +147,14 @@
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        cell.timeLabel.text=_doArray[indexPath.row][@"sd_time"];
+        cell.goodsTitleLabel.text=_doArray[indexPath.row][@"sd_title"];
+        /**商品图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,_doArray[indexPath.row][@"thumb"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [cell.goodsImageView sd_setImageWithURL:imgUrl];
         return cell;
     }
     return nil;

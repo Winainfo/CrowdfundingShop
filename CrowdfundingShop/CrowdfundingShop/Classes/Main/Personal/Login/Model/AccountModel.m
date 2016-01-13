@@ -51,6 +51,8 @@
     [aCoder encodeObject:self.sign_in_date forKey:@"sign_in_date"];
     [aCoder encodeObject:self.sign_in_time_all forKey:@"sign_in_time_all"];
     [aCoder encodeObject:self.auto_user forKey:@"auto_user"];
+    [aCoder encodeObject:self.yungoudj forKey:@"yungoudj"];
+    [aCoder encodeObject:self.icon forKey:@"icon"];
 
 }
 /**
@@ -87,6 +89,8 @@
         self.sign_in_date=[aDecoder decodeObjectForKey:@"sign_in_date"];
         self.sign_in_time_all=[aDecoder decodeObjectForKey:@"sign_in_time_all"];
         self.auto_user=[aDecoder decodeObjectForKey:@"auto_user"];
+        self.yungoudj=[aDecoder decodeObjectForKey:@"yungoudj"];
+        self.icon=[aDecoder decodeObjectForKey:@"icon"];
     }
     return self;
 }
