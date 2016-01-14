@@ -10,7 +10,7 @@
 #import "UITabBarController+ShowHideBar.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
+#define URL @"http://www.god-store.com/statics/uploads/"
 @interface GoodsDetailController ()
 /**所有云购记录*/
 @property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell1;

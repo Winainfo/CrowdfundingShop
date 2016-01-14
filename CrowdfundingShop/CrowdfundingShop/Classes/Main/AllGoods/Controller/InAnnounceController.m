@@ -10,7 +10,7 @@
 #import "ARLabel.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
+#define URL @"http://www.god-store.com/statics/uploads/"
 @interface InAnnounceController ()
 /**商品图片*/
 @property (weak, nonatomic) IBOutlet UIImageView *goodsImageView;

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#define UmengAppkey @"5678b900e0f55a807e00388d"
+#import <ShareSDK/ShareSDK.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+#import <TencentOpenAPI/TencentOAuth.h>
+#import "WXApi.h"
+#import "WeiboSDK.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

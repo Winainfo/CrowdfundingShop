@@ -17,21 +17,7 @@
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
 #import <MJRefresh.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
-//获得当前屏幕宽高点数（非像素）
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
-//判断设备
-#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
-#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
-#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
-#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
-
-#define IS_IPHONE_4_OR_LESS (IS_IPHONE && SCREEN_MAX_LENGTH < 568.0)
-#define IS_IPHONE_5 (IS_IPHONE && SCREEN_MAX_LENGTH == 568.0)
-#define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
-#define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
+#import "UIViewController+WeChatAndAliPayMethod.h"
 @interface IndexController ()<UIScrollViewDelegate,MZTimerLabelDelegate,MBProgressHUDDelegate>{
     MZTimerLabel *timerExample3;
     MBProgressHUD *HUD;
@@ -104,6 +90,7 @@
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     self.revealedArray=[[NSMutableArray alloc]initWithCapacity:0];
 //    [self example21];
+
 }
 #pragma mark UICollectionView 上下拉刷新
 - (void)example21
@@ -353,7 +340,7 @@
         cell.goodsNameLabel.text=self.announcedArray[indexPath.row][@"title"];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,self.announcedArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.announcedArray[indexPath.row][@"thumb"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
@@ -376,7 +363,7 @@
         cell.goodsID.text=self.revealedArray[indexPath.row][@"id"];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,self.revealedArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.revealedArray[indexPath.row][@"thumb"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
@@ -397,7 +384,7 @@
         cell.goodsID.text=self.groomArray[indexPath.row][@"id"];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,self.groomArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.groomArray[indexPath.row][@"thumb"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
@@ -578,5 +565,66 @@
         HUD.progress = progress;
         usleep(50000);
     }
+}
+/**
+ *  微信支付
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)payWithWeChatPay:(UIButton *)sender {
+    //这里调用我自己写的catagoary中的方法，方法里集成了微信支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
+    //这里填写的两个参数是后台会返回给你的
+    [self payTheMoneyUseWeChatPayWithPrepay_id:@"这里填写后台返回的Prepay_id" nonce_str:@"这里填写后台给你返回的nonce_str"];
+    //所以这里添加一个监听，用来接收是否成功的消息
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPayResultNoti:) name:WX_PAY_RESULT object:nil];
+}
+/**
+ *  支付宝支付
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)payWithAliPay:(id)sender {
+//    NSLog(@"AliPay MoneyNum Is %@",self.moneyTextField.text);
+    //这里调用我自己写的catagoary中的方法，方法里集成了支付宝支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
+    [self payTHeMoneyUseAliPayWithOrderId:@"这里填写后台返回给你的订单id" totalMoney:@"这里填写钱数（单位/元）" payTitle:@"这里告诉客户花钱买了啥，力求简短"];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AliPayResultNoti:) name:ALI_PAY_RESULT object:nil];
+}
+
+//微信支付付款成功失败
+-(void)weChatPayResultNoti:(NSNotification *)noti{
+    NSLog(@"%@",noti);
+    if ([[noti object] isEqualToString:IS_SUCCESSED]) {
+        [self showMessage:@"支付成功"];
+        //在这里填写支付成功之后你要做的事情
+        
+    }else{
+        [self showMessage:@"支付失败"];
+    }
+    //上边添加了监听，这里记得移除
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:WX_PAY_RESULT object:nil];
+}
+
+
+//支付宝支付成功失败
+-(void)AliPayResultNoti:(NSNotification *)noti
+{
+    NSLog(@"%@",noti);
+    if ([[noti object] isEqualToString:ALIPAY_SUCCESSED]) {
+        [self showMessage:@"支付成功"];
+        //在这里填写支付成功之后你要做的事情
+        
+    }else{
+        [self showMessage:@"支付失败"];
+    }
+    //上边添加了监听，这里记得移除
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:ALI_PAY_RESULT object:nil];
+}
+
+- (void) showMessage:(NSString*)message{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    [alert show];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [alert dismissWithClickedButtonIndex:alert.cancelButtonIndex animated:YES];
+    });
 }
 @end

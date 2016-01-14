@@ -11,9 +11,10 @@
 #import "PersonalController.h"
 #import "ShopCartController.h"
 #import "CommentaryController.h"
-
-@interface LoginController ()
-
+#import <ShareSDK/ShareSDK.h>
+#import "LoginMethod.h"
+@interface LoginController ()<LoginMethodDelegate>
+@property (nonatomic ,strong) LoginMethod * myLoginMethod;
 /**登录按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 /**账号*/
@@ -48,6 +49,10 @@
     /**圆角*/
     self.loginBtn.layer.cornerRadius=2.0;
     self.loginBtn.layer.masksToBounds=YES;
+    //只需要初始化LoginMethod这个类的对象，然后让当前控制器遵守他的协议
+    self.myLoginMethod = [[LoginMethod alloc]init];
+    self.myLoginMethod.delegate = self;
+
 }
 -(void)searchClick{
     [self.navigationController popViewControllerAnimated:YES];
@@ -133,6 +138,36 @@
 - (IBAction)loginClick:(UIButton *)sender {
     [self requestData:self.userTextField.text andpassword:self.pwdTextField.text];
 }
-
-
+/**
+ *  微信登录
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)weixinLogin:(UIButton *)sender {
+    [self.myLoginMethod getUserInfoDicWithThirdPartyLoginType:LoginTypeWechat];
+}
+/**
+ *  qq登录
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)qqLogin:(id)sender {
+    [self.myLoginMethod getUserInfoDicWithThirdPartyLoginType:LoginTypeQQ];
+}
+#pragma mark - LoginDelegate
+/**
+ *  拿到数据之后的代理方法
+ *
+ *  @param userInfo 拿到的用户数据
+ *  @param errorMsg 返回的错误信息。（判断是否存在错误信息，如果没有错误信息，用户数据可以拿到）
+ */
+-(void)recieveTheUserInfo:(NSDictionary *)userInfo errorMsg:(NSString *)errorMsg
+{
+    if (!errorMsg) {
+        NSLog(@"%@",userInfo);
+    }else{
+        NSLog(@"%@",errorMsg);
+    }
+    
+}
 @end

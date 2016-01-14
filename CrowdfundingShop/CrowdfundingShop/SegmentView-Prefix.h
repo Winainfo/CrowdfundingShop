@@ -7,7 +7,7 @@
 //
 
 #import <Availability.h>
-
+#define URL @"http://www.god-store.com"
 #ifndef __IPHONE_3_0
 #warning "This project uses features only available in iOS SDK 3.0 and later."
 #endif

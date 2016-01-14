@@ -12,7 +12,6 @@
 #import "AccountTool.h"
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
 @interface AccessGoodsController (){
     AccountModel *account;
 }
@@ -111,7 +110,7 @@
     cell.numLabel.text=_goodsArray[indexPath.row][@"q_user_code"];
     /**商品图片*/
     //拼接图片网址·
-    NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,_goodsArray[indexPath.row][@"thumb"]];
+    NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_goodsArray[indexPath.row][@"thumb"]];
     //转换成url
     NSURL *imgUrl = [NSURL URLWithString:urlStr];
     [cell.goodsImageView sd_setImageWithURL:imgUrl];

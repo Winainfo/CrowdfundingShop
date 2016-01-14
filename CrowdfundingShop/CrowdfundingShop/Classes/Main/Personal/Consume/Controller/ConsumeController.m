@@ -15,10 +15,6 @@
 #import "AccountTool.h"
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
-//获得当前屏幕宽高点数（非像素）
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 @interface ConsumeController ()<LXDSegmentControlDelegate>{
     AccountModel *account;
 }

@@ -10,7 +10,8 @@
 #import <IQKeyboardManager.h>
 #import <PgySDK/PgyManager.h>
 #import <PgyUpdate/PgyUpdateManager.h>
-@interface AppDelegate ()
+#import "payRequsestHandler.h"
+@interface AppDelegate ()<WXApiDelegate>
 
 @end
 
@@ -28,17 +29,107 @@
     manager.shouldToolbarUsesTextFieldTintColor = NO;
     //控制是否显示键盘上的工具条
     manager.enableAutoToolbar = YES;
-//    //设置友盟AppKey
-//    [UMSocialData setAppKey:UmengAppkey];
-    //蒲公英
-    //启动基本SDK
-    [[PgyManager sharedPgyManager] startManagerWithAppId:@"b8e4b0ea3fd7099599ff77a78eec37a8"];
-    //启动更新检查SDK
-    [[PgyUpdateManager sharedPgyManager] startManagerWithAppId:@"b8e4b0ea3fd7099599ff77a78eec37a8"];
-    //微信支付
-//    [WXApi registerApp:@"wx8c4af72cf9c77cb3" withDescription:@"一元商城"];
+    //APP_ID 这里我写成了宏的形式，如果你按照我的文档方法添加了WXPay的文件夹，你这里可以直接点击宏进去查看里面其他的宏
+    [WXApi registerApp:APP_ID withDescription:@"一元商城"];
+    
+    [ShareSDK registerApp:@"dade7bf06aaa"];
+    [self initShareSDKRegisit];
     return YES;
 }
+- (void)initShareSDKRegisit
+{
+    //微信朋友
+    [ShareSDK connectWeChatSessionWithAppId:APP_ID
+                                  appSecret:APP_SECRET
+                                  wechatCls:[WXApi class]];
+    //微信朋友圈
+    [ShareSDK connectWeChatTimelineWithAppId:APP_ID
+                                   wechatCls:[WXApi class]];
+    
+    //QQ
+    [ShareSDK connectQZoneWithAppKey:@"1105110714"
+                           appSecret:@"fsQPstIMmwidD8Wh"
+                   qqApiInterfaceCls:[QQApiInterface class]
+                     tencentOAuthCls:[TencentOAuth class]];
+    [ShareSDK connectQQWithQZoneAppKey:@"1105110714"
+                     qqApiInterfaceCls:[QQApiInterface class]
+                       tencentOAuthCls:[TencentOAuth class]];
+    
+    
+    //短信
+    
+    [ShareSDK connectSMS];
+    
+    //新浪微博
+    [ShareSDK connectSinaWeiboWithAppKey:@"微博开放平台的appkey"
+                               appSecret:@"微博开放平台的appSecret"
+                             redirectUri:@"http://www.sydoil.com"];//注意，这是回调网址，回调网址一定要跟微博开放平台上填写的回调网址一致才行。另外，如果应用没有上架，你想测试的话，要在微博开放平台上添加测试微博账号才可以
+    
+}
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+{
+    //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
+    if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",APP_ID]].location != NSNotFound) {
+        return  [WXApi handleOpenURL:url delegate:self];
+        //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
+    }else{
+        return [ShareSDK handleOpenURL:url
+                            wxDelegate:self];
+    }
+    
+}
+
+#pragma mark - IOS9.0以后废弃了这两个方法的调用  改用上边这个方法了，请注意、
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
+    if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",APP_ID]].location != NSNotFound) {
+        return  [WXApi handleOpenURL:url delegate:self];
+        //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
+    }else{
+        return [ShareSDK handleOpenURL:url
+                            wxDelegate:self];
+    }
+}
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    
+    //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
+    if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",APP_ID]].location != NSNotFound) {
+        return  [WXApi handleOpenURL:url delegate:self];
+    }else
+    {
+        //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
+        return [ShareSDK handleOpenURL:url
+                     sourceApplication:sourceApplication
+                            annotation:annotation
+                            wxDelegate:self];
+    }
+}
+
+//微信SDK自带的方法，处理从微信客户端完成操作后返回程序之后的回调方法
+-(void) onResp:(BaseResp*)resp
+{
+    //这里判断回调信息是否为 支付
+    if([resp isKindOfClass:[PayResp class]]){
+        switch (resp.errCode) {
+            case WXSuccess:
+                //如果支付成功的话，全局发送一个通知，支付成功
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"weixin_pay_result" object:@"成功"];
+                break;
+                
+            default:
+                //如果支付失败的话，全局发送一个通知，支付失败
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"weixin_pay_result" object:@"失败"];
+                break;
+        }
+    }
+}
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

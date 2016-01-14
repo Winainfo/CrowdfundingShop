@@ -13,7 +13,6 @@
 #import "RequestData.h"
 #import "CommentaryController.h"
 #import <UIImageView+WebCache.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
 @interface ShareOrderController ()<UIScrollViewDelegate,CartCellDelegate>
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -169,7 +168,7 @@
     cell.delegate=self;
     for (int i=0; i<imageArray.count; i++) {
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,imageArray[i]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,imageArray[i]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake((i*100)+5, 0, 94, 94)];

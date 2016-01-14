@@ -439,10 +439,10 @@
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYP-z1-b1c">
-                                        <rect key="frame" x="50" y="15" width="14" height="14"/>
+                                        <rect key="frame" x="50" y="12" width="20" height="20"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="14" id="kOb-P4-vKx"/>
-                                            <constraint firstAttribute="height" constant="14" id="yGz-nR-lVq"/>
+                                            <constraint firstAttribute="height" constant="20" id="XXa-en-KOH"/>
+                                            <constraint firstAttribute="width" constant="20" id="s4G-Fy-h6E"/>
                                         </constraints>
                                         <state key="normal" image="share_order_heart_unselect"/>
                                         <connections>
@@ -450,9 +450,9 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="paZ-Dg-VMp" customClass="ARLabel">
-                                        <rect key="frame" x="64" y="14" width="6" height="16"/>
+                                        <rect key="frame" x="70" y="14" width="6" height="16"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="UMM-Q7-sK8"/>
+                                            <constraint firstAttribute="height" constant="16" id="8ND-av-Pi5"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -466,10 +466,10 @@
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehF-7M-6Af">
-                                        <rect key="frame" x="153" y="15" width="14" height="14"/>
+                                        <rect key="frame" x="153" y="12" width="20" height="20"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="14" id="Ewh-Oj-x41"/>
-                                            <constraint firstAttribute="height" constant="14" id="f4k-SL-N2A"/>
+                                            <constraint firstAttribute="width" constant="20" id="L5W-PW-BD7"/>
+                                            <constraint firstAttribute="height" constant="20" id="hbq-tg-neC"/>
                                         </constraints>
                                         <state key="normal" image="share_order_cmt_unselect"/>
                                         <connections>
@@ -477,42 +477,43 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DrL-9g-qmT" customClass="ARLabel">
-                                        <rect key="frame" x="167" y="14" width="6" height="16"/>
+                                        <rect key="frame" x="173" y="14" width="6" height="16"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="YRa-Ls-Axv"/>
+                                            <constraint firstAttribute="height" constant="16" id="0yg-EU-Nfg"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhS-md-KF1">
-                                        <rect key="frame" x="256" y="15" width="14" height="14"/>
+                                        <rect key="frame" x="256" y="2" width="64" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="14" id="IqV-V7-6XO"/>
-                                            <constraint firstAttribute="height" constant="14" id="RXA-i8-D7x"/>
+                                            <constraint firstAttribute="height" constant="40" id="K4k-zp-2nA"/>
+                                            <constraint firstAttribute="width" constant="64" id="cew-Ee-LlR"/>
                                         </constraints>
                                         <state key="normal" image="share_order_share_unselect"/>
                                         <connections>
-                                            <action selector="shareClick:" destination="aI3-Cl-6eg" eventType="touchUpInside" id="hIN-Sn-6he"/>
+                                            <action selector="sharClick:" destination="aI3-Cl-6eg" eventType="touchUpInside" id="z5Y-1e-cTP"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="vhS-md-KF1" firstAttribute="leading" secondItem="DrL-9g-qmT" secondAttribute="trailing" constant="83" id="9vH-TG-CtM"/>
-                                    <constraint firstItem="vhS-md-KF1" firstAttribute="centerY" secondItem="paZ-Dg-VMp" secondAttribute="centerY" id="G26-9Q-dDg"/>
-                                    <constraint firstItem="DrL-9g-qmT" firstAttribute="leading" secondItem="ehF-7M-6Af" secondAttribute="trailing" id="HIw-40-Uwu"/>
-                                    <constraint firstItem="vhS-md-KF1" firstAttribute="top" secondItem="ehF-7M-6Af" secondAttribute="top" id="HxV-Mv-Ldh"/>
+                                    <constraint firstItem="vYP-z1-b1c" firstAttribute="leading" secondItem="d5U-Ax-tWg" secondAttribute="leading" constant="50" id="6Yc-4Q-K03"/>
+                                    <constraint firstItem="DrL-9g-qmT" firstAttribute="centerY" secondItem="d5U-Ax-tWg" secondAttribute="centerY" id="6iP-Ok-Okw"/>
+                                    <constraint firstAttribute="bottom" secondItem="vhS-md-KF1" secondAttribute="bottom" constant="2" id="7i8-1z-17U"/>
+                                    <constraint firstItem="paZ-Dg-VMp" firstAttribute="centerY" secondItem="d5U-Ax-tWg" secondAttribute="centerY" id="GtU-0r-ZZe"/>
+                                    <constraint firstItem="vhS-md-KF1" firstAttribute="top" secondItem="VGW-R9-qkC" secondAttribute="bottom" constant="1" id="HA5-1B-dvs"/>
                                     <constraint firstAttribute="height" constant="44" id="KCz-xg-nNP"/>
-                                    <constraint firstItem="vhS-md-KF1" firstAttribute="top" secondItem="vYP-z1-b1c" secondAttribute="top" id="N2M-yV-0DG"/>
+                                    <constraint firstItem="DrL-9g-qmT" firstAttribute="leading" secondItem="ehF-7M-6Af" secondAttribute="trailing" id="KLG-wp-PjK"/>
                                     <constraint firstItem="VGW-R9-qkC" firstAttribute="leading" secondItem="d5U-Ax-tWg" secondAttribute="leading" id="Rct-oM-YRa"/>
-                                    <constraint firstItem="VGW-R9-qkC" firstAttribute="centerX" secondItem="ehF-7M-6Af" secondAttribute="centerX" id="UGg-Tb-NAy"/>
+                                    <constraint firstItem="paZ-Dg-VMp" firstAttribute="leading" secondItem="vYP-z1-b1c" secondAttribute="trailing" id="SQo-EF-djI"/>
+                                    <constraint firstItem="ehF-7M-6Af" firstAttribute="centerY" secondItem="d5U-Ax-tWg" secondAttribute="centerY" id="c0L-il-sdk"/>
                                     <constraint firstAttribute="trailing" secondItem="VGW-R9-qkC" secondAttribute="trailing" id="c1n-5J-1wH"/>
-                                    <constraint firstItem="ehF-7M-6Af" firstAttribute="leading" secondItem="paZ-Dg-VMp" secondAttribute="trailing" constant="83" id="eyY-Od-k42"/>
-                                    <constraint firstItem="DrL-9g-qmT" firstAttribute="top" secondItem="VGW-R9-qkC" secondAttribute="bottom" constant="13" id="iGQ-RL-XNv"/>
-                                    <constraint firstItem="paZ-Dg-VMp" firstAttribute="leading" secondItem="vYP-z1-b1c" secondAttribute="trailing" id="mQl-5m-kP5"/>
+                                    <constraint firstItem="ehF-7M-6Af" firstAttribute="leading" secondItem="paZ-Dg-VMp" secondAttribute="trailing" constant="77" id="gWJ-uv-fMU"/>
+                                    <constraint firstItem="vYP-z1-b1c" firstAttribute="centerY" secondItem="d5U-Ax-tWg" secondAttribute="centerY" id="jbf-9K-WIG"/>
+                                    <constraint firstAttribute="trailing" secondItem="vhS-md-KF1" secondAttribute="trailing" id="mc8-Ol-IDp"/>
                                     <constraint firstItem="VGW-R9-qkC" firstAttribute="top" secondItem="d5U-Ax-tWg" secondAttribute="top" id="mcN-2I-3IS"/>
-                                    <constraint firstItem="vhS-md-KF1" firstAttribute="centerY" secondItem="DrL-9g-qmT" secondAttribute="centerY" id="zaz-kL-iOn"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1602,10 +1603,16 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gt9-aS-Jvj" userLabel="qqButton">
                                         <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                                         <state key="normal" image="login_qq_logo"/>
+                                        <connections>
+                                            <action selector="qqLogin:" destination="DJG-xb-Wwk" eventType="touchUpInside" id="knf-X6-2ba"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IYf-Qn-sw2" userLabel="weixinButton">
                                         <rect key="frame" x="123" y="0.0" width="48" height="48"/>
                                         <state key="normal" image="login_wechat_logo"/>
+                                        <connections>
+                                            <action selector="weixinLogin:" destination="DJG-xb-Wwk" eventType="touchUpInside" id="epl-zF-501"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </view>
@@ -5090,6 +5097,9 @@
                                                             </constraints>
                                                             <state key="normal" backgroundImage="homepage_new_unselect"/>
                                                             <state key="selected" backgroundImage="homepage_new_select"/>
+                                                            <connections>
+                                                                <action selector="payWithWeChatPay:" destination="2RH-fH-aks" eventType="touchUpInside" id="kLv-Qg-Kir"/>
+                                                            </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新品" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzU-fy-k0B" customClass="ARLabel">
                                                             <rect key="frame" x="15" y="50" width="20" height="17"/>
@@ -5186,6 +5196,9 @@
                                                             </constraints>
                                                             <state key="normal" backgroundImage="homepage_charge_unselect"/>
                                                             <state key="selected" backgroundImage="homepage_charge_select"/>
+                                                            <connections>
+                                                                <action selector="payWithAliPay:" destination="2RH-fH-aks" eventType="touchUpInside" id="URw-11-FFA"/>
+                                                            </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="账户充值" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3jw-va-QJa" customClass="ARLabel">
                                                             <rect key="frame" x="5" y="50" width="40" height="17"/>

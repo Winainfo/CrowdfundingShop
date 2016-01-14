@@ -15,7 +15,6 @@
 #import "InAnnounceView.h"
 #import <UIImageView+WebCache.h>
 #import <MJRefresh.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
 @interface AnnounceController ()<UITableViewDataSource,UITableViewDelegate>
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -167,13 +166,13 @@
     cell.timeLabel.text=self.announcedArray[indexPath.row][@"q_end_time"];
     /**商品图片*/
     //拼接图片网址·
-    NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,self.announcedArray[indexPath.row][@"thumb"]];
+    NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.announcedArray[indexPath.row][@"thumb"]];
     //转换成url
     NSURL *imgUrl = [NSURL URLWithString:urlStr];
     [cell.goodsImageView sd_setImageWithURL:imgUrl];
     /**商品图片*/
     //拼接图片网址·
-    NSString *urlStr1 =[NSString stringWithFormat:@"%@%@",URL,self.announcedArray[indexPath.row][@"userphoto"]];
+    NSString *urlStr1 =[NSString stringWithFormat:@"%@%@",imgURL,self.announcedArray[indexPath.row][@"userphoto"]];
     //转换成url
     NSURL *imgUrl1 = [NSURL URLWithString:urlStr1];
     [cell.faceImageView sd_setImageWithURL:imgUrl1];

@@ -11,7 +11,6 @@
 #import "ARLabel.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
 @interface DidAnnounceController ()
 
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
@@ -68,7 +67,7 @@
             self.time1Label.text=data[@"content"][@"q_end_time"];
             /**商品图片*/
             //拼接图片网址·
-            NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,data[@"content"][@"thumb"]];
+            NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,data[@"content"][@"thumb"]];
             //转换成url
             NSURL *imgUrl = [NSURL URLWithString:urlStr];
             [self.goodsImageView sd_setImageWithURL:imgUrl];

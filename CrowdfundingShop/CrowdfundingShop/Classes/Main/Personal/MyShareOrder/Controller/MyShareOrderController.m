@@ -14,10 +14,6 @@
 #import "AccountTool.h"
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
-//获得当前屏幕宽高点数（非像素）
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 @interface MyShareOrderController ()<LXDSegmentControlDelegate>{
     AccountModel *account;
 }
@@ -151,7 +147,7 @@
         cell.goodsTitleLabel.text=_doArray[indexPath.row][@"sd_title"];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,_doArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_doArray[indexPath.row][@"thumb"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];

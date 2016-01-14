@@ -9,9 +9,6 @@
 #import "SeetingTableController.h"
 #import "PersonalController.h"
 #import "AccountTool.h"
-//获得当前屏幕宽高点数（非像素）
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 @interface SeetingTableController ()
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (retain,nonatomic) UIView *footerView;

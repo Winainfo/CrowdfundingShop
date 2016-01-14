@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C60F956B525FC1FC06A92F6E1CED56F298FB0B81",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "fe53730f-2d15-ba41-ba61-958c2fe86742++3072" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "fe53730f-2d15-ba41-ba61-958c2fe86742++3072" : 0,
+    "C60F956B525FC1FC06A92F6E1CED56F298FB0B81" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2F56C93E-9677-45B2-992B-BEEB2F907450",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "fe53730f-2d15-ba41-ba61-958c2fe86742++3072" : "CrowdfundingShop\/CrowdfundingShop\/CrowdfundingShop\/Classes\/Plug-in\/ThirdParty\/AliPay\/",
+    "C60F956B525FC1FC06A92F6E1CED56F298FB0B81" : "CrowdfundingShop\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "CrowdfundingShop",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "CrowdfundingShop\/CrowdfundingShop.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:Winainfo\/CrowdfundingShop.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C60F956B525FC1FC06A92F6E1CED56F298FB0B81"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/cnsywangkd068.bluemobi.cn\/svn\/cnpc",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "fe53730f-2d15-ba41-ba61-958c2fe86742++3072"
+    }
+  ]
+}

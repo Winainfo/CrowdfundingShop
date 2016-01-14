@@ -12,6 +12,7 @@
 #import "LoginController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <MBProgressHUD.h>
+#import <UIImageView+WebCache.h>
 @interface CommentaryController ()<UITextFieldDelegate,MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
     AccountModel *account;
@@ -20,7 +21,7 @@
 /**评论框*/
 @property (weak, nonatomic) IBOutlet UITextField *contentTextField;
 /**评论数组*/
-@property(retain,nonatomic) NSArray *contentArray;
+@property(retain,nonatomic) NSMutableArray *contentArray;
 @property (nonatomic, strong) UITableViewCell *prototypeCell;
 @end
 
@@ -50,28 +51,28 @@
     [self.myTableView  registerNib:nib forCellReuseIdentifier:@"CommentaryCell"];
     self.myTableView.separatorStyle=NO;
     [self setExtraCellLineHidden:self.myTableView];
-    self.contentArray=@[@"1asdfad",@"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试",@"1ad"];
     self.prototypeCell=[self.myTableView dequeueReusableCellWithIdentifier:@"CommentaryCell"];
     self.contentTextField.delegate=self;
+    self.contentArray=[[NSMutableArray alloc]initWithCapacity:0];
+    [self requestData:self.sd_id andpageIndex:@"1" andpageSize:@"8"];
 }
 #pragma mark 数据请求
 /**
- *  请求即将揭晓商品
+ *  评论列表
  */
 -(void)requestData:(NSString *)sd_id andpageIndex:(NSString *)pageindex andpageSize:(NSString *)pagesize{
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"type",sd_id,@"sd_id",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
     [RequestData reviewListSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-        HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-        [self.navigationController.view addSubview:HUD];
-        HUD.mode = MBProgressHUDModeAnnularDeterminate;
-        HUD.delegate = self;
-        HUD.labelText = @"加载中...";
-        [HUD showWhileExecuting:@selector(myProgressTask) onTarget:self withObject:nil animated:YES];
-        self.contentArray=data[@"content"];
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.myTableView reloadData];
-        });
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            self.contentArray=data[@"content"];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }else{
+            
+        }
     }];
 }
 /**
@@ -104,7 +105,12 @@
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.contentArray.count;
+    if (self.contentArray.count!=0) {
+        return self.contentArray.count;
+    }else{
+        return 0;
+    }
+    
 }
 /**
  *  设置单元格内容
@@ -122,9 +128,28 @@
     if (cell==nil) {
         cell=[[CommentaryCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
     }
-    cell.contetnLabel.numberOfLines=0;
-//    cell.contetnLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    cell.contetnLabel.text=self.contentArray[indexPath.row];
+    if (self.contentArray.count!=0) {
+        cell.contetnLabel.text=self.contentArray[indexPath.row][@"sdhf_content"];
+        [cell.peopleNameBtn setTitle:[NSString stringWithFormat:@"%@",self.contentArray[indexPath.row][@"sdhf_username"]] forState:UIControlStateNormal];
+        /**商品图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.contentArray[indexPath.row][@"sdhf_img"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [cell.peopleImageView sd_setImageWithURL:imgUrl];
+        
+        //时间戳转换时间
+        NSString *str=self.contentArray[indexPath.row][@"sdhf_time"];//时间戳
+        NSTimeInterval time=[str doubleValue];
+        NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
+        //实例化一个NSDateFormatter对象
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        //设定时间格式,这里可以设置成自己需要的格式
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+        NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
+        cell.timeLabel.text=currentDateStr;
+
+    }
     //取消Cell选中时背景
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
@@ -140,21 +165,25 @@
  */
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CommentaryCell *cell=(CommentaryCell *)self.prototypeCell;
-    //获得当前cell高度
-    CGRect frame=[cell frame];
-    //文本赋值
-    cell.contetnLabel.text=self.contentArray[indexPath.row];
-      //设置label的最大行数
-    cell.contetnLabel.numberOfLines=0;
-    CGSize labelSize=[cell.contetnLabel sizeThatFits:CGSizeMake(cell.contetnLabel.frame.size.width, 1000)];
-    CGRect sFrame=cell.contetnLabel.frame;
-    sFrame.size=labelSize;
-    cell.contetnLabel.frame=sFrame;
-     //计算出自适应的高度
-    frame.size.height=labelSize.height+60;
-    cell.frame=frame;
-    return cell.frame.size.height;
+    if (self.contentArray.count!=0) {
+        CommentaryCell *cell=(CommentaryCell *)self.prototypeCell;
+        //获得当前cell高度
+        CGRect frame=[cell frame];
+        //文本赋值
+        cell.contetnLabel.text=self.contentArray[indexPath.row][@"sdhf_content"];
+        //设置label的最大行数
+        cell.contetnLabel.numberOfLines=0;
+        CGSize labelSize=[cell.contetnLabel sizeThatFits:CGSizeMake(cell.contetnLabel.frame.size.width, 1000)];
+        CGRect sFrame=cell.contetnLabel.frame;
+        sFrame.size=labelSize;
+        cell.contetnLabel.frame=sFrame;
+        //计算出自适应的高度
+        frame.size.height=labelSize.height+60;
+        cell.frame=frame;
+        return cell.frame.size.height;
+    }else{
+        return 50;
+    }
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -169,10 +198,7 @@
             HUD.delegate = self;
             HUD.labelText = @"提交中...";
             [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
-            //更新主线程
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.myTableView reloadData];
-            });
+            [self.myTableView reloadData];
         }];
         self.contentTextField.text=@"";
         [self.contentTextField resignFirstResponder];

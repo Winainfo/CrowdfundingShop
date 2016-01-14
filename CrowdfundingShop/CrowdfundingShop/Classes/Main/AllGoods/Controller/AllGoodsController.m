@@ -14,7 +14,6 @@
 #import "RequestData.h"
 #import <MJRefresh.h>
 #import <UIImageView+WebCache.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
 @interface AllGoodsController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (assign,nonatomic)BOOL flag;
@@ -186,7 +185,7 @@ int page=8;
         cell.goodsLabel3.text=self.allGoodsArray[indexPath.row][@"shenyurenshu"];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,self.allGoodsArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.allGoodsArray[indexPath.row][@"thumb"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];

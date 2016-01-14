@@ -17,7 +17,6 @@
 #import "KTSelectDatePicker.h"
 #import "AccountTool.h"
 #import <UIImageView+WebCache.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
 #define kScreen_Height      ([UIScreen mainScreen].bounds.size.height)
 #define kScreen_Width       ([UIScreen mainScreen].bounds.size.width)
 #define kScreen_Frame       (CGRectMake(0, 0 ,kScreen_Width,kScreen_Height))
@@ -81,11 +80,10 @@
     {
         self.userNameLabel.text=account.username;
         NSString *string=account.qianming;
-        NSLog(@"--%@",string);
         self.userAutographLabel.text=[NSString stringWithFormat:@"%@",account.qianming];
 //        self.userAutographLabel.text=account.qianming;
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,account.img];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,account.img];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [self.userImageView sd_setImageWithURL:imgUrl];

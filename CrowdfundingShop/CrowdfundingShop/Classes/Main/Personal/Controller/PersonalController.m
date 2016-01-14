@@ -12,7 +12,6 @@
 #import "AccountTool.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
 @interface PersonalController ()
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 /**未登陆*/
@@ -94,7 +93,7 @@
         self.moneyLabel.text=account.money;
         self.gradesLabel.text=account.yungoudj;
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,account.img];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,account.img];
         NSLog(@"%@",urlStr);
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];

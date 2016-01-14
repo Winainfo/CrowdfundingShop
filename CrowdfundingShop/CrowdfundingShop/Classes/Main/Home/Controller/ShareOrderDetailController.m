@@ -11,10 +11,6 @@
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
-#define URL @"http://120.55.112.80/statics/uploads/"
-//获得当前屏幕宽高点数（非像素）
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 @interface ShareOrderDetailController ()
 @property (nonatomic, strong) UITableViewCell *prototypeCell;
 /**评论数组*/
@@ -56,7 +52,7 @@
         self.imageCell.frame=temp;
         for (int i=0; i<imageArray.count; i++) {
             //拼接图片网址·
-            NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,imageArray[i]];
+            NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,imageArray[i]];
             //转换成url
             NSURL *imgUrl = [NSURL URLWithString:urlStr];
             UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(10, (i*220)+130, 300, 220)];
@@ -70,7 +66,7 @@
             [self.peopleNameBtn setTitle:userInfo[@"content"][@"username"] forState:UIControlStateNormal];
             /**商品图片*/
             //拼接图片网址·
-            NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,userInfo[@"content"][@"img"]];
+            NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,userInfo[@"content"][@"img"]];
             //转换成url
             NSURL *imgUrl = [NSURL URLWithString:urlStr];
             [self.peopleImageView sd_setImageWithURL:imgUrl];
@@ -100,7 +96,7 @@
                 self.imageCell.frame=temp;
                 for (int i=0; i<imageArray.count; i++) {
                     //拼接图片网址·
-                    NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,imageArray[i]];
+                    NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,imageArray[i]];
                     //转换成url
                     NSURL *imgUrl = [NSURL URLWithString:urlStr];
                     UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(10, (i*220)+130, 300, 220)];
@@ -114,7 +110,7 @@
                     [self.peopleNameBtn setTitle:userInfo[@"content"][@"username"] forState:UIControlStateNormal];
                     /**商品图片*/
                     //拼接图片网址·
-                    NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,userInfo[@"content"][@"img"]];
+                    NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,userInfo[@"content"][@"img"]];
                     //转换成url
                     NSURL *imgUrl = [NSURL URLWithString:urlStr];
                     [self.peopleImageView sd_setImageWithURL:imgUrl];

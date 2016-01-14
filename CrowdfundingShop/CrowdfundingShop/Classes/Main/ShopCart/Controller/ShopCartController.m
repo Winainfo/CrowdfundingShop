@@ -12,7 +12,6 @@
 #import "AccountTool.h"
 #import "GoodsNavController.h"
 #import <UIImageView+WebCache.h>
-#define URL @"http://wn.winainfo.com/statics/uploads/"
 @interface ShopCartController ()
 /**未登陆View*/
 @property (weak, nonatomic) IBOutlet UIView *view1;

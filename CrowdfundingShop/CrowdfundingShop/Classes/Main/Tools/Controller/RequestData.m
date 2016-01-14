@@ -468,7 +468,7 @@
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
     //设置参数
-    NSDictionary *params=@{@"sd_id":data[@"sd_id"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSDictionary *params=@{@"type":data[@"type"],@"sd_id":data[@"sd_id"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/shaidan/detail/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"请求成功-----%@",responseObject);

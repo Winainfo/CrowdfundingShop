@@ -10,9 +10,8 @@
 #import "ARLabel.h"
 #import "RequestData.h"
 #import "CommentaryController.h"
-//获得当前屏幕宽高点数（非像素）
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
+#import <ShareSDK/ShareSDK.h>
+#import <UIImageView+WebCache.h>
 @interface ShareOrderDetailView ()
 /**点赞*/
 @property (weak, nonatomic) IBOutlet ARLabel *dianZanLabel;
@@ -45,6 +44,7 @@
     UIBarButtonItem *left=[[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem=left;
     [self requestData];
+    NSLog(@"%@",self.dic);
 }
 #pragma mark 数据源
 -(void)requestData{
@@ -83,8 +83,7 @@
     self.dianzanBtn.enabled=NO;
     [self.dianzanBtn setImage:[UIImage imageNamed:@"share_order_heart_select"] forState:UIControlStateNormal];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.sd_id,@"sd_id",nil];
-    [RequestData dianZanSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-    }];
+    [RequestData dianZanSerivce:params FinishCallbackBlock:^(NSDictionary *data) {}];
 }
 /**
  *  评论
@@ -112,6 +111,51 @@
         [theSegue setValue:self.sd_id forKey:@"sd_id"];
         [theSegue setValue:self.dic forKey:@"dic"];
     }
+}
+/**
+ *  晒单分享
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)sharClick:(UIButton *)sender {
+    /**商品图片*/
+    //拼接图片网址·
+    NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.dic[@"sd_thumbs"]];
+    //转换成url
+    NSURL *imgUrl = [NSURL URLWithString:urlStr];
+    id<ISSContent> publishContent = [ShareSDK content:[NSString stringWithFormat:@"%@",self.dic[@"sd_content"]]defaultContent:nil
+        image:[ShareSDK pngImageWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl]]]
+        title:[NSString stringWithFormat:@"%@",self.dic[@"sd_title"]] url:[NSString stringWithFormat:@"http://www.god-store.com/index.php/go/shaidan/detail/%@",self.dic[@"sd_id"]]
+        description:@"这是一条演示信息"
+        mediaType:SSPublishContentMediaTypeNews];
+    //1+创建弹出菜单容器（iPad必要）
+    id<ISSContainer> container = [ShareSDK container];
+    [container setIPadContainerWithView:nil arrowDirect:UIPopoverArrowDirectionUp];
+    //2、弹出分享菜单
+    [ShareSDK showShareActionSheet:container shareList:nil content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil
+                            result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                //可以根据回调提示用户。
+                                if (state == SSResponseStateCancel) {}
+                                if (state == SSResponseStateSuccess)
+                                {
+                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享成功"
+                                                                                    message:nil
+                                                                                   delegate:self
+                                                                          cancelButtonTitle:@"OK"
+                                                                          otherButtonTitles:nil, nil];
+                                    
+                                    [alert show];
+                                }
+                                else if (state == SSResponseStateFail)
+                                {
+                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                                    message:[NSString stringWithFormat:@"失败描述：%@",[error errorDescription]]
+                                                                                   delegate:self
+                                                                          cancelButtonTitle:@"OK"
+                                                                          otherButtonTitles:nil, nil];
+                                    [alert show];
+                                }
+                }];
 }
 
 @end

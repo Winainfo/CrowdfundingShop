@@ -9,9 +9,6 @@
 #import "MyAddressController.h"
 #import "MyAddressCell.h"
 #import "AddMyAddressController.h"
-//获得当前屏幕宽高点数（非像素）
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
 @interface MyAddressController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
