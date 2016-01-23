@@ -6,3 +6,4 @@ pod 'FSMediaPicker'
 pod 'IQKeyboardManager'
 pod 'MJRefresh'
 pod 'MZTimerLabel'
+pod ‘JGProgressHUD’

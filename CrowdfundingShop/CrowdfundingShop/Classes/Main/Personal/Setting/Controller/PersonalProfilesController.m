@@ -79,7 +79,6 @@
     if(account)
     {
         self.userNameLabel.text=account.username;
-        NSString *string=account.qianming;
         self.userAutographLabel.text=[NSString stringWithFormat:@"%@",account.qianming];
 //        self.userAutographLabel.text=account.qianming;
         //拼接图片网址·
