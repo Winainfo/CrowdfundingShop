@@ -5,8 +5,6 @@ PODS:
   - MBProgressHUD (0.9.1)
   - MJRefresh (3.0.7)
   - MZTimerLabel (0.5.4)
-  - Pgyer (2.8.4)
-  - PgyUpdate (1.2)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
@@ -18,8 +16,6 @@ DEPENDENCIES:
   - MBProgressHUD
   - MJRefresh
   - MZTimerLabel
-  - Pgyer
-  - PgyUpdate
   - SDWebImage (~> 3.7)
 
 SPEC CHECKSUMS:
@@ -29,8 +25,6 @@ SPEC CHECKSUMS:
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MJRefresh: f3e1228ec3d38c7ba5208d58032631a52f39f495
   MZTimerLabel: cd9bfb9304540ef2a9e163384fca9c978f0dbf83
-  Pgyer: 26edfcc8da6da6383fabfdbccd2f77c623b9d6eb
-  PgyUpdate: a42e82cec5ad4e992af390e9d494f6fc62db65e4
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
 
 COCOAPODS: 0.39.0
