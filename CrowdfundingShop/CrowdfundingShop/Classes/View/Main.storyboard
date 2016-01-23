@@ -140,6 +140,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="myTableView" destination="1ap-4H-6Y0" id="M5v-Nx-7rD"/>
+                        <outlet property="shareBtn" destination="3tj-ye-pGS" id="h0d-hW-F6Q"/>
                         <outlet property="sortTableView" destination="YlA-YC-H1x" id="hH5-iZ-Rqh"/>
                     </connections>
                 </viewController>
@@ -333,9 +334,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5A-pO-I8h">
-                                                    <rect key="frame" x="10" y="7" width="300" height="30"/>
-                                                </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8pR-E8-rh5">
                                                     <rect key="frame" x="10" y="7" width="300" height="30"/>
                                                     <subviews>
@@ -374,6 +372,12 @@
                                                         <constraint firstItem="jJB-gB-t7S" firstAttribute="centerY" secondItem="8pR-E8-rh5" secondAttribute="centerY" id="xeW-mE-sLs"/>
                                                     </constraints>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5A-pO-I8h">
+                                                    <rect key="frame" x="10" y="7" width="300" height="30"/>
+                                                    <connections>
+                                                        <action selector="clickBtn:" destination="bkf-z4-m0j" eventType="touchUpInside" id="1rn-LT-WIt"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="8pR-E8-rh5" secondAttribute="bottom" constant="7" id="BeE-L7-0Iw"/>
@@ -4760,7 +4764,7 @@
                                             <constraint firstAttribute="width" constant="23" id="Jop-Wy-cfl"/>
                                             <constraint firstAttribute="height" constant="22" id="NgR-RA-uKQ"/>
                                         </constraints>
-                                        <state key="normal" image="common_buy_default_unselect"/>
+                                        <state key="normal" image="fenxiang"/>
                                         <state key="selected" image="common_buy_default_select"/>
                                     </button>
                                 </subviews>
@@ -5694,14 +5698,17 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgk-cM-e7n">
+                                    <button opaque="NO" tag="1004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jgk-cM-e7n">
                                         <rect key="frame" x="282" y="13" width="23" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="Oph-Ge-Kqs"/>
                                             <constraint firstAttribute="width" constant="23" id="otj-rC-jeC"/>
                                         </constraints>
-                                        <state key="normal" image="common_buy_default_unselect"/>
+                                        <state key="normal" image="fenxiang"/>
                                         <state key="selected" image="common_buy_default_select"/>
+                                        <connections>
+                                            <action selector="shareClick:" destination="7zU-AJ-Ceq" eventType="touchUpInside" id="Tlg-zK-zZM"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -5809,7 +5816,7 @@
                                             <constraint firstAttribute="width" constant="23" id="M1z-M7-c0f"/>
                                             <constraint firstAttribute="height" constant="22" id="wig-tY-Y8M"/>
                                         </constraints>
-                                        <state key="normal" image="common_buy_default_unselect"/>
+                                        <state key="normal" image="fenxiang"/>
                                         <state key="selected" image="common_buy_default_select"/>
                                     </button>
                                 </subviews>
@@ -7097,7 +7104,7 @@
                                                         <constraint firstAttribute="height" constant="0.5" id="LcR-qZ-6Tg"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="所有云购记录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kmo-Kf-7hu" customClass="ARLabel">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="所有夺宝记录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kmo-Kf-7hu" customClass="ARLabel">
                                                     <rect key="frame" x="10" y="12" width="84" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="fJ5-oA-WJ7"/>
@@ -7136,7 +7143,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="CyP-Od-r6I" kind="show" id="JuE-GY-Y3f"/>
+                                            <segue destination="CyP-Od-r6I" kind="show" identifier="cloudRecordSegue" id="JuE-GY-Y3f"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="TE1-Jr-J41">
@@ -7201,6 +7208,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EyQ-Be-Nt3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                    <connections>
+                                                        <action selector="shareOrderClick:" destination="I6i-wH-qfb" eventType="touchUpInside" id="5DR-ZV-BLd"/>
+                                                    </connections>
+                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="商品晒单" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rY4-0B-njP" customClass="ARLabel">
                                                     <rect key="frame" x="10" y="12" width="56" height="21"/>
                                                     <constraints>
@@ -7237,12 +7250,16 @@
                                             <constraints>
                                                 <constraint firstItem="wiY-00-5Sc" firstAttribute="leading" secondItem="rY4-0B-njP" secondAttribute="trailing" constant="2" id="1DB-H3-YC0"/>
                                                 <constraint firstItem="rY4-0B-njP" firstAttribute="centerY" secondItem="FQz-wO-oKq" secondAttribute="centerY" id="6Wv-cu-f9K"/>
+                                                <constraint firstItem="EyQ-Be-Nt3" firstAttribute="top" secondItem="FQz-wO-oKq" secondAttribute="top" id="751-g1-KnG"/>
+                                                <constraint firstItem="EyQ-Be-Nt3" firstAttribute="leading" secondItem="FQz-wO-oKq" secondAttribute="leading" id="JdZ-P3-HiW"/>
                                                 <constraint firstAttribute="trailing" secondItem="quL-BM-EKW" secondAttribute="trailing" id="NVR-OA-65s"/>
                                                 <constraint firstAttribute="trailing" secondItem="hcZ-ty-4xm" secondAttribute="trailing" constant="10" id="UmA-jp-eB6"/>
                                                 <constraint firstItem="rY4-0B-njP" firstAttribute="leading" secondItem="FQz-wO-oKq" secondAttribute="leadingMargin" constant="2" id="Xg5-rb-CT7"/>
                                                 <constraint firstItem="wiY-00-5Sc" firstAttribute="centerY" secondItem="FQz-wO-oKq" secondAttribute="centerY" id="Zrq-cc-BFi"/>
+                                                <constraint firstAttribute="trailing" secondItem="EyQ-Be-Nt3" secondAttribute="trailing" id="bpt-zO-QO7"/>
                                                 <constraint firstItem="quL-BM-EKW" firstAttribute="leading" secondItem="FQz-wO-oKq" secondAttribute="leading" id="fz5-bB-PLj"/>
                                                 <constraint firstItem="hcZ-ty-4xm" firstAttribute="centerY" secondItem="FQz-wO-oKq" secondAttribute="centerY" id="gBS-Xn-ogP"/>
+                                                <constraint firstAttribute="bottom" secondItem="EyQ-Be-Nt3" secondAttribute="bottom" id="vpQ-rK-9I5"/>
                                                 <constraint firstAttribute="bottom" secondItem="quL-BM-EKW" secondAttribute="bottom" id="xvg-RH-0J1"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -7433,7 +7450,7 @@
         <!--云购记录View-->
         <scene sceneID="x8e-ix-mUO">
             <objects>
-                <viewController title="云购记录View" id="CyP-Od-r6I" customClass="CloudRecordController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="cloudRecordView" title="云购记录View" id="CyP-Od-r6I" customClass="CloudRecordController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AzQ-bf-efo"/>
                         <viewControllerLayoutGuide type="bottom" id="UkX-XW-tBw"/>
@@ -7466,7 +7483,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sAM-v4-sZA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2279" y="-773"/>
+            <point key="canvasLocation" x="2299" y="-766"/>
         </scene>
         <!--内容详情View-->
         <scene sceneID="6KC-sx-oph">
@@ -8255,7 +8272,7 @@
         <image name="announced_result_more_bg" width="11" height="11"/>
         <image name="buy_suc_ic" width="20" height="20"/>
         <image name="common_buy_default_select" width="23" height="21"/>
-        <image name="common_buy_default_unselect" width="23" height="21"/>
+        <image name="fenxiang" width="64" height="64"/>
         <image name="goods_detail_periods_ic" width="8" height="8"/>
         <image name="goods_detail_showimg_ic" width="14" height="14"/>
         <image name="goods_detail_timing_ic" width="22" height="20"/>
@@ -8302,8 +8319,8 @@
         <image name="零食天地" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8IG-f6-6iu"/>
         <segue reference="bKk-DI-Wea"/>
+        <segue reference="8IG-f6-6iu"/>
         <segue reference="JuE-GY-Y3f"/>
     </inferredMetricsTieBreakers>
 </document>

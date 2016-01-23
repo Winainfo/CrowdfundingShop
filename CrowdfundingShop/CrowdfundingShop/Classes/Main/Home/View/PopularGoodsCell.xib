@@ -46,19 +46,19 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXr-sA-LLY">
                         <rect key="frame" x="5" y="126" width="97" height="18"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03:48:36" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cz0-gd-X0P" customClass="MZTimerLabel">
-                                <rect key="frame" x="22" y="0.0" width="75" height="18"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03:48:36" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cz0-gd-X0P">
+                                <rect key="frame" x="0.0" y="0.0" width="97" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.90588235294117647" green="0.22352941176470587" blue="0.35686274509803922" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="cz0-gd-X0P" secondAttribute="trailing" id="9Db-2F-353"/>
-                            <constraint firstItem="cz0-gd-X0P" firstAttribute="leading" secondItem="XXr-sA-LLY" secondAttribute="leading" constant="22" id="FhR-E3-WVg"/>
-                            <constraint firstItem="cz0-gd-X0P" firstAttribute="top" secondItem="XXr-sA-LLY" secondAttribute="top" id="GsO-nP-bYk"/>
-                            <constraint firstAttribute="bottom" secondItem="cz0-gd-X0P" secondAttribute="bottom" id="j1t-fy-rYf"/>
+                            <constraint firstItem="cz0-gd-X0P" firstAttribute="top" secondItem="XXr-sA-LLY" secondAttribute="top" id="GcU-bc-hI7"/>
+                            <constraint firstAttribute="bottom" secondItem="cz0-gd-X0P" secondAttribute="bottom" id="Xas-av-cVR"/>
+                            <constraint firstItem="cz0-gd-X0P" firstAttribute="leading" secondItem="XXr-sA-LLY" secondAttribute="leading" id="fkM-Wf-C8e"/>
+                            <constraint firstAttribute="trailing" secondItem="cz0-gd-X0P" secondAttribute="trailing" id="wu3-ou-hlg"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -87,7 +87,7 @@
             <connections>
                 <outlet property="goodsImageView" destination="x8T-Wj-iuL" id="Ds2-nK-njs"/>
                 <outlet property="goodsNameLabel" destination="U7n-C0-Hjr" id="xO1-Ji-duN"/>
-                <outlet property="timeLabel" destination="cz0-gd-X0P" id="g0T-rL-4GW"/>
+                <outlet property="timeLabel" destination="cz0-gd-X0P" id="Cwr-Yy-Qh4"/>
                 <outlet property="timeView" destination="XXr-sA-LLY" id="XFi-f2-56Q"/>
             </connections>
             <point key="canvasLocation" x="244" y="250"/>

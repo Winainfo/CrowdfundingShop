@@ -2,8 +2,8 @@
 //  AliPayNeedDEF.h
 //  WeChatAndAliPayDemo
 //
-//  Created by 李政 on 15/10/21.
-//  Copyright © 2015年 Leon李政. All rights reserved.
+//  Created by 吴金林 on 16/1/21.
+//  Copyright © 2016年 Leon吴金林. All rights reserved.
 //
 
 #ifndef AliPayNeedDEF_h
@@ -17,13 +17,13 @@
 //#define AliSellerID  @"这里一般填写客户的企业级支付宝收款账号"
 
 //合作身份者id，以2088开头的16位纯数字（客户给）
-#define AliPartnerID @"合作身份者id，以2088开头的16位纯数字"
+#define AliPartnerID @"2088711955534853"
 
 //收款支付宝账号
-#define AliSellerID  @"收款支付宝账号"
+#define AliSellerID  @"1144775900@qq.com"
 
 //商户私钥，自助生成（这个私钥需要自己手动生成，具体生成方法可以看支付宝的官方文档，下面给出大体格式）
-#define AliPartnerPrivKey @"MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAMJIujTSdNBrYHZEv+5lSMNKK+oORdjhFWnhqsWZil5EHeMdbUpALTp1QQeEJPgzE9aPC+YzweiV2CFOIjGEq2/taO3iWC9FZi0hlbN11GpbFVvhAZnouznwYPoO6y8ekeJlpqH2OUrJuwyL7Bq4ATyukuvhftuawxQ25SuvBw9pAgMBAAECgYARTcLv43KuAXJE9liV1gWGBzwkC4NjDqEGnifEk6lEPhLfYIaUX2Tn2PuivL1CMeJpcLIhnah+m6H1TW00NdnC5XvCvR7puD51nPrdDVkXZrORHVTn1qerQsHoL6vprbl8858DIXLrxDnM9dojuBd2k0ygb54MuhL7CpR2pwgtRQJBAOuwheM5yJq4khe4U0uLcU7C5iKfmzPMGyKNSzMggO8Li1NnxX6O6BYDS8PUAAhSDzC1xeyHzAhKaXxTQoFJd4cCQQDTBsVgMS3oSn4SqMnPZ5jJ4OAaqNGCH8NA3ATAVQmaF7575sLVhQ2F566NRqgTJYWGfru4xTkOeJ40YsDOtR2PAkEAgetWgoDxwcgIUCb9U2FUXlQ1Q9SzWwQh2RQF5fL+38Z/UMSdKzxfVvMOKq6MLgn98Z3hspbQs6lBKJVEzbvPtQJBALIWFb2O40oUi36duOnyaGt9/kIhU+V3fqSeyNezLA5BmXwgiy38QiROF+2bwj2ePaf6DdvpfLQssH5PFJ2dFRsCQFwU5PM8P/Oc96UM6Z8XEPe7bNjcQtHTvEjThWV4NdJpSSkLg0w4nKwJEl8B1crpzRtigoMHcRFeKBSYr/7peYk="
+#define AliPartnerPrivKey @"MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKOgg5L/hVBxXcjNMXg0OodQxvEWAUtQs0vo7KmD43r6sQVTyhvwiQuJABzj3c9mV1LF+cHE7FL3hwoI/+DGoGWkUC/L+kSCq1h9CCHd1cUcJTs5s5p6yi+WmYLUDlom2T9mJXGSl+ycNf4SdElBx6upmicD0DFxET3E9yVBapcJAgMBAAECgYBLnYvwTKEBEcKzXw/zar95dPzawL6MXZjeBaAInmhrlppjydrmmnvals80iqEgjTzhhZfr0eMcXENNgectqtzIHraSwd01Y9uMwcRtI/X0G+KvnY5QcrQoQt1toTYElL3L+Siq9Ragv6lZFdum9EZKj6XIJssmUsaru6gB/kqWGQJBANFSCWqR6Cb2ce6DpgHLuK9DgxLTGMF7N9zTDXRhkSIt31FnInxzsWshePgyEjXNnWac2Xti0Nk1YCyOZ1/1Tr8CQQDIHd5+nuMnV6UJaRbYjCcWLv+kp41UT1TZdXFyPXstzB1/xEaNID4uedQKg235LyptQBTPYrNUUB7UtpgyIFQ3AkEAhoz0TpOxpfH+tHHdcQQSGF8OTzhwjlZ1RzZHTMs2rsDL7xibm2IG5rVifDA7cmhUSFSEnAKd+zGLO7jiDFW0IwJAEENNJ6El+LaItQETWDnbm1PqdqkfNTDVRm7i71PLxOcHprB+w01RgFlqQAh6UXvhyMsiZdAxnrJ8LvE/4SL7dQJAcGqoj/F27L9gR89a8msswphyUcBoY+zxfOOOqanmf5tJO7+SfF0HNkoBDU4S2O9qY5Eme3IHCLhRPyY3tA9FAA=="
 //后台给的接口网址
 #define AliNotifyURL @"后台给的接口网址"
 

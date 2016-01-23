@@ -13,10 +13,14 @@
 - (void)awakeFromNib {
     self.imgView.layer.borderWidth=0.5;
     self.imgView.layer.borderColor=[[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1.0]CGColor];
+    self.imgView2.layer.borderWidth=0.5;
+    self.imgView2.layer.borderColor=[[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1.0]CGColor];
     /**圆角*/
     [[self.imgView layer]setCornerRadius:2.0];
+     [[self.imgView2 layer]setCornerRadius:2.0];
     self.faceImageView.layer.cornerRadius=25.0;
     self.faceImageView.layer.masksToBounds=YES;
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

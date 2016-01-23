@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
@@ -19,9 +20,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20150427091614458.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1Yz-Qf-bTd">
                                 <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="limit_buy_goods_ic-320w" translatesAutoresizingMaskIntoConstraints="NO" id="jEO-5l-898">
-                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -29,11 +27,7 @@
                             <constraint firstAttribute="height" constant="80" id="6Fy-H3-csR"/>
                             <constraint firstItem="1Yz-Qf-bTd" firstAttribute="top" secondItem="GQj-9N-y2e" secondAttribute="top" id="HD7-zH-Bg8"/>
                             <constraint firstItem="1Yz-Qf-bTd" firstAttribute="leading" secondItem="GQj-9N-y2e" secondAttribute="leading" id="KBf-EI-jg8"/>
-                            <constraint firstItem="jEO-5l-898" firstAttribute="top" secondItem="1Yz-Qf-bTd" secondAttribute="top" id="Mp6-LD-tBN"/>
                             <constraint firstAttribute="width" constant="80" id="SUA-Ao-VZr"/>
-                            <constraint firstItem="jEO-5l-898" firstAttribute="leading" secondItem="1Yz-Qf-bTd" secondAttribute="leading" id="hpD-Sp-9jy"/>
-                            <constraint firstItem="jEO-5l-898" firstAttribute="bottom" secondItem="1Yz-Qf-bTd" secondAttribute="bottom" constant="-50" id="iAV-ch-yTW"/>
-                            <constraint firstItem="jEO-5l-898" firstAttribute="trailing" secondItem="1Yz-Qf-bTd" secondAttribute="trailing" constant="-50" id="uYE-3c-Dqn"/>
                             <constraint firstAttribute="bottom" secondItem="1Yz-Qf-bTd" secondAttribute="bottom" id="yNw-Ug-xTL"/>
                         </constraints>
                     </view>
@@ -192,13 +186,11 @@
                 <outlet property="goodsLabel3" destination="3Rh-Il-Ood" id="DxG-Go-P5v"/>
                 <outlet property="goodsPriceLabel" destination="llW-pD-tph" id="8Us-co-Ua8"/>
                 <outlet property="imagView" destination="GQj-9N-y2e" id="n92-33-kgM"/>
-                <outlet property="limitImageVIew" destination="jEO-5l-898" id="oYn-xT-wkd"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="20150427091614458.jpg" width="200" height="200"/>
-        <image name="limit_buy_goods_ic-320w" width="30" height="30"/>
+        <image name="20150427091614458.jpg" width="640" height="620"/>
         <image name="shopCat" width="32" height="32"/>
     </resources>
 </document>

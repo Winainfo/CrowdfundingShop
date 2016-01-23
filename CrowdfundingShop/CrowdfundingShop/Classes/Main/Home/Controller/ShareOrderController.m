@@ -13,13 +13,15 @@
 #import "RequestData.h"
 #import "CommentaryController.h"
 #import <UIImageView+WebCache.h>
+#import <ShareSDK/ShareSDK.h>
 @interface ShareOrderController ()<UIScrollViewDelegate,CartCellDelegate>
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @property (weak, nonatomic) IBOutlet UITableView *sortTableView;
 @property (retain,nonatomic)NSArray *sortNameArray;
-/**晒单*/
-@property (retain,nonatomic)NSArray *shareArray;
+@property (retain,nonatomic)NSArray *imageArray;
+@property (weak, nonatomic) IBOutlet UIButton *shareBtn;
+
 @end
 
 @implementation ShareOrderController
@@ -59,7 +61,16 @@
     //分类名字
     self.sortNameArray= @[ @"最新晒单", @"人气晒单", @"评论最多"];
     //即将揭晓数据请求
-    [self requestData:@"1" andpageSize:@"8"];
+    if (self.shareArray.count==0) {
+        [self requestData:@"1" andpageSize:@"8"];
+    }else{
+        self.shareBtn.hidden=YES;
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myTableView reloadData];
+        });
+    }
+    NSLog(@"%@",self.shareArray[0]);
 }
 #pragma mark 数据请求
 /**
@@ -162,32 +173,22 @@
     NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
     cell.timeLabel.text=currentDateStr;
     /**晒单图片*/
-    NSArray *imageArray=_shareArray[indexPath.row][@"sd_photolist"];
+    self.imageArray=_shareArray[indexPath.row][@"sd_photolist"];
     cell.goodsImageScroll.contentSize=CGSizeMake(cell.goodsImageScroll.frame.size.width, cell.goodsImageScroll.frame.size.height);
     cell.goodsImageScroll.delegate=self;
+    
+    //    for (int i=0; i<self.imageArray.count; i++) {
+    //        //拼接图片网址·
+    //        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.imageArray[i]];
+    //        //转换成url
+    //        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+    //        UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake((i*100)+5, 0, 94, 94)];
+    //        imageV.layer.borderWidth=0.5;
+    //        imageV.layer.borderColor=[[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1]CGColor];
+    //        [imageV sd_setImageWithURL:imgUrl];
+    //        [cell.goodsImageScroll addSubview:imageV];
+    //    }
     cell.delegate=self;
-    for (int i=0; i<imageArray.count; i++) {
-        //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,imageArray[i]];
-        //转换成url
-        NSURL *imgUrl = [NSURL URLWithString:urlStr];
-        UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake((i*100)+5, 0, 94, 94)];
-        imageV.layer.borderWidth=0.5;
-        imageV.layer.borderColor=[[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1]CGColor];
-        [imageV sd_setImageWithURL:imgUrl];
-        [cell.goodsImageScroll addSubview:imageV];
-    }
-//    //获取头像和用户名
-//     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:_shareArray[indexPath.row][@"sd_userid"],@"uid",nil];
-//    [RequestData userDetail:params FinishCallbackBlock:^(NSDictionary *data) {
-//        [cell.peopleName setTitle:data[@"content"][@"username"] forState:UIControlStateNormal];
-//        //拼接图片网址·
-//        NSString *urlStr =[NSString stringWithFormat:@"%@%@",URL,data[@"content"][@"img"]];
-//        //转换成url
-//        NSURL *imgUrl = [NSURL URLWithString:urlStr];
-//        [cell.peopleImageView sd_setImageWithURL:imgUrl];
-//    }];
-
     //取消Cell选中时背景
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
@@ -268,6 +269,7 @@
  *  @param flag 按钮标识，100为点赞，101为评论
  */
 -(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag andS_id:(NSString *)sid{
+    NSIndexPath *index = [_myTableView indexPathForCell:cell];
     switch (flag) {
         case 1001:{
             //设置故事板为第一启动
@@ -277,11 +279,89 @@
             [self.navigationController pushViewController:controller animated:YES];
         }
             break;
-        case 1002:
-            NSLog(@"去分享");
+        case 1002:{
+            /**商品图片*/
+            //拼接图片网址·
+            NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.shareArray[index.row][@"sd_thumbs"]];
+            //转换成url
+            NSURL *imgUrl = [NSURL URLWithString:urlStr];
+            UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl] scale:0.1];
+            id<ISSContent> publishContent = [ShareSDK content:[NSString stringWithFormat:@"%@",self.shareArray[index.row][@"sd_content"]]defaultContent:nil
+                                                        image:[ShareSDK pngImageWithImage:image]
+                                                        title:[NSString stringWithFormat:@"%@",self.shareArray[index.row][@"sd_title"]] url:[NSString stringWithFormat:@"http://www.god-store.com/index.php/go/shaidan/detail/%@",self.shareArray[index.row][@"sd_id"]]
+                                                  description:@""
+                                                    mediaType:SSPublishContentMediaTypeNews];
+            //1+创建弹出菜单容器（iPad必要）
+            id<ISSContainer> container = [ShareSDK container];
+            [container setIPadContainerWithView:nil arrowDirect:UIPopoverArrowDirectionUp];
+            //2、弹出分享菜单
+            [ShareSDK showShareActionSheet:container shareList:nil content:publishContent statusBarTips:YES authOptions:nil shareOptions:nil
+                                    result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                        //可以根据回调提示用户。
+                                        if (state == SSResponseStateCancel) {}
+                                        if (state == SSResponseStateSuccess)
+                                        {
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享成功"
+                                                                                            message:nil
+                                                                                           delegate:self
+                                                                                  cancelButtonTitle:@"OK"
+                                                                                  otherButtonTitles:nil, nil];
+                                            
+                                            [alert show];
+                                        }
+                                        else if (state == SSResponseStateFail)
+                                        {
+                                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                                            message:[NSString stringWithFormat:@"失败描述：%@",[error errorDescription]]
+                                                                                           delegate:self
+                                                                                  cancelButtonTitle:@"OK"
+                                                                                  otherButtonTitles:nil, nil];
+                                            [alert show];
+                                        }
+                                    }];
+        }
             break;
         default:
             break;
     }
+}
+- (NSString *)intervalSinceNow: (NSString *) theDate
+{
+    
+    NSDateFormatter *date=[[NSDateFormatter alloc] init];
+    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *d=[date dateFromString:theDate];
+    
+    NSTimeInterval late=[d timeIntervalSince1970]*1;
+    
+    
+    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval now=[dat timeIntervalSince1970]*1;
+    NSString *timeString=@"";
+    
+    NSTimeInterval cha=now-late;
+    
+    if (cha/3600<1) {
+        timeString = [NSString stringWithFormat:@"%f", cha/60];
+        timeString = [timeString substringToIndex:timeString.length-7];
+        timeString=[NSString stringWithFormat:@"%@分钟前", timeString];
+        if ([timeString  isEqual: @"0分钟前"]) {
+            timeString = @"刚刚";
+        }
+    }
+    if (cha/3600>1&&cha/86400<1) {
+        timeString = [NSString stringWithFormat:@"%f", cha/3600];
+        timeString = [timeString substringToIndex:timeString.length-7];
+        timeString=[NSString stringWithFormat:@"%@小时前", timeString];
+    }
+    if (cha/86400>1)
+    {
+        //        timeString = [NSString stringWithFormat:@"%f", cha/86400];
+        //        timeString = [timeString substringToIndex:timeString.length-7];
+        //        timeString=[NSString stringWithFormat:@"%@天前", timeString];
+        timeString = theDate;
+        
+    }
+    return timeString;
 }
 @end

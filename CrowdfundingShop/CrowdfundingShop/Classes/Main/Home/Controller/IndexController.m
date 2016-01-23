@@ -52,6 +52,8 @@
 @property (retain,nonatomic) NSMutableArray *scrollImageTags;
 @property (retain,nonatomic) NSArray *imageArray;
 
+@property (nonatomic, strong) NSMutableArray *times;
+@property (nonatomic, strong) NSTimer *timer;
 //倒计时
 
 @end
@@ -61,7 +63,7 @@
 - (void)viewDidLoad {
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Menlo" size:16.0],NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    self.title=@"欢乐夺宝";
+    self.title=@"1元商城";
     CGRect table=self.mytableView.frame;
     table.size.height=800;
     self.mytableView.frame=table;
@@ -88,55 +90,11 @@
     //定时触发数据
     NSTimer *timer=[NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(requestAnnouncedData) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    //    [self requestAnnouncedData];
     self.revealedArray=[[NSMutableArray alloc]initWithCapacity:0];
-//    [self example21];
-
-}
-#pragma mark UICollectionView 上下拉刷新
-- (void)example21
-{
-    __unsafe_unretained __typeof(self) weakSelf = self;
+    self.times=[[NSMutableArray alloc]init];
+    [self addTimer];
     
-    // 下拉刷新
-    self.goodsCollectionView.mj_header= [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        // 增加5条假数据
-//        for (int i = 0; i<10; i++) {
-//            [weakSelf.colors insertObject:MJRandomColor atIndex:0];
-//        }
-        [weakSelf requestData:@"1" andpageSize:@"8"];
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.goodsCollectionView reloadData];
-            // 结束刷新
-            [weakSelf.goodsCollectionView.mj_header endRefreshing];
-        });
-    }];
-    [self.goodsCollectionView.mj_header beginRefreshing];
-    
-    // 上拉刷新
-    self.goodsCollectionView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        
-        // 增加8条数据
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"2",@"pageIndex",@"8",@"pageSize",nil];
-        
-        [RequestData beginRevealed:params FinishCallbackBlock:^(NSDictionary *data) {
-            
-            NSArray *array=data[@"content"];
-            [self.revealedArray addObjectsFromArray:array];
-            //更新主线程
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.goodsCollectionView reloadData];
-            });
-        }];
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.goodsCollectionView reloadData];
-            // 结束刷新
-            [weakSelf.goodsCollectionView.mj_footer endRefreshing];
-        });
-        }];
-    // 默认先隐藏footer
-    self.goodsCollectionView.mj_footer.hidden = YES;
 }
 
 /**
@@ -146,22 +104,84 @@
     [super updateViewConstraints];
     self.viewWidth.constant=CGRectGetWidth([UIScreen mainScreen].bounds)*2;
 }
+#pragma mark 倒计时
+/**
+ *  倒计时
+ */
+- (void)addTimer {
+    _timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timeDecrement) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
+    [_timer fire];
+}
+
+- (void)timeDecrement {
+    [self.times enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSNumber *number = (NSNumber *)obj;
+        NSInteger currentTime = number.integerValue;
+        currentTime --;
+        if (currentTime >= 0) {
+            NSNumber *currentNumber = [NSNumber numberWithInteger:currentTime];
+            self.times[idx] = currentNumber;
+        }
+    }];
+    [self.myCollectionView reloadData];
+}
+
+- (void)invalidTimer {
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+}
+
+- (void)dealloc {
+    [self invalidTimer];
+}
+
 #pragma mark 数据请求
 /**
  *  请求即将揭晓商品
  */
 -(void)requestData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
-    
+        //声明对象；
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        //显示的文本；
+        hud.labelText = @"正在加载";
+        hud.detailsLabelText = @"请稍候。。。";
     [RequestData beginRevealed:params FinishCallbackBlock:^(NSDictionary *data) {
+        //加载成功，先移除原来的HUD；
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        
+        //然后显示一个成功的提示；
+        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        successHUD.labelText = @"加载成功";
+        successHUD.mode = MBProgressHUDModeCustomView;
+        //可以设置对应的图片；
+        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"success"]];
+        successHUD.removeFromSuperViewOnHide = true;
+        [successHUD hide:true afterDelay:1];
         
         self.revealedArray=data[@"content"];
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.goodsCollectionView reloadData];
         });
+    } andFailure:^(NSError *failure) {
+        NSLog(@"%@",failure);
+        //        hud.removeFromSuperViewOnHide = true;
+        //        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"加载失败";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
     }];
 }
+
 /**
  *  请求人气商品
  *
@@ -186,15 +206,29 @@
  */
 -(void)requestAnnouncedData{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"pageIndex",@"6",@"pageSize",nil];
-    NSLog(@"请求%@",params);
     [RequestData newAnnounced:params FinishCallbackBlock:^(NSDictionary *data) {
-        //加载
-//        HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-//        [self.navigationController.view addSubview:HUD];
-//        HUD.delegate = self;
-//        HUD.labelText = @"加载中...";
-//        [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
         self.announcedArray=data[@"content"];
+        //时间差
+        for (int i=0; i<self.announcedArray.count; i++) {
+            if ([self.announcedArray[i][@"q_showtime"]isEqualToString:@"Y"]) {
+                //获取当前时间
+                //实例化一个NSDateFormatter对象
+                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                NSDate *currentDate = [NSDate date];//获取当前时间，日期
+                [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss.SS"];
+                NSString *dateString = [dateFormatter stringFromDate:currentDate];
+                NSDateFormatter *date=[[NSDateFormatter alloc] init];
+                [date setDateFormat:@"YYYY-MM-dd HH:mm:ss.SS"];
+                NSCalendar *cal=[NSCalendar currentCalendar];
+                unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
+                NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
+                NSLog(@"%ld分钟%ld秒",(long)[d minute],(long)[d second]);
+                long m=[d minute];
+                long s=[d second];
+                long time=m*60+s;
+                [_times addObject:@(time)];
+            }
+        }
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myCollectionView reloadData];
@@ -215,7 +249,7 @@
         //设置滚动视图的包含的视图大小和图片
         [self scrollViewWithFrame:CGRectMake(0, 0, kScreenWidth, 150) andImages:self.imageArray];
         //设置定时滚动
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(scrollAdView) userInfo:nil repeats:YES];
+        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(scrollAdView) userInfo:nil repeats:YES];
     }];
 }
 
@@ -232,8 +266,8 @@
     for (int i=0; i<images.count; i++) {
         //拼接图片网址·
         NSString *urlStr =[NSString stringWithFormat:@"%@",images[i][@"src"]];
-//        //获取图片的ID存入tag值数组
-//        [self.scrollImageTags addObject:images[i][@"id"]];
+        //        //获取图片的ID存入tag值数组
+        //        [self.scrollImageTags addObject:images[i][@"id"]];
         
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
@@ -333,7 +367,6 @@
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     if (collectionView==self.myCollectionView) {
         PopularGoodsCell *cell = (PopularGoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PopularGoodsCell" forIndexPath:indexPath];
         /**商品名字*/
@@ -344,12 +377,18 @@
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
-        //倒计时
-        cell.timeLabel.timerType=MZTimerLabelTypeTimer;
-        cell.timeLabel.timeFormat=@"mm:ss:SS";
-        [cell.timeLabel setCountDownTime:180];
-        cell.timeLabel.delegate=self;
-        [cell.timeLabel start];
+        
+        if ([self.announcedArray[indexPath.row][@"q_showtime"]isEqualToString:@"Y"]) {
+            int time=[self.times[indexPath.row] intValue];
+            if (time>0) {
+                //倒计时
+                cell.timeLabel.text=[NSString stringWithFormat:@"%02d:%02d",(time%3600/60),(time%60)];
+            }else{
+                cell.timeLabel.text=@"已揭晓";
+            }
+        }else{
+            cell.timeLabel.text=@"已揭晓";
+        }
         return cell;
     }else if(collectionView==self.goodsCollectionView){ //即将揭晓
         goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
@@ -449,12 +488,14 @@
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
         DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
         detailController.goodsID=self.revealedArray[indexPath.row][@"id"];
+        detailController.dic=self.revealedArray[indexPath.row];
         [self.navigationController pushViewController:detailController animated:YES];
     }else if(collectionView==self.groomCollectionView){//人气推荐
         //设置故事板为第一启动
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
         DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
         detailController.goodsID=self.groomArray[indexPath.row][@"id"];
+        detailController.dic=self.groomArray[indexPath.row];
         [self.navigationController pushViewController:detailController animated:YES];
     }else if(collectionView==self.limitCollectionView){//限购专区
         //设置故事板为第一启动
@@ -491,7 +532,7 @@
         UIView *lineview2=[[UIView alloc]initWithFrame:CGRectMake(0, view.frame.size.height, kScreenWidth, 0.5)];
         lineview2.backgroundColor=[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1];
         [view addSubview:lineview2];
-         [self creatMoveView];
+        [self creatMoveView];
         return view;
     }
     return nil;
@@ -584,9 +625,9 @@
  *  @param sender <#sender description#>
  */
 - (IBAction)payWithAliPay:(id)sender {
-//    NSLog(@"AliPay MoneyNum Is %@",self.moneyTextField.text);
+    //    NSLog(@"AliPay MoneyNum Is %@",self.moneyTextField.text);
     //这里调用我自己写的catagoary中的方法，方法里集成了支付宝支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
-    [self payTHeMoneyUseAliPayWithOrderId:@"这里填写后台返回给你的订单id" totalMoney:@"这里填写钱数（单位/元）" payTitle:@"这里告诉客户花钱买了啥，力求简短"];
+    [self payTHeMoneyUseAliPayWithOrderId:@"123431" totalMoney:@"0.01" payTitle:@"这里告诉客户花钱买了啥，力求简短"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AliPayResultNoti:) name:ALI_PAY_RESULT object:nil];
 }
 

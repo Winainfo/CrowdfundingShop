@@ -60,17 +60,17 @@
             NSLog(@"请求成功-----%@",dictionary);
             block(dictionary);
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//            NSLog(@"请求失败-%@",error);
+            //            NSLog(@"请求失败-%@",error);
         }];
     }
 }
 #pragma mark 所有商品
 /**
-*   所有商品
-*
-*  @param data  传入字典｛categoryId：分类id，sort：排序 ,pageSize：分页数，pageIndex：当前页数｝
-*  @param block 返回块值
-*/
+ *   所有商品
+ *
+ *  @param data  传入字典｛categoryId：分类id，sort：排序 ,pageSize：分页数，pageIndex：当前页数｝
+ *  @param block 返回块值
+ */
 +(void)allGoods:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
@@ -79,10 +79,10 @@
     NSDictionary *params=@{@"categoryId":data[@"categoryId"],@"sort":data[@"sort"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/all_shop_list/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"所有商品请求成功-----%@",responseObject);
+        //        NSLog(@"所有商品请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"所有商品请求失败-%@",error);
+        //        NSLog(@"所有商品请求失败-%@",error);
     }];
 }
 /**
@@ -91,7 +91,7 @@
  *  @param data  <#data description#>
  *  @param block <#block description#>
  */
-+(void)beginRevealed:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)beginRevealed:(NSDictionary *)data FinishCallbackBlock:(void (^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -99,12 +99,25 @@
     NSDictionary *params=@{@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/index/ready/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"所有商品请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
     }];
 }
+
+//+(void)beginRevealed:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
+//    //1.请求管理者
+//    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+//    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+//    //设置参数
+//    NSDictionary *params=@{@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+//    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/index/ready/",URL];
+//    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        block(responseObject);
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+////        NSLog(@"所有商品请求失败-%@",error);
+//    }];
+//}
 /**
  *  人气商品
  *
@@ -123,7 +136,7 @@
         //        NSLog(@"所有商品请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"所有商品请求失败-%@",error);
+        //        NSLog(@"所有商品请求失败-%@",error);
     }];
 }
 /**
@@ -140,10 +153,10 @@
     NSDictionary *params=@{@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/get_lottery_list/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"最新揭晓商品请求成功-----%@",responseObject);
+        //        NSLog(@"最新揭晓商品请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"最新揭晓商品请求失败-%@",error);
+        //        NSLog(@"最新揭晓商品请求失败-%@",error);
     }];
 }
 /**
@@ -160,13 +173,13 @@
     NSDictionary *params=@{@"itemId":data[@"goodsId"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/item/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];//把网络数据转换成字符串
-//        NSString *fromString=[self flattenHTML:str trimWhiteSpace:YES];
-//        NSDictionary *dictionary=[self dictionaryWithJsonString:fromString];
-//        NSLog(@"所有商品请求成功-----%@",str);
+        //        NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];//把网络数据转换成字符串
+        //        NSString *fromString=[self flattenHTML:str trimWhiteSpace:YES];
+        //        NSDictionary *dictionary=[self dictionaryWithJsonString:fromString];
+        //        NSLog(@"所有商品请求成功-----%@",str);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"所有商品请求失败-%@",error);
+        //        NSLog(@"所有商品请求失败-%@",error);
     }];
 }
 /**
@@ -186,7 +199,7 @@
         NSLog(@"登录请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"登录请求失败-%@",error);
+        //        NSLog(@"登录请求失败-%@",error);
     }];
 }
 /**
@@ -203,10 +216,10 @@
     NSDictionary *params=@{@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/index/shaidan/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"晒单请求成功-----%@",responseObject);
+        //        NSLog(@"晒单请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"晒单请求失败-%@",error);
+        //        NSLog(@"晒单请求失败-%@",error);
     }];
 }
 /**
@@ -240,7 +253,7 @@
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
     //设置参数
-//    NSDictionary *params=@{@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    //    NSDictionary *params=@{@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/cartnum/",URL];
     [mgr GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"购物车数量请求成功-----%@",responseObject);
@@ -285,7 +298,7 @@
     NSDictionary *params=@{@"user":data[@"user"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/checkname/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"添加购物车请求成功-----%@",responseObject);
+        //        NSLog(@"添加购物车请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //        NSLog(@"晒单请求失败-%@",error);
@@ -327,7 +340,7 @@
     NSDictionary *params=@{@"uid":data[@"uid"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/userindex/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"请求成功-----%@",responseObject);
+        //        NSLog(@"请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //        NSLog(@"所有商品请求失败-%@",error);
@@ -408,7 +421,7 @@
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
     //设置参数
-//    NSDictionary *params=@{@"uid":data[@"uid"]};
+    //    NSDictionary *params=@{@"uid":data[@"uid"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/terms/",URL];
     [mgr GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //        NSLog(@"请求成功-----%@",responseObject);
@@ -451,7 +464,7 @@
     NSDictionary *params=@{@"sd_id":data[@"sd_id"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/shaidan/dianZan/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSLog(@"请求成功-----%@",responseObject);
+        NSLog(@"请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //        NSLog(@"所有商品请求失败-%@",error);
@@ -491,7 +504,7 @@
     NSDictionary *params=@{@"uid":data[@"uid"],@"sdhf_id":data[@"sdhf_id"],@"sdhf_content":data[@"sdhf_content"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/shaidan/plajax/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"请求成功-----%@",responseObject);
+        //        NSLog(@"请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //NSLog(@"所有商品请求失败-%@",error);

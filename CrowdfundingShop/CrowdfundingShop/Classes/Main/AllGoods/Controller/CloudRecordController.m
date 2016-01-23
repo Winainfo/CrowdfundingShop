@@ -8,8 +8,10 @@
 
 #import "CloudRecordController.h"
 #import "CloudRecordCell.h"
+#import <UIImageView+WebCache.h>
 @interface CloudRecordController ()<UITableViewDataSource,UITableViewDelegate>
 @property (assign,nonatomic)BOOL flag;
+@property (retain,nonatomic)NSArray *content;
 @end
 
 @implementation CloudRecordController
@@ -38,7 +40,7 @@
     //导航栏右侧按钮
     UIButton *rightBtn=[UIButton buttonWithType:UIButtonTypeCustom];
     [rightBtn setImage:[UIImage imageNamed:@"buy_record_time_down_unselect"] forState:UIControlStateNormal];
-     [rightBtn setImage:[UIImage imageNamed:@"buy_record_time_down_unselect"] forState:UIControlStateSelected];
+    [rightBtn setImage:[UIImage imageNamed:@"buy_record_time_down_unselect"] forState:UIControlStateSelected];
     rightBtn.tag=100;
     rightBtn.frame=CGRectMake(-5, 5, 30, 30);
     [rightBtn addTarget:self action:@selector(sortClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -48,9 +50,9 @@
     UINib *nib=[UINib nibWithNibName:@"CloudRecordCell" bundle:[NSBundle mainBundle]];
     //注册到表格视图
     [self.myTableView registerNib:nib forCellReuseIdentifier:@"CloudRecordCell"];
-//    self.myTableView.separatorStyle=NO;
+    //    self.myTableView.separatorStyle=NO;
     [self setExtraCellLineHidden:self.myTableView];
-
+    NSLog(@"%@",self.content);
 }
 
 /**
@@ -121,7 +123,7 @@
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return self.content.count;
 }
 /**
  *  设置单元格内容
@@ -138,7 +140,28 @@
     if (cell==nil) {
         cell=[[CloudRecordCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
     }
-    //取消Cell选中时背景
+    cell.nameLabel.text=self.content[indexPath.row][@"username"];
+    cell.numLabel.text=self.content[indexPath.row][@"gonumber"];
+    //时间戳转换时间
+    NSString *str=self.content[indexPath.row][@"time"];//时间戳
+    NSTimeInterval time=[str doubleValue];
+    NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
+    //实例化一个NSDateFormatter对象
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
+    cell.timeLabel.text=currentDateStr;
+    /**商品图片*/
+    //拼接图片网址·
+    NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.content[indexPath.row][@"uphoto"]];
+    //转换成url
+    NSURL *imgUrl = [NSURL URLWithString:urlStr];
+    [cell.peopleImageView sd_setImageWithURL:imgUrl];
+    //截取城市
+    NSString *string =self.content[indexPath.row][@"ip"];
+    NSArray *strArray=[string componentsSeparatedByString:@","];
+    cell.cityLabel.text=[NSString stringWithFormat:@"(%@)",strArray[0]];
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
 }

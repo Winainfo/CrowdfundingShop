@@ -21,7 +21,7 @@
 /**
  *  时间
  */
-@property (weak, nonatomic) IBOutlet MZTimerLabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIView *timeView;
 
 @end

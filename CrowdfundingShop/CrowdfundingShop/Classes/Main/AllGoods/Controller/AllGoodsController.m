@@ -43,7 +43,7 @@ int page=8;
     UINib *nib=[UINib nibWithNibName:@"AllGoodsCell" bundle:[NSBundle mainBundle]];
     //注册到表格视图
     [self.myTableView  registerNib:nib forCellReuseIdentifier:@"AllGoodsCell"];
-//    self.myTableView.separatorStyle=NO;
+    //    self.myTableView.separatorStyle=NO;
     [self setExtraCellLineHidden:self.myTableView];
     //创建分类xib文件对象
     UINib *categoryNib=[UINib nibWithNibName:@"GoodsCategoryCell" bundle:[NSBundle mainBundle]];
@@ -57,12 +57,12 @@ int page=8;
     [self setExtraCellLineHidden:self.sortTableView];
     //分类名字
     self.categoryNameArray= @[ @"全部分类", @"手机数码", @"电脑办公", @"家用电器", @"化妆个性" , @"钟表首饰" , @"其他商品" ];
- self.unselectImageArray=@[@"category_2130837504_unselect",@"category_2130837505_unselect",@"category_2130837507_unselect",@"category_2130837506_unselect",@"category_2130837509_unselect",@"category_2130837508_unselect",@"category_2130837510_unselect"];
+    self.unselectImageArray=@[@"category_2130837504_unselect",@"category_2130837505_unselect",@"category_2130837507_unselect",@"category_2130837506_unselect",@"category_2130837509_unselect",@"category_2130837508_unselect",@"category_2130837510_unselect"];
     self.selectImageArray=@[@"category_2130837504_select",@"category_2130837505_select",@"category_2130837507_select",@"category_2130837506_select",@"category_2130837509_select",@"category_2130837508_select",@"category_2130837510_select"];
     self.sortNameArray=@[@"即将揭晓",@"人气",@"价值(由高到低)",@"价值(由低到高)",@"最新"];
     /**所有商品数据源*/
-    [self requestData:@"" andSort:@"" andIndex:@"1" andpagesize:@"8"];
-      page=page+8;
+    [self requestData:@"" andSort:@"" andIndex:@"1" andpagesize:@"20"];
+    page=page+8;
     //上拉加载
     [self pushRefresh];
     //下拉刷新
@@ -90,7 +90,7 @@ int page=8;
  *  上拉加载
  */
 -(void)pushRefresh{
-     NSString *pageSize=[NSString stringWithFormat:@"%i",page];
+    NSString *pageSize=[NSString stringWithFormat:@"%i",page];
     self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"",@"sort",@"1",@"pageIndex",pageSize,@"pageSize",nil];
         [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
@@ -112,7 +112,7 @@ int page=8;
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:categoryid,@"categoryId",sortid,@"sort",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
     [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
         self.allGoodsArray=data[@"content"];
-       //NSLog(@"---%@---",self.allGoodsArray[0][@"title"]);
+        //NSLog(@"---%@---",self.allGoodsArray[0][@"title"]);
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myTableView reloadData];
         });
@@ -304,7 +304,7 @@ int page=8;
         self.categoryTableView.hidden=YES;
         self.sortTableView.hidden=YES;
         self.myTableView.hidden=NO;
-//        [self requestData:@"" andSort:@"40" andPageSize:@"1" andpageIndex:@"6"];
+        //        [self requestData:@"" andSort:@"40" andPageSize:@"1" andpageIndex:@"6"];
         [self.myTableView reloadData];
         _flag1=NO;
     }else{
@@ -312,6 +312,7 @@ int page=8;
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
         DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
         detailController.goodsID=_allGoodsArray[indexPath.row][@"id"];
+        detailController.dic=_allGoodsArray[indexPath.row];
         [self.navigationController pushViewController:detailController animated:YES];
     }
 }
@@ -323,7 +324,7 @@ int page=8;
         case 100:
             if (_flag) {
                 [_categoryBtn setImage:[UIImage imageNamed:@"product_pull_down_bg"] forState:UIControlStateNormal];
-                 [_sortBtn setImage:[UIImage imageNamed:@"product_pull_down_bg"] forState:UIControlStateNormal];
+                [_sortBtn setImage:[UIImage imageNamed:@"product_pull_down_bg"] forState:UIControlStateNormal];
                 self.categoryTableView.hidden=YES;
                 self.sortTableView.hidden=YES;
                 self.myTableView.hidden=NO;
@@ -340,7 +341,7 @@ int page=8;
         case 101:
             if (_flag1) {
                 [_sortBtn setImage:[UIImage imageNamed:@"product_pull_down_bg"] forState:UIControlStateNormal];
-                 [_categoryBtn setImage:[UIImage imageNamed:@"product_pull_down_bg"] forState:UIControlStateNormal];
+                [_categoryBtn setImage:[UIImage imageNamed:@"product_pull_down_bg"] forState:UIControlStateNormal];
                 self.categoryTableView.hidden=YES;
                 self.sortTableView.hidden=YES;
                 self.myTableView.hidden=NO;
@@ -358,7 +359,7 @@ int page=8;
         default:
             break;
     }
-
+    
 }
 
 

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ARLabel.h"
+
 @interface GoodsDetailController : UITableViewController
 /**商品图片*/
 @property (weak, nonatomic) IBOutlet UIImageView *goodsImageView;
@@ -42,5 +43,5 @@
 
 /**商品ID*/
 @property (retain,nonatomic) NSString *gID;
-
+@property (retain,nonatomic)NSDictionary *dic;
 @end

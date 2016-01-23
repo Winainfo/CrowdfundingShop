@@ -8,8 +8,6 @@
 
 #import "AppDelegate.h"
 #import <IQKeyboardManager.h>
-#import <PgySDK/PgyManager.h>
-#import <PgyUpdate/PgyUpdateManager.h>
 #import "payRequsestHandler.h"
 @interface AppDelegate ()<WXApiDelegate>
 

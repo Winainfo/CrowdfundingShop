@@ -47,4 +47,12 @@
     [self.delegate btnClick:self andFlag:(int)sender.tag andS_id:self.idLabel.text];
 }
 
+/**
+ *  分享代理
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)shareClick:(UIButton *)sender {
+        [self.delegate btnClick:self andFlag:(int)sender.tag andS_id:self.idLabel.text];
+}
 @end

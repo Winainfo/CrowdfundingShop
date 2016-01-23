@@ -44,7 +44,6 @@
     UIBarButtonItem *left=[[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem=left;
     [self requestData];
-    NSLog(@"%@",self.dic);
 }
 #pragma mark 数据源
 -(void)requestData{
@@ -64,13 +63,6 @@
  */
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];
-}
-/**
- *  分享
- *
- *  @param sender <#sender description#>
- */
-- (IBAction)shareClick:(UIButton *)sender {
 }
 /**
  *  点赞
@@ -123,11 +115,12 @@
     NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.dic[@"sd_thumbs"]];
     //转换成url
     NSURL *imgUrl = [NSURL URLWithString:urlStr];
+    UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl] scale:0.1];
     id<ISSContent> publishContent = [ShareSDK content:[NSString stringWithFormat:@"%@",self.dic[@"sd_content"]]defaultContent:nil
-        image:[ShareSDK pngImageWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl]]]
-        title:[NSString stringWithFormat:@"%@",self.dic[@"sd_title"]] url:[NSString stringWithFormat:@"http://www.god-store.com/index.php/go/shaidan/detail/%@",self.dic[@"sd_id"]]
-        description:@"这是一条演示信息"
-        mediaType:SSPublishContentMediaTypeNews];
+                                                image:[ShareSDK pngImageWithImage:image]
+                                                title:[NSString stringWithFormat:@"%@",self.dic[@"sd_title"]] url:[NSString stringWithFormat:@"http://www.god-store.com/index.php/go/shaidan/detail/%@",self.dic[@"sd_id"]]
+                                          description:@""
+                                            mediaType:SSPublishContentMediaTypeNews];
     //1+创建弹出菜单容器（iPad必要）
     id<ISSContainer> container = [ShareSDK container];
     [container setIPadContainerWithView:nil arrowDirect:UIPopoverArrowDirectionUp];
@@ -155,7 +148,7 @@
                                                                           otherButtonTitles:nil, nil];
                                     [alert show];
                                 }
-                }];
+                            }];
 }
 
 @end
