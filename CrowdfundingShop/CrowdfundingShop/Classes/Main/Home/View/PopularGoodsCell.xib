@@ -20,7 +20,7 @@
                             <constraint firstAttribute="width" constant="90" id="wqB-Zo-u6h"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U7n-C0-Hjr" customClass="ARLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="97" translatesAutoresizingMaskIntoConstraints="NO" id="U7n-C0-Hjr" customClass="ARLabel">
                         <rect key="frame" x="5" y="96" width="97" height="29"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="29" id="s0V-nJ-968"/>

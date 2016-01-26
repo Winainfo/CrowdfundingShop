@@ -11,8 +11,10 @@
 #import "CommentaryController.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
-#import <MBProgressHUD.h>
-@interface ShareOrderDetailController ()
+#import <JGProgressHUD.h>
+@interface ShareOrderDetailController ()<JGProgressHUDDelegate>{
+    BOOL _blockUserInteraction;
+}
 @property (nonatomic, strong) UITableViewCell *prototypeCell;
 /**评论数组*/
 @property(retain,nonatomic) NSArray *contentArray;
@@ -29,6 +31,9 @@
     self.myView.layer.cornerRadius=3.0;
     self.myView.layer.masksToBounds=YES;
     [self requestData:self.sd_id];
+    _blockUserInteraction=YES;
+    self.peopleImageView.layer.cornerRadius=self.peopleImageView.frame.size.width/2.0;
+    self.peopleImageView.layer.masksToBounds=YES;
 }
 
 #pragma mark 数据请求
@@ -54,22 +59,13 @@
         //            [imageV sd_setImageWithURL:imgUrl];
         //            [self.view addSubview:imageV];
         //        }
-        NSDictionary *param=[NSDictionary dictionaryWithObjectsAndKeys:_dic[@"sd_userid"],@"uid",nil];
-        [RequestData userDetail:param FinishCallbackBlock:^(NSDictionary *userInfo) {
-            int code=[userInfo[@"code"] intValue];
-            if (code==0) {
-                [self.peopleNameBtn setTitle:userInfo[@"content"][@"username"] forState:UIControlStateNormal];
-                /**商品图片*/
-                //拼接图片网址·
-                NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,userInfo[@"content"][@"img"]];
-                //转换成url
-                NSURL *imgUrl = [NSURL URLWithString:urlStr];
-                [self.peopleImageView sd_setImageWithURL:imgUrl];
-            }else{
-                
-            }
-            
-        }];
+        [self.peopleNameBtn setTitle:_dic[@"q_user"] forState:UIControlStateNormal];
+        /**头像图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_dic[@"userphoto"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [self.peopleImageView sd_setImageWithURL:imgUrl];
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myTableView reloadData];
@@ -77,9 +73,21 @@
         
     }else{
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:sd_Id,@"sd_id",nil];
+        JGProgressHUD *HUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleDark];
+        HUD.textLabel.text = @"正在加载中";//
+        [HUD showInView:self.navigationController.view];
+        HUD.square = YES;
+        HUD.delegate=self;
         [RequestData shareOrderDetail:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];
             if (code==0) {
+                HUD.userInteractionEnabled=_blockUserInteraction;
+                HUD.square = YES;
+                HUD.delegate=self;
+                HUD.textLabel.text = @"加载成功";
+                HUD.indicatorView = [[JGProgressHUDSuccessIndicatorView alloc] init];
+                [HUD showInView:self.navigationController.view];
+                [HUD dismissAfterDelay:1.5];
                 self.titleLabel.text=data[@"content"][@"sd_title"];
                 self.contentTextView.text=data[@"content"][@"sd_content"];
                 self.numberLabel.text=data[@"content"][@"sd_ping"];
@@ -98,24 +106,16 @@
                     //转换成url
                     NSURL *imgUrl = [NSURL URLWithString:urlStr];
                     UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(10, (i*220)+130, 300, 220)];
-                    //                imageV.layer.borderWidth=0.5;
-                    //                imageV.layer.borderColor=[[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1]CGColor];
                     [imageV sd_setImageWithURL:imgUrl];
                     [self.view addSubview:imageV];
                 }
-                
-                [RequestData userDetail:param FinishCallbackBlock:^(NSDictionary *userInfo) {
-                    int code=[userInfo[@"code"] intValue];
-                    if (code==0) {
-                        [self.peopleNameBtn setTitle:userInfo[@"content"][@"username"] forState:UIControlStateNormal];
-                        /**商品图片*/
-                        //拼接图片网址·
-                        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,userInfo[@"content"][@"img"]];
-                        //转换成url
-                        NSURL *imgUrl = [NSURL URLWithString:urlStr];
-                        [self.peopleImageView sd_setImageWithURL:imgUrl];
-                    }
-                }];
+                [self.peopleNameBtn setTitle:data[@"content"][@"username"] forState:UIControlStateNormal];
+                /**商品图片*/
+                //拼接图片网址·
+                NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,data[@"content"][@"img"]];
+                //转换成url
+                NSURL *imgUrl = [NSURL URLWithString:urlStr];
+                [self.peopleImageView sd_setImageWithURL:imgUrl];
                 //更新主线程
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.myTableView reloadData];
@@ -124,6 +124,14 @@
             }else{
                 
             }
+        } andFailure:^(NSError *error) {
+            HUD.userInteractionEnabled=_blockUserInteraction;
+            HUD.square = YES;
+            HUD.delegate=self;
+            HUD.textLabel.text = @"加载失败";
+            HUD.indicatorView = [[JGProgressHUDErrorIndicatorView alloc] init];
+            [HUD showInView:self.navigationController.view];
+            [HUD dismissAfterDelay:1.5];
         }];
     }
 }

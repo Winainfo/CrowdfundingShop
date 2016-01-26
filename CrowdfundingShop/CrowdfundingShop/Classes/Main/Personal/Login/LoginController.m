@@ -121,10 +121,6 @@
                     }
                 }
             }
-//            //设置故事板为第一启动
-//            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//            PersonalController *personalController=[storyboard instantiateViewControllerWithIdentifier:@"PersonalView"];
-//            [self.navigationController pushViewController:personalController animated:YES];
         }else{
            
         }

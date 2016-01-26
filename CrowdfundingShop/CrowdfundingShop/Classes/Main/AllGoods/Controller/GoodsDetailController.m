@@ -11,6 +11,7 @@
 #import "RequestData.h"
 #import "ShareOrderController.h"
 #import <UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
 @interface GoodsDetailController ()
 /**所有云购记录*/
 @property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell1;
@@ -35,7 +36,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"%@",_dic);
     self.goodsImageView.layer.borderWidth=0.5;
     self.goodsImageView.layer.borderColor=[[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1.0]CGColor];
     /**圆角*/
@@ -47,7 +47,6 @@
     /**头像圆角*/
     self.peopleImageView.layer.cornerRadius=30.0;
     self.peopleImageView.layer.masksToBounds=YES;
-    
     /**数据请求*/
     [self requestData:self.gID];
 }
@@ -59,10 +58,27 @@
  */
 -(void)requestData:(NSString *)goodsId{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:goodsId,@"goodsId",nil];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在加载...";
     [RequestData goodsDetail:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"] intValue];
         if (code==0) {
+            //加载成功，先移除原来的HUD；
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //然后显示一个成功的提示；
+            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            successHUD.labelText = @"加载成功";
+            successHUD.mode = MBProgressHUDModeCustomView;
+            //可以设置对应的图片；
+            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+            successHUD.removeFromSuperViewOnHide = true;
+            [successHUD hide:true afterDelay:1];
+
             self.goodsDictionary=data[@"content"];
+            NSLog(@"数据%@",data[@"content"]);
             /**商品名字*/
             self.goodsNameLabel.text=data[@"content"][@"title"];
             /**商品描述*/
@@ -92,8 +108,18 @@
             });
             
         }else{
-            NSLog(@"sss");
+
         }
+    }andFailure:^(NSError *error) {
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"加载失败";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
     }];
 }
 /**
@@ -118,11 +144,20 @@
  *  @param sender <#sender description#>
  */
 - (IBAction)shareOrderClick:(UIButton *)sender {
-    //设置故事板为第一启动
-    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ShareOrderController *controller=[storyboard instantiateViewControllerWithIdentifier:@"shareOrderView"];
-    controller.shareArray=self.goodsDictionary[@"shaidan"];
-    [self.navigationController pushViewController:controller animated:YES];
+    NSArray *array=self.goodsDictionary[@"shaidan"];
+    if (array.count==0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"暂无晒单";
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:1.5];
+    }else{
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ShareOrderController *controller=[storyboard instantiateViewControllerWithIdentifier:@"shareOrderView"];
+        controller.shareArray=self.goodsDictionary[@"shaidan"];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 @end

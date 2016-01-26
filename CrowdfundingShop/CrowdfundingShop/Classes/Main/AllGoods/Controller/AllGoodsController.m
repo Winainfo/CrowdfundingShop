@@ -14,6 +14,7 @@
 #import "RequestData.h"
 #import <MJRefresh.h>
 #import <UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
 @interface AllGoodsController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (assign,nonatomic)BOOL flag;
@@ -81,6 +82,8 @@ int page=8;
                 // 结束刷新
                 [self.myTableView.mj_header endRefreshing];
             });
+        } andFailure:^(NSError *error) {
+            
         }];
     }];
     // 设置自动切换透明度(在导航栏下面自动隐藏)
@@ -100,6 +103,8 @@ int page=8;
                 // 结束刷新
                 [self.myTableView.mj_footer endRefreshing];
             });
+        }andFailure:^(NSError *error) {
+            
         }];
     }];
 }
@@ -110,12 +115,36 @@ int page=8;
  */
 -(void)requestData:(NSString *)categoryid andSort:(NSString *)sortid andIndex:(NSString *)pageindex andpagesize:(NSString *)pagesize{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:categoryid,@"categoryId",sortid,@"sort",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在加载...";
     [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
+        //加载成功，先移除原来的HUD；
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //然后显示一个成功的提示；
+        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        successHUD.labelText = @"加载成功";
+        successHUD.mode = MBProgressHUDModeCustomView;
+        //可以设置对应的图片；
+        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+        successHUD.removeFromSuperViewOnHide = true;
+        [successHUD hide:true afterDelay:1];
         self.allGoodsArray=data[@"content"];
-        //NSLog(@"---%@---",self.allGoodsArray[0][@"title"]);
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myTableView reloadData];
         });
+    }andFailure:^(NSError *error) {
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"加载失败";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
     }];
 }
 

@@ -14,6 +14,7 @@
 #import "CommentaryController.h"
 #import <UIImageView+WebCache.h>
 #import <ShareSDK/ShareSDK.h>
+#import <MBProgressHUD.h>
 @interface ShareOrderController ()<UIScrollViewDelegate,CartCellDelegate>
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -60,7 +61,7 @@
     [self setExtraCellLineHidden:self.sortTableView];
     //分类名字
     self.sortNameArray= @[ @"最新晒单", @"人气晒单", @"评论最多"];
-    //即将揭晓数据请求
+    //请求分享列表
     if (self.shareArray.count==0) {
         [self requestData:@"1" andpageSize:@"8"];
     }else{
@@ -70,20 +71,45 @@
             [self.myTableView reloadData];
         });
     }
-    NSLog(@"%@",self.shareArray[0]);
 }
 #pragma mark 数据请求
-/**
- *  请求即将揭晓商品
- */
 -(void)requestData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在加载...";
     [RequestData shareOrder:params FinishCallbackBlock:^(NSDictionary *data) {
         self.shareArray=data[@"content"];
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.myTableView reloadData];
-        });
+        int code=[data[@"code"]intValue];
+        if (code==0) {
+            //加载成功，先移除原来的HUD；
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //然后显示一个成功的提示；
+            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            successHUD.labelText = @"加载成功";
+            successHUD.mode = MBProgressHUDModeCustomView;
+            //可以设置对应的图片；
+            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+            successHUD.removeFromSuperViewOnHide = true;
+            [successHUD hide:true afterDelay:1];
+
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }
+    }andFailure:^(NSError *error) {
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"加载失败";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
     }];
 }
 /**
@@ -163,20 +189,19 @@
     cell.praiseLabel.text=_shareArray[indexPath.row][@"sd_zhan"];
     cell.commentaryLabel.text=_shareArray[indexPath.row][@"sd_ping"];
     //时间戳转换时间
-    NSString *str=_shareArray[indexPath.row][@"sd_time"];//时间戳
-    NSTimeInterval time=[str doubleValue];
-    NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
-    //实例化一个NSDateFormatter对象
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //设定时间格式,这里可以设置成自己需要的格式
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
-    cell.timeLabel.text=currentDateStr;
+    long time=[_shareArray[indexPath.row][@"sd_time"] integerValue];//时间戳
+    cell.timeLabel.text=[ShareOrderController timeFromTimestamp:time];
     /**晒单图片*/
     self.imageArray=_shareArray[indexPath.row][@"sd_photolist"];
     cell.goodsImageScroll.contentSize=CGSizeMake(cell.goodsImageScroll.frame.size.width, cell.goodsImageScroll.frame.size.height);
     cell.goodsImageScroll.delegate=self;
-    
+    [cell.peopleName setTitle:_shareArray[indexPath.row][@"q_user"] forState:UIControlStateNormal];
+    /**用户头像*/
+    //拼接图片网址·
+    NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_shareArray[indexPath.row][@"userphoto"]];
+    //转换成url
+    NSURL *imgUrl = [NSURL URLWithString:urlStr];
+    [cell.peopleImageView sd_setImageWithURL:imgUrl];
     //    for (int i=0; i<self.imageArray.count; i++) {
     //        //拼接图片网址·
     //        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.imageArray[i]];
@@ -193,6 +218,7 @@
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
     return cell;
 }
+
 
 
 /**
@@ -325,43 +351,83 @@
             break;
     }
 }
-- (NSString *)intervalSinceNow: (NSString *) theDate
-{
-    
-    NSDateFormatter *date=[[NSDateFormatter alloc] init];
-    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSDate *d=[date dateFromString:theDate];
-    
-    NSTimeInterval late=[d timeIntervalSince1970]*1;
-    
-    
+
+#define mark - 时间
+/**
+ *  时间戳转成字符串
+ *
+ *  @param timestamp 时间戳
+ *
+ *  @return 格式化后的字符串
+ */
++ (NSString *)timeFromTimestamp:(NSInteger)timestamp{
+    NSDateFormatter *dateFormtter =[[NSDateFormatter alloc] init];
+    NSDate *d = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSTimeInterval late=[d timeIntervalSince1970]*1;	//转记录的时间戳
     NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
-    NSTimeInterval now=[dat timeIntervalSince1970]*1;
+    NSTimeInterval now=[dat timeIntervalSince1970]*1;   //获取当前时间戳
     NSString *timeString=@"";
-    
     NSTimeInterval cha=now-late;
-    
+    // 发表在一小时之内
     if (cha/3600<1) {
-        timeString = [NSString stringWithFormat:@"%f", cha/60];
-        timeString = [timeString substringToIndex:timeString.length-7];
-        timeString=[NSString stringWithFormat:@"%@分钟前", timeString];
-        if ([timeString  isEqual: @"0分钟前"]) {
-            timeString = @"刚刚";
+        if (cha/60<1) {
+            timeString = @"1";
         }
+        else
+        {
+            timeString = [NSString stringWithFormat:@"%f", cha/60];
+            timeString = [timeString substringToIndex:timeString.length-7];
+        }
+        timeString=[NSString stringWithFormat:@"%@分钟前", timeString];
     }
-    if (cha/3600>1&&cha/86400<1) {
+    // 在一小时以上24小以内
+    else if (cha/3600>1&&cha/86400<1) {
         timeString = [NSString stringWithFormat:@"%f", cha/3600];
         timeString = [timeString substringToIndex:timeString.length-7];
         timeString=[NSString stringWithFormat:@"%@小时前", timeString];
     }
-    if (cha/86400>1)
+    // 发表在24以上10天以内
+    else if (cha/86400>1&&cha/86400*3<1)	 //86400 = 60(分)*60(秒)*24(小时)   3天内
     {
-        //        timeString = [NSString stringWithFormat:@"%f", cha/86400];
-        //        timeString = [timeString substringToIndex:timeString.length-7];
-        //        timeString=[NSString stringWithFormat:@"%@天前", timeString];
-        timeString = theDate;
-        
+        timeString = [NSString stringWithFormat:@"%f", cha/86400];
+        timeString = [timeString substringToIndex:timeString.length-7];
+        timeString=[NSString stringWithFormat:@"%@天前", timeString];
+    }
+    // 发表时间大于10天
+    else
+    {
+        [dateFormtter setDateFormat:@"yyyy-MM-dd"];
+        timeString = [dateFormtter stringFromDate:d];
     }
     return timeString;
+}
+/**
+ *  根据格式将时间戳转换成时间
+ *
+ *  @param timestamp	时间戳
+ *  @param dateFormtter 日期格式
+ *
+ *  @return 带格式的日期
+ */
++ (NSString *)timeFromTimestamp:(NSInteger)timestamp formtter:(NSString *)formtter{
+    NSDateFormatter *dataFormtter =[[NSDateFormatter alloc] init];
+    [dataFormtter setDateFormat:formtter];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSString *time = [dataFormtter stringFromDate:date];
+    return time;
+}
+/**
+ *  获取当前时间戳
+ */
++ (NSString *)timeIntervalGetFromNow{
+    // 获取时间（非本地时区，需转换）
+    NSDate * today = [NSDate date];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate:today];
+    // 转换成当地时间
+    NSDate *localeDate = [today dateByAddingTimeInterval:interval];
+    // 时间转换成时间戳
+    NSString *timeSp = [NSString stringWithFormat:@"%ld",(long)[localeDate timeIntervalSince1970]];
+    return timeSp;
 }
 @end

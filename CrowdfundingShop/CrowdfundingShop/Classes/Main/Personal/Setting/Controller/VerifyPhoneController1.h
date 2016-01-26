@@ -10,4 +10,5 @@
 
 @interface VerifyPhoneController1 : UIViewController
 @property (retain,nonatomic)NSString *phone;
+@property (retain,nonatomic)NSString *uid;
 @end

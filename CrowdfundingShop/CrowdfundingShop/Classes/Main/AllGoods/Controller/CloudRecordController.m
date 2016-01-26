@@ -8,10 +8,14 @@
 
 #import "CloudRecordController.h"
 #import "CloudRecordCell.h"
+#import "RequestData.h"
+#import <MBProgressHUD.h>
 #import <UIImageView+WebCache.h>
 @interface CloudRecordController ()<UITableViewDataSource,UITableViewDelegate>
 @property (assign,nonatomic)BOOL flag;
 @property (retain,nonatomic)NSArray *content;
+@property (retain,nonatomic)NSArray *array;
+@property (retain,nonatomic)NSString *gid;
 @end
 
 @implementation CloudRecordController
@@ -50,11 +54,53 @@
     UINib *nib=[UINib nibWithNibName:@"CloudRecordCell" bundle:[NSBundle mainBundle]];
     //注册到表格视图
     [self.myTableView registerNib:nib forCellReuseIdentifier:@"CloudRecordCell"];
-    //    self.myTableView.separatorStyle=NO;
     [self setExtraCellLineHidden:self.myTableView];
-    NSLog(@"%@",self.content);
+    if (self.gid!=nil) {
+        [self requestData:self.gid andpageIndex:@"1" andpageSize:@"8"];
+    }else{
+        self.array=self.content;
+    }
 }
+#pragma mark 数据请求
+/**
+ *  商品详情
+ *
+ *  @param goodsId <#goodsId description#>
+ */
+-(void)requestData:(NSString *)goodsId andpageIndex:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:goodsId,@"itemId",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在加载...";
+    [RequestData buyRecordSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            //加载成功，先移除原来的HUD；
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //然后显示一个成功的提示；
+            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            successHUD.labelText = @"加载成功";
+            successHUD.mode = MBProgressHUDModeCustomView;
+            //可以设置对应的图片；
+            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+            successHUD.removeFromSuperViewOnHide = true;
+            [successHUD hide:true afterDelay:1];
+            
+            self.array=data[@"content"];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
 
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        
+    }];
+}
 /**
  *  按时间排序
  *
@@ -123,7 +169,7 @@
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.content.count;
+    return self.array.count;
 }
 /**
  *  设置单元格内容
@@ -140,26 +186,19 @@
     if (cell==nil) {
         cell=[[CloudRecordCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
     }
-    cell.nameLabel.text=self.content[indexPath.row][@"username"];
-    cell.numLabel.text=self.content[indexPath.row][@"gonumber"];
+    cell.nameLabel.text=self.array[indexPath.row][@"username"];
+    cell.numLabel.text=self.array[indexPath.row][@"gonumber"];
     //时间戳转换时间
-    NSString *str=self.content[indexPath.row][@"time"];//时间戳
-    NSTimeInterval time=[str doubleValue];
-    NSDate *detaildate=[NSDate dateWithTimeIntervalSince1970:time];
-    //实例化一个NSDateFormatter对象
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //设定时间格式,这里可以设置成自己需要的格式
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
-    NSString *currentDateStr = [dateFormatter stringFromDate: detaildate];
-    cell.timeLabel.text=currentDateStr;
+    long time=[self.array[indexPath.row][@"time"]intValue];//时间戳
+    cell.timeLabel.text=[CloudRecordController timeFromTimestamp:time formtter:@"yyyy-MM-dd HH:mm"];
     /**商品图片*/
     //拼接图片网址·
-    NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.content[indexPath.row][@"uphoto"]];
+    NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.array[indexPath.row][@"uphoto"]];
     //转换成url
     NSURL *imgUrl = [NSURL URLWithString:urlStr];
     [cell.peopleImageView sd_setImageWithURL:imgUrl];
     //截取城市
-    NSString *string =self.content[indexPath.row][@"ip"];
+    NSString *string =self.array[indexPath.row][@"ip"];
     NSArray *strArray=[string componentsSeparatedByString:@","];
     cell.cityLabel.text=[NSString stringWithFormat:@"(%@)",strArray[0]];
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
@@ -177,5 +216,84 @@
 {
     return 60;
 }
+#define mark - 时间
+/**
+ *  时间戳转成字符串
+ *
+ *  @param timestamp 时间戳
+ *
+ *  @return 格式化后的字符串
+ */
++ (NSString *)timeFromTimestamp:(NSInteger)timestamp{
+    NSDateFormatter *dateFormtter =[[NSDateFormatter alloc] init];
+    NSDate *d = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSTimeInterval late=[d timeIntervalSince1970]*1;	//转记录的时间戳
+    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval now=[dat timeIntervalSince1970]*1;   //获取当前时间戳
+    NSString *timeString=@"";
+    NSTimeInterval cha=now-late;
+    // 发表在一小时之内
+    if (cha/3600<1) {
+        if (cha/60<1) {
+            timeString = @"1";
+        }
+        else
+        {
+            timeString = [NSString stringWithFormat:@"%f", cha/60];
+            timeString = [timeString substringToIndex:timeString.length-7];
+        }
+        timeString=[NSString stringWithFormat:@"%@分钟前", timeString];
+    }
+    // 在一小时以上24小以内
+    else if (cha/3600>1&&cha/86400<1) {
+        timeString = [NSString stringWithFormat:@"%f", cha/3600];
+        timeString = [timeString substringToIndex:timeString.length-7];
+        timeString=[NSString stringWithFormat:@"%@小时前", timeString];
+    }
+    // 发表在24以上10天以内
+    else if (cha/86400>1&&cha/86400*3<1)	 //86400 = 60(分)*60(秒)*24(小时)   3天内
+    {
+        timeString = [NSString stringWithFormat:@"%f", cha/86400];
+        timeString = [timeString substringToIndex:timeString.length-7];
+        timeString=[NSString stringWithFormat:@"%@天前", timeString];
+    }
+    // 发表时间大于10天
+    else
+    {
+        [dateFormtter setDateFormat:@"yyyy-MM-dd"];
+        timeString = [dateFormtter stringFromDate:d];
+    }
+    return timeString;
+}
+/**
+ *  根据格式将时间戳转换成时间
+ *
+ *  @param timestamp	时间戳
+ *  @param dateFormtter 日期格式
+ *
+ *  @return 带格式的日期
+ */
++ (NSString *)timeFromTimestamp:(NSInteger)timestamp formtter:(NSString *)formtter{
+    NSDateFormatter *dataFormtter =[[NSDateFormatter alloc] init];
+    [dataFormtter setDateFormat:formtter];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSString *time = [dataFormtter stringFromDate:date];
+    return time;
+}
+/**
+ *  获取当前时间戳
+ */
++ (NSString *)timeIntervalGetFromNow{
+    // 获取时间（非本地时区，需转换）
+    NSDate * today = [NSDate date];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate:today];
+    // 转换成当地时间
+    NSDate *localeDate = [today dateByAddingTimeInterval:interval];
+    // 时间转换成时间戳
+    NSString *timeSp = [NSString stringWithFormat:@"%ld",(long)[localeDate timeIntervalSince1970]];
+    return timeSp;
+}
+
 
 @end

@@ -168,7 +168,7 @@
                                     <constraint firstAttribute="height" constant="80" id="zhL-mg-wzE"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(第30068期)福临门 泰国茉莉香米5kg" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HWc-Ti-rmO" customClass="ARLabel">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(第30068期)福临门 泰国茉莉香米5kg" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="210" translatesAutoresizingMaskIntoConstraints="NO" id="HWc-Ti-rmO" customClass="ARLabel">
                                 <rect key="frame" x="100" y="11" width="210" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="Uew-2N-ywx"/>

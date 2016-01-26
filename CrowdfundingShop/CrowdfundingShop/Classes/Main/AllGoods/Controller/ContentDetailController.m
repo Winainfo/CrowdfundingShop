@@ -8,7 +8,7 @@
 
 #import "ContentDetailController.h"
 
-@interface ContentDetailController ()
+@interface ContentDetailController ()<UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (retain,nonatomic)NSString *content;
 @end
@@ -36,7 +36,7 @@
     [leftBtn addTarget:self action:@selector(backClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *left=[[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem=left;
-    NSLog(@"%@",self.content);
+    self.webView.delegate=self;
     [self.webView loadHTMLString:self.content baseURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]]];
     _webView.backgroundColor=[UIColor clearColor];
     for (UIView *subView in [_webView subviews])

@@ -181,21 +181,11 @@
 		01F9A28D1C442468007CCA4E /* ServicesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F9A28C1C442468007CCA4E /* ServicesController.m */; };
 		01F9A2901C4426F8007CCA4E /* AboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F9A28F1C4426F8007CCA4E /* AboutController.m */; };
 		01F9A2931C44270A007CCA4E /* HelpController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F9A2921C44270A007CCA4E /* HelpController.m */; };
-		01FA8E0E1C3AB70C00E7E00B /* IMG_0248.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E0C1C3AB70C00E7E00B /* IMG_0248.PNG */; };
-		01FA8E0F1C3AB70C00E7E00B /* IMG_0249.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E0D1C3AB70C00E7E00B /* IMG_0249.PNG */; };
 		01FA8E121C3ABEE100E7E00B /* PersonalProfilesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E111C3ABEE100E7E00B /* PersonalProfilesController.m */; };
-		01FA8E161C3AC32100E7E00B /* IMG_0253.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E131C3AC32100E7E00B /* IMG_0253.PNG */; };
-		01FA8E171C3AC32100E7E00B /* IMG_0251.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E141C3AC32100E7E00B /* IMG_0251.PNG */; };
-		01FA8E181C3AC32100E7E00B /* IMG_0252.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E151C3AC32100E7E00B /* IMG_0252.PNG */; };
 		01FA8E1B1C3AC51E00E7E00B /* UpdateNicknameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E1A1C3AC51E00E7E00B /* UpdateNicknameController.m */; };
 		01FA8E1E1C3ACA6900E7E00B /* UpdateQQNumberController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E1D1C3ACA6900E7E00B /* UpdateQQNumberController.m */; };
 		01FA8E211C3ACCCB00E7E00B /* UpdateAutographController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E201C3ACCCB00E7E00B /* UpdateAutographController.m */; };
 		01FA8E241C3AD1E600E7E00B /* SafetySettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E231C3AD1E600E7E00B /* SafetySettingController.m */; };
-		01FA8E2A1C3AD39E00E7E00B /* IMG_0255.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E251C3AD39E00E7E00B /* IMG_0255.PNG */; };
-		01FA8E2B1C3AD39E00E7E00B /* IMG_0254.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E261C3AD39E00E7E00B /* IMG_0254.PNG */; };
-		01FA8E2C1C3AD39E00E7E00B /* IMG_0257.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E271C3AD39E00E7E00B /* IMG_0257.PNG */; };
-		01FA8E2D1C3AD39E00E7E00B /* IMG_0256.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E281C3AD39E00E7E00B /* IMG_0256.PNG */; };
-		01FA8E2E1C3AD39E00E7E00B /* IMG_0258.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01FA8E291C3AD39E00E7E00B /* IMG_0258.PNG */; };
 		01FA8E311C3ADBC100E7E00B /* UpdatePasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E301C3ADBC100E7E00B /* UpdatePasswordController.m */; };
 		01FA8E341C3AE66600E7E00B /* VerifyEmailController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E331C3AE66600E7E00B /* VerifyEmailController1.m */; };
 		01FA8E371C3AE67300E7E00B /* VerifyEmailController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FA8E361C3AE67300E7E00B /* VerifyEmailController2.m */; };
@@ -599,13 +589,8 @@
 		01F9A28F1C4426F8007CCA4E /* AboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutController.m; sourceTree = "<group>"; };
 		01F9A2911C44270A007CCA4E /* HelpController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpController.h; sourceTree = "<group>"; };
 		01F9A2921C44270A007CCA4E /* HelpController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpController.m; sourceTree = "<group>"; };
-		01FA8E0C1C3AB70C00E7E00B /* IMG_0248.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0248.PNG; sourceTree = "<group>"; };
-		01FA8E0D1C3AB70C00E7E00B /* IMG_0249.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0249.PNG; sourceTree = "<group>"; };
 		01FA8E101C3ABEE100E7E00B /* PersonalProfilesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfilesController.h; sourceTree = "<group>"; };
 		01FA8E111C3ABEE100E7E00B /* PersonalProfilesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfilesController.m; sourceTree = "<group>"; };
-		01FA8E131C3AC32100E7E00B /* IMG_0253.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0253.PNG; sourceTree = "<group>"; };
-		01FA8E141C3AC32100E7E00B /* IMG_0251.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0251.PNG; sourceTree = "<group>"; };
-		01FA8E151C3AC32100E7E00B /* IMG_0252.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0252.PNG; sourceTree = "<group>"; };
 		01FA8E191C3AC51E00E7E00B /* UpdateNicknameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateNicknameController.h; sourceTree = "<group>"; };
 		01FA8E1A1C3AC51E00E7E00B /* UpdateNicknameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateNicknameController.m; sourceTree = "<group>"; };
 		01FA8E1C1C3ACA6900E7E00B /* UpdateQQNumberController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateQQNumberController.h; sourceTree = "<group>"; };
@@ -614,11 +599,6 @@
 		01FA8E201C3ACCCB00E7E00B /* UpdateAutographController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateAutographController.m; sourceTree = "<group>"; };
 		01FA8E221C3AD1E600E7E00B /* SafetySettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SafetySettingController.h; sourceTree = "<group>"; };
 		01FA8E231C3AD1E600E7E00B /* SafetySettingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SafetySettingController.m; sourceTree = "<group>"; };
-		01FA8E251C3AD39E00E7E00B /* IMG_0255.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0255.PNG; sourceTree = "<group>"; };
-		01FA8E261C3AD39E00E7E00B /* IMG_0254.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0254.PNG; sourceTree = "<group>"; };
-		01FA8E271C3AD39E00E7E00B /* IMG_0257.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0257.PNG; sourceTree = "<group>"; };
-		01FA8E281C3AD39E00E7E00B /* IMG_0256.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0256.PNG; sourceTree = "<group>"; };
-		01FA8E291C3AD39E00E7E00B /* IMG_0258.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_0258.PNG; sourceTree = "<group>"; };
 		01FA8E2F1C3ADBC100E7E00B /* UpdatePasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdatePasswordController.h; sourceTree = "<group>"; };
 		01FA8E301C3ADBC100E7E00B /* UpdatePasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdatePasswordController.m; sourceTree = "<group>"; };
 		01FA8E321C3AE66600E7E00B /* VerifyEmailController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerifyEmailController1.h; sourceTree = "<group>"; };
@@ -1339,16 +1319,6 @@
 		019C1DEF1C3990C8000A0778 /* Setting(设置) */ = {
 			isa = PBXGroup;
 			children = (
-				01FA8E251C3AD39E00E7E00B /* IMG_0255.PNG */,
-				01FA8E261C3AD39E00E7E00B /* IMG_0254.PNG */,
-				01FA8E271C3AD39E00E7E00B /* IMG_0257.PNG */,
-				01FA8E281C3AD39E00E7E00B /* IMG_0256.PNG */,
-				01FA8E291C3AD39E00E7E00B /* IMG_0258.PNG */,
-				01FA8E131C3AC32100E7E00B /* IMG_0253.PNG */,
-				01FA8E141C3AC32100E7E00B /* IMG_0251.PNG */,
-				01FA8E151C3AC32100E7E00B /* IMG_0252.PNG */,
-				01FA8E0C1C3AB70C00E7E00B /* IMG_0248.PNG */,
-				01FA8E0D1C3AB70C00E7E00B /* IMG_0249.PNG */,
 				019C1DF11C3990EB000A0778 /* Controller(控制) */,
 				019C1DF21C3990F9000A0778 /* View(视图) */,
 			);
@@ -1821,16 +1791,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01FA8E0E1C3AB70C00E7E00B /* IMG_0248.PNG in Resources */,
 				01FD4FC21C33B03F005D4125 /* RechargeCell.xib in Resources */,
 				01D3B7321C1FDE0E00C86772 /* GoodsCategoryCell.xib in Resources */,
 				019C1DE91C3978C0000A0778 /* DoShareOrderCell.xib in Resources */,
 				015B58C31C215EB9008EF7A1 /* ShareOrderCell.xib in Resources */,
 				01747DFD1C1D54270051086C /* CloudNumberCell.xib in Resources */,
 				019E09731C173C730022593A /* NewGoodsCell.xib in Resources */,
-				01FA8E0F1C3AB70C00E7E00B /* IMG_0249.PNG in Resources */,
 				015B58BA1C213E83008EF7A1 /* GoodsSortCell.xib in Resources */,
-				01FA8E2C1C3AD39E00E7E00B /* IMG_0257.PNG in Resources */,
 				01B24F541C303DC100D2104E /* shopCartCell.xib in Resources */,
 				01B7971A1C3386410076BA01 /* ConsumeCell.xib in Resources */,
 				01FD4FD11C33BD29005D4125 /* Canon.jpg in Resources */,
@@ -1840,33 +1807,26 @@
 				01860E671C3C1CE8007A462A /* china_Province_city_zone(1). in Resources */,
 				01F8769D1C226A3E00FF0801 /* SearchWordCell.xib in Resources */,
 				0110AA5D1C0D8D03009A8660 /* PopularGoodsCell.xib in Resources */,
-				01FA8E161C3AC32100E7E00B /* IMG_0253.PNG in Resources */,
 				01AB379C1C2707EE0065C902 /* goodsViewCell.xib in Resources */,
-				01FA8E2B1C3AD39E00E7E00B /* IMG_0254.PNG in Resources */,
 				018619E61C15DC8200EABF64 /* AllGoodsCell.xib in Resources */,
 				019E09751C1741C70022593A /* IMG_0066.JPG in Resources */,
 				017FA8061C33D27700B4AA6F /* MyShareOrderCell.xib in Resources */,
 				01BE47CE1C47A27100450CB1 /* Resource.bundle in Resources */,
 				01747E151C1D76CC0051086C /* ComputeDetailCell.xib in Resources */,
-				01FA8E2D1C3AD39E00E7E00B /* IMG_0256.PNG in Resources */,
-				01FA8E181C3AC32100E7E00B /* IMG_0252.PNG in Resources */,
 				01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */,
 				0136CE4D1C32E81C00BDF538 /* MyAddressCell.xib in Resources */,
-				01FA8E2A1C3AD39E00E7E00B /* IMG_0255.PNG in Resources */,
 				01BE47CC1C47A27100450CB1 /* ShareSDKLocalizable.strings in Resources */,
 				017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */,
 				012626411C1ABA7400509985 /* CloudRecordCell.xib in Resources */,
 				019C1DEE1C398067000A0778 /* DoMyCouldRecordCell.xib in Resources */,
 				0111B9DF1C03540D00DDC2EA /* PersonalView.xib in Resources */,
 				0130F6371C322EC300D2CDFD /* MyCouldRecordCell.xib in Resources */,
-				01FA8E171C3AC32100E7E00B /* IMG_0251.PNG in Resources */,
 				013280261C27CD0B00339038 /* CommentaryCell.xib in Resources */,
 				01B7AC831C23F01300D09565 /* HITORY.sqlite in Resources */,
 				011E374F1C1E5F960032FB13 /* SelectCloudNumCell.xib in Resources */,
 				013738371C481DB40040A569 /* AlipaySDK.bundle in Resources */,
 				01B7AC781C23E62700D09565 /* HistoryTableViewCell.xib in Resources */,
 				01FD4FCA1C33B7DD005D4125 /* AccessGoodsCell.xib in Resources */,
-				01FA8E2E1C3AD39E00E7E00B /* IMG_0258.PNG in Resources */,
 				01BE47D61C47A27100450CB1 /* ShareSDKFlatShareViewUI.bundle in Resources */,
 				017F75BA1C3C2BAE0047B260 /* KTSelectPickerView.xib in Resources */,
 			);

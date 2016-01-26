@@ -9,7 +9,7 @@
 #import "RequestData.h"
 #import "AFNetworking.h"
 #import <EGOCache.h>
-#define URL @"http://120.55.112.80"
+#define URL @"http://www.yiydb.cn"
 @implementation RequestData
 /**
  *  字典转字符串工具类
@@ -71,7 +71,7 @@
  *  @param data  传入字典｛categoryId：分类id，sort：排序 ,pageSize：分页数，pageIndex：当前页数｝
  *  @param block 返回块值
  */
-+(void)allGoods:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)allGoods:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -82,7 +82,7 @@
         //        NSLog(@"所有商品请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //        NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
     }];
 }
 /**
@@ -145,7 +145,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)newAnnounced:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)newAnnounced:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -156,7 +156,7 @@
         //        NSLog(@"最新揭晓商品请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //        NSLog(@"最新揭晓商品请求失败-%@",error);
+        failure(error);
     }];
 }
 /**
@@ -165,7 +165,7 @@
  *  @param data  <#data description#>
  *  @param block <#block description#>
  */
-+(void)goodsDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)goodsDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -173,13 +173,28 @@
     NSDictionary *params=@{@"itemId":data[@"goodsId"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/item/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //        NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];//把网络数据转换成字符串
-        //        NSString *fromString=[self flattenHTML:str trimWhiteSpace:YES];
-        //        NSDictionary *dictionary=[self dictionaryWithJsonString:fromString];
-        //        NSLog(@"所有商品请求成功-----%@",str);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //        NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
+    }];
+}
+/**
+ *   已揭晓商品详情
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)lotteryGoodsDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"itemId":data[@"goodsId"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/getCalResult/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
     }];
 }
 /**
@@ -208,7 +223,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)shareOrder:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)shareOrder:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -219,7 +234,7 @@
         //        NSLog(@"晒单请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //        NSLog(@"晒单请求失败-%@",error);
+        failure(error);
     }];
 }
 /**
@@ -228,7 +243,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)shareOrderDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)shareOrderDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -236,10 +251,10 @@
     NSDictionary *params=@{@"sd_id":data[@"sd_id"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/shaidan/detail/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //        NSLog(@"晒单请求成功-----%@",responseObject);
+
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //        NSLog(@"晒单请求失败-%@",error);
+        failure(error);
     }];
 }
 /**
@@ -332,7 +347,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)userDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)userDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -340,10 +355,9 @@
     NSDictionary *params=@{@"uid":data[@"uid"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/userindex/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //        NSLog(@"请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //        NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
     }];
 }
 /**
@@ -496,7 +510,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)reviewSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)reviewSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -507,7 +521,7 @@
         //        NSLog(@"请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
     }];
 }
 /**
@@ -519,7 +533,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)myRecordSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)myRecordSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -530,7 +544,7 @@
         //        NSLog(@"请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
     }];
 }
 /**
@@ -541,7 +555,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)gainGoodsSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)gainGoodsSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -552,7 +566,7 @@
         //        NSLog(@"请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
     }];
 }
 /**
@@ -563,7 +577,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)myShareSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)myShareSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -574,7 +588,28 @@
         //        NSLog(@"请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
+    }];
+}
+/**
+ *  未晒单
+ * uid 用户id
+ * pageSize    分页数
+ * pageIndex   分页当前页数
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)postSingleList:(NSDictionary *)data FinishCallbackBlock:(void (^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/shopajax/getUserUnPostList/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
     }];
 }
 /**
@@ -585,7 +620,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)myConsumeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)myConsumeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -596,7 +631,7 @@
         //        NSLog(@"请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
     }];
 }
 /**
@@ -607,7 +642,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)myRechargeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)myRechargeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -618,7 +653,86 @@
         //        NSLog(@"请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
+    }];
+}
+/**
+ *  商品购买记录
+ * itemId 商品id
+ * pageSize    分页数
+ * pageIndex   分页当前页数
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)buyRecordSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"itemId":data[@"itemId"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/buy_records/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *  密码修改
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)updatePwdSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"userpassword":data[@"userpassword"],@"userpassword2":data[@"userpassword2"],@"password":data[@"password"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/userpassword/",URL];
+     NSLog(@"对象%@",params);
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *  修改昵称
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)updateNikenameSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    mgr.responseSerializer = [AFHTTPResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"username":data[@"username"],@"qianming":data[@"qianming"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/usermodify/",URL];
+    NSLog(@"对象%@",params);
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *  获取验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)getMobileCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"mobile":data[@"mobile"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/mobile_send/",URL];
+    NSLog(@"对象%@",params);
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
     }];
 }
 @end

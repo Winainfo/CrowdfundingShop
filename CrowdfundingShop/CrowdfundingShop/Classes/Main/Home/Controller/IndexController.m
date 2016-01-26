@@ -15,12 +15,11 @@
 #import "InAnnounceView.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
-#import <MBProgressHUD.h>
 #import <MJRefresh.h>
+#import <MBProgressHUD.h>
 #import "UIViewController+WeChatAndAliPayMethod.h"
-@interface IndexController ()<UIScrollViewDelegate,MZTimerLabelDelegate,MBProgressHUDDelegate>{
-    MZTimerLabel *timerExample3;
-    MBProgressHUD *HUD;
+@interface IndexController ()<UIScrollViewDelegate>{
+     BOOL _blockUserInteraction;
 }
 @property (strong, nonatomic) IBOutlet UITableView *mytableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewWidth;
@@ -94,7 +93,7 @@
     self.revealedArray=[[NSMutableArray alloc]initWithCapacity:0];
     self.times=[[NSMutableArray alloc]init];
     [self addTimer];
-    
+     _blockUserInteraction = YES;
 }
 
 /**
@@ -144,39 +143,39 @@
  */
 -(void)requestData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
-        //声明对象；
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-        //显示的文本；
-        hud.labelText = @"正在加载";
-        hud.detailsLabelText = @"请稍候。。。";
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在加载...";
     [RequestData beginRevealed:params FinishCallbackBlock:^(NSDictionary *data) {
-        //加载成功，先移除原来的HUD；
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            //加载成功，先移除原来的HUD；
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //然后显示一个成功的提示；
+            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            successHUD.labelText = @"加载成功";
+            successHUD.mode = MBProgressHUDModeCustomView;
+            //可以设置对应的图片；
+            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+            successHUD.removeFromSuperViewOnHide = true;
+            [successHUD hide:true afterDelay:1];
+
+            self.revealedArray=data[@"content"];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.goodsCollectionView reloadData];
+            });
+        }
+    } andFailure:^(NSError *error) {
         hud.removeFromSuperViewOnHide = true;
         [hud hide:true afterDelay:0];
-        
-        //然后显示一个成功的提示；
-        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-        successHUD.labelText = @"加载成功";
-        successHUD.mode = MBProgressHUDModeCustomView;
-        //可以设置对应的图片；
-        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"success"]];
-        successHUD.removeFromSuperViewOnHide = true;
-        [successHUD hide:true afterDelay:1];
-        
-        self.revealedArray=data[@"content"];
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.goodsCollectionView reloadData];
-        });
-    } andFailure:^(NSError *failure) {
-        NSLog(@"%@",failure);
-        //        hud.removeFromSuperViewOnHide = true;
-        //        [hud hide:true afterDelay:0];
         //显示失败的提示；
         MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
         failHUD.labelText = @"加载失败";
         failHUD.mode = MBProgressHUDModeCustomView;
-        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"error"]];
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
         failHUD.removeFromSuperViewOnHide = true;
         [failHUD hide:true afterDelay:1];
     }];
@@ -233,6 +232,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myCollectionView reloadData];
         });
+    }andFailure:^(NSError *error) {
+        
     }];
 }
 
@@ -473,13 +474,13 @@
             //设置故事板为第一启动
             UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
             DidAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"didAnnounceView"];
-            controller.goodsID=self.announcedArray[indexPath.row][@"sid"];
+            controller.goodsID=self.announcedArray[indexPath.row][@"id"];
             [self.navigationController pushViewController:controller animated:YES];
         }else{
             //设置故事板为第一启动
             UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
             InAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"inAnnounceView"];
-            controller.goodsID=self.announcedArray[indexPath.row][@"sid"];
+            controller.goodsID=self.announcedArray[indexPath.row][@"id"];
             [self.navigationController pushViewController:controller animated:YES];
         }
         
@@ -591,21 +592,6 @@
     self.moveView.backgroundColor=[UIColor colorWithRed:239.0/255.0 green:31.0/255.0 blue:48.0/255.0 alpha:1];//设置背景颜色
     [self.btnView addSubview:self.moveView];//将视图添加到self.btnView上
     
-}
-#pragma mark - Execution code
-
-- (void)myTask {
-    // Do something usefull in here instead of sleeping ...
-    sleep(3);
-}
-- (void)myProgressTask {
-    // This just increases the progress indicator in a loop
-    float progress = 0.0f;
-    while (progress < 1.0f) {
-        progress += 0.01f;
-        HUD.progress = progress;
-        usleep(50000);
-    }
 }
 /**
  *  微信支付

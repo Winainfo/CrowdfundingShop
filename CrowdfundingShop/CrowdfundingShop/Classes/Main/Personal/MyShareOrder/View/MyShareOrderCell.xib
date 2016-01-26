@@ -14,14 +14,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="95.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Canon.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="LdN-Z2-jLM">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LdN-Z2-jLM">
                         <rect key="frame" x="10" y="8" width="80" height="80"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="80" id="FAJ-RD-oHJ"/>
                             <constraint firstAttribute="width" constant="80" id="OwT-59-ZIl"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(第1期)苹果（Apple）iPhone 6s Plus 16G版 4G手机5.5英寸Retina HD显示，指尖一按， 3D Touch就" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAx-8f-Dsh" customClass="ARLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(第1期)苹果（Apple）iPhone 6s Plus 16G版 4G手机5.5英寸Retina HD显示，指尖一按， 3D Touch就" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="iAx-8f-Dsh" customClass="ARLabel">
                         <rect key="frame" x="97" y="8" width="203" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="SwW-p6-0qe"/>
@@ -101,7 +101,4 @@
             </connections>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="Canon.jpg" width="400" height="400"/>
-    </resources>
 </document>

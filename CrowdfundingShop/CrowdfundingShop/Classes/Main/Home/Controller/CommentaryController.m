@@ -11,11 +11,11 @@
 #import "AccountTool.h"
 #import "LoginController.h"
 #import <QuartzCore/QuartzCore.h>
-#import <MBProgressHUD.h>
 #import <UIImageView+WebCache.h>
-@interface CommentaryController ()<UITextFieldDelegate,MBProgressHUDDelegate>{
-    MBProgressHUD *HUD;
+#import <JGProgressHUD.h>
+@interface CommentaryController ()<UITextFieldDelegate,JGProgressHUDDelegate>{
     AccountModel *account;
+    BOOL _blockUserInteraction;
 }
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 /**评论框*/
@@ -55,6 +55,7 @@
     self.contentTextField.delegate=self;
     self.contentArray=[[NSMutableArray alloc]initWithCapacity:0];
     [self requestData:self.sd_id andpageIndex:@"1" andpageSize:@"8"];
+    _blockUserInteraction=YES;
 }
 #pragma mark 数据请求
 /**
@@ -189,47 +190,45 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     //沙盒路径
     account=[AccountTool account];
+    JGProgressHUD *HUD = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleDark];
     if ([self.contentTextField.text length]>2) {
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",self.sd_id,@"sdhf_id",self.contentTextField.text,@"sdhf_content",nil];
+        HUD.textLabel.text = @"提交中...";//
+        [HUD showInView:self.navigationController.view];
+        HUD.square = YES;
+        HUD.delegate=self;
         [RequestData reviewSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-            NSLog(@"%@",data);
-           HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-            [self.navigationController.view addSubview:HUD];
-            HUD.delegate = self;
-            HUD.labelText = @"提交中...";
-            [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
-            [self.myTableView reloadData];
+            HUD.userInteractionEnabled=_blockUserInteraction;
+            HUD.square = YES;
+            HUD.delegate=self;
+            HUD.textLabel.text = @"提交成功";
+            HUD.indicatorView = [[JGProgressHUDSuccessIndicatorView alloc] init];
+            [HUD showInView:self.navigationController.view];
+            [HUD dismissAfterDelay:1.5];
+            [self requestData:self.sd_id andpageIndex:@"1" andpageSize:@"8"];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        } andFailure:^(NSError *error) {
+            HUD.userInteractionEnabled=_blockUserInteraction;
+            HUD.square = YES;
+            HUD.delegate=self;
+            HUD.textLabel.text = @"提交失败";
+            HUD.indicatorView = [[JGProgressHUDErrorIndicatorView alloc] init];
+            [HUD showInView:self.navigationController.view];
+            [HUD dismissAfterDelay:1.5];
         }];
         self.contentTextField.text=@"";
         [self.contentTextField resignFirstResponder];
     }else{
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        
-        // Configure for text only and offset down
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"内容为空或不够3位";
-        hud.frame=CGRectMake(100, 300, 20, 10);
-//        hud.margin = 10.f;
-        hud.removeFromSuperViewOnHide = YES;
-        [hud hide:YES afterDelay:2];
+        HUD.indicatorView = nil;
+        HUD.textLabel.text = @"输入内容不够3位";
+        HUD.position = JGProgressHUDPositionBottomCenter;
+        [HUD showInView:self.navigationController.view];
+        [HUD dismissAfterDelay:1.5];
     }
     return YES;
-}
-#pragma mark - Execution code
-
-- (void)myTask {
-    // Do something usefull in here instead of sleeping ...
-    sleep(3);
-}
-
-- (void)myProgressTask {
-    // This just increases the progress indicator in a loop
-    float progress = 0.0f;
-    while (progress < 1.0f) {
-        progress += 0.01f;
-        HUD.progress = progress;
-        usleep(50000);
-    }
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     //沙盒路径

@@ -21,7 +21,7 @@
                             <constraint firstAttribute="height" constant="80" id="ipO-XP-6Hc"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 终于抢到了" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPG-2v-IGC" customClass="ARLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 终于抢到了" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="203" translatesAutoresizingMaskIntoConstraints="NO" id="sPG-2v-IGC" customClass="ARLabel">
                         <rect key="frame" x="97" y="8" width="203" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="0Wd-pv-qvr"/>

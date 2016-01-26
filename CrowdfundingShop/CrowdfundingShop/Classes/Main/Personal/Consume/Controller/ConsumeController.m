@@ -68,6 +68,7 @@
     [self.rechargeTableView registerNib:nib1 forCellReuseIdentifier:@"RechargeCell"];
     [self setExtraCellLineHidden:self.rechargeTableView];
     [self consumeServer:@"1" andpageSize:@"20"];
+    [self rechargeServer:@"1" andpageSize:@"20"];
 }
 #pragma mark 数据源
 /**
@@ -76,12 +77,42 @@
 -(void)rechargeServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
     account=[AccountTool account];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在加载...";
     [RequestData myRechargeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-        self.rechargeArray=data[@"content"];
+        //加载成功，先移除原来的HUD；
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //然后显示一个成功的提示；
+        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        successHUD.labelText = @"加载成功";
+        successHUD.mode = MBProgressHUDModeCustomView;
+        //可以设置对应的图片；
+        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+        successHUD.removeFromSuperViewOnHide = true;
+        [successHUD hide:true afterDelay:1];
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            self.rechargeArray=data[@"content"];
+        }else{
+            
+        }
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myTableView reloadData];
         });
+    } andFailure:^(NSError *error) {
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"加载失败";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
     }];
 }
 /**
@@ -101,6 +132,8 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.rechargeTableView reloadData];
         });
+    } andFailure:^(NSError *error) {
+        
     }];
 }
 /**
@@ -154,9 +187,9 @@
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
-//        cell.timeLabel.text=_rechargeArray[indexPath.row][@""];
-//        cell.moneyLabel.text=_rechargeArray[indexPath.row][@""];
-//        cell.channelLabel.text=_rechargeArray[indexPath.row][@""];
+        cell.timeLabel.text=_rechargeArray[indexPath.row][@"time"];
+        cell.moneyLabel.text=_rechargeArray[indexPath.row][@"money"];
+        cell.channelLabel.text=_rechargeArray[indexPath.row][@"content"];
         return cell;
     }else if(tableView==self.rechargeTableView){
         static NSString *cellStr=@"RechargeCell";

@@ -59,12 +59,37 @@
 -(void)didAnnounceServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
     account=[AccountTool account];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在加载...";
     [RequestData myRecordSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        //加载成功，先移除原来的HUD；
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //然后显示一个成功的提示；
+        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        successHUD.labelText = @"加载成功";
+        successHUD.mode = MBProgressHUDModeCustomView;
+        //可以设置对应的图片；
+        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+        successHUD.removeFromSuperViewOnHide = true;
+        [successHUD hide:true afterDelay:1];
         self.didArray=data[@"content"];
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myTableView reloadData];
         });
+    } andFailure:^(NSError *error) {
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"加载失败";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
     }];
 }
 /**
@@ -74,11 +99,20 @@
     account=[AccountTool account];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
     [RequestData myRecordSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-        self.inArray=data[@"content"];
+        int code=[data[@"code"] intValue];
+//         NSLog(@"数据：%@",data[@"content"]);
+        if (code==0) {
+            self.inArray=data[@"content"];
+            NSLog(@"数组大小:%ld",_inArray.count);
+        }else{
+            
+        }
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.doMyTableView reloadData];
         });
+    }andFailure:^(NSError *error) {
+        
     }];
 }
 -(void)backClick{
@@ -129,16 +163,24 @@
         if (cell==nil) {
             cell=[[MyCouldRecordCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
         }
-        //取消Cell选中时背景
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        cell.goodsTitleLabel.text=_didArray[indexPath.row][@"shopname"];
-        cell.timeLabel.text=_didArray[indexPath.row][@"q_end_time"];
-        /**商品图片*/
-        //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_didArray[indexPath.row][@"thumb"]];
-        //转换成url
-        NSURL *imgUrl = [NSURL URLWithString:urlStr];
-        [cell.goodsImageView sd_setImageWithURL:imgUrl];
+        if (_didArray.count==0) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"暂无该商品";
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:1.5];
+        }else{
+            //取消Cell选中时背景
+            cell.selectionStyle=UITableViewCellSelectionStyleNone;
+            cell.goodsTitleLabel.text=_didArray[indexPath.row][@"shopname"];
+            cell.timeLabel.text=_didArray[indexPath.row][@"q_end_time"];
+            /**商品图片*/
+            //拼接图片网址·
+            NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_didArray[indexPath.row][@"thumb"]];
+            //转换成url
+            NSURL *imgUrl = [NSURL URLWithString:urlStr];
+            [cell.goodsImageView sd_setImageWithURL:imgUrl];
+        }
         return cell;
     }else{
         static NSString *cellStr=@"DoMyCouldRecordCell";
@@ -146,23 +188,31 @@
         if (cell==nil) {
             cell=[[DoMyCouldRecordCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
         }
-        //取消Cell选中时背景
-        cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        cell.goodsLabel.text=_inArray[indexPath.row][@"shopname"];
-        cell.goodsLabel1.text=_inArray[indexPath.row][@"canyurenshu"];
-        cell.goodsLabel2.text=_inArray[indexPath.row][@"zongrenshu"];
-        cell.goodsLabel3.text=_inArray[indexPath.row][@"shenyurenshu"];
-        cell.goodsPriceLabel.text=[NSString stringWithFormat:@"¥%@",_inArray[indexPath.row][@"money"]];
-        /**进度条*/
-        float curreNum=[_inArray[indexPath.row][@"canyurenshu"] floatValue];
-        float countNum=[_inArray[indexPath.row][@"zongrenshu"] floatValue];
-        cell.ProgressView.progress=curreNum/countNum;
-        /**商品图片*/
-        //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_inArray[indexPath.row][@"thumb"]];
-        //转换成url
-        NSURL *imgUrl = [NSURL URLWithString:urlStr];
-        [cell.goodsImageView sd_setImageWithURL:imgUrl];
+        if (_inArray.count==0) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"暂无该商品";
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:1.5];
+        }else{
+            //取消Cell选中时背景
+            cell.selectionStyle=UITableViewCellSelectionStyleNone;
+            cell.goodsLabel.text=_inArray[indexPath.row][@"shopname"];
+            cell.goodsLabel1.text=_inArray[indexPath.row][@"canyurenshu"];
+            cell.goodsLabel2.text=_inArray[indexPath.row][@"zongrenshu"];
+            cell.goodsLabel3.text=_inArray[indexPath.row][@"shenyurenshu"];
+            cell.goodsPriceLabel.text=[NSString stringWithFormat:@"¥%@",_inArray[indexPath.row][@"money"]];
+            /**进度条*/
+            float curreNum=[_inArray[indexPath.row][@"canyurenshu"] floatValue];
+            float countNum=[_inArray[indexPath.row][@"zongrenshu"] floatValue];
+            cell.ProgressView.progress=curreNum/countNum;
+            /**商品图片*/
+            //拼接图片网址·
+            NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_inArray[indexPath.row][@"thumb"]];
+            //转换成url
+            NSURL *imgUrl = [NSURL URLWithString:urlStr];
+            [cell.goodsImageView sd_setImageWithURL:imgUrl];
+        }
         return cell;
     }
 }

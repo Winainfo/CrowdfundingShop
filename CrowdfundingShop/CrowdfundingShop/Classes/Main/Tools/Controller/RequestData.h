@@ -29,7 +29,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)allGoods:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)allGoods:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;;
 /**
  *   即将揭晓
  *
@@ -50,14 +50,21 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)goodsDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)goodsDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   已揭晓商品详情
+ *
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)lotteryGoodsDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
  *   最新揭晓
  *
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)newAnnounced:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)newAnnounced:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 
 /**
  *   登录
@@ -72,14 +79,14 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)shareOrder:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)shareOrder:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
  *   晒单详情
  *
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)shareOrderDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)shareOrderDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
  *   购物车数量
  *
@@ -115,7 +122,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)userDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)userDetail:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
  *   服务协议
  *
@@ -150,7 +157,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)reviewSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)reviewSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
  *   我的记录
  * uid 用户id
@@ -160,7 +167,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)myRecordSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)myRecordSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
  *  获得的商品
  * uid 用户id
@@ -169,7 +176,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)gainGoodsSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)gainGoodsSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
  *  我的晒单
  * uid 用户id
@@ -178,7 +185,16 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)myShareSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)myShareSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *  未晒单
+ * uid 用户id
+ * pageSize    分页数
+ * pageIndex   分页当前页数
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)postSingleList:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
  *  消费明细
  * uid 用户id
@@ -187,7 +203,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)myConsumeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)myConsumeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
  *  充值明细
  * uid 用户id
@@ -196,5 +212,32 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)myRechargeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)myRechargeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *  商品购买记录
+ * itemId 商品id
+ * pageSize    分页数
+ * pageIndex   分页当前页数
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)buyRecordSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *  密码修改
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)updatePwdSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *  修改昵称
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)updateNikenameSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *  获取验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)getMobileCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 @end

@@ -12,6 +12,7 @@
 #import "CommentaryController.h"
 #import <ShareSDK/ShareSDK.h>
 #import <UIImageView+WebCache.h>
+
 @interface ShareOrderDetailView ()
 /**点赞*/
 @property (weak, nonatomic) IBOutlet ARLabel *dianZanLabel;
@@ -55,6 +56,8 @@
         [RequestData shareOrderDetail:params FinishCallbackBlock:^(NSDictionary *data) {
             self.dianZanLabel.text=data[@"content"][@"sd_zhan"];
             self.pinglunLabel.text=data[@"content"][@"sd_ping"];
+        }andFailure:^(NSError *error) {
+            
         }];
     }
 }

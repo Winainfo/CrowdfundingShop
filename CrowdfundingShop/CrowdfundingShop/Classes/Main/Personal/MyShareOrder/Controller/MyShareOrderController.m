@@ -52,6 +52,7 @@
     [self.shareOrderTableView  registerNib:nib1 forCellReuseIdentifier:@"DoShareOrderCell"];
     [self setExtraCellLineHidden:self.shareOrderTableView];
     [self doShareServer:@"1" andpageSize:@"6"];
+    [self shareServer:@"1" andpageSize:@"6"];
 }
 #pragma mark 数据源
 /**
@@ -60,12 +61,37 @@
 -(void)doShareServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
     account=[AccountTool account];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在加载...";
     [RequestData myShareSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        //加载成功，先移除原来的HUD；
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //然后显示一个成功的提示；
+        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        successHUD.labelText = @"加载成功";
+        successHUD.mode = MBProgressHUDModeCustomView;
+        //可以设置对应的图片；
+        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+        successHUD.removeFromSuperViewOnHide = true;
+        [successHUD hide:true afterDelay:1];
         self.doArray=data[@"content"];
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.shareOrderTableView reloadData];
         });
+    }andFailure:^(NSError *error) {
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"加载失败";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
     }];
 }
 /**
@@ -74,12 +100,21 @@
 -(void)shareServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
     account=[AccountTool account];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
-    [RequestData myShareSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-        self.goodsArray=data[@"content"];
+    [RequestData postSingleList:params FinishCallbackBlock:^(NSDictionary *data) {
+       
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            self.goodsArray=data[@"content"];
+            NSLog(@"未晒单:%@",self.goodsArray);
+        }else{
+            
+        }
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myTableView reloadData];
         });
+    }andFailure:^(NSError *error) {
+        
     }];
 }
 /**
@@ -134,6 +169,15 @@
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        cell.goodsTitleLabel.text=_goodsArray[indexPath.row][@"title"];
+        cell.numLabel.text=_goodsArray[indexPath.row][@"q_user_code"];
+        cell.timeLabel.text=_goodsArray[indexPath.row][@"q_end_time"];
+        /**商品图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_goodsArray[indexPath.row][@"thumb"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [cell.goodsImageView sd_setImageWithURL:imgUrl];
         return cell;
     }else{
         static NSString *cellStr=@"DoShareOrderCell";

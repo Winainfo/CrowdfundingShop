@@ -44,14 +44,14 @@
 #define IS_FAILED       @"wechat_pay_isFailed"
 
 
-#define APP_ID          @"wx8c4af72cf9c77cb3"               //微信APPID
-#define APP_SECRET      @"09feb2a40f4c5fbea6ebf06061498c90" //微信appsecret
+#define APP_ID          @"wx5cab43d3cf178c88"               //微信APPID
+#define APP_SECRET      @"5648f91e88e587c9c89e79c87abed0bc" //微信appsecret
 //商户号，填写商户对应参数（客户给）
-#define MCH_ID          @"1265888301"
+#define MCH_ID          @"1307352001"
 //商户API密钥，填写相应参数（客户给）
-#define PARTNER_ID      @"FeOpXP8HiQF852bpZvxQFFe7rQZ66i6i"
+#define PARTNER_ID      @"ZLLGxKAzqJqrhhGsiWCEU7X5vlHvcT88 "
 //支付结果回调页面（后台会给你）
-#define NOTIFY_URL      @"www.god-store.com"
+#define NOTIFY_URL      @"www.yiydb.cn"
 
 
 

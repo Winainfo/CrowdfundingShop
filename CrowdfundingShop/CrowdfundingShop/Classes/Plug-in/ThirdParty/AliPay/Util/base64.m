@@ -109,7 +109,7 @@ int base64_encode( unsigned char *dst, int *dlen,
         *p++ = '=';
     }
 
-    *dlen = p - dst;
+    *dlen = (int)p - (int)dst;
     *p = 0;
 
     return( 0 );
@@ -174,7 +174,7 @@ int base64_decode( unsigned char *dst, int *dlen,
         }
     }
 
-    *dlen = p - dst;
+    *dlen = (int)p - (int)dst;
 
     return( 0 );
 }

@@ -46,7 +46,7 @@
     
     //QQ
     [ShareSDK connectQZoneWithAppKey:@"1105110714"
-                           appSecret:@"fsQPstIMmwidD8Wh"
+                           appSecret:@"LRDKLN5IySk65roC"
                    qqApiInterfaceCls:[QQApiInterface class]
                      tencentOAuthCls:[TencentOAuth class]];
     [ShareSDK connectQQWithQZoneAppKey:@"1105110714"

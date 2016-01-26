@@ -54,7 +54,7 @@
  */
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"didAnnounce"]) {
+    if ([segue.identifier isEqualToString:@"InAnnounceControllerView"]) {
         id theSegue=segue.destinationViewController;
         [theSegue setValue:self.goodsID forKey:@"gID"];
     }

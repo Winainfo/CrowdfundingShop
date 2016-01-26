@@ -7,6 +7,7 @@
 //
 
 #import "VerifyPhoneController1.h"
+#import "RequestData.h"
 #import "ARLabel.h"
 @interface VerifyPhoneController1 ()
 /**手机号*/
@@ -44,8 +45,10 @@
     self.navigationItem.leftBarButtonItem=left;
     self.saveBtn.layer.cornerRadius=4.0;
     self.saveBtn.layer.masksToBounds=YES;
-    
-    self.phoneLabel.text=self.phone;
+     self.phoneLabel.text=self.phone;
+    NSString *phoneString = [self.phoneLabel.text substringWithRange:NSMakeRange(5,4)];
+    self.phoneLabel.text=[self.phoneLabel.text stringByReplacingOccurrencesOfString:phoneString withString:@"****"];
+   
 }
 /**
  *  返回
@@ -54,5 +57,29 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark 获取验证码
+/**
+ *  获取验证码
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)getCodeClick:(id)sender {
+    [self getCode:self.uid andMobile:self.phone];
+}
+
+/**
+ *  请求
+ *
+ *  @param uid    <#uid description#>
+ *  @param mobile <#mobile description#>
+ */
+-(void)getCode:(NSString *)uid andMobile:(NSString *)mobile{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:uid,@"uid",mobile,@"mobile",nil];
+    [RequestData getMobileCodeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        NSLog(@"结果:%@",data);
+    } andFailure:^(NSError *error) {
+        NSLog(@"错误:%@",error);
+    }];
+}
 
 @end

@@ -94,7 +94,6 @@
         self.gradesLabel.text=account.yungoudj;
         //拼接图片网址·
         NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,account.img];
-        NSLog(@"%@",urlStr);
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [self.userImageView sd_setImageWithURL:imgUrl];

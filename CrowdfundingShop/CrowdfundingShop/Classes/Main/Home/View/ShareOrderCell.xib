@@ -21,7 +21,7 @@
                             <constraint firstAttribute="width" constant="50" id="uk3-jl-sx0"/>
                         </constraints>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJW-xr-h4Z">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gJW-xr-h4Z">
                         <rect key="frame" x="65" y="10" width="108" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="7eh-V7-NDF"/>
@@ -54,7 +54,7 @@
                             <constraint firstAttribute="height" constant="0.5" id="kiS-2K-3ci"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c4n-tx-0dq" customClass="ARLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="300" translatesAutoresizingMaskIntoConstraints="NO" id="c4n-tx-0dq" customClass="ARLabel">
                         <rect key="frame" x="10" y="80" width="300" height="36"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="36" id="VdU-Gc-2j3"/>
@@ -143,6 +143,7 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="equ-r8-Mla" secondAttribute="trailing" constant="31" id="0la-2V-7GC"/>
                     <constraint firstItem="B5M-PZ-IhX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="1mx-Kt-qjO"/>
                     <constraint firstAttribute="trailing" secondItem="uMQ-vr-aWE" secondAttribute="trailing" id="2cD-EW-iZ7"/>
                     <constraint firstAttribute="bottom" secondItem="B5M-PZ-IhX" secondAttribute="bottom" id="3eD-Gs-rII"/>
@@ -188,6 +189,11 @@
                     <constraint firstItem="M5w-gp-EhM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="xgg-pZ-5WC"/>
                     <constraint firstItem="vWm-N5-uEh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="yEi-R0-rl2"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="WUV-ie-R2n"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="commentaryLabel" destination="buZ-Zr-fDU" id="73w-A4-Wft"/>

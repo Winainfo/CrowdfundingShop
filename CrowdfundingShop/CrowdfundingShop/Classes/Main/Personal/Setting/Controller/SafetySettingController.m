@@ -9,6 +9,7 @@
 #import "SafetySettingController.h"
 #import "ARLabel.h"
 #import "AccountTool.h"
+#import "RequestData.h"
 #import "VerifyEmailController1.h"
 #import "VerifyEmailController2.h"
 #import "VerifyPhoneController1.h"
@@ -138,6 +139,7 @@
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
         VerifyPhoneController1 *phoneController=[storyboard instantiateViewControllerWithIdentifier:@"VerifyPhoneView1"];
         phoneController.phone=account.mobile;
+        phoneController.uid=account.uid;
         [self.navigationController pushViewController:phoneController animated:YES];
     }else{
         //设置故事板为第一启动
