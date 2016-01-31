@@ -44,8 +44,8 @@
 #define IS_FAILED       @"wechat_pay_isFailed"
 
 
-#define APP_ID          @"wx5cab43d3cf178c88"               //微信APPID
-#define APP_SECRET      @"5648f91e88e587c9c89e79c87abed0bc" //微信appsecret
+#define APP_ID          @"wx999588dd3ec6a977"               //微信APPID
+#define APP_SECRET      @"ebab72e80f222d5119563ad8dbb5f02c" //微信appsecret
 //商户号，填写商户对应参数（客户给）
 #define MCH_ID          @"1307352001"
 //商户API密钥，填写相应参数（客户给）

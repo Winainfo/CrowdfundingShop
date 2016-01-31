@@ -9,6 +9,7 @@
 #import "SeetingTableController.h"
 #import "PersonalController.h"
 #import "AccountTool.h"
+#import <MBProgressHUD.h>
 @interface SeetingTableController ()
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (retain,nonatomic) UIView *footerView;
@@ -16,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *ViewCell2;
 
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 
 @end
 
@@ -39,6 +41,7 @@
     addBtn.layer.masksToBounds=YES;
     [self.footerView addSubview:addBtn];
     self.myTableView.tableFooterView=self.footerView;
+    self.sizeLabel.text=[self getCacheSize];
 }
 /**
  *  判断是否有登录
@@ -126,6 +129,52 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 10;
+}
+
+#pragma mark - 计算缓存大小
+/**
+ *  计算缓存大小
+ *
+ *  @return
+ */
+- (NSString *)getCacheSize
+{
+    
+    //定义变量存储总的缓存大小
+    long long sumSize = 0;
+    //01.获取当前图片缓存路径
+    NSString *cacheFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches"];
+    //02.创建文件管理对象
+    NSFileManager *filemanager = [NSFileManager defaultManager];
+    //获取当前缓存路径下的所有子路径
+    NSArray *subPaths = [filemanager subpathsOfDirectoryAtPath:cacheFilePath error:nil];
+    //遍历所有子文件
+    for (NSString *subPath in subPaths) {
+        //1）.拼接完整路径
+        NSString *filePath = [cacheFilePath stringByAppendingFormat:@"/%@",subPath];//2）.计算文件的大小
+        long long fileSize = [[filemanager attributesOfItemAtPath:filePath error:nil]fileSize];
+        //3）.加载到文件的大小
+        sumSize += fileSize;
+    }
+    float size_m = sumSize/(1000*1000);
+    return [NSString stringWithFormat:@"%.2fM",size_m];
+}
+- (IBAction)clearBtn:(id)sender {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *cacheFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches"];
+    [fileManager removeItemAtPath:cacheFilePath error:nil];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:3 inSection:0];
+//      [_myTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    [_myTableView reloadData];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在清除";
+    //加载成功，先移除原来的HUD；
+    hud.removeFromSuperViewOnHide = true;
+    [hud hide:true afterDelay:2];
+    self.sizeLabel.text=@"0M";
+    
 }
 
 @end

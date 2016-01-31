@@ -13,6 +13,7 @@
 #import "DetailController.h"
 #import "RequestData.h"
 #import <MJRefresh.h>
+#import <SVPullToRefresh.h>
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
 @interface AllGoodsController ()<UITableViewDataSource,UITableViewDelegate>
@@ -28,9 +29,10 @@
 @property (retain,nonatomic)NSArray *unselectImageArray;
 @property (retain,nonatomic)NSArray *selectImageArray;
 /**所有商品数组*/
-@property (retain,nonatomic)NSArray *allGoodsArray;
+@property (retain,nonatomic)NSMutableArray *allGoodsArray;
+@property (assign,nonatomic)int page;
 @end
-int page=8;
+static int pageNum = 1;
 @implementation AllGoodsController
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationItem setHidesBackButton:YES];
@@ -44,7 +46,6 @@ int page=8;
     UINib *nib=[UINib nibWithNibName:@"AllGoodsCell" bundle:[NSBundle mainBundle]];
     //注册到表格视图
     [self.myTableView  registerNib:nib forCellReuseIdentifier:@"AllGoodsCell"];
-    //    self.myTableView.separatorStyle=NO;
     [self setExtraCellLineHidden:self.myTableView];
     //创建分类xib文件对象
     UINib *categoryNib=[UINib nibWithNibName:@"GoodsCategoryCell" bundle:[NSBundle mainBundle]];
@@ -62,13 +63,15 @@ int page=8;
     self.selectImageArray=@[@"category_2130837504_select",@"category_2130837505_select",@"category_2130837507_select",@"category_2130837506_select",@"category_2130837509_select",@"category_2130837508_select",@"category_2130837510_select"];
     self.sortNameArray=@[@"即将揭晓",@"人气",@"价值(由高到低)",@"价值(由低到高)",@"最新"];
     /**所有商品数据源*/
-    [self requestData:@"" andSort:@"" andIndex:@"1" andpagesize:@"20"];
-    page=page+8;
+    [self requestData:@"" andSort:@"" andIndex:@"1" andpagesize:@"8"];
     //上拉加载
     [self pushRefresh];
     //下拉刷新
     [self pullRefresh];
+    [self.myTableView addInfiniteScrollingWithActionHandler:^{
+    }];
 }
+
 /**
  *  下拉刷新
  */
@@ -93,19 +96,33 @@ int page=8;
  *  上拉加载
  */
 -(void)pushRefresh{
-    NSString *pageSize=[NSString stringWithFormat:@"%i",page];
-    self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"",@"sort",@"1",@"pageIndex",pageSize,@"pageSize",nil];
-        [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
-            self.allGoodsArray=data[@"content"];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.myTableView reloadData];
-                // 结束刷新
-                [self.myTableView.mj_footer endRefreshing];
-            });
-        }andFailure:^(NSError *error) {
-            
-        }];
+    pageNum += 1;
+    // 上拉刷新
+    self.myTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+        [self getData];
+        // 结束刷新
+        [self.myTableView.mj_footer endRefreshing];
+    }];
+    // 默认先隐藏footer
+    self.myTableView.mj_footer.hidden = YES;
+}
+
+
+
+
+-(void)getData{
+    self.allGoodsArray=[NSMutableArray array];
+    NSString *pageIndex=[NSString stringWithFormat:@"%i",pageNum];
+    NSLog(@"---%@",pageIndex);
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"",@"sort",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
+        NSLog(@"参数%@",data);
+        self.allGoodsArray=data[@"content"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myTableView reloadData];
+            [self.myTableView.mj_footer endRefreshing];
+        });
+    }andFailure:^(NSError *error) {
     }];
 }
 
@@ -114,6 +131,7 @@ int page=8;
  *  请求所有商品
  */
 -(void)requestData:(NSString *)categoryid andSort:(NSString *)sortid andIndex:(NSString *)pageindex andpagesize:(NSString *)pagesize{
+    self.allGoodsArray=[NSMutableArray array];
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:categoryid,@"categoryId",sortid,@"sort",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
     //声明对象；
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
@@ -175,7 +193,7 @@ int page=8;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView==self.myTableView) {
-        return self.allGoodsArray.count;
+        return _allGoodsArray.count;
     }else if(tableView==self.categoryTableView){
         return _categoryNameArray.count;
     }else

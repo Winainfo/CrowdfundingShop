@@ -71,7 +71,7 @@
         UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl] scale:0.1];
         id<ISSContent> publishContent = [ShareSDK content:[NSString stringWithFormat:@"%@",_dic[@"title"]]defaultContent:nil
                                                     image:[ShareSDK pngImageWithImage:image]
-                                                    title:[NSString stringWithFormat:@"%@",_dic[@"title"]] url:[NSString stringWithFormat:@"http://120.55.112.80/index.php/goods/%@",_dic[@"id"]]
+                                                    title:[NSString stringWithFormat:@"%@",_dic[@"title"]] url:[NSString stringWithFormat:@"http://mobile.yiydb.cn/index.php/mobile/mobile/item/%@",_dic[@"id"]]
                                               description:[NSString stringWithFormat:@"%@",_dic[@"description"]]
                                                 mediaType:SSPublishContentMediaTypeNews];
         //1+创建弹出菜单容器（iPad必要）
@@ -115,7 +115,7 @@
                 UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl] scale:0.1];
                 id<ISSContent> publishContent = [ShareSDK content:[NSString stringWithFormat:@"%@",data[@"content"][@"title"]]defaultContent:nil
                                                             image:[ShareSDK pngImageWithImage:image]
-                                                            title:[NSString stringWithFormat:@"%@",data[@"content"][@"title"]] url:[NSString stringWithFormat:@"http://120.55.112.80/index.php/goods/%@",data[@"content"][@"id"]]
+                                                            title:[NSString stringWithFormat:@"%@",data[@"content"][@"title"]] url:[NSString stringWithFormat:@"http://mobile.yiydb.cn/index.php/mobile/mobile/item/%@",data[@"content"][@"id"]]
                                                       description:[NSString stringWithFormat:@"%@",data[@"content"][@"description"]]
                                                         mediaType:SSPublishContentMediaTypeNews];
                 //1+创建弹出菜单容器（iPad必要）

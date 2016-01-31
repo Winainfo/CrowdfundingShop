@@ -94,6 +94,8 @@
     self.times=[[NSMutableArray alloc]init];
     [self addTimer];
      _blockUserInteraction = YES;
+    [self fileSize];
+
 }
 
 /**
@@ -475,6 +477,7 @@
             UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
             DidAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"didAnnounceView"];
             controller.goodsID=self.announcedArray[indexPath.row][@"id"];
+            controller.dic=self.announcedArray[indexPath.row];
             [self.navigationController pushViewController:controller animated:YES];
         }else{
             //设置故事板为第一启动
@@ -498,7 +501,7 @@
         detailController.goodsID=self.groomArray[indexPath.row][@"id"];
         detailController.dic=self.groomArray[indexPath.row];
         [self.navigationController pushViewController:detailController animated:YES];
-    }else if(collectionView==self.limitCollectionView){//限购专区
+    }else if(collectionView==self.limitCollectionView){//推荐专区
         //设置故事板为第一启动
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
         DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
@@ -613,7 +616,7 @@
 - (IBAction)payWithAliPay:(id)sender {
     //    NSLog(@"AliPay MoneyNum Is %@",self.moneyTextField.text);
     //这里调用我自己写的catagoary中的方法，方法里集成了支付宝支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
-    [self payTHeMoneyUseAliPayWithOrderId:@"123431" totalMoney:@"0.01" payTitle:@"这里告诉客户花钱买了啥，力求简短"];
+    [self payTHeMoneyUseAliPayWithOrderId:@"12343111" totalMoney:@"0.01" payTitle:@"这里告诉客户花钱买了啥，力求简短"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AliPayResultNoti:) name:ALI_PAY_RESULT object:nil];
 }
 
@@ -653,5 +656,53 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [alert dismissWithClickedButtonIndex:alert.cancelButtonIndex animated:YES];
     });
+}
+/**
+ *   缓存大小
+ */
+- (void)fileSize{
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSArray *files = [manager subpathsOfDirectoryAtPath:cachePath error:nil]; // 递归所有子路径
+    NSInteger totalSize = 0;
+    for (NSString *filePath in files) {
+        NSString *path = [cachePath stringByAppendingPathComponent:filePath];
+        // 判断是否为文件
+        BOOL isDir = NO;
+        [manager fileExistsAtPath:path isDirectory:&isDir];
+        if (!isDir) {
+            NSDictionary *attrs = [manager attributesOfItemAtPath:path error:nil];
+            totalSize += [attrs[NSFileSize] integerValue];
+        }
+    }
+    NSLog(@"%ld",(long)totalSize);
+}
+
+#pragma mark - 计算缓存大小
+/**
+ *  计算缓存大小
+ *
+ *  @return
+ */
+- (NSString *)getCacheSize
+{
+    //定义变量存储总的缓存大小
+    long long sumSize = 0;
+    //01.获取当前图片缓存路径
+    NSString *cacheFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches"];
+    //02.创建文件管理对象
+    NSFileManager *filemanager = [NSFileManager defaultManager];
+    //获取当前缓存路径下的所有子路径
+    NSArray *subPaths = [filemanager subpathsOfDirectoryAtPath:cacheFilePath error:nil];
+    //遍历所有子文件
+    for (NSString *subPath in subPaths) {
+        //1）.拼接完整路径
+        NSString *filePath = [cacheFilePath stringByAppendingFormat:@"/%@",subPath];//2）.计算文件的大小
+        long long fileSize = [[filemanager attributesOfItemAtPath:filePath error:nil]fileSize];
+        //3）.加载到文件的大小
+        sumSize += fileSize;
+    }
+    float size_m = sumSize/(1000*1000);
+    return [NSString stringWithFormat:@"%.2fM",size_m];
 }
 @end

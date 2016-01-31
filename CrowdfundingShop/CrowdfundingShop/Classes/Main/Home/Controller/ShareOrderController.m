@@ -314,7 +314,7 @@
             UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:imgUrl] scale:0.1];
             id<ISSContent> publishContent = [ShareSDK content:[NSString stringWithFormat:@"%@",self.shareArray[index.row][@"sd_content"]]defaultContent:nil
                                                         image:[ShareSDK pngImageWithImage:image]
-                                                        title:[NSString stringWithFormat:@"%@",self.shareArray[index.row][@"sd_title"]] url:[NSString stringWithFormat:@"http://www.god-store.com/index.php/go/shaidan/detail/%@",self.shareArray[index.row][@"sd_id"]]
+                                                        title:[NSString stringWithFormat:@"%@",self.shareArray[index.row][@"sd_title"]] url:[NSString stringWithFormat:@"http://mobile.yiydb.cn/index.php/mobile/shaidan/detail/%@",self.shareArray[index.row][@"sd_id"]]
                                                   description:@""
                                                     mediaType:SSPublishContentMediaTypeNews];
             //1+创建弹出菜单容器（iPad必要）

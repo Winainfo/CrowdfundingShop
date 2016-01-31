@@ -10,4 +10,5 @@
 
 @interface DidAnnounceView : UIViewController
 @property (retain,nonatomic)NSString *goodsID;
+@property (retain,nonatomic) NSDictionary *dic;
 @end

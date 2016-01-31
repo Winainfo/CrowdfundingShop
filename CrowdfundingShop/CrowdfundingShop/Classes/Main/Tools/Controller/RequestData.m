@@ -190,7 +190,8 @@
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
     //设置参数
     NSDictionary *params=@{@"itemId":data[@"goodsId"]};
-    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/getCalResult/",URL];
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/dataserver/",URL];
+    NSLog(@"%@",url);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -728,7 +729,24 @@
     //设置参数
     NSDictionary *params=@{@"uid":data[@"uid"],@"mobile":data[@"mobile"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/mobile_send/",URL];
-    NSLog(@"对象%@",params);
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *  计算结果详情
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)getCalResultSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"itemId":data[@"itemId"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/calResult/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

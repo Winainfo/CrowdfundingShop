@@ -16,6 +16,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *categoryBtn;
 /**排序*/
 @property (weak, nonatomic) IBOutlet UIButton *sortBtn;
+/**
+ *  名字
+ */
 @property (retain,nonatomic) NSString *name;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @end

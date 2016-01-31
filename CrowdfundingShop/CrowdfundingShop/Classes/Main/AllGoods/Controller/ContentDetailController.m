@@ -57,7 +57,16 @@
     }
     [_webView.scrollView setContentInset:UIEdgeInsetsMake(50, 0, -50, 0)];
 }
-
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName(‘p‘).style.background-color= ‘black‘"];
+    //给网页增加css样式
+//    [webView stringByEvaluatingJavaScriptFromString:
+//     @"var tagHead =document.documentElement.firstChild;"
+//     "var tagStyle = document.createElement(\"style\");"
+//     "tagStyle.setAttribute(\"type\", \"text/css\");"
+//     "tagStyle.appendChild(document.createTextNode(\"BODY{padding: 20pt 15pt}\"));"
+//     "var tagHeadAdd = tagHead.appendChild(tagStyle);"];
+}
 //返回
 -(void)backClick{
     [self.navigationController popViewControllerAnimated:YES];

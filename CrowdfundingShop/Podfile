@@ -7,3 +7,4 @@ pod 'IQKeyboardManager'
 pod 'MJRefresh'
 pod 'MZTimerLabel'
 pod ‘JGProgressHUD’
+pod 'SVPullToRefresh'

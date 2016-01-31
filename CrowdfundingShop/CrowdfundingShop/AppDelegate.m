@@ -45,11 +45,11 @@
                                    wechatCls:[WXApi class]];
     
     //QQ
-    [ShareSDK connectQZoneWithAppKey:@"1105110714"
+    [ShareSDK connectQZoneWithAppKey:@"1105071079"
                            appSecret:@"LRDKLN5IySk65roC"
                    qqApiInterfaceCls:[QQApiInterface class]
                      tencentOAuthCls:[TencentOAuth class]];
-    [ShareSDK connectQQWithQZoneAppKey:@"1105110714"
+    [ShareSDK connectQQWithQZoneAppKey:@"1105071079"
                      qqApiInterfaceCls:[QQApiInterface class]
                        tencentOAuthCls:[TencentOAuth class]];
     

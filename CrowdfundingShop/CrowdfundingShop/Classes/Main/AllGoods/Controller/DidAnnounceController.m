@@ -8,9 +8,11 @@
 
 #import "DidAnnounceController.h"
 #import "CloudNumberCell.h"
+#import "ShareOrderController.h"
 #import "ARLabel.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
 @interface DidAnnounceController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
 /**商品图片*/
@@ -35,6 +37,12 @@
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 
 @property (retain,nonatomic) NSDictionary *array;
+/**云购码*/
+@property (retain,nonatomic) NSArray *numArray;
+/**晒单次数*/
+@property (weak, nonatomic) IBOutlet ARLabel *shareNumLabel;
+@property (weak, nonatomic) IBOutlet ARLabel *timeLabel;
+
 @end
 
 @implementation DidAnnounceController
@@ -61,17 +69,41 @@
  */
 -(void)requestData:(NSString *)goodsId{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:goodsId,@"goodsId",nil];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在加载...";
     [RequestData lotteryGoodsDetail:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"] intValue];
         if (code==0) {
+            //加载成功，先移除原来的HUD；
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //然后显示一个成功的提示；
+            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            successHUD.labelText = @"加载成功";
+            successHUD.mode = MBProgressHUDModeCustomView;
+            //可以设置对应的图片；
+            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+            successHUD.removeFromSuperViewOnHide = true;
+            [successHUD hide:true afterDelay:1];
             self.array=data[@"content"];
             self.numberLabel.text=data[@"content"][@"q_user_code"];
+            self.countLabel.text=[NSString stringWithFormat:@"%@",data[@"content"][@"user_shop_number"]];
+            /**晒单次数*/
+            NSArray *array1=data[@"content"][@"shaidan"];
+            self.shareNumLabel.text=[NSString stringWithFormat:@"(%lu)",(unsigned long)array1.count];
+            //截取城市
+            NSString *string =data[@"content"][@"user_ip"];
+            NSArray *strArray=[string componentsSeparatedByString:@","];
+            self.peopleCityLabel.text=[NSString stringWithFormat:@"(%@)",strArray[0]];
             /**揭晓时间*/
               long time=[data[@"content"][@"q_end_time"] integerValue];
             self.time1Label.text=[DidAnnounceController timeFromTimestamp:time formtter:@"YYYY-MM-dd HH:mm:ss"];
             /**购买时间*/
             long buytime=[data[@"content"][@"time"] integerValue];
             self.buyTimeLabel.text=[DidAnnounceController timeFromTimestamp:buytime formtter:@"YYYY-MM-dd HH:mm:ss"];
+            self.timeLabel.text=[DidAnnounceController timeFromTimestamp:buytime formtter:@"YYYY-MM-dd HH:mm:ss"];
             self.peopleNameLabel.text=data[@"content"][@"q_user"][@"username"];
             /**商品图片*/
             //拼接图片网址·
@@ -90,11 +122,27 @@
                 [self.myTableView reloadData];
             });
         }else{
-            
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //显示失败的提示；
+            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            failHUD.labelText = @"加载失败";
+            failHUD.mode = MBProgressHUDModeCustomView;
+            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+            failHUD.removeFromSuperViewOnHide = true;
+            [failHUD hide:true afterDelay:1];
         }
         
     } andFailure:^(NSError *error) {
-        
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"加载失败";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
     }];
 }
 
@@ -141,7 +189,32 @@
     }else if([ segue.identifier isEqualToString:@"recoderSegue"]){
         id theSegue=segue.destinationViewController;
         [theSegue setValue:self.gID forKey:@"gid"];
+    }else if([ segue.identifier isEqualToString:@"resultSegue"]){
+        id theSegue=segue.destinationViewController;
+        [theSegue setValue:self.gID forKey:@"goodsId"];
     }
+}
+/**
+ *  晒单
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)shareClick:(UIButton *)sender {
+    NSArray *goodsarray=self.array[@"shaidan"];
+    if (goodsarray.count==0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"暂无晒单";
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:1.5];
+    }else{
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ShareOrderController *controller=[storyboard instantiateViewControllerWithIdentifier:@"shareOrderView"];
+        controller.shareArray=self.array[@"shaidan"];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+
 }
 #define mark - 时间
 /**
