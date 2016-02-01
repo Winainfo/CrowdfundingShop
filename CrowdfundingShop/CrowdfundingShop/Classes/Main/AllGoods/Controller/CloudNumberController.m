@@ -10,7 +10,12 @@
 
 @interface CloudNumberController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
-
+@property (retain,nonatomic) NSArray *numArray;
+@property (retain,nonatomic) NSString *timeString;
+/**次数*/
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+/**时间*/
+@property (weak, nonatomic) IBOutlet ARLabel *timeLabel;
 @end
 
 @implementation CloudNumberController
@@ -30,7 +35,8 @@
     self.navigationItem.leftBarButtonItem=left;
     //注册Cell
     [self.myCollectionView registerClass:[CloudNumberCell class] forCellWithReuseIdentifier:@"CloudNumberCell"];
-    
+    self.timeLabel.text=self.timeString;
+    self.countLabel.text=[NSString stringWithFormat:@"%ld",(unsigned long)self.numArray.count];
 }
 //返回
 -(void)backClick{
@@ -41,14 +47,14 @@
 //每个section的item个数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 2300;
+    return self.numArray.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
     CloudNumberCell *cell = (CloudNumberCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"CloudNumberCell" forIndexPath:indexPath];
-    
+    cell.numberLabel.text=self.numArray[indexPath.row];
     return cell;
 }
 

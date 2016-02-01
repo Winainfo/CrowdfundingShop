@@ -20,6 +20,9 @@
 #import "UIViewController+WeChatAndAliPayMethod.h"
 @interface IndexController ()<UIScrollViewDelegate>{
      BOOL _blockUserInteraction;
+    NSInteger offset1;
+    NSInteger offset2;
+    NSInteger offset3;
 }
 @property (strong, nonatomic) IBOutlet UITableView *mytableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewWidth;
@@ -27,7 +30,7 @@
 /**最新揭晓*/
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
 /**最新揭晓数组*/
-@property (retain,nonatomic) NSArray *announcedArray;
+@property (retain,nonatomic) NSMutableArray *announcedArray;
 /**即将揭晓*/
 @property (weak, nonatomic) IBOutlet UICollectionView *goodsCollectionView;
 /**即将揭晓数组*/
@@ -35,7 +38,7 @@
 /**人气推荐*/
 @property (weak, nonatomic) IBOutlet UICollectionView *groomCollectionView;
 /**人气推荐数组*/
-@property (retain,nonatomic) NSArray *groomArray;
+@property (retain,nonatomic) NSMutableArray *groomArray;
 /**限购专区*/
 @property (weak, nonatomic) IBOutlet UICollectionView *limitCollectionView;
 
@@ -58,7 +61,22 @@
 @end
 
 @implementation IndexController
-
+-(NSMutableArray *)revealedArray
+{
+    if (_revealedArray==nil)
+    {
+        _revealedArray=[NSMutableArray array];
+    }
+    return _revealedArray;
+}
+-(NSMutableArray *)groomArray
+{
+    if (_groomArray==nil)
+    {
+        _groomArray=[NSMutableArray array];
+    }
+    return _groomArray;
+}
 - (void)viewDidLoad {
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Menlo" size:16.0],NSForegroundColorAttributeName:[UIColor whiteColor]}];
@@ -82,19 +100,21 @@
     [self scrollViewAdv];
     //即将揭晓数据请求
     [self requestData:@"1" andpageSize:@"8"];
+    self.goodsCollectionView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    offset1=1;
     //人气推荐数据请求
     [self requestHotData:@"1" andpageSize:@"8"];
+    self.groomCollectionView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadHotMoreData)];
+    offset2=1;
     //最新揭晓数据请求
     [self requestAnnouncedData];
     //定时触发数据
     NSTimer *timer=[NSTimer scheduledTimerWithTimeInterval:20 target:self selector:@selector(requestAnnouncedData) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-    //    [self requestAnnouncedData];
     self.revealedArray=[[NSMutableArray alloc]initWithCapacity:0];
     self.times=[[NSMutableArray alloc]init];
     [self addTimer];
      _blockUserInteraction = YES;
-    [self fileSize];
 
 }
 
@@ -141,6 +161,50 @@
 
 #pragma mark 数据请求
 /**
+ *  即将揭晓上拉加载
+ */
+-(void)loadMoreData
+{
+    offset1+=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset1];
+     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData beginRevealed:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.goodsCollectionView.mj_footer endRefreshing];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.revealedArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.revealedArray.count, array.count)]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.goodsCollectionView reloadData];
+            });
+        }else{}
+    }andFailure:^(NSError *error) {
+        [self.goodsCollectionView.mj_footer endRefreshing];
+    }];
+}
+/**
+ *  人气推荐上拉加载
+ */
+-(void)loadHotMoreData
+{
+    offset2+=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset2];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData hotGoods:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.groomCollectionView.mj_footer endRefreshing];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.groomArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.groomArray.count, array.count)]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.groomCollectionView reloadData];
+            });
+        }else{}
+    }andFailure:^(NSError *error) {
+        [self.groomCollectionView.mj_footer endRefreshing];
+    }];
+}
+/**
  *  请求即将揭晓商品
  */
 -(void)requestData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
@@ -163,19 +227,29 @@
             successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
             successHUD.removeFromSuperViewOnHide = true;
             [successHUD hide:true afterDelay:1];
-
-            self.revealedArray=data[@"content"];
+            NSArray *array=data[@"content"];
+            [self.revealedArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
             //更新主线程
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.goodsCollectionView reloadData];
             });
+        }else{
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //显示失败的提示；
+            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            failHUD.labelText = @"暂无数据";
+            failHUD.mode = MBProgressHUDModeCustomView;
+            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+            failHUD.removeFromSuperViewOnHide = true;
+            [failHUD hide:true afterDelay:1];
         }
     } andFailure:^(NSError *error) {
         hud.removeFromSuperViewOnHide = true;
         [hud hide:true afterDelay:0];
         //显示失败的提示；
         MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-        failHUD.labelText = @"加载失败";
+        failHUD.labelText = @"数据加载异常";
         failHUD.mode = MBProgressHUDModeCustomView;
         failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
         failHUD.removeFromSuperViewOnHide = true;
@@ -192,11 +266,19 @@
 -(void)requestHotData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
     [RequestData hotGoods:params FinishCallbackBlock:^(NSDictionary *data) {
-        self.groomArray=data[@"content"];
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.groomCollectionView reloadData];
-        });
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.groomArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.groomCollectionView reloadData];
+            });
+        }else{
+            
+        }
+    }andFailure:^(NSError *error) {
+        
     }];
 }
 /**

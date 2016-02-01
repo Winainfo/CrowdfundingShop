@@ -203,7 +203,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeX-Xx-vht" customClass="ARLabel">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeX-Xx-vht" customClass="ARLabel">
                                                     <rect key="frame" x="137" y="30" width="7" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="nCO-PZ-deh"/>
@@ -212,7 +212,7 @@
                                                     <color key="textColor" red="0.98823529409999999" green="0.40000000000000002" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="人次" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcx-7K-Pze" customClass="ARLabel">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="人次" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zcx-7K-Pze" customClass="ARLabel">
                                                     <rect key="frame" x="144" y="30" width="22" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="Y0p-dF-Z1Q"/>
@@ -221,7 +221,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="获得的商品:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3mb-gu-doF" customClass="ARLabel">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" misplaced="YES" text="获得的商品:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3mb-gu-doF" customClass="ARLabel">
                                                     <rect key="frame" x="82" y="48" width="59" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="7fC-ST-LEy"/>
@@ -230,7 +230,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(第343云)苹果（Apple）iPad..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20s-Ws-lBF" customClass="ARLabel">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20s-Ws-lBF" customClass="ARLabel">
                                                     <rect key="frame" x="146" y="48" width="158" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="3N8-h5-cgu"/>
@@ -297,7 +297,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今天 18:10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgF-Kr-Wt5" customClass="ARLabel">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgF-Kr-Wt5" customClass="ARLabel">
                                                     <rect key="frame" x="10" y="26" width="49" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="5fc-n6-KgD"/>
@@ -337,13 +337,13 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8pR-E8-rh5">
                                                     <rect key="frame" x="10" y="7" width="300" height="30"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aob-BE-fjc" customClass="ARLabel">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aob-BE-fjc" customClass="ARLabel">
                                                             <rect key="frame" x="142" y="7" width="16.5" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="1" green="0.20000000000000001" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="条评论" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7G-eZ-hcY">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="条评论" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7G-eZ-hcY">
                                                             <rect key="frame" x="158.5" y="6" width="39" height="18"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="18" id="kZp-8p-Cka"/>
@@ -352,7 +352,7 @@
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="查看所有" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJB-gB-t7S">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="查看所有" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jJB-gB-t7S">
                                                             <rect key="frame" x="90" y="6" width="52" height="18"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="18" id="XkS-fW-odD"/>
@@ -1300,7 +1300,7 @@
                                 </constraints>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uRy-33-VWG" userLabel="未登陆View">
-                                <rect key="frame" x="0.0" y="211" width="320" height="278"/>
+                                <rect key="frame" x="0.0" y="211" width="320" height="288"/>
                                 <connections>
                                     <segue destination="NYd-B7-1YD" kind="embed" id="N2X-AJ-iGv"/>
                                 </connections>
@@ -1433,7 +1433,7 @@
                                 </constraints>
                             </view>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zZS-w1-1jo" userLabel="已登陆View">
-                                <rect key="frame" x="0.0" y="211" width="320" height="278"/>
+                                <rect key="frame" x="0.0" y="211" width="320" height="288"/>
                                 <connections>
                                     <segue destination="poP-lp-Tjf" kind="embed" id="Hgh-eb-Ryq"/>
                                 </connections>
@@ -1446,8 +1446,8 @@
                             <constraint firstItem="zZS-w1-1jo" firstAttribute="top" secondItem="guq-ra-mkq" secondAttribute="bottom" constant="10" id="NXG-P4-iDH"/>
                             <constraint firstAttribute="trailing" secondItem="guq-ra-mkq" secondAttribute="trailing" id="QTf-kp-x1n"/>
                             <constraint firstItem="guq-ra-mkq" firstAttribute="leading" secondItem="hSf-G4-Luy" secondAttribute="leading" id="SKy-sz-m9U"/>
-                            <constraint firstItem="jUn-sa-OXX" firstAttribute="top" secondItem="zZS-w1-1jo" secondAttribute="bottom" constant="30" id="ShC-tb-RGg"/>
-                            <constraint firstItem="jUn-sa-OXX" firstAttribute="top" secondItem="uRy-33-VWG" secondAttribute="bottom" constant="30" id="VGV-T1-dVe"/>
+                            <constraint firstItem="jUn-sa-OXX" firstAttribute="top" secondItem="zZS-w1-1jo" secondAttribute="bottom" constant="20" id="ShC-tb-RGg"/>
+                            <constraint firstItem="jUn-sa-OXX" firstAttribute="top" secondItem="uRy-33-VWG" secondAttribute="bottom" constant="20" id="VGV-T1-dVe"/>
                             <constraint firstItem="uRy-33-VWG" firstAttribute="top" secondItem="guq-ra-mkq" secondAttribute="bottom" constant="10" id="Wyz-IK-RFy"/>
                             <constraint firstItem="luX-CI-SM0" firstAttribute="leading" secondItem="hSf-G4-Luy" secondAttribute="leading" id="j3N-zo-H8N"/>
                             <constraint firstAttribute="trailing" secondItem="uRy-33-VWG" secondAttribute="trailing" id="ohc-7a-Zn7"/>
@@ -4490,7 +4490,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2300" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q2K-ve-vNm">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q2K-ve-vNm">
                                                     <rect key="frame" x="138" y="6" width="34.5" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="txs-gg-eJt"/>
@@ -4499,7 +4499,7 @@
                                                     <color key="textColor" red="0.98823529409999999" green="0.40000000000000002" blue="0.12941176469999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="人次" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRg-I2-r5Q">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="人次" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRg-I2-r5Q">
                                                     <rect key="frame" x="172" y="6" width="32" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="Dcd-4U-n8U"/>
@@ -4539,7 +4539,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="539"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-12-12 13:34:39.547" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6hG-Y0-kBb" customClass="ARLabel">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6hG-Y0-kBb" customClass="ARLabel">
                                                     <rect key="frame" x="10" y="5" width="133" height="18"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="18" id="Ete-WS-lsV"/>
@@ -4595,7 +4595,9 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="countLabel" destination="q2K-ve-vNm" id="Yjj-Mi-jjj"/>
                         <outlet property="myCollectionView" destination="EL3-mP-dgz" id="5bi-F9-ZKL"/>
+                        <outlet property="timeLabel" destination="6hG-Y0-kBb" id="VHh-fm-r3M"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B7O-ZD-lJR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -6341,7 +6343,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="aKn-GX-PoM" kind="show" id="JNb-dd-DPa"/>
+                                            <segue destination="aKn-GX-PoM" kind="show" identifier="cloudnumberSegue" id="JNb-dd-DPa"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

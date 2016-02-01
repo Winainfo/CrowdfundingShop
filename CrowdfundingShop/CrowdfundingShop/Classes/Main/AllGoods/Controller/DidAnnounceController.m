@@ -88,6 +88,7 @@
             successHUD.removeFromSuperViewOnHide = true;
             [successHUD hide:true afterDelay:1];
             self.array=data[@"content"];
+            self.numArray=data[@"content"][@"user_shop_codes"];
             self.numberLabel.text=data[@"content"][@"q_user_code"];
             self.countLabel.text=[NSString stringWithFormat:@"%@",data[@"content"][@"user_shop_number"]];
             /**晒单次数*/
@@ -120,6 +121,7 @@
             //        //更新主线程
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.myTableView reloadData];
+                [self.myCollectionView reloadData];
             });
         }else{
             hud.removeFromSuperViewOnHide = true;
@@ -150,14 +152,14 @@
 //每个section的item个数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 12;
+    return self.numArray.count;
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
     CloudNumberCell *cell = (CloudNumberCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"CloudNumberCell" forIndexPath:indexPath];
-    
+    cell.numberLabel.text=self.numArray[indexPath.row];
     return cell;
 }
 
@@ -192,6 +194,10 @@
     }else if([ segue.identifier isEqualToString:@"resultSegue"]){
         id theSegue=segue.destinationViewController;
         [theSegue setValue:self.gID forKey:@"goodsId"];
+    }else if([segue.identifier isEqualToString:@"cloudnumberSegue"]){
+        id theSegue=segue.destinationViewController;
+        [theSegue setValue:self.numArray forKey:@"numArray"];
+        [theSegue setValue:self.timeLabel.text forKey:@"timeString"];
     }
 }
 /**

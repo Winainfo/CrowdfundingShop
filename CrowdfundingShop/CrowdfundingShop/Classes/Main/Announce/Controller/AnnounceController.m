@@ -16,7 +16,9 @@
 #import <UIImageView+WebCache.h>
 #import <MJRefresh.h>
 #import <MBProgressHUD.h>
-@interface AnnounceController ()<UITableViewDataSource,UITableViewDelegate>
+@interface AnnounceController ()<UITableViewDataSource,UITableViewDelegate>{
+    NSInteger offset;
+}
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @property (weak, nonatomic) IBOutlet UITableView *categoryTableView;
@@ -24,17 +26,21 @@
 @property (retain,nonatomic)NSArray *unselectImageArray;
 @property (retain,nonatomic)NSArray *selectImageArray;
 /**最新揭晓数组*/
-@property (retain,nonatomic) NSArray *announcedArray;
-/**用户数组*/
-@property (retain,nonatomic) NSMutableArray *userNameArray;
-@property (retain,nonatomic) NSArray *array;
-
+@property (retain,nonatomic) NSMutableArray *announcedArray;
+/**时间数组*/
 @property (nonatomic, strong) NSMutableArray *times;
 @property (nonatomic, strong) NSTimer *timer;
 @end
 
 @implementation AnnounceController
-
+-(NSMutableArray *)announcedArray
+{
+    if (_announcedArray==nil)
+    {
+        _announcedArray=[NSMutableArray array];
+    }
+    return _announcedArray;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
@@ -55,11 +61,16 @@
     self.categoryNameArray= @[ @"全部分类", @"手机数码", @"电脑办公", @"家用电器", @"化妆个性" , @"钟表首饰" , @"其他商品" ];
     self.unselectImageArray=@[@"category_2130837504_unselect",@"category_2130837505_unselect",@"category_2130837507_unselect",@"category_2130837506_unselect",@"category_2130837509_unselect",@"category_2130837508_unselect",@"category_2130837510_unselect"];
     self.selectImageArray=@[@"category_2130837504_select",@"category_2130837505_select",@"category_2130837507_select",@"category_2130837506_select",@"category_2130837509_select",@"category_2130837508_select",@"category_2130837510_select"];
-    //最新揭晓数据请求
-    [self requestAnnouncedData:@"1" andpageSize:@"6"];
     _times = @[].mutableCopy;
     [self addTimer];
+    //最新揭晓数据请求
+    self.myTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [self.myTableView.mj_header beginRefreshing];
+      self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    offset=1;
+
 }
+
 /**
  *  倒计时
  */
@@ -93,6 +104,99 @@
     [self invalidTimer];
 }
 
+#pragma mark - 加载新数据
+/**
+ *  下拉刷新
+ */
+-(void)loadNewData
+{
+    offset=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData newAnnounced:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.myTableView.mj_header endRefreshing];
+        if (code==0) {
+            [self.announcedArray removeAllObjects];
+            NSArray *array=data[@"content"];
+            [self.announcedArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+            //获取用户名
+            for (int i=0; i<self.announcedArray.count; i++) {
+                if ([self.announcedArray[i][@"q_showtime"]isEqualToString:@"Y"]) {
+                    //获取当前时间
+                    //实例化一个NSDateFormatter对象
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+                    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+                    NSDateFormatter *date=[[NSDateFormatter alloc] init];
+                    [date setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                    NSCalendar *cal=[NSCalendar currentCalendar];
+                    unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
+                    NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
+                    long m=[d minute];
+                    long s=[d second];
+                    long time=m*60+s;
+                    [_times addObject:@(time)];
+                }
+            }
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        [self.myTableView.mj_header endRefreshing];
+    }];
+}
+/**
+ *  上拉加载
+ */
+-(void)loadMoreData
+{
+    offset+=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData newAnnounced:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.myTableView.mj_footer endRefreshing];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.announcedArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.announcedArray.count, array.count)]];
+            //获取用户名
+            for (int i=0; i<self.announcedArray.count; i++) {
+                if ([self.announcedArray[i][@"q_showtime"]isEqualToString:@"Y"]) {
+                    //获取当前时间
+                    //实例化一个NSDateFormatter对象
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+                    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+                    NSDateFormatter *date=[[NSDateFormatter alloc] init];
+                    [date setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                    NSCalendar *cal=[NSCalendar currentCalendar];
+                    unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
+                    NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
+                    long m=[d minute];
+                    long s=[d second];
+                    long time=m*60+s;
+                    [_times addObject:@(time)];
+                }
+            }
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        [self.myTableView.mj_footer endRefreshing];
+    }];
+    
+}
 
 /**
  *  请求最新揭晓商品
@@ -107,69 +211,65 @@
     //显示的文本；
     hud.labelText = @"正在加载...";
     [RequestData newAnnounced:params FinishCallbackBlock:^(NSDictionary *data) {
-        //加载成功，先移除原来的HUD；
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            //加载成功，先移除原来的HUD；
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //然后显示一个成功的提示；
+            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            successHUD.labelText = @"加载成功";
+            successHUD.mode = MBProgressHUDModeCustomView;
+            //可以设置对应的图片；
+            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+            successHUD.removeFromSuperViewOnHide = true;
+            [successHUD hide:true afterDelay:1];
+            self.announcedArray=data[@"content"];
+            //获取用户名
+            for (int i=0; i<self.announcedArray.count; i++) {
+                if ([self.announcedArray[i][@"q_showtime"]isEqualToString:@"Y"]) {
+                    //获取当前时间
+                    //实例化一个NSDateFormatter对象
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+                    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+                    NSDateFormatter *date=[[NSDateFormatter alloc] init];
+                    [date setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                    NSCalendar *cal=[NSCalendar currentCalendar];
+                    unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
+                    NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
+                    long m=[d minute];
+                    long s=[d second];
+                    long time=m*60+s;
+                    [_times addObject:@(time)];
+                }
+            }
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }else{
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //显示失败的提示；
+            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            failHUD.labelText = @"暂无数据";
+            failHUD.mode = MBProgressHUDModeCustomView;
+            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+            failHUD.removeFromSuperViewOnHide = true;
+            [failHUD hide:true afterDelay:1];
+        }
+    } andFailure:^(NSError *error) {
         hud.removeFromSuperViewOnHide = true;
         [hud hide:true afterDelay:0];
-        //然后显示一个成功的提示；
-        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-        successHUD.labelText = @"加载成功";
-        successHUD.mode = MBProgressHUDModeCustomView;
-        //可以设置对应的图片；
-        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
-        successHUD.removeFromSuperViewOnHide = true;
-        [successHUD hide:true afterDelay:1];
-        self.announcedArray=data[@"content"];
-        NSLog(@"揭晓%@",data[@"content"]);
-        //声明空间
-        self.userNameArray=[[NSMutableArray alloc]initWithCapacity:self.announcedArray.count];
-        //获取用户名
-        for (int i=0; i<self.announcedArray.count; i++) {
-            if ([self.announcedArray[i][@"q_showtime"]isEqualToString:@"Y"]) {
-                //获取当前时间
-                //实例化一个NSDateFormatter对象
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                NSDate *currentDate = [NSDate date];//获取当前时间，日期
-                [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss.SS"];
-                NSString *dateString = [dateFormatter stringFromDate:currentDate];
-                NSDateFormatter *date=[[NSDateFormatter alloc] init];
-                [date setDateFormat:@"YYYY-MM-dd HH:mm:ss.SS"];
-                NSCalendar *cal=[NSCalendar currentCalendar];
-                unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
-                NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
-                NSLog(@"%ld分钟%ld秒",(long)[d minute],(long)[d second]);
-                long m=[d minute];
-                long s=[d second];
-                long time=m*60+s;
-                [_times addObject:@(time)];
-            }
-            NSDictionary *params1=[NSDictionary dictionaryWithObjectsAndKeys:self.announcedArray[i][@"q_uid"],@"uid",nil];
-            [RequestData userDetail:params1 FinishCallbackBlock:^(NSDictionary *block)  {
-                int code=[block[@"code"] intValue];
-                NSDictionary *dic;
-                if (code==0) {
-                    dic=[NSDictionary dictionaryWithObjectsAndKeys:block[@"content"][@"username"],@"name", nil];
-                }else{
-                    dic=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"name", nil];
-                }
-                [self.userNameArray addObject:dic];
-            }andFailure:^(NSError *error) {
-                hud.removeFromSuperViewOnHide = true;
-                [hud hide:true afterDelay:0];
-                //显示失败的提示；
-                MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-                failHUD.labelText = @"加载失败";
-                failHUD.mode = MBProgressHUDModeCustomView;
-                failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
-                failHUD.removeFromSuperViewOnHide = true;
-                [failHUD hide:true afterDelay:1];
-            }];
-        }
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.myTableView reloadData];
-        });
-    } andFailure:^(NSError *error) {
-        
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"数据加载异常";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
     }];
 }
 
@@ -199,7 +299,6 @@
     if(tableView==self.categoryTableView){
         return self.categoryNameArray.count;
     }
-    NSLog(@"%@",self.userNameArray);
     return self.announcedArray.count;
 }
 /**

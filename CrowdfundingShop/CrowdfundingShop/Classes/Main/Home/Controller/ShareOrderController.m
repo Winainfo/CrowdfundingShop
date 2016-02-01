@@ -15,7 +15,11 @@
 #import <UIImageView+WebCache.h>
 #import <ShareSDK/ShareSDK.h>
 #import <MBProgressHUD.h>
+#import <MJRefresh.h>
 @interface ShareOrderController ()<UIScrollViewDelegate,CartCellDelegate>
+{
+    NSInteger offset;
+}
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @property (weak, nonatomic) IBOutlet UITableView *sortTableView;
@@ -35,6 +39,14 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     self.tabBarController.tabBar.hidden = NO;
+}
+-(NSMutableArray *)shareArray
+{
+    if (_shareArray==nil)
+    {
+        _shareArray=[NSMutableArray array];
+    }
+    return _shareArray;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,16 +75,76 @@
     self.sortNameArray= @[ @"最新晒单", @"人气晒单", @"评论最多"];
     //请求分享列表
     if (self.shareArray.count==0) {
-        [self requestData:@"1" andpageSize:@"8"];
+        //最新揭晓数据请求
+        self.myTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+        [self.myTableView.mj_header beginRefreshing];
+        self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+        offset=1;
     }else{
         self.shareBtn.hidden=YES;
+        NSLog(@"数据%@",_shareArray);
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myTableView reloadData];
         });
     }
 }
+
+
+
 #pragma mark 数据请求
+/**
+ *  下拉刷新
+ */
+-(void)loadNewData
+{
+    offset=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData shareOrder:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.myTableView.mj_header endRefreshing];
+        if (code==0) {
+            [self.shareArray removeAllObjects];
+            NSArray *array=data[@"content"];
+            [self.shareArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        [self.myTableView.mj_header endRefreshing];
+    }];
+}
+/**
+ *  上拉加载
+ */
+-(void)loadMoreData
+{
+    offset+=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData shareOrder:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.myTableView.mj_footer endRefreshing];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.shareArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.shareArray.count, array.count)]];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        [self.myTableView.mj_footer endRefreshing];
+    }];
+    
+}
 -(void)requestData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
     //声明对象；
@@ -195,24 +267,24 @@
     self.imageArray=_shareArray[indexPath.row][@"sd_photolist"];
     cell.goodsImageScroll.contentSize=CGSizeMake(cell.goodsImageScroll.frame.size.width, cell.goodsImageScroll.frame.size.height);
     cell.goodsImageScroll.delegate=self;
-    [cell.peopleName setTitle:_shareArray[indexPath.row][@"q_user"] forState:UIControlStateNormal];
+    [cell.peopleName setTitle:_shareArray[indexPath.row][@"username"] forState:UIControlStateNormal];
     /**用户头像*/
     //拼接图片网址·
     NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_shareArray[indexPath.row][@"userphoto"]];
     //转换成url
     NSURL *imgUrl = [NSURL URLWithString:urlStr];
     [cell.peopleImageView sd_setImageWithURL:imgUrl];
-    //    for (int i=0; i<self.imageArray.count; i++) {
-    //        //拼接图片网址·
-    //        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.imageArray[i]];
-    //        //转换成url
-    //        NSURL *imgUrl = [NSURL URLWithString:urlStr];
-    //        UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake((i*100)+5, 0, 94, 94)];
-    //        imageV.layer.borderWidth=0.5;
-    //        imageV.layer.borderColor=[[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1]CGColor];
-    //        [imageV sd_setImageWithURL:imgUrl];
-    //        [cell.goodsImageScroll addSubview:imageV];
-    //    }
+        for (int i=0; i<self.imageArray.count; i++) {
+            //拼接图片网址·
+            NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.imageArray[i]];
+            //转换成url
+            NSURL *imgUrl = [NSURL URLWithString:urlStr];
+            UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake((i*100)+5, 0, 94, 94)];
+            imageV.layer.borderWidth=0.5;
+            imageV.layer.borderColor=[[UIColor colorWithRed:222.0/255.0 green:222.0/255.0 blue:222.0/255.0 alpha:1]CGColor];
+            [imageV sd_setImageWithURL:imgUrl];
+            [cell.goodsImageScroll addSubview:imageV];
+        }
     cell.delegate=self;
     //取消Cell选中时背景
     cell.selectionStyle=UITableViewCellSelectionStyleNone;

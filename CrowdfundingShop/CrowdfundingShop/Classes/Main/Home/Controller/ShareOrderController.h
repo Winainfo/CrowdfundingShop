@@ -13,5 +13,5 @@
     NSIndexPath    *_lastIndexPath;
 }
 /**晒单*/
-@property (retain,nonatomic)NSArray *shareArray;
+@property (retain,nonatomic)NSMutableArray *shareArray;
 @end

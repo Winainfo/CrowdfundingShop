@@ -17,7 +17,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GQj-9N-y2e">
                         <rect key="frame" x="10" y="8" width="80" height="80"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20150427091614458.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="1Yz-Qf-bTd">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1Yz-Qf-bTd">
                                 <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                             </imageView>
                         </subviews>
@@ -36,15 +36,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="37" id="zCz-UZ-DtL"/>
                         </constraints>
-                        <attributedString key="attributedText">
-                            <fragment content="(第816云)苹果（Apple）MacBook Pro MF840CH/A 13.3英寸宽屏笔记本电脑">
-                                <attributes>
-                                    <color key="NSColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                    <font key="NSFont" size="12" name="STHeiti"/>
-                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                </attributes>
-                            </fragment>
-                        </attributedString>
+                        <attributedString key="attributedText"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="价值:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OnB-IP-ECO" customClass="ARLabel">
@@ -56,7 +48,7 @@
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥10888" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llW-pD-tph" customClass="ARLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llW-pD-tph" customClass="ARLabel">
                         <rect key="frame" x="133" y="42" width="37.5" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="ueQ-TF-IRT"/>
@@ -73,7 +65,7 @@
                         <color key="progressTintColor" red="0.9882352941176471" green="0.70196078431372544" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="trackTintColor" red="0.99215686274509807" green="0.90196078431372551" blue="0.77647058823529413" alpha="1" colorSpace="calibratedRGB"/>
                     </progressView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="508" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYd-CC-Pp6" customClass="ARLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYd-CC-Pp6" customClass="ARLabel">
                         <rect key="frame" x="110" y="60" width="19.5" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="1Uc-Pq-Wr7"/>
@@ -91,7 +83,7 @@
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5188" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DE9-Im-TII" customClass="ARLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DE9-Im-TII" customClass="ARLabel">
                         <rect key="frame" x="173" y="60" width="24.5" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="yFJ-hi-2lc"/>
@@ -109,7 +101,7 @@
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4680" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Rh-Il-Ood" customClass="ARLabel">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Rh-Il-Ood" customClass="ARLabel">
                         <rect key="frame" x="231" y="60" width="26" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="D4W-ik-tjG"/>
@@ -190,7 +182,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="20150427091614458.jpg" width="640" height="620"/>
         <image name="shopCat" width="32" height="32"/>
     </resources>
 </document>

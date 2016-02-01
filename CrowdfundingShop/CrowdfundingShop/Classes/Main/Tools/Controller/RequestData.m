@@ -125,7 +125,7 @@
  *  @param changeFormat <#changeFormat description#>
  *  @param data         <#data description#>
  */
-+(void)hotGoods:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)hotGoods:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -136,7 +136,7 @@
         //        NSLog(@"所有商品请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //        NSLog(@"所有商品请求失败-%@",error);
+        failure(error);
     }];
 }
 /**
