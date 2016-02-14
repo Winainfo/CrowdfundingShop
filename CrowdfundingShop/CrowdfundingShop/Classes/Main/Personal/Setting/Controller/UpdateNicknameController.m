@@ -60,7 +60,7 @@
 
 /**完成操作*/
 -(void)saveClick{
-    [self requestData:self.nickName.text andqianming:self.nickname];
+    [self requestData:self.nickName.text];
 }
 
 #pragma mark 昵称修改
@@ -70,17 +70,17 @@
  *  @param username <#username description#>
  *  @param qianming <#qianming description#>
  */
--(void)requestData:(NSString *)username andqianming:(NSString *)qianming {
+-(void)requestData:(NSString *)username{
     //沙盒路径
     AccountModel *account=[AccountTool account];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",username,@"username",qianming,@"qianming",nil];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",username,@"username",@"",@"qianming",nil];
     //声明对象；
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
     //显示的文本；
     hud.labelText = @"正在修改";
     [RequestData updateNikenameSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"]intValue];
-        NSLog(@"%@",data[@"content"]);
+        NSLog(@"%@",data);
         if (code==0) {
             //加载成功，先移除原来的HUD；
             hud.removeFromSuperViewOnHide = true;

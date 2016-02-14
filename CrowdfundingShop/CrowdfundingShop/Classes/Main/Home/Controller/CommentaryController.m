@@ -67,6 +67,7 @@
         int code=[data[@"code"] intValue];
         if (code==0) {
             self.contentArray=data[@"content"];
+            NSLog(@"头像%@",data[@"content"]);
             //更新主线程
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.myTableView reloadData];

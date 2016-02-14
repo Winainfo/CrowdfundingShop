@@ -10,12 +10,16 @@
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
 #import <ShareSDK/ShareSDK.h>
+#import "Database.h"
+#import "CartModel.h"
 @interface DetailController ()
 /**立即购买*/
 @property (weak, nonatomic) IBOutlet UIButton *buyGoodsBtn;
 /**添加购物车*/
 @property (weak, nonatomic) IBOutlet UIButton *addCarBtn;
 @property (retain,nonatomic) NSString *flag;
+@property (retain,nonatomic)NSMutableArray *array;
+
 @end
 
 @implementation DetailController
@@ -150,6 +154,44 @@
             }
         } andFailure:^(NSError *error) {
         }];
+    }
+}
+
+- (IBAction)addCartClick:(id)sender {
+    //初始化数据库
+    Database *db=[Database new];
+    _array=[db searchTestList:_dic[@"id"]];
+    if (_array.count>0) {
+        CartModel *cartList=_array[0];
+        NSLog(@"已存在%ld",(unsigned long)_array.count);
+        int pkid=cartList.pk_id;
+        NSLog(@"%i",pkid);
+        cartList.num=10;
+        cartList.price=10;
+        cartList.pk_id=pkid;
+        if ([db updateList:cartList]) {
+            NSLog(@"成功");
+        }else{
+            NSLog(@"失败");
+        }
+    }else{
+        CartModel *cartList=[CartModel new];
+        //数据库 插入
+        cartList.shopId=_dic[@"id"];
+        cartList.title=_dic[@"title"];
+        cartList.shenyurenshu=_dic[@"shenyurenshu"];
+        cartList.thumb=_dic[@"thumb"];
+        cartList.num=1;
+        cartList.price=[_dic[@"yunjiage"]intValue];
+        if([db insertList:cartList])
+        {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }else
+        {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加失败" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
     }
 }
 

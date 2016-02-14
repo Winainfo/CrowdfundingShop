@@ -12,15 +12,33 @@
 #import "AccountTool.h"
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
+#import <MJRefresh.h>
 @interface AccessGoodsController (){
     AccountModel *account;
+     NSInteger offset;
 }
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
-@property (retain,nonatomic) NSArray *goodsArray;
+@property (retain,nonatomic) NSMutableArray *goodsArray;
 @end
 
 @implementation AccessGoodsController
-
+-(NSMutableArray *)goodsArray
+{
+    if (_goodsArray==nil)
+    {
+        _goodsArray=[NSMutableArray array];
+    }
+    return _goodsArray;
+}
+//隐藏和显示底部标签栏
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -40,9 +58,124 @@
     //注册到表格视图
     [self.myTableView  registerNib:nib forCellReuseIdentifier:@"AccessGoodsCell"];
     [self setExtraCellLineHidden:self.myTableView];
-    [self requestServer:@"1" andpageSize:@"8"];
+    /**未晒单数据*/
+    self.myTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [self.myTableView.mj_header beginRefreshing];
+    self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    offset=1;
 }
 #pragma mark 数据源
+/**
+ *  下拉刷新
+ */
+-(void)loadNewData
+{
+    if (self.goodsArray.count==0) {
+        account=[AccountTool account];
+        offset=1;
+        NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+        //声明对象；
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        //显示的文本；
+        hud.labelText = @"正在加载...";
+        [RequestData gainGoodsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+            int code=[data[@"code"] intValue];
+            [self.myTableView.mj_header endRefreshing];
+            if (code==0) {
+                //加载成功，先移除原来的HUD；
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:0];
+                //然后显示一个成功的提示；
+                MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                successHUD.labelText = @"加载成功";
+                successHUD.mode = MBProgressHUDModeCustomView;
+                //可以设置对应的图片；
+                successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+                successHUD.removeFromSuperViewOnHide = true;
+                [successHUD hide:true afterDelay:1];
+                [self.goodsArray removeAllObjects];
+                NSArray *array=data[@"content"];
+                [self.goodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+                //更新主线程
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.myTableView reloadData];
+                });
+            }else{
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:0];
+                //显示失败的提示；
+                MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                failHUD.labelText = @"暂无数据";
+                failHUD.mode = MBProgressHUDModeCustomView;
+                failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+                failHUD.removeFromSuperViewOnHide = true;
+                [failHUD hide:true afterDelay:1];
+            }
+        } andFailure:^(NSError *error) {
+            [self.myTableView.mj_header endRefreshing];
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //显示失败的提示；
+            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            failHUD.labelText = @"数据加载异常";
+            failHUD.mode = MBProgressHUDModeCustomView;
+            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+            failHUD.removeFromSuperViewOnHide = true;
+            [failHUD hide:true afterDelay:1];
+        }];
+    }else{
+        account=[AccountTool account];
+        offset=1;
+        NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+        [RequestData gainGoodsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+            int code=[data[@"code"] intValue];
+            [self.myTableView.mj_header endRefreshing];
+            if (code==0) {
+                [self.goodsArray removeAllObjects];
+                NSArray *array=data[@"content"];
+                [self.goodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+                //更新主线程
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.myTableView reloadData];
+                });
+            }else{
+                
+            }
+        } andFailure:^(NSError *error) {
+            [self.myTableView.mj_header endRefreshing];
+        }];
+    }
+}
+/**
+ *  上拉加载
+ */
+-(void)loadMoreData
+{
+    account=[AccountTool account];
+    offset+=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData gainGoodsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.myTableView.mj_footer endRefreshing];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.goodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.goodsArray.count, array.count)]];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        [self.myTableView.mj_footer endRefreshing];
+    }];
+    
+}
+
 /**
  *  获得的商品
  */

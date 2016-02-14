@@ -1,27 +1,29 @@
 //
-//  ShareOrderDetailController.m
+//  ShareOrderDetailController1.m
 //  CrowdfundingShop
 //
-//  Created by 吴金林 on 15/12/21.
-//  Copyright © 2015年 吴金林. All rights reserved.
+//  Created by 吴金林 on 16/2/11.
+//  Copyright © 2016年 吴金林. All rights reserved.
 //
 
-#import "ShareOrderDetailController.h"
+#import "ShareOrderDetailController1.h"
 #import "CommentaryCell.h"
 #import "CommentaryController.h"
 #import "RequestData.h"
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
-@interface ShareOrderDetailController ()
-@property (nonatomic, strong) UITableViewCell *prototypeCell;
+@interface ShareOrderDetailController1 ()
 /**评论数组*/
 @property(retain,nonatomic) NSArray *contentArray;
 @property (weak, nonatomic) IBOutlet UIView *myView;
-@property (strong, nonatomic) IBOutlet UITableView *myTableView;
-@property (weak, nonatomic) IBOutlet UITableViewCell *imageCell;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
+/**高度*/
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewHeight;
+
 @end
 
-@implementation ShareOrderDetailController
+@implementation ShareOrderDetailController1
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,7 +33,6 @@
     self.peopleImageView.layer.cornerRadius=self.peopleImageView.frame.size.width/2.0;
     self.peopleImageView.layer.masksToBounds=YES;
 }
-
 #pragma mark 数据请求
 /**
  *  商品详情
@@ -46,31 +47,31 @@
         self.numberLabel.text=_dic[@"sd_ping"];
         //时间戳转换时间
         long time=[_dic[@"sd_time"] integerValue];//时间戳
-        self.timeLabel.text=[ShareOrderDetailController timeFromTimestamp:time];
+        self.timeLabel.text=[ShareOrderDetailController1 timeFromTimestamp:time];
         /**商品详情*/
         [self getShopDetail:_dic[@"sd_shopid"]];
         /**晒单图片*/
-                NSArray *imageArray=_dic[@"sd_photolist"];
-                for (int i=0; i<imageArray.count; i++) {
-                    //拼接图片网址·
-                    NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,imageArray[i]];
-                    //转换成url
-                    NSURL *imgUrl = [NSURL URLWithString:urlStr];
-                    UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(10, (i*220)+130, 300, 220)];
-                    [imageV sd_setImageWithURL:imgUrl];
-                    [self.view addSubview:imageV];
-                }
-        [self.peopleNameBtn setTitle:_dic[@"username"] forState:UIControlStateNormal];
+        NSArray *imageArray=_dic[@"sd_photolist"];
+        //修改高度
+        self.contentHeight.constant=imageArray.count*200;
+         self.viewHeight.constant=155+self.contentHeight.constant;
+        for (int i=0; i<imageArray.count; i++) {
+            //拼接图片网址·
+            NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,imageArray[i]];
+            //转换成url
+            NSURL *imgUrl = [NSURL URLWithString:urlStr];
+//            UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(10, (i*200)+130, 200, 200)];
+             UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake((self.contentView.frame.size.width-200)/2.0, (i*200)+130, 200, 200)];
+            [imageV sd_setImageWithURL:imgUrl];
+            [self.contentView addSubview:imageV];
+        }
+        [self.peopleNameBtn setTitle:_dic[@"q_user"] forState:UIControlStateNormal];
         /**头像图片*/
         //拼接图片网址·
         NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,_dic[@"userphoto"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [self.peopleImageView sd_setImageWithURL:imgUrl];
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.myTableView reloadData];
-        });
         
     }else{
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:sd_Id,@"sd_id",nil];
@@ -92,43 +93,36 @@
                 successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
                 successHUD.removeFromSuperViewOnHide = true;
                 [successHUD hide:true afterDelay:1];
-
+                
                 self.titleLabel.text=data[@"content"][@"sd_title"];
                 self.contentTextView.text=data[@"content"][@"sd_content"];
                 self.numberLabel.text=data[@"content"][@"sd_ping"];
                 //时间戳转换时间
                 long time=[data[@"content"][@"sd_time"] integerValue];//时间戳
-                self.timeLabel.text=[ShareOrderDetailController timeFromTimestamp:time];
+                self.timeLabel.text=[ShareOrderDetailController1 timeFromTimestamp:time];
                 /**商品详情*/
                 [self getShopDetail:data[@"content"][@"sd_shopid"]];
                 /**晒单图片*/
                 NSArray *imageArray=data[@"content"][@"sd_photolist"];
-                // 1. 用一个临时变量保存返回值。
-                CGRect temp=self.imageCell.frame;
-                // 2. 给这个变量赋值。因为变量都是L-Value，可以被赋值
-                temp.size.height=2200;
-                // 3. 修改frame的值
-                self.imageCell.frame=temp;
+                //修改高度
+                self.contentHeight.constant=imageArray.count*200;
+                self.viewHeight.constant=155+self.contentHeight.constant;
                 for (int i=0; i<imageArray.count; i++) {
                     //拼接图片网址·
                     NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,imageArray[i]];
                     //转换成url
                     NSURL *imgUrl = [NSURL URLWithString:urlStr];
-                    UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(10, (i*220)+130, 300, 220)];
+                    UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake((self.contentView.frame.size.width-200)/2.0, (i*200)+130, 200, 200)];
                     [imageV sd_setImageWithURL:imgUrl];
-                    [self.view addSubview:imageV];
+                    [self.contentView addSubview:imageV];
                 }
-                [self.peopleNameBtn setTitle:data[@"content"][@"username"] forState:UIControlStateNormal];
+                [self.peopleNameBtn setTitle:data[@"content"][@"q_user"] forState:UIControlStateNormal];
                 /**商品图片*/
                 //拼接图片网址·
                 NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,data[@"content"][@"img"]];
                 //转换成url
                 NSURL *imgUrl = [NSURL URLWithString:urlStr];
                 [self.peopleImageView sd_setImageWithURL:imgUrl];
-                //更新主线程
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.myTableView reloadData];
-                });
                 
             }else{
                 hud.removeFromSuperViewOnHide = true;
@@ -151,12 +145,12 @@
             failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
             failHUD.removeFromSuperViewOnHide = true;
             [failHUD hide:true afterDelay:1];
-
+            
         }];
     }
 }
 -(void)getShopDetail:(NSString *)goodsId{
-      NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:goodsId,@"goodsId",nil];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:goodsId,@"goodsId",nil];
     [RequestData lotteryGoodsDetail:params FinishCallbackBlock:^(NSDictionary *data) {
         self.numLabel.text=[NSString stringWithFormat:@"%@",data[@"content"][@"user_shop_number"]];
         self.goodsNameLabel.text=[NSString stringWithFormat:@"(第%@期)%@",data[@"content"][@"qishu"],data[@"content"][@"title"]];
@@ -164,17 +158,7 @@
         
     }];
 }
-/**
- *  去掉多余的分割线
- *
- *  @param tableView <#tableView description#>
- */
-- (void)setExtraCellLineHidden: (UITableView *)tableView
-{
-    UIView *view =[ [UIView alloc]init];
-    view.backgroundColor = [UIColor clearColor];
-    [tableView setTableFooterView:view];
-}
+
 - (IBAction)clickBtn:(UIButton *)sender {
     //设置故事板为第一启动
     UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -261,4 +245,5 @@
     NSString *timeSp = [NSString stringWithFormat:@"%ld",(long)[localeDate timeIntervalSince1970]];
     return timeSp;
 }
+
 @end

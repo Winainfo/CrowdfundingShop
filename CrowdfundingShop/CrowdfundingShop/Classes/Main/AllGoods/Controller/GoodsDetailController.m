@@ -78,7 +78,6 @@
             [successHUD hide:true afterDelay:1];
 
             self.goodsDictionary=data[@"content"];
-            NSLog(@"数据%@",data[@"content"]);
             /**商品名字*/
             self.goodsNameLabel.text=data[@"content"][@"title"];
             /**商品描述*/

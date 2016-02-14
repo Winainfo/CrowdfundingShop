@@ -246,4 +246,28 @@
  *  @param block 返回块值
  */
 +(void)getCalResultSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   添加收货地址
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)addAddressSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   收货地址
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)getAddressSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   删除地址
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)delAddressSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   更新地址
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)updateAddressSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 @end

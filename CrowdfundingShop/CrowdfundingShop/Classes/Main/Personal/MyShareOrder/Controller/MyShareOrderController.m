@@ -14,19 +14,52 @@
 #import "AccountTool.h"
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
+#import <MJRefresh.h>
 @interface MyShareOrderController ()<LXDSegmentControlDelegate>{
     AccountModel *account;
+    NSInteger offset1;
+    NSInteger offset2;
 }
+/**未晒单表*/
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
+/**已晒单表*/
 @property (weak, nonatomic) IBOutlet UITableView *shareOrderTableView;
 /**已晒单数组*/
-@property (retain,nonatomic)NSArray *doArray;
+@property (retain,nonatomic)NSMutableArray *doArray;
 /**未晒单数组*/
-@property (retain,nonatomic)NSArray *goodsArray;
+@property (retain,nonatomic)NSMutableArray *goodsArray;
+/**
+ *  头部视图
+ */
+@property (weak, nonatomic) IBOutlet UIView *topView;
 @end
 
 @implementation MyShareOrderController
-
+-(NSMutableArray *)doArray
+{
+    if (_doArray==nil)
+    {
+        _doArray=[NSMutableArray array];
+    }
+    return _doArray;
+}
+-(NSMutableArray *)goodsArray
+{
+    if (_goodsArray==nil)
+    {
+        _goodsArray=[NSMutableArray array];
+    }
+    return _goodsArray;
+}
+//隐藏和显示底部标签栏
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -51,8 +84,184 @@
     //注册到表格视图
     [self.shareOrderTableView  registerNib:nib1 forCellReuseIdentifier:@"DoShareOrderCell"];
     [self setExtraCellLineHidden:self.shareOrderTableView];
-    [self doShareServer:@"1" andpageSize:@"6"];
-    [self shareServer:@"1" andpageSize:@"6"];
+    [self segmentControl];
+    /**已晒单数据*/
+    self.shareOrderTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadDoData)];
+    [self.shareOrderTableView.mj_header beginRefreshing];
+    self.shareOrderTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadDoMoreData)];
+    offset1=1;
+    /**未晒单数据*/
+    self.myTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [self.myTableView.mj_header beginRefreshing];
+    self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    offset2=1;
+}
+#pragma mark - 加载新数据
+/**
+ *  已晒单下拉刷新
+ */
+-(void)loadDoData
+{
+    if (self.doArray.count==0) {
+        //声明对象；
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        //显示的文本；
+        hud.labelText = @"正在加载...";
+        account=[AccountTool account];
+        offset1=1;
+        NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset1];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+        [RequestData myShareSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+            int code=[data[@"code"] intValue];
+            [self.shareOrderTableView.mj_header endRefreshing];
+            if (code==0) {
+                //加载成功，先移除原来的HUD；
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:0];
+                //然后显示一个成功的提示；
+                MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                successHUD.labelText = @"加载成功";
+                successHUD.mode = MBProgressHUDModeCustomView;
+                //可以设置对应的图片；
+                successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+                successHUD.removeFromSuperViewOnHide = true;
+                [successHUD hide:true afterDelay:1];
+                [self.doArray removeAllObjects];
+                NSArray *array=data[@"content"];
+                [self.doArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+                //更新主线程
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.shareOrderTableView reloadData];
+                });
+            }else{
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:0];
+                //显示失败的提示；
+                MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                failHUD.labelText = @"暂无数据";
+                failHUD.mode = MBProgressHUDModeCustomView;
+                failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+                failHUD.removeFromSuperViewOnHide = true;
+                [failHUD hide:true afterDelay:1];
+
+            }
+        } andFailure:^(NSError *error) {
+            [self.shareOrderTableView.mj_header endRefreshing];
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //显示失败的提示；
+            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            failHUD.labelText = @"数据加载异常";
+            failHUD.mode = MBProgressHUDModeCustomView;
+            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+            failHUD.removeFromSuperViewOnHide = true;
+            [failHUD hide:true afterDelay:1];
+
+        }];
+    }else {
+    account=[AccountTool account];
+    offset1=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset1];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData myShareSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.shareOrderTableView.mj_header endRefreshing];
+        if (code==0) {
+            [self.doArray removeAllObjects];
+            NSArray *array=data[@"content"];
+            [self.doArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.shareOrderTableView reloadData];
+            });
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        [self.shareOrderTableView.mj_header endRefreshing];
+    }];
+    }
+}
+/**
+ *  已晒单上拉加载
+ */
+-(void)loadDoMoreData
+{
+    account=[AccountTool account];
+    offset1+=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset1];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"",@"state",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData myShareSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.shareOrderTableView.mj_footer endRefreshing];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.doArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.doArray.count, array.count)]];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.shareOrderTableView reloadData];
+            });
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        [self.shareOrderTableView.mj_footer endRefreshing];
+    }];
+    
+}
+/**
+ *  未晒单下拉
+ */
+-(void)loadNewData
+{
+    account=[AccountTool account];
+    offset2=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset2];
+   NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData postSingleList:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.myTableView.mj_header endRefreshing];
+        if (code==0) {
+            [self.goodsArray removeAllObjects];
+            NSArray *array=data[@"content"];
+            [self.goodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        [self.myTableView.mj_header endRefreshing];
+    }];
+}
+/**
+ *  未晒单上拉加载
+ */
+-(void)loadMoreData
+{
+    account=[AccountTool account];
+    offset2+=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset2];
+   NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    [RequestData postSingleList:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.myTableView.mj_footer endRefreshing];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.goodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.goodsArray.count, array.count)]];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        [self.myTableView.mj_footer endRefreshing];
+    }];
+    
 }
 #pragma mark 数据源
 /**
@@ -219,9 +428,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
-    view.backgroundColor=[UIColor whiteColor];
+/**
+ *  选项卡
+ */
+-(void)segmentControl{
     CGRect frame = CGRectMake(40, 5, 240.f, 30.f);
     NSArray * items = @[@"已晒单", @"未晒单"];
     LXDSegmentControlConfiguration * select = [LXDSegmentControlConfiguration configurationWithControlType: LXDSegmentControlTypeSelectBlock items: items];
@@ -232,15 +442,8 @@
     select.itemTextColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
     select.cornerWidth=0.5f;
     LXDSegmentControl * selectControl = [LXDSegmentControl segmentControlWithFrame: frame configuration: select delegate: self];
-    selectControl.center=view.center;
-    [view addSubview:selectControl];
-    UIView *lineview1=[[UIView alloc]initWithFrame:CGRectMake(0, view.frame.size.height, kScreenWidth, 0.5)];
-    lineview1.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
-    [view addSubview:lineview1];
-    return view;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 40;
+    [_topView addSubview:selectControl];
+    
 }
 #pragma mark - LXDSegmentControlDelegate
 - (void)segmentControl:(LXDSegmentControl *)segmentControl didSelectAtIndex:(NSUInteger)index

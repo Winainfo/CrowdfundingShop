@@ -15,34 +15,58 @@
 #import "AccountTool.h"
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
+#import <MJRefresh.h>
 @interface ConsumeController ()<LXDSegmentControlDelegate>{
     AccountModel *account;
+    NSInteger offset1;
+    NSInteger offset2;
 }
 
 /**充值明细表*/
-@property (weak, nonatomic) IBOutlet UITableView *myTableView;
-/**消费明细表*/
 @property (weak, nonatomic) IBOutlet UITableView *rechargeTableView;
 /**充值数组*/
-@property (retain,nonatomic) NSArray *rechargeArray;
+@property (retain,nonatomic) NSMutableArray *rechargeArray;
+/**消费明细表*/
+@property (weak, nonatomic) IBOutlet UITableView *consumeTableView;
 /**消费数组*/
-@property (retain,nonatomic) NSArray *consumeArray;
-//表头
-@property (retain,nonatomic) UIView *recharView;
-/**总金额*/
-@property (retain,nonatomic) UILabel *moneyLabel;
-@property (retain,nonatomic) UILabel *label1;
-@property (retain,nonatomic) UILabel *label2;
-@property (retain,nonatomic) UILabel *label3;
-@property (retain,nonatomic) UILabel *consume;
-@property (retain,nonatomic) UIView *lineview1;
-@property (retain,nonatomic) UIView *lineview2;
-@property (retain,nonatomic) UIView *lineview3;
-@property (retain,nonatomic) UILabel *consumeMoney;
+@property (retain,nonatomic) NSMutableArray *consumeArray;
+@property (weak, nonatomic) IBOutlet UIView *topView;
+/**充值View*/
+@property (weak, nonatomic) IBOutlet UIView *rechargeView;
+/**充值金额*/
+@property (weak, nonatomic) IBOutlet ARLabel *rechargeLabel;
+/**消费View*/
+@property (weak, nonatomic) IBOutlet UIView *consumeView;
+/**消费金额*/
+@property (weak, nonatomic) IBOutlet ARLabel *consumeLabel;
 @end
 
 @implementation ConsumeController
-
+-(NSMutableArray *)rechargeArray
+{
+    if (_rechargeArray==nil)
+    {
+        _rechargeArray=[NSMutableArray array];
+    }
+    return _rechargeArray;
+}
+-(NSMutableArray *)consumeArray
+{
+    if (_consumeArray==nil)
+    {
+        _consumeArray=[NSMutableArray array];
+    }
+    return _consumeArray;
+}
+//隐藏和显示底部标签栏
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -60,81 +84,212 @@
     //创建xib文件对象
     UINib *nib=[UINib nibWithNibName:@"ConsumeCell" bundle:[NSBundle mainBundle]];
     //注册到表格视图
-    [self.myTableView  registerNib:nib forCellReuseIdentifier:@"ConsumeCell"];
-    [self setExtraCellLineHidden:self.myTableView];
+    [self.rechargeTableView  registerNib:nib forCellReuseIdentifier:@"ConsumeCell"];
+    [self setExtraCellLineHidden:self.rechargeTableView];
     //创建xib文件对象
     UINib *nib1=[UINib nibWithNibName:@"RechargeCell" bundle:[NSBundle mainBundle]];
     //注册到表格视图
-    [self.rechargeTableView registerNib:nib1 forCellReuseIdentifier:@"RechargeCell"];
-    [self setExtraCellLineHidden:self.rechargeTableView];
-    [self consumeServer:@"1" andpageSize:@"20"];
-    [self rechargeServer:@"1" andpageSize:@"20"];
+    [self.consumeTableView registerNib:nib1 forCellReuseIdentifier:@"RechargeCell"];
+    [self setExtraCellLineHidden:self.consumeTableView];
+    /**已充值数据*/
+    self.rechargeTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadDoData)];
+    [self.rechargeTableView.mj_header beginRefreshing];
+    self.rechargeTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadDoMoreData)];
+    offset1=1;
+    /**已消费数据*/
+    self.consumeTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+    [self.consumeTableView.mj_header beginRefreshing];
+    self.consumeTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    offset2=1;
+    [self segmentControl];
 }
-#pragma mark 数据源
+
+#pragma mark - 加载新数据
 /**
- *  充值明细
+ *  充值明细下拉刷新
  */
--(void)rechargeServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+-(void)loadDoData
+{
+    if (self.rechargeArray.count==0) {
+        //声明对象；
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        //显示的文本；
+        hud.labelText = @"正在加载...";
+        account=[AccountTool account];
+        offset1=1;
+        NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset1];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",pageIndex,@"pageIndex",@"20",@"pageSize",nil];
+        [RequestData myRechargeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+            int code=[data[@"code"] intValue];
+            [self.rechargeTableView.mj_header endRefreshing];
+            if (code==0) {
+                //加载成功，先移除原来的HUD；
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:0];
+                //然后显示一个成功的提示；
+                MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                successHUD.labelText = @"加载成功";
+                successHUD.mode = MBProgressHUDModeCustomView;
+                //可以设置对应的图片；
+                successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+                successHUD.removeFromSuperViewOnHide = true;
+                [successHUD hide:true afterDelay:1];
+                [self.rechargeArray removeAllObjects];
+                NSArray *array=data[@"content"];
+                [self.rechargeArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+                int money=0;
+                for (int i=0; i<self.rechargeArray.count; i++) {
+                    money+=[self.rechargeArray[i][@"money"] intValue];
+                }
+                self.rechargeLabel.text=[NSString stringWithFormat:@"¥%i",money];
+                //更新主线程
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.rechargeTableView reloadData];
+                });
+            }else{
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:0];
+                //显示失败的提示；
+                MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                failHUD.labelText = @"暂无数据";
+                failHUD.mode = MBProgressHUDModeCustomView;
+                failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+                failHUD.removeFromSuperViewOnHide = true;
+                [failHUD hide:true afterDelay:1];
+                
+            }
+        } andFailure:^(NSError *error) {
+            [self.rechargeTableView.mj_header endRefreshing];
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //显示失败的提示；
+            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            failHUD.labelText = @"数据加载异常";
+            failHUD.mode = MBProgressHUDModeCustomView;
+            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+            failHUD.removeFromSuperViewOnHide = true;
+            [failHUD hide:true afterDelay:1];
+            
+        }];
+    }else {
+        account=[AccountTool account];
+        offset1=1;
+        NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset1];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",pageIndex,@"pageIndex",@"20",@"pageSize",nil];
+        [RequestData myRechargeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+            int code=[data[@"code"] intValue];
+            [self.rechargeTableView.mj_header endRefreshing];
+            if (code==0) {
+                [self.rechargeArray removeAllObjects];
+                NSArray *array=data[@"content"];
+                [self.rechargeArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+                int money=0;
+                for (int i=0; i<self.rechargeArray.count; i++) {
+                    money+=[self.rechargeArray[i][@"money"] intValue];
+                }
+                self.rechargeLabel.text=[NSString stringWithFormat:@"¥%i",money];
+                //更新主线程
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.rechargeTableView reloadData];
+                });
+            }else{
+                
+            }
+        } andFailure:^(NSError *error) {
+            [self.rechargeTableView.mj_header endRefreshing];
+        }];
+    }
+}
+/**
+ *  充值明细上拉加载
+ */
+-(void)loadDoMoreData
+{
     account=[AccountTool account];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
-    //声明对象；
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-    //显示的文本；
-    hud.labelText = @"正在加载...";
+    offset1+=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset1];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"",@"state",pageIndex,@"pageIndex",@"20",@"pageSize",nil];
     [RequestData myRechargeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-        //加载成功，先移除原来的HUD；
-        hud.removeFromSuperViewOnHide = true;
-        [hud hide:true afterDelay:0];
-        //然后显示一个成功的提示；
-        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-        successHUD.labelText = @"加载成功";
-        successHUD.mode = MBProgressHUDModeCustomView;
-        //可以设置对应的图片；
-        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
-        successHUD.removeFromSuperViewOnHide = true;
-        [successHUD hide:true afterDelay:1];
         int code=[data[@"code"] intValue];
+        [self.rechargeTableView.mj_footer endRefreshing];
         if (code==0) {
-            self.rechargeArray=data[@"content"];
+            NSArray *array=data[@"content"];
+            [self.rechargeArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.rechargeArray.count, array.count)]];
+            int money=0;
+            for (int i=0; i<self.rechargeArray.count; i++) {
+                money+=[self.rechargeArray[i][@"money"] intValue];
+            }
+            self.rechargeLabel.text=[NSString stringWithFormat:@"¥%i",money];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.rechargeTableView reloadData];
+            });
         }else{
             
         }
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.myTableView reloadData];
-        });
     } andFailure:^(NSError *error) {
-        hud.removeFromSuperViewOnHide = true;
-        [hud hide:true afterDelay:0];
-        //显示失败的提示；
-        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-        failHUD.labelText = @"加载失败";
-        failHUD.mode = MBProgressHUDModeCustomView;
-        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
-        failHUD.removeFromSuperViewOnHide = true;
-        [failHUD hide:true afterDelay:1];
+        [self.rechargeTableView.mj_footer endRefreshing];
+    }];
+    
+}
+/**
+ *  消费明细下拉
+ */
+-(void)loadNewData
+{
+    account=[AccountTool account];
+    offset2=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset2];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",pageIndex,@"pageIndex",@"20",@"pageSize",nil];
+    [RequestData myConsumeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.consumeTableView.mj_header endRefreshing];
+        if (code==0) {
+            [self.consumeArray removeAllObjects];
+            NSArray *array=data[@"content"];
+            [self.consumeArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+            int money=0;
+            for (int i=0; i<self.consumeArray.count; i++) {
+                money+=[self.consumeArray[i][@"money"] intValue];
+            }
+            self.consumeLabel.text=[NSString stringWithFormat:@"¥%i",money];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.consumeTableView reloadData];
+            });
+        }else{
+            
+        }
+    } andFailure:^(NSError *error) {
+        [self.consumeTableView.mj_header endRefreshing];
     }];
 }
 /**
- * 消费明细
+ *  消费明细上拉加载
  */
--(void)consumeServer:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+-(void)loadMoreData
+{
     account=[AccountTool account];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    offset2+=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset2];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",pageIndex,@"pageIndex",@"20",@"pageSize",nil];
     [RequestData myConsumeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-        self.consumeArray=data[@"content"];
-        int money=0;
-        for (int i=0; i<self.consumeArray.count; i++) {
-            money+=[self.consumeArray[i][@"money"] intValue];
+        int code=[data[@"code"] intValue];
+        [self.consumeTableView.mj_footer endRefreshing];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.consumeArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.consumeArray.count, array.count)]];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.consumeTableView reloadData];
+            });
+        }else{
+            
         }
-        self.consumeMoney.text=[NSString stringWithFormat:@"%i",money];
-        //更新主线程
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.rechargeTableView reloadData];
-        });
     } andFailure:^(NSError *error) {
-        
+        [self.consumeTableView.mj_footer endRefreshing];
     }];
+    
 }
 /**
  *  返回
@@ -165,7 +320,7 @@
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView==self.myTableView) {
+    if (tableView==self.rechargeTableView) {
         return self.rechargeArray.count;
     }
     return self.consumeArray.count;
@@ -179,21 +334,21 @@
  *  @return <#return value description#>
  */
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (tableView==self.myTableView) {
+    if (tableView==self.rechargeTableView) {
         static NSString *cellStr=@"ConsumeCell";
-        ConsumeCell *cell=[self.myTableView dequeueReusableCellWithIdentifier:cellStr];
+        ConsumeCell *cell=[self.rechargeTableView dequeueReusableCellWithIdentifier:cellStr];
         if (cell==nil) {
             cell=[[ConsumeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
         cell.timeLabel.text=_rechargeArray[indexPath.row][@"time"];
-        cell.moneyLabel.text=_rechargeArray[indexPath.row][@"money"];
+        cell.moneyLabel.text=[NSString stringWithFormat:@"¥%@",_rechargeArray[indexPath.row][@"money"]];
         cell.channelLabel.text=_rechargeArray[indexPath.row][@"content"];
         return cell;
-    }else if(tableView==self.rechargeTableView){
+    }else if(tableView==self.consumeTableView){
         static NSString *cellStr=@"RechargeCell";
-        RechargeCell *cell=[self.rechargeTableView dequeueReusableCellWithIdentifier:cellStr];
+        RechargeCell *cell=[self.consumeTableView dequeueReusableCellWithIdentifier:cellStr];
         if (cell==nil) {
             cell=[[RechargeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
         }
@@ -225,15 +380,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    self.recharView=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 115)];
-    self.recharView.backgroundColor=[UIColor whiteColor];
-    UIView *view1=[[UIView alloc]initWithFrame:CGRectMake(0,0, kScreenWidth, 40)];
-    [self.recharView addSubview:view1];
-    CGRect frame = CGRectMake(40, 5, 240.f, 30.f);
+/**
+ *  选项卡
+ */
+-(void)segmentControl{
+    CGRect frame = CGRectMake(40,9, 240.f, 30.f);
     NSArray * items = @[@"充值明细", @"消费明细"];
     LXDSegmentControlConfiguration * select = [LXDSegmentControlConfiguration configurationWithControlType: LXDSegmentControlTypeSelectBlock items: items];
-    select.currentIndex=1;
     select.cornerColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
     select.backgroundColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
     select.itemBackgroundColor=[UIColor whiteColor];
@@ -241,92 +394,22 @@
     select.itemTextColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
     select.cornerWidth=0.5f;
     LXDSegmentControl * selectControl = [LXDSegmentControl segmentControlWithFrame: frame configuration: select delegate: self];
-    selectControl.center=view1.center;
-    if (tableView==self.myTableView) {
-        /**充值明细表头*/
-        self.lineview1=[[UIView alloc]initWithFrame:CGRectMake(0, 43, kScreenWidth, 0.5)];
-        self.lineview1.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
-        [self.recharView addSubview:self.lineview1];
-        self.consume=[[UILabel alloc] initWithFrame:CGRectMake(96,57, 75, 21)];
-        self.consume.text=@"总充值金额";
-        self.consume.textColor=[UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
-        self.consume.font=[UIFont fontWithName:@"Menlo" size:14];
-        [self.recharView addSubview:self.consume];
-        self.moneyLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.consume.frame.origin.x+self.consume.frame.size.width+5,57, 75, 21)];
-        self.moneyLabel.text=@"¥11.00";
-        self.moneyLabel.textColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
-        self.moneyLabel.font=[UIFont fontWithName:@"Menlo" size:14];
-        [self.recharView addSubview:self.moneyLabel];
-        self.lineview2=[[UIView alloc]initWithFrame:CGRectMake(0, 85, kScreenWidth, 0.5)];
-        self.lineview2.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
-        [self.recharView addSubview:self.lineview2];
-        self.label1=[[UILabel alloc] initWithFrame:CGRectMake(10,91, 48, 18)];
-        self.label1.text=@"充值时间";
-        self.label1.textColor=[UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
-        self.label1.font=[UIFont fontWithName:@"Menlo" size:12];
-        [self.recharView addSubview:self.label1];
-        self.label2=[[UILabel alloc] initWithFrame:CGRectMake(160, 91, 48, 18)];
-        self.label2.text=@"资金渠道";
-        self.label2.textColor=[UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
-        self.label2.font=[UIFont fontWithName:@"Menlo" size:12];
-        [self.recharView addSubview:self.label2];
-        self.label3=[[UILabel alloc] initWithFrame:CGRectMake(250, 91, 48, 18)];
-        self.label3.text=@"充值金额";
-        self.label3.textColor=[UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
-        self.label3.font=[UIFont fontWithName:@"Menlo" size:12];
-        [self.recharView addSubview:self.label3];
-        self.lineview3=[[UIView alloc]initWithFrame:CGRectMake(0, self.recharView.frame.size.height, kScreenWidth, 0.5)];
-        self.lineview3.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
-        [self.recharView addSubview:self.lineview3];
-    }else if(tableView==self.rechargeTableView){
-        static NSString *cellStr=@"RechargeCell";
-        RechargeCell *cell=[self.rechargeTableView dequeueReusableCellWithIdentifier:cellStr];
-        self.lineview1=[[UIView alloc]initWithFrame:CGRectMake(0, 50, kScreenWidth, 0.5)];
-        self.lineview1.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
-        [self.recharView addSubview:self.lineview1];
-        self.consume=[[UILabel alloc] initWithFrame:CGRectMake(96,57, 75, 21)];
-        self.consume.text=@"总消费金额";
-        self.consume.textColor=[UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
-        self.consume.font=[UIFont fontWithName:@"Menlo" size:14];
-        [self.recharView addSubview:self.consume];
-        self.moneyLabel=[[UILabel alloc] initWithFrame:CGRectMake(self.consume.frame.origin.x+self.consume.frame.size.width+5,57, 75, 21)];
-        self.consumeMoney.text=@"¥11.00";
-        self.consumeMoney.textColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
-        self.consumeMoney.font=[UIFont fontWithName:@"Menlo" size:14];
-        [self.recharView addSubview:self.consumeMoney];
-        self.lineview2=[[UIView alloc]initWithFrame:CGRectMake(0, 85, kScreenWidth, 0.5)];
-        self.lineview2.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
-        [self.recharView addSubview:self.lineview2];
-        self.label1=[[UILabel alloc] initWithFrame:CGRectMake(cell.timeLabel.frame.origin.x,91, cell.timeLabel.frame.size.width, 18)];
-        self.label1.text=@"消费时间";
-        self.label1.textColor=[UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
-        self.label1.font=[UIFont fontWithName:@"Menlo" size:12];
-        [self.recharView addSubview:self.label1];
-        self.label3=[[UILabel alloc] initWithFrame:CGRectMake(cell.moneyLabel.frame.origin.x, 91, 20+cell.moneyLabel.frame.size.width, 18)];
-        self.label3.text=@"消费金额";
-        self.label3.textColor=[UIColor colorWithRed:102.0/255.0 green:102.0/255.0 blue:102.0/255.0 alpha:1];
-        self.label3.font=[UIFont fontWithName:@"Menlo" size:12];
-        [self.recharView addSubview:self.label3];
-        self.lineview3=[[UIView alloc]initWithFrame:CGRectMake(0, self.recharView.frame.size.height, kScreenWidth, 0.5)];
-        self.lineview3.backgroundColor=[UIColor colorWithRed:189.0/255.0 green:189.0/255.0 blue:189.0/255.0 alpha:1];
-        [self.recharView addSubview:self.lineview3];
-    }
-    [view1 addSubview:selectControl];
-    return self.recharView;
+    [_topView addSubview:selectControl];
+    
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 115;
-}
-
 #pragma mark - LXDSegmentControlDelegate
 - (void)segmentControl:(LXDSegmentControl *)segmentControl didSelectAtIndex:(NSUInteger)index
 {
     if (index==0) {
-        self.myTableView.hidden=NO;
-        self.rechargeTableView.hidden=YES;
-    }else if(index==1){
-        self.myTableView.hidden=YES;
         self.rechargeTableView.hidden=NO;
+        self.consumeTableView.hidden=YES;
+        self.consumeView.hidden=YES;
+        self.rechargeView.hidden=NO;
+    }else if(index==1){
+        self.rechargeTableView.hidden=YES;
+        self.consumeTableView.hidden=NO;
+        self.consumeView.hidden=NO;
+        self.rechargeView.hidden=YES;
     }
 }
 @end

@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-12-20 17:19:59" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQr-AB-lBF" customClass="ARLabel">
-                        <rect key="frame" x="10" y="6" width="119" height="18"/>
+                        <rect key="frame" x="10" y="6" width="118.5" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="xN7-XV-0nG"/>
                         </constraints>
@@ -24,18 +24,20 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="¥5.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OeB-uJ-nvK" customClass="ARLabel">
-                        <rect key="frame" x="250" y="6" width="33.5" height="18"/>
+                        <rect key="frame" x="250" y="4" width="48" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="18" id="OWE-ZE-9MR"/>
+                            <constraint firstAttribute="height" constant="21" id="xIg-wT-pzK"/>
+                            <constraint firstAttribute="width" constant="48" id="zuo-xZ-WkP"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="微信支付" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O5l-Y2-EnC" customClass="ARLabel">
-                        <rect key="frame" x="160" y="6" width="48" height="18"/>
+                        <rect key="frame" x="160" y="4" width="48" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="18" id="z27-1X-fRm"/>
+                            <constraint firstAttribute="width" constant="48" id="3Al-dg-rl0"/>
+                            <constraint firstAttribute="height" constant="21" id="oAm-b1-owA"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -43,11 +45,11 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="OeB-uJ-nvK" firstAttribute="leading" secondItem="O5l-Y2-EnC" secondAttribute="trailing" constant="42" id="0Cy-A0-PQY"/>
-                    <constraint firstItem="OeB-uJ-nvK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="1cX-UN-fxd"/>
-                    <constraint firstItem="O5l-Y2-EnC" firstAttribute="leading" secondItem="uQr-AB-lBF" secondAttribute="trailing" constant="31" id="8yL-Ex-3On"/>
-                    <constraint firstItem="O5l-Y2-EnC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="CL1-KN-s3q"/>
                     <constraint firstItem="uQr-AB-lBF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="Meb-vn-ax9"/>
+                    <constraint firstItem="OeB-uJ-nvK" firstAttribute="leading" secondItem="O5l-Y2-EnC" secondAttribute="trailing" constant="42" id="kBh-qJ-QX7"/>
+                    <constraint firstAttribute="trailing" secondItem="OeB-uJ-nvK" secondAttribute="trailing" constant="22" id="mMo-EZ-zqK"/>
+                    <constraint firstItem="OeB-uJ-nvK" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="pN6-kn-Orc"/>
+                    <constraint firstItem="O5l-Y2-EnC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="szC-Zf-sDZ"/>
                     <constraint firstItem="uQr-AB-lBF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="uaC-9N-jzm"/>
                 </constraints>
             </tableViewCellContentView>

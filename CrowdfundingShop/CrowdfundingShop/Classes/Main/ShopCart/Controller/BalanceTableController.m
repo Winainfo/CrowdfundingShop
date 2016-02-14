@@ -7,8 +7,18 @@
 //
 
 #import "BalanceTableController.h"
-
+#import "AccountTool.h"
 @interface BalanceTableController ()
+/**商品数量*/
+@property (weak, nonatomic) IBOutlet ARLabel *countLabel;
+/**商品价格*/
+@property (weak, nonatomic) IBOutlet ARLabel *PriceLabel;
+/**剩余价格*/
+@property (weak, nonatomic) IBOutlet UILabel *shenyuPrice;
+/**积分*/
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+/**余额*/
+@property (weak, nonatomic) IBOutlet UILabel *balanceLabel;
 
 @end
 
@@ -16,8 +26,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self getData];
 }
-
+#pragma mark 数据
+-(void)getData{
+    self.countLabel.text=[NSString stringWithFormat:@"%@件",self.sumNum];
+    self.PriceLabel.text=[NSString stringWithFormat:@"¥%0.2f",[self.sumPrice floatValue]];
+    //沙盒路径
+    AccountModel *account=[AccountTool account];
+    self.scoreLabel.text=[NSString stringWithFormat:@"您的可用积分为%@",account.score];
+    self.balanceLabel.text=[NSString stringWithFormat:@"您的帐号余额为¥%0.2f",[account.money floatValue]];
+}
 
 @end

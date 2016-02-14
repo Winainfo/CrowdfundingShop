@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ARLabel.h"
-
+#import "Database.h"
+#import "CartModel.h"
 @interface GoodsDetailController : UITableViewController
 /**商品图片*/
 @property (weak, nonatomic) IBOutlet UIImageView *goodsImageView;

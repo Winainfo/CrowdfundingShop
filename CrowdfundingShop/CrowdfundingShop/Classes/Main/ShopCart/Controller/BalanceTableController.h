@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ARLabel.h"
 @interface BalanceTableController : UITableViewController
-
+/**总数量*/
+@property (retain,nonatomic)NSString *sumNum;
+/**总价格*/
+@property (retain,nonatomic)NSString *sumPrice;
 @end

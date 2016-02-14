@@ -22,5 +22,23 @@
 
     // Configure the view for the selected state
 }
+/**
+ *  添加数量
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)addClick:(UIButton *)sender {
+    //调用代理
+    [self.delegate btnClick:self andFlag:(int)sender.tag];
+}
+/**
+ *  减少数量
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)subClick:(UIButton *)sender {
+    //调用代理
+    [self.delegate btnClick:self andFlag:(int)sender.tag];
+}
 
 @end
