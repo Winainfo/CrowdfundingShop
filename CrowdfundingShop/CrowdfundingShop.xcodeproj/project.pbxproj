@@ -180,7 +180,11 @@
 		01D437371C46C54A0068E937 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D437361C46C54A0068E937 /* libc++.tbd */; };
 		01DC45171C31A90B006E478F /* Register1Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DC45161C31A90B006E478F /* Register1Controller.m */; };
 		01DC451A1C31A915006E478F /* Register2Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DC45191C31A915006E478F /* Register2Controller.m */; };
+		01E43F771C71BB1F006440F0 /* GroomViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E43F751C71BB1F006440F0 /* GroomViewCell.m */; };
+		01E43F781C71BB1F006440F0 /* GroomViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01E43F761C71BB1F006440F0 /* GroomViewCell.xib */; };
 		01E96BA91C1DC5C3006ED4CD /* ComputeDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01E96BA81C1DC5C3006ED4CD /* ComputeDetailController.m */; };
+		01F0448E1C7365010057B18B /* InviteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F0448D1C7365010057B18B /* InviteController.m */; };
+		01F044901C736D610057B18B /* iPhone6s.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 01F0448F1C736D610057B18B /* iPhone6s.jpg */; };
 		01F712891C1A617200D859A7 /* UITabBarController+ShowHideBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F712881C1A617200D859A7 /* UITabBarController+ShowHideBar.m */; };
 		01F8769C1C226A3E00FF0801 /* SearchWordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F8769A1C226A3E00FF0801 /* SearchWordCell.m */; };
 		01F8769D1C226A3E00FF0801 /* SearchWordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F8769B1C226A3E00FF0801 /* SearchWordCell.xib */; };
@@ -593,8 +597,14 @@
 		01DC45161C31A90B006E478F /* Register1Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Register1Controller.m; sourceTree = "<group>"; };
 		01DC45181C31A915006E478F /* Register2Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Register2Controller.h; sourceTree = "<group>"; };
 		01DC45191C31A915006E478F /* Register2Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Register2Controller.m; sourceTree = "<group>"; };
+		01E43F741C71BB1F006440F0 /* GroomViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroomViewCell.h; sourceTree = "<group>"; };
+		01E43F751C71BB1F006440F0 /* GroomViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroomViewCell.m; sourceTree = "<group>"; };
+		01E43F761C71BB1F006440F0 /* GroomViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroomViewCell.xib; sourceTree = "<group>"; };
 		01E96BA71C1DC5C3006ED4CD /* ComputeDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComputeDetailController.h; sourceTree = "<group>"; };
 		01E96BA81C1DC5C3006ED4CD /* ComputeDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComputeDetailController.m; sourceTree = "<group>"; };
+		01F0448C1C7365010057B18B /* InviteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteController.h; sourceTree = "<group>"; };
+		01F0448D1C7365010057B18B /* InviteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteController.m; sourceTree = "<group>"; };
+		01F0448F1C736D610057B18B /* iPhone6s.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iPhone6s.jpg; sourceTree = "<group>"; };
 		01F712871C1A617200D859A7 /* UITabBarController+ShowHideBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarController+ShowHideBar.h"; sourceTree = "<group>"; };
 		01F712881C1A617200D859A7 /* UITabBarController+ShowHideBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarController+ShowHideBar.m"; sourceTree = "<group>"; };
 		01F876991C226A3E00FF0801 /* SearchWordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchWordCell.h; sourceTree = "<group>"; };
@@ -754,6 +764,7 @@
 		0111B9D91C0353BC00DDC2EA /* Personal(个人中心) */ = {
 			isa = PBXGroup;
 			children = (
+				01F044841C734E930057B18B /* Invite(邀请管理) */,
 				01F9A28A1C4423AB007CCA4E /* About(关于) */,
 				019C1DEF1C3990C8000A0778 /* Setting(设置) */,
 				017FA7FB1C33D1FC00B4AA6F /* MyShareOrder(我的晒单) */,
@@ -927,6 +938,9 @@
 				013280221C27CD0B00339038 /* CommentaryCell.h */,
 				013280231C27CD0B00339038 /* CommentaryCell.m */,
 				013280241C27CD0B00339038 /* CommentaryCell.xib */,
+				01E43F741C71BB1F006440F0 /* GroomViewCell.h */,
+				01E43F751C71BB1F006440F0 /* GroomViewCell.m */,
+				01E43F761C71BB1F006440F0 /* GroomViewCell.xib */,
 			);
 			name = "View(视图)";
 			path = View;
@@ -1702,6 +1716,26 @@
 			path = weChatSDK;
 			sourceTree = "<group>";
 		};
+		01F044841C734E930057B18B /* Invite(邀请管理) */ = {
+			isa = PBXGroup;
+			children = (
+				01F044851C734EF90057B18B /* Controller(控制) */,
+			);
+			name = "Invite(邀请管理)";
+			path = Invite;
+			sourceTree = "<group>";
+		};
+		01F044851C734EF90057B18B /* Controller(控制) */ = {
+			isa = PBXGroup;
+			children = (
+				01F0448F1C736D610057B18B /* iPhone6s.jpg */,
+				01F0448C1C7365010057B18B /* InviteController.h */,
+				01F0448D1C7365010057B18B /* InviteController.m */,
+			);
+			name = "Controller(控制)";
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		01F9A28A1C4423AB007CCA4E /* About(关于) */ = {
 			isa = PBXGroup;
 			children = (
@@ -1859,9 +1893,11 @@
 				019E09751C1741C70022593A /* IMG_0066.JPG in Resources */,
 				017FA8061C33D27700B4AA6F /* MyShareOrderCell.xib in Resources */,
 				01BE47CE1C47A27100450CB1 /* Resource.bundle in Resources */,
+				01E43F781C71BB1F006440F0 /* GroomViewCell.xib in Resources */,
 				01CB33641C6CD3AB008CA4AE /* area.plist in Resources */,
 				01747E151C1D76CC0051086C /* ComputeDetailCell.xib in Resources */,
 				01D341AA1C029C9C000A32A1 /* Assets.xcassets in Resources */,
+				01F044901C736D610057B18B /* iPhone6s.jpg in Resources */,
 				0136CE4D1C32E81C00BDF538 /* MyAddressCell.xib in Resources */,
 				01545DA71C609D270029A0AB /* 112.png in Resources */,
 				01BE47CC1C47A27100450CB1 /* ShareSDKLocalizable.strings in Resources */,
@@ -1974,6 +2010,7 @@
 				01B24F591C30584400D2104E /* BalanceController.m in Sources */,
 				01806B871C7060660090D6A8 /* Database.m in Sources */,
 				01747E141C1D76CC0051086C /* ComputeDetailCell.m in Sources */,
+				01F0448E1C7365010057B18B /* InviteController.m in Sources */,
 				0137383D1C481DB40040A569 /* DataVerifier.m in Sources */,
 				01E96BA91C1DC5C3006ED4CD /* ComputeDetailController.m in Sources */,
 				014FEFAA1C06018300C247C5 /* LoginController.m in Sources */,
@@ -2067,6 +2104,7 @@
 				01FA8E211C3ACCCB00E7E00B /* UpdateAutographController.m in Sources */,
 				01BE48461C47AB0000450CB1 /* payRequsestHandler.mm in Sources */,
 				0130F6361C322EC300D2CDFD /* MyCouldRecordCell.m in Sources */,
+				01E43F771C71BB1F006440F0 /* GroomViewCell.m in Sources */,
 				019C1DF81C399321000A0778 /* SeetingTableController.m in Sources */,
 				01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */,
 				010212841C70DDF600BB1ED5 /* UITabBar+badge.m in Sources */,

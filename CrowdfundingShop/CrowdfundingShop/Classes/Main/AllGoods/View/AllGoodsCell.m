@@ -26,5 +26,15 @@
 
     // Configure the view for the selected state
 }
+/**
+ *  添加购物车
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)addCartClick:(UIButton *)sender {
+    //调用代理
+    [self.delegate btnClick:self andFlag:(int)sender.tag];
+}
+
 
 @end

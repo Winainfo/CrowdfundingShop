@@ -13,4 +13,14 @@
 @property (retain,nonatomic)NSString *sumNum;
 /**总价格*/
 @property (retain,nonatomic)NSString *sumPrice;
+/**余额btn*/
+@property (weak, nonatomic) IBOutlet UIButton *moneyBtn;
+/**积分btn*/
+@property (weak, nonatomic) IBOutlet UIButton *scoreBtn;
+/**微信支付*/
+@property (weak, nonatomic) IBOutlet UIButton *wxPayBtn;
+/**支付宝*/
+@property (weak, nonatomic) IBOutlet UIButton *aliPayBtn;
+
+
 @end

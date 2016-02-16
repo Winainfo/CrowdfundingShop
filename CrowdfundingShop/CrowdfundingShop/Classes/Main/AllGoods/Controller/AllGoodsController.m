@@ -16,7 +16,9 @@
 #import <SVPullToRefresh.h>
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
-@interface AllGoodsController ()<UITableViewDataSource,UITableViewDelegate>
+#import "CartModel.h"
+#import "Database.h"
+@interface AllGoodsController ()<UITableViewDataSource,UITableViewDelegate,CartCellDelegate>
 {
     NSInteger offset;
 }
@@ -32,6 +34,7 @@
 @property (retain,nonatomic)NSArray *selectImageArray;
 /**所有商品数组*/
 @property (retain,nonatomic)NSMutableArray *allGoodsArray;
+@property (retain,nonatomic)NSMutableArray *array;
 @end
 @implementation AllGoodsController
 -(void)viewWillAppear:(BOOL)animated{
@@ -309,6 +312,7 @@
         float curreNum=[self.allGoodsArray[indexPath.row][@"canyurenshu"] floatValue];
         float countNum=[self.allGoodsArray[indexPath.row][@"zongrenshu"] floatValue];
         cell.ProgressView.progress=curreNum/countNum;
+        cell.delegate=self;
         return cell;
     }else if(tableView==self.categoryTableView){
         static NSString *cellStr=@"GoodsCategoryCell";
@@ -478,5 +482,57 @@
     
 }
 
+#pragma mark -- 实现添加购物车点击代理事件
+/**
+ *  实现添加购物车点击代理事件
+ *
+ *  @param cell 当前单元格
+ *  @param flag 按钮标识，101
+ */
+-(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag
+{
+    NSIndexPath *index = [_myTableView indexPathForCell:cell];
+    switch (flag) {
+        case 101:
+        {
+            //初始化数据库
+            Database *db=[Database new];
+            _array=[db searchTestList:_allGoodsArray[index.row][@"id"]];
+            if (_array.count>0) {
+                CartModel *cartList=_array[0];
+                int pkid=cartList.pk_id;
+                cartList.num=cartList.num+1;
+                cartList.price=cartList.price+1;
+                cartList.pk_id=pkid;
+                if ([db updateList:cartList]) {
+                    NSLog(@"成功");
+                }else{
+                    NSLog(@"失败");
+                }
+            }else{
+                CartModel *cartList=[CartModel new];
+                //数据库 插入
+                cartList.shopId=_allGoodsArray[index.row][@"id"];
+                cartList.title=_allGoodsArray[index.row][@"title"];
+                cartList.shenyurenshu=_allGoodsArray[index.row][@"shenyurenshu"];
+                cartList.thumb=_allGoodsArray[index.row][@"thumb"];
+                cartList.num=1;
+                cartList.price=[_allGoodsArray[index.row][@"yunjiage"]intValue];
+                if([db insertList:cartList])
+                {
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
+                }else
+                {
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加失败" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
 
 @end

@@ -158,7 +158,7 @@
 {
     if ([self openDB]) {
         sqlite3_stmt *stmt;//这相当一个容器，放转化OK的sql语句
-        char *sql = "update cart_table set num = ? and price = ? where pk_id = ?";
+        char *sql = "update cart_table set num = ?,price = ? where pk_id = ?";
         //将SQL语句放入sqlite3_stmt中
         int success = sqlite3_prepare_v2(_database, sql, -1, &stmt, NULL);
         if (success != SQLITE_OK) {
@@ -168,10 +168,9 @@
         }
         //这里的数字1，2，3代表第几个问号。这里只有1个问号，这是一个相对比较简单的数据库操作，真正的项目中会远远比这个复杂
         //绑定text类型的数据库数据
-        sqlite3_bind_int(stmt, 3, updateList.num);
+        sqlite3_bind_int(stmt, 1, updateList.num);
         sqlite3_bind_int(stmt, 2, updateList.price);
-        sqlite3_bind_int(stmt, 1, updateList.pk_id);
-        NSLog(@"－－－－%i",updateList.num);
+        sqlite3_bind_int(stmt, 3, updateList.pk_id);
         //执行SQL语句。这里是更新数据库
         success = sqlite3_step(stmt);
         //释放statement

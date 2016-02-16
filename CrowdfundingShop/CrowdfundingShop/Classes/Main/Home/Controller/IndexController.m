@@ -18,7 +18,10 @@
 #import <MJRefresh.h>
 #import <MBProgressHUD.h>
 #import "UIViewController+WeChatAndAliPayMethod.h"
-@interface IndexController ()<UIScrollViewDelegate>{
+#import "CartModel.h"
+#import "Database.h"
+#import "GroomViewCell.h"
+@interface IndexController ()<UIScrollViewDelegate,CartCellDelegate,AddCartDelegate>{
      BOOL _blockUserInteraction;
     NSInteger offset1;
     NSInteger offset2;
@@ -57,7 +60,7 @@
 @property (nonatomic, strong) NSMutableArray *times;
 @property (nonatomic, strong) NSTimer *timer;
 //倒计时
-
+@property (retain,nonatomic)NSMutableArray *array;
 @end
 
 @implementation IndexController
@@ -89,7 +92,7 @@
     //即将揭晓
     [self.goodsCollectionView registerClass:[goodsViewCell class] forCellWithReuseIdentifier:@"goodsViewCell"];
     //人气推荐
-    [self.groomCollectionView registerClass:[goodsViewCell class] forCellWithReuseIdentifier:@"goodsViewCell"];
+    [self.groomCollectionView registerClass:[GroomViewCell class] forCellWithReuseIdentifier:@"GroomViewCell"];
     //限购专区
     [self.limitCollectionView registerClass:[goodsViewCell class] forCellWithReuseIdentifier:@"goodsViewCell"];
     //代理
@@ -495,9 +498,10 @@
         float curreNum=[self.revealedArray[indexPath.row][@"canyurenshu"] floatValue];
         float countNum=[self.revealedArray[indexPath.row][@"zongrenshu"] floatValue];
         cell.progressView.progress=curreNum/countNum;
+        cell.delegate=self;
         return cell;
     }else if(collectionView==self.groomCollectionView){//人气推荐
-        goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
+        GroomViewCell *cell = (GroomViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"GroomViewCell" forIndexPath:indexPath];
         /**商品名称*/
         cell.goodsTitle.text=self.groomArray[indexPath.row][@"title"];
         /**总人数*/
@@ -516,6 +520,7 @@
         float curreNum=[self.groomArray[indexPath.row][@"canyurenshu"] floatValue];
         float countNum=[self.groomArray[indexPath.row][@"zongrenshu"] floatValue];
         cell.progressView.progress=curreNum/countNum;
+        cell.delegate=self;
         return cell;
     }else if(collectionView==self.limitCollectionView){//限购专区
         goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
@@ -698,7 +703,7 @@
 - (IBAction)payWithAliPay:(id)sender {
     //    NSLog(@"AliPay MoneyNum Is %@",self.moneyTextField.text);
     //这里调用我自己写的catagoary中的方法，方法里集成了支付宝支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
-    [self payTHeMoneyUseAliPayWithOrderId:@"12343111" totalMoney:@"0.01" payTitle:@"这里告诉客户花钱买了啥，力求简短"];
+    [self payTHeMoneyUseAliPayWithOrderId:@"1234311123" totalMoney:@"0.01" payTitle:@"这里告诉客户花钱买了啥，力求简短"];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AliPayResultNoti:) name:ALI_PAY_RESULT object:nil];
 }
 
@@ -786,5 +791,102 @@
     }
     float size_m = sumSize/(1000*1000);
     return [NSString stringWithFormat:@"%.2fM",size_m];
+}
+#pragma mark -- 实现添加购物车点击代理事件
+/**
+ *  实现添加购物车点击代理事件
+ *
+ *  @param cell 当前单元格
+ *  @param flag 按钮标识，101
+ */
+-(void)btnClick:(UICollectionViewCell *)cell andFlag:(int)flag
+{
+    NSIndexPath *index = [_goodsCollectionView indexPathForCell:cell];
+    switch (flag) {
+        case 100:
+        {
+            //初始化数据库
+            Database *db=[Database new];
+            _array=[db searchTestList:_revealedArray[index.row][@"id"]];
+            if (_array.count>0) {
+                CartModel *cartList=_array[0];
+                int pkid=cartList.pk_id;
+                cartList.num=cartList.num+1;
+                cartList.price=cartList.price+1;
+                cartList.pk_id=pkid;
+                if ([db updateList:cartList]) {
+                    NSLog(@"成功");
+                }else{
+                    NSLog(@"失败");
+                }
+            }else{
+                CartModel *cartList=[CartModel new];
+                //数据库 插入
+                cartList.shopId=_revealedArray[index.row][@"id"];
+                cartList.title=_revealedArray[index.row][@"title"];
+                cartList.shenyurenshu=_revealedArray[index.row][@"shenyurenshu"];
+                cartList.thumb=_revealedArray[index.row][@"thumb"];
+                cartList.num=1;
+                cartList.price=[_revealedArray[index.row][@"yunjiage"]intValue];
+                if([db insertList:cartList])
+                {
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
+                }else
+                {
+                    UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加失败" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark -- 实现添加购物车点击代理事件
+/**
+ *  实现添加购物车点击代理事件
+ *
+ *  @param cell 当前单元格
+ *  @param flag 按钮标识，101
+ */
+-(void)addCartClick:(UICollectionViewCell *)cell{
+    NSIndexPath *index = [_groomCollectionView indexPathForCell:cell];
+    //初始化数据库
+    Database *db=[Database new];
+    _array=[db searchTestList:_groomArray[index.row][@"id"]];
+    if (_array.count>0) {
+        CartModel *cartList=_array[0];
+        int pkid=cartList.pk_id;
+        cartList.num=cartList.num+1;
+        cartList.price=cartList.price+1;
+        cartList.pk_id=pkid;
+        if ([db updateList:cartList]) {
+            NSLog(@"成功");
+        }else{
+            NSLog(@"失败");
+        }
+    }else{
+        CartModel *cartList=[CartModel new];
+        //数据库 插入
+        cartList.shopId=_groomArray[index.row][@"id"];
+        cartList.title=_groomArray[index.row][@"title"];
+        cartList.shenyurenshu=_groomArray[index.row][@"shenyurenshu"];
+        cartList.thumb=_groomArray[index.row][@"thumb"];
+        cartList.num=1;
+        cartList.price=[_groomArray[index.row][@"yunjiage"]intValue];
+        if([db insertList:cartList])
+        {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }else
+        {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加失败" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
+
 }
 @end

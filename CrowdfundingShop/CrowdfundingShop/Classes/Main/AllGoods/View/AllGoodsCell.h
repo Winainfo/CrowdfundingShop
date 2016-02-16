@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "ARLabel.h"
+//添加代理，用于按钮加减的实现
+@protocol CartCellDelegate <NSObject>
+
+-(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag;
+
+@end
 @interface AllGoodsCell : UITableViewCell
 /**图片*/
 @property (weak, nonatomic) IBOutlet UIView *imagView;
@@ -27,5 +33,5 @@
 @property (weak, nonatomic) IBOutlet ARLabel *goodsLabel3;
 /**进度条*/
 @property (weak, nonatomic) IBOutlet UIProgressView *ProgressView;
-
+@property(assign,nonatomic)id<CartCellDelegate>delegate;
 @end

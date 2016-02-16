@@ -1,17 +1,14 @@
 //
-//  goodsViewCell.m
+//  GroomViewCell.m
 //  CrowdfundingShop
 //
-//  Created by 吴金林 on 15/12/20.
-//  Copyright © 2015年 吴金林. All rights reserved.
+//  Created by 吴金林 on 16/2/15.
+//  Copyright © 2016年 吴金林. All rights reserved.
 //
 
-#import "goodsViewCell.h"
-#import "RequestData.h"
-//获得当前屏幕宽高点数（非像素）
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kScreenWidth  [UIScreen mainScreen].bounds.size.width
-@implementation goodsViewCell
+#import "GroomViewCell.h"
+
+@implementation GroomViewCell
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -19,7 +16,7 @@
     if (self)
     {
         // 初始化时加载collectionCell.xib文件
-        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"goodsViewCell" owner:self options:nil];
+        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"GroomViewCell" owner:self options:nil];
         
         // 如果路径不存在，return nil
         if (arrayOfViews.count < 1)
@@ -48,7 +45,6 @@
  */
 - (IBAction)addShopCart:(UIButton *)sender {
     //调用代理
-    [self.delegate btnClick:self andFlag:(int)sender.tag];
+    [self.delegate addCartClick:self];
 }
-
 @end

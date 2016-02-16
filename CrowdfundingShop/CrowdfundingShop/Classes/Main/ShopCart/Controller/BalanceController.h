@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ARLabel.h"
 @interface BalanceController : UIViewController
 /**总数量*/
 @property (retain,nonatomic)NSString *sumNum;

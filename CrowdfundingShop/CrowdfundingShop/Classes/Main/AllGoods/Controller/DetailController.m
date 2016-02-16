@@ -12,6 +12,8 @@
 #import <ShareSDK/ShareSDK.h>
 #import "Database.h"
 #import "CartModel.h"
+#import "ShopCartController.h"
+#import "UITabBar+badge.h"
 @interface DetailController ()
 /**立即购买*/
 @property (weak, nonatomic) IBOutlet UIButton *buyGoodsBtn;
@@ -163,14 +165,12 @@
     _array=[db searchTestList:_dic[@"id"]];
     if (_array.count>0) {
         CartModel *cartList=_array[0];
-        NSLog(@"已存在%ld",(unsigned long)_array.count);
         int pkid=cartList.pk_id;
         NSLog(@"%i",pkid);
-        cartList.num=10;
-        cartList.price=10;
+        cartList.num=cartList.num+1;
+        cartList.price=cartList.price+1;
         cartList.pk_id=pkid;
         if ([db updateList:cartList]) {
-            NSLog(@"成功");
         }else{
             NSLog(@"失败");
         }
@@ -187,6 +187,53 @@
         {
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
+        }else
+        {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加失败" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
+}
+- (IBAction)BuyClick:(UIButton *)sender {
+    //初始化数据库
+    Database *db=[Database new];
+    _array=[db searchTestList:_dic[@"id"]];
+    if (_array.count>0) {
+        CartModel *cartList=_array[0];
+        int pkid=cartList.pk_id;
+        NSLog(@"%i",pkid);
+        cartList.num=cartList.num+1;
+        cartList.price=cartList.price+1;
+        cartList.pk_id=pkid;
+        if ([db updateList:cartList]) {
+            //设置故事板为第一启动
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            ShopCartController *controller=[storyboard instantiateViewControllerWithIdentifier:@"ShopCart"];
+            [self.navigationController pushViewController:controller animated:YES];
+        }else{
+            
+        }
+    }else{
+        CartModel *cartList=[CartModel new];
+        //数据库 插入
+        cartList.shopId=_dic[@"id"];
+        cartList.title=_dic[@"title"];
+        cartList.shenyurenshu=_dic[@"shenyurenshu"];
+        cartList.thumb=_dic[@"thumb"];
+        cartList.num=1;
+        cartList.price=[_dic[@"yunjiage"]intValue];
+        if([db insertList:cartList])
+        {
+            //设置故事板为第一启动
+//            [self.navigationController.tabBarController.tabBar ]
+//             [self.navigationController.tabBarController.tabBar hideBadgeWithIndex:self.navigationController.tabBarController.selectedIndex];
+//            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//            ShopCartController *controller=[storyboard instantiateViewControllerWithIdentifier:@"ShopCart"];
+//            [self presentViewController:controller animated:YES completion:nil];
+////            [self.navigationController pushViewController:controller animated:YES];
+////            [self.navigationController pushViewController:controller animated:YES];
+////            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+////            [alert show];
         }else
         {
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加失败" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

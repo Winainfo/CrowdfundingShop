@@ -277,16 +277,15 @@
  */
 -(void)btnClick:(UITableViewCell *)cell andFlag:(int)flag
 {
+    //初始化
+    sumPrice=0;
     NSIndexPath *index = [_myTableView indexPathForCell:cell];
     CartModel *model = _shopCartArray[index.row];
-      NSLog(@"%i",model.pk_id);
     switch (flag) {
         case 11:
         {
             //做减法
             //先获取到当期行数据源内容，改变数据源内容，刷新表格
-            
-//            model.selectState = YES;
             if (model.num > 1)
             {
                 model.num --;
@@ -297,8 +296,6 @@
         case 12:
         {
             //做加法
-//            CartModel *model = _shopCartArray[index.row];
-//            model.selectState = YES;
             model.num ++;
             model.price++;
         }
@@ -306,16 +303,18 @@
         default:
             break;
     }
-    CartModel *cartList=[CartModel new];
-    cartList.pk_id=9;
-    cartList.num=10;
-    cartList.price=10;
+
     //初始化数据库
     Database *db=[Database new];
     //数据更新
-    if([db updateList:cartList])
+    if([db updateList:model])
     {
         NSLog(@"成功");
+        for (int i=0; i<_shopCartArray.count; i++) {
+            CartModel *cartList=_shopCartArray[i];
+            sumPrice=sumPrice+cartList.price;
+        }
+        self.priceLabel.text=[NSString stringWithFormat:@"%lu",(unsigned long)sumPrice];
     }else
     {
     }
