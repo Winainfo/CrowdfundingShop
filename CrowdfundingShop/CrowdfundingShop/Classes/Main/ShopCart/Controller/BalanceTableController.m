@@ -33,9 +33,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self getData];
-//    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    BalanceController *controller=[storyboard instantiateViewControllerWithIdentifier:@"BalanceView"];
-    BalanceController *controller=[BalanceController new];
     self.type=0;
 }
 #pragma mark 数据

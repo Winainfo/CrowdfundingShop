@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="InvitationRecordCell" id="KGk-i7-Jjw" customClass="InvitationRecordCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="35.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nku-zc-qaQ" userLabel="lineView">
+                        <rect key="frame" x="0.0" y="35" width="320" height="0.5"/>
+                        <color key="backgroundColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="F0j-HW-eVP"/>
+                        </constraints>
+                    </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hs5-tr-sgU">
+                        <rect key="frame" x="10" y="10" width="75" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <state key="normal" title="186****5971"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="2016.02.15 23:31:21" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKS-Y6-V7Q" customClass="ARLabel">
+                        <rect key="frame" x="85" y="3" width="75" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000009122" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUh-sx-Vp6" customClass="ARLabel">
+                        <rect key="frame" x="160" y="7" width="75" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已参与购买" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jrR-Rb-ome" customClass="ARLabel">
+                        <rect key="frame" x="235" y="7" width="75" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="nku-zc-qaQ" firstAttribute="top" secondItem="XUh-sx-Vp6" secondAttribute="bottom" constant="7" id="11x-ec-FHd"/>
+                    <constraint firstItem="XUh-sx-Vp6" firstAttribute="width" secondItem="hs5-tr-sgU" secondAttribute="width" id="149-mD-yNe"/>
+                    <constraint firstItem="nku-zc-qaQ" firstAttribute="top" secondItem="zKS-Y6-V7Q" secondAttribute="bottom" constant="2" id="1PN-ab-eiL"/>
+                    <constraint firstItem="XUh-sx-Vp6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="37y-do-Rcn"/>
+                    <constraint firstItem="nku-zc-qaQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="5ue-Eo-kfn"/>
+                    <constraint firstItem="jrR-Rb-ome" firstAttribute="leading" secondItem="XUh-sx-Vp6" secondAttribute="trailing" id="5zg-FL-9Os"/>
+                    <constraint firstAttribute="trailing" secondItem="jrR-Rb-ome" secondAttribute="trailing" constant="10" id="7nd-Xl-kHJ"/>
+                    <constraint firstItem="zKS-Y6-V7Q" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="ALL-Fo-vDt"/>
+                    <constraint firstItem="jrR-Rb-ome" firstAttribute="leading" secondItem="XUh-sx-Vp6" secondAttribute="trailing" id="Ekm-3U-HmO"/>
+                    <constraint firstItem="nku-zc-qaQ" firstAttribute="top" secondItem="jrR-Rb-ome" secondAttribute="bottom" constant="7" id="O44-HH-yd7"/>
+                    <constraint firstItem="hs5-tr-sgU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="OBh-hG-ebw"/>
+                    <constraint firstItem="nku-zc-qaQ" firstAttribute="top" secondItem="hs5-tr-sgU" secondAttribute="bottom" constant="9" id="RYm-Kc-F6s"/>
+                    <constraint firstItem="zKS-Y6-V7Q" firstAttribute="width" secondItem="hs5-tr-sgU" secondAttribute="width" id="S2p-5q-TNS"/>
+                    <constraint firstItem="jrR-Rb-ome" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7" id="Uyh-17-kPw"/>
+                    <constraint firstAttribute="trailing" secondItem="nku-zc-qaQ" secondAttribute="trailing" id="ZxE-xN-jYD"/>
+                    <constraint firstItem="zKS-Y6-V7Q" firstAttribute="leading" secondItem="hs5-tr-sgU" secondAttribute="trailing" id="aTr-Mv-JfB"/>
+                    <constraint firstAttribute="bottom" secondItem="nku-zc-qaQ" secondAttribute="bottom" id="ce7-eb-4C4"/>
+                    <constraint firstItem="jrR-Rb-ome" firstAttribute="width" secondItem="hs5-tr-sgU" secondAttribute="width" id="cwK-ms-eyd"/>
+                    <constraint firstItem="zKS-Y6-V7Q" firstAttribute="leading" secondItem="hs5-tr-sgU" secondAttribute="trailing" id="g1y-i0-QtX"/>
+                    <constraint firstItem="XUh-sx-Vp6" firstAttribute="leading" secondItem="zKS-Y6-V7Q" secondAttribute="trailing" id="hMU-U8-9EK"/>
+                    <constraint firstItem="hs5-tr-sgU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="srH-I9-u6H"/>
+                    <constraint firstItem="XUh-sx-Vp6" firstAttribute="leading" secondItem="zKS-Y6-V7Q" secondAttribute="trailing" id="zp1-4L-Ho8"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="codeLabel" destination="XUh-sx-Vp6" id="gTn-La-PVw"/>
+                <outlet property="stateLabel" destination="jrR-Rb-ome" id="8to-U6-5Bh"/>
+                <outlet property="timeLabel" destination="zKS-Y6-V7Q" id="qWY-Ba-C9R"/>
+                <outlet property="userButton" destination="hs5-tr-sgU" id="CCz-Kd-uzR"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

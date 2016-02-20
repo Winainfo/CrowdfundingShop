@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "AccountTool.h"
+#import <ShareSDK/ShareSDK.h>
 @interface LoginController : UIViewController
 @property (retain,nonatomic) NSString *type;
+
 @end

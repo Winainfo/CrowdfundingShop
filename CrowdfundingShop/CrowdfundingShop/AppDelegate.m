@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <IQKeyboardManager.h>
 #import "payRequsestHandler.h"
+#import <AlipaySDK/AlipaySDK.h>
 @interface AppDelegate ()<WXApiDelegate>
 
 @end
@@ -28,7 +29,7 @@
     //控制是否显示键盘上的工具条
     manager.enableAutoToolbar = YES;
     //APP_ID 这里我写成了宏的形式，如果你按照我的文档方法添加了WXPay的文件夹，你这里可以直接点击宏进去查看里面其他的宏
-    [WXApi registerApp:APP_ID withDescription:@"一元商城"];
+    [WXApi registerApp:APP_ID withDescription:@"1元商城"];
     
     [ShareSDK registerApp:@"dade7bf06aaa"];
     [self initShareSDKRegisit];
@@ -49,10 +50,9 @@
                            appSecret:@"LRDKLN5IySk65roC"
                    qqApiInterfaceCls:[QQApiInterface class]
                      tencentOAuthCls:[TencentOAuth class]];
-    [ShareSDK connectQQWithQZoneAppKey:@"1105071079"
+    [ShareSDK connectQQWithQZoneAppKey:@"QQ41de0be7"
                      qqApiInterfaceCls:[QQApiInterface class]
                        tencentOAuthCls:[TencentOAuth class]];
-    
     
     //短信
     
@@ -96,16 +96,23 @@
 {
     
     //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
-    if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",APP_ID]].location != NSNotFound) {
-        return  [WXApi handleOpenURL:url delegate:self];
-    }else
-    {
-        //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
-        return [ShareSDK handleOpenURL:url
-                     sourceApplication:sourceApplication
-                            annotation:annotation
-                            wxDelegate:self];
+//    if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",APP_ID]].location != NSNotFound) {
+//        return  [WXApi handleOpenURL:url delegate:self];
+//    }else
+//    {
+//        //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
+//        return [ShareSDK handleOpenURL:url
+//                     sourceApplication:sourceApplication
+//                            annotation:annotation
+//                            wxDelegate:self];
+//    }
+    if ([url.host isEqualToString:@"safepay"]) {
+        //跳转支付宝钱包进行支付，处理支付结果
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+        }];
     }
+    return YES;
 }
 
 //微信SDK自带的方法，处理从微信客户端完成操作后返回程序之后的回调方法

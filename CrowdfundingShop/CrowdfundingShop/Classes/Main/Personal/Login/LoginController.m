@@ -11,8 +11,9 @@
 #import "PersonalController.h"
 #import "ShopCartController.h"
 #import "CommentaryController.h"
-#import <ShareSDK/ShareSDK.h>
+
 #import "LoginMethod.h"
+#import "IndexController.h"
 @interface LoginController ()<LoginMethodDelegate>
 @property (nonatomic ,strong) LoginMethod * myLoginMethod;
 /**登录按钮*/
@@ -65,10 +66,7 @@
 -(void)requestData:(NSString *)user andpassword:(NSString *)pwd{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:user,@"user",pwd,@"password",nil];
     [RequestData login:params FinishCallbackBlock:^(NSDictionary *data) {
-        
-//        NSString *code=data[@"code"];
         int code=[data[@"code"] intValue];
-        NSLog(@"%d",code);
         if (code==0) {
             //存储账号信息
             AccountModel *account=[AccountModel new];
@@ -109,6 +107,20 @@
             }else if([self.type isEqualToString:@"commentary"]){
                 //popToViewController
                 for (UIViewController *temp in self.navigationController.viewControllers) {
+                    if ([temp isKindOfClass:[IndexController class]]) {
+                        [self.navigationController popToViewController:temp animated:YES];
+                    }
+                }
+            }else if([self.type isEqualToString:@"recode"]){
+                //popToViewController
+                for (UIViewController *temp in self.navigationController.viewControllers) {
+                    if ([temp isKindOfClass:[IndexController class]]) {
+                        [self.navigationController popToViewController:temp animated:YES];
+                    }
+                }
+            }else if([self.type isEqualToString:@"rechare"]){
+                //popToViewController
+                for (UIViewController *temp in self.navigationController.viewControllers) {
                     if ([temp isKindOfClass:[CommentaryController class]]) {
                         [self.navigationController popToViewController:temp animated:YES];
                     }
@@ -140,7 +152,98 @@
  *  @param sender <#sender description#>
  */
 - (IBAction)weixinLogin:(UIButton *)sender {
-    [self.myLoginMethod getUserInfoDicWithThirdPartyLoginType:LoginTypeWechat];
+//    [self.myLoginMethod getUserInfoDicWithThirdPartyLoginType:LoginTypeWechat];
+    //设置授权选项
+    [ShareSDK getUserInfoWithType:ShareTypeWeixiSession authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
+        
+        [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
+        
+        NSLog(@"用户资料：%@", [userInfo uid]);
+        //        // 获取token
+        id <ISSPlatformCredential> Cred = [userInfo credential];
+        NSLog(@"%@", [Cred token]);
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[Cred token],@"access_token",[userInfo uid],@"openid",nil];
+        [RequestData userinfoSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+            NSDictionary *params1=[NSDictionary dictionaryWithObjectsAndKeys:data[@"unionid"],@"b_code",nil];
+            [RequestData thirdLodigSerivce:params1 FinishCallbackBlock:^(NSDictionary *data) {
+                int code=[data[@"code"] intValue];
+                if (code==0) {
+                    //存储账号信息
+                    AccountModel *account=[AccountModel new];
+                    account.uid=data[@"content"][@"uid"];
+                    account.username=data[@"content"][@"username"];
+                    account.email=data[@"content"][@"email"];
+                    account.mobile=data[@"content"][@"mobile"];
+                    account.user_ip=data[@"content"][@"user_ip"];
+                    account.img=data[@"content"][@"img"];
+                    account.qianming=data[@"content"][@"qianming"];
+                    account.groupid=data[@"content"][@"groupid"];
+                    account.addgroup=data[@"content"][@"addgroup"];
+                    account.money=data[@"content"][@"money"];
+                    account.emailcode=data[@"content"][@"emailcode"];
+                    account.mobilecode=data[@"content"][@"mobilecode"];
+                    account.passcode=data[@"content"][@"passcode"];
+                    account.reg_key=data[@"content"][@"reg_key"];
+                    account.score=data[@"content"][@"score"];
+                    account.jingyan=data[@"content"][@"jingyan"];
+                    account.yaoqing=data[@"content"][@"yaoqing"];
+                    account.band=data[@"content"][@"band"];
+                    account.time=data[@"content"][@"time"];
+                    account.login_time=data[@"content"][@"login_time"];
+                    account.sign_in_time=data[@"content"][@"sign_in_time"];
+                    account.sign_in_date=data[@"content"][@"sign_in_date"];
+                    account.sign_in_time_all=data[@"content"][@"sign_in_time_all"];
+                    account.auto_user=data[@"content"][@"auto_user"];
+                    account.yungoudj=data[@"content"][@"yungoudj"];
+                    account.icon=data[@"content"][@"icon"];
+                    [AccountTool saveAccount:account];
+                    if ([self.type isEqualToString:@"shopCart"]) {
+                        //popToViewController
+                        for (UIViewController *temp in self.navigationController.viewControllers) {
+                            if ([temp isKindOfClass:[ShopCartController class]]) {
+                                [self.navigationController popToViewController:temp animated:YES];
+                            }
+                        }
+                    }else if([self.type isEqualToString:@"commentary"]){
+                        //popToViewController
+                        for (UIViewController *temp in self.navigationController.viewControllers) {
+                            if ([temp isKindOfClass:[IndexController class]]) {
+                                [self.navigationController popToViewController:temp animated:YES];
+                            }
+                        }
+                    }else if([self.type isEqualToString:@"recode"]){
+                        //popToViewController
+                        for (UIViewController *temp in self.navigationController.viewControllers) {
+                            if ([temp isKindOfClass:[IndexController class]]) {
+                                [self.navigationController popToViewController:temp animated:YES];
+                            }
+                        }
+                    }else if([self.type isEqualToString:@"rechare"]){
+                        //popToViewController
+                        for (UIViewController *temp in self.navigationController.viewControllers) {
+                            if ([temp isKindOfClass:[CommentaryController class]]) {
+                                [self.navigationController popToViewController:temp animated:YES];
+                            }
+                        }
+                    }else{
+                        //popToViewController
+                        for (UIViewController *temp in self.navigationController.viewControllers) {
+                            if ([temp isKindOfClass:[PersonalController class]]) {
+                                [self.navigationController popToViewController:temp animated:YES];
+                            }
+                        }
+                    }
+                }else{
+                    
+                }
+            } andFailure:^(NSError *error) {
+                
+            }];
+        } andFailure:^(NSError *error) {
+            
+        }];
+    }];
+    
 }
 /**
  *  qq登录
@@ -160,7 +263,82 @@
 -(void)recieveTheUserInfo:(NSDictionary *)userInfo errorMsg:(NSString *)errorMsg
 {
     if (!errorMsg) {
-        NSLog(@"%@",userInfo);
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:userInfo[@"uid"],@"b_code",nil];
+        [RequestData thirdLodigSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+            int code=[data[@"code"] intValue];
+            NSLog(@"%d",code);
+            if (code==0) {
+                //存储账号信息
+                AccountModel *account=[AccountModel new];
+                account.uid=data[@"content"][@"uid"];
+                account.username=data[@"content"][@"username"];
+                account.email=data[@"content"][@"email"];
+                account.mobile=data[@"content"][@"mobile"];
+                account.user_ip=data[@"content"][@"user_ip"];
+                account.img=data[@"content"][@"img"];
+                account.qianming=data[@"content"][@"qianming"];
+                account.groupid=data[@"content"][@"groupid"];
+                account.addgroup=data[@"content"][@"addgroup"];
+                account.money=data[@"content"][@"money"];
+                account.emailcode=data[@"content"][@"emailcode"];
+                account.mobilecode=data[@"content"][@"mobilecode"];
+                account.passcode=data[@"content"][@"passcode"];
+                account.reg_key=data[@"content"][@"reg_key"];
+                account.score=data[@"content"][@"score"];
+                account.jingyan=data[@"content"][@"jingyan"];
+                account.yaoqing=data[@"content"][@"yaoqing"];
+                account.band=data[@"content"][@"band"];
+                account.time=data[@"content"][@"time"];
+                account.login_time=data[@"content"][@"login_time"];
+                account.sign_in_time=data[@"content"][@"sign_in_time"];
+                account.sign_in_date=data[@"content"][@"sign_in_date"];
+                account.sign_in_time_all=data[@"content"][@"sign_in_time_all"];
+                account.auto_user=data[@"content"][@"auto_user"];
+                account.yungoudj=data[@"content"][@"yungoudj"];
+                account.icon=data[@"content"][@"icon"];
+                [AccountTool saveAccount:account];
+                if ([self.type isEqualToString:@"shopCart"]) {
+                    //popToViewController
+                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                        if ([temp isKindOfClass:[ShopCartController class]]) {
+                            [self.navigationController popToViewController:temp animated:YES];
+                        }
+                    }
+                }else if([self.type isEqualToString:@"commentary"]){
+                    //popToViewController
+                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                        if ([temp isKindOfClass:[IndexController class]]) {
+                            [self.navigationController popToViewController:temp animated:YES];
+                        }
+                    }
+                }else if([self.type isEqualToString:@"recode"]){
+                    //popToViewController
+                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                        if ([temp isKindOfClass:[IndexController class]]) {
+                            [self.navigationController popToViewController:temp animated:YES];
+                        }
+                    }
+                }else if([self.type isEqualToString:@"rechare"]){
+                    //popToViewController
+                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                        if ([temp isKindOfClass:[CommentaryController class]]) {
+                            [self.navigationController popToViewController:temp animated:YES];
+                        }
+                    }
+                }else{
+                    //popToViewController
+                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                        if ([temp isKindOfClass:[PersonalController class]]) {
+                            [self.navigationController popToViewController:temp animated:YES];
+                        }
+                    }
+                }
+            }else{
+                
+            }
+        } andFailure:^(NSError *error) {
+            
+        }];
     }else{
         NSLog(@"%@",errorMsg);
     }

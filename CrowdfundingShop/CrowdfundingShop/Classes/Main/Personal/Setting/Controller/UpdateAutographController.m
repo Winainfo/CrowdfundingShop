@@ -7,7 +7,9 @@
 //
 
 #import "UpdateAutographController.h"
-
+#import "AccountTool.h"
+#import "RequestData.h"
+#import <MBProgressHUD.h>
 @interface UpdateAutographController ()
 @property (retain,nonatomic)NSString *autograph;
 @property (weak, nonatomic) IBOutlet UITextField *autographTextField;
@@ -57,7 +59,62 @@
 
 /**完成操作*/
 -(void)saveClick{
-    NSLog(@"完成");
+    [self requestData:self.autographTextField.text];
+}
+#pragma mark 昵称修改
+/**
+ *  昵称修改
+ *
+ *  @param username <#username description#>
+ *  @param qianming <#qianming description#>
+ */
+-(void)requestData:(NSString *)qianming{
+    //沙盒路径
+    AccountModel *account=[AccountTool account];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",qianming,@"qianming",nil];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在修改";
+    [RequestData updateQianMingSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"]intValue];
+        if (code==0) {
+            account.qianming=qianming;
+            [AccountTool saveAccount:account];
+            self.autographTextField.text=[NSString stringWithFormat:@"%@",qianming];
+            //加载成功，先移除原来的HUD；
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //然后显示一个成功的提示；
+            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            successHUD.labelText = @"修改成功";
+            successHUD.mode = MBProgressHUDModeCustomView;
+            //可以设置对应的图片；
+            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+            successHUD.removeFromSuperViewOnHide = true;
+            [successHUD hide:true afterDelay:1];
+        }else{
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //显示失败的提示；
+            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            failHUD.labelText = @"修改失败";
+            failHUD.mode = MBProgressHUDModeCustomView;
+            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+            failHUD.removeFromSuperViewOnHide = true;
+            [failHUD hide:true afterDelay:1];
+        }
+    }andFailure:^(NSError *error) {
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"无法请求";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
+    }];
 }
 
 @end

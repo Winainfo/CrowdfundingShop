@@ -167,6 +167,15 @@
 ///#end
 - (NSString *)nickname;
 
+///#begin en
+/**
+ *	@brief	Get user nickname.
+ *
+ *	@return	User nickname
+ */
+///#end
+- (NSString *)code;
+
 ///#begin zh-cn
 /**
  *	@brief	获取用户个人头像

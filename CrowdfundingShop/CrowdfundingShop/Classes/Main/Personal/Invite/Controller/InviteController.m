@@ -8,7 +8,11 @@
 
 #import "InviteController.h"
 #import <ShareSDK/ShareSDK.h>
-@interface InviteController ()
+#import "RequestData.h"
+#import "AccountTool.h"
+@interface InviteController (){
+     AccountModel *account;
+}
 /**分享按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 /**分享文本*/
@@ -48,6 +52,32 @@
     UIBarButtonItem *left=[[UIBarButtonItem alloc]initWithCustomView:leftBtn];
     self.navigationItem.leftBarButtonItem=left;
     [self initStyle];
+    [self requestServer];
+}
+#pragma mark 数据
+-(void)requestServer{
+    account=[AccountTool account];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"",@"pageIndex",@"",@"pageSize",nil];
+    //好友列表
+    [RequestData friendsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        NSArray *array=[[NSArray alloc]init];
+        array=data[@"content"];
+        self.friendsNumLabel.text=[NSString stringWithFormat:@"%lu",(unsigned long)array.count];
+    }andFailure:^(NSError *error) {}];
+    //佣金
+//    [RequestData commissionsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+//        NSArray *array=[[NSArray alloc]init];
+//        array=data[@"content"];
+//        self.moneyLabel.text=[NSString stringWithFormat:@"¥%lu",(unsigned long)array.count];
+//    }andFailure:^(NSError *error) {}];
+    
+     NSDictionary *params1=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",nil];
+    [RequestData inviteManageSerivce:params1 FinishCallbackBlock:^(NSDictionary *data) {
+        NSLog(@"-----:%@",data);
+        self.shareTextView.text=[NSString stringWithFormat:@"%@",data[@"content"]];
+    } andFailure:^(NSError *error) {
+        
+    }];
 }
 /**
  *  返回
@@ -68,7 +98,7 @@
     //提现按钮
     self.cashButton.layer.cornerRadius=5.0;
     self.cashButton.layer.borderWidth=1.0;
-    self.cashButton.layer.borderColor=[[UIColor colorWithRed:255.0/255.0 green:102.0/255.0 blue:0.0/255.0 alpha:1.0]CGColor];
+    self.cashButton.layer.borderColor=[[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1.0]CGColor];
     //转账按钮
     self.transferButton.layer.cornerRadius=5.0;
 }
@@ -80,7 +110,7 @@
 - (IBAction)shareClick:(UIButton *)sender {
     id<ISSContent> publishContent = [ShareSDK content:@"1元就能买iPhone6S，一种很有意思的购物方式，快来看看吧!"
                                        defaultContent:nil
-                                                image:[ShareSDK pngImageWithImage:[UIImage imageNamed:@"iPhone6s.jpg"]]
+                                                image:[ShareSDK pngImageWithImage:[UIImage imageNamed:@"iPhone.jpg"]]
                                                 title:@"1元就能买iPhone6S，一种很有意思的购物方式，快来看看吧!"
                                                   url:@"http://mobile.yiydb.cn/index.php/mobile/user/register/5782UwFWUgRSVgEDCFEGV1JUUlZRCldQBgwDBVFaVAFU"
                                           description:@"1元就能买iPhone6S，一种很有意思的购物方式，快来看看吧!"

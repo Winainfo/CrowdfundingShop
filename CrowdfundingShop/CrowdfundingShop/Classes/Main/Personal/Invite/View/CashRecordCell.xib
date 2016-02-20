@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CashRecordCell" id="KGk-i7-Jjw" customClass="CashRecordCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="2016.02.15" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xw-KR-j2p" customClass="ARLabel">
+                        <rect key="frame" x="10" y="11" width="60" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="建设银行62270812316387415234518" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M38-rb-4M2" customClass="ARLabel">
+                        <rect key="frame" x="70" y="6" width="60" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YDo-HW-ikn" customClass="ARLabel">
+                        <rect key="frame" x="130" y="11" width="60" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8d-z9-Yqr" customClass="ARLabel">
+                        <rect key="frame" x="190" y="11" width="60" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="审核未通过" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XaD-zu-3Kf" customClass="ARLabel">
+                        <rect key="frame" x="250" y="11" width="60" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gg9-ky-7Da" userLabel="lineView">
+                        <rect key="frame" x="0.0" y="43" width="320" height="0.5"/>
+                        <color key="backgroundColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="N66-b4-O4f"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2Xw-KR-j2p" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="3FW-J7-mvK"/>
+                    <constraint firstItem="gg9-ky-7Da" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="3wl-19-eOo"/>
+                    <constraint firstAttribute="trailing" secondItem="gg9-ky-7Da" secondAttribute="trailing" id="6NG-Wd-ypt"/>
+                    <constraint firstItem="gg9-ky-7Da" firstAttribute="top" secondItem="2Xw-KR-j2p" secondAttribute="bottom" constant="11" id="9aT-Iy-HqF"/>
+                    <constraint firstItem="M38-rb-4M2" firstAttribute="leading" secondItem="2Xw-KR-j2p" secondAttribute="trailing" id="9d7-zG-SsY"/>
+                    <constraint firstItem="YDo-HW-ikn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="AbE-gc-sfF"/>
+                    <constraint firstAttribute="trailing" secondItem="XaD-zu-3Kf" secondAttribute="trailing" constant="10" id="C19-Dk-YUp"/>
+                    <constraint firstItem="gg9-ky-7Da" firstAttribute="top" secondItem="YDo-HW-ikn" secondAttribute="bottom" constant="11" id="Jat-FO-qAL"/>
+                    <constraint firstItem="YDo-HW-ikn" firstAttribute="leading" secondItem="M38-rb-4M2" secondAttribute="trailing" id="Ko5-90-mg0"/>
+                    <constraint firstItem="XaD-zu-3Kf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="OMT-he-h7c"/>
+                    <constraint firstItem="gg9-ky-7Da" firstAttribute="top" secondItem="M38-rb-4M2" secondAttribute="bottom" constant="6" id="OOs-e7-z4o"/>
+                    <constraint firstItem="2Xw-KR-j2p" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="SjY-zd-hUH"/>
+                    <constraint firstItem="M38-rb-4M2" firstAttribute="width" secondItem="2Xw-KR-j2p" secondAttribute="width" id="XmM-fx-1BF"/>
+                    <constraint firstItem="gg9-ky-7Da" firstAttribute="top" secondItem="XaD-zu-3Kf" secondAttribute="bottom" constant="11" id="bFh-XQ-ZJN"/>
+                    <constraint firstItem="YDo-HW-ikn" firstAttribute="leading" secondItem="M38-rb-4M2" secondAttribute="trailing" id="bJf-ud-zyJ"/>
+                    <constraint firstItem="XaD-zu-3Kf" firstAttribute="leading" secondItem="K8d-z9-Yqr" secondAttribute="trailing" id="ckU-wo-UhO"/>
+                    <constraint firstItem="K8d-z9-Yqr" firstAttribute="width" secondItem="2Xw-KR-j2p" secondAttribute="width" id="hzl-kX-veR"/>
+                    <constraint firstItem="K8d-z9-Yqr" firstAttribute="leading" secondItem="YDo-HW-ikn" secondAttribute="trailing" id="mpR-BO-cih"/>
+                    <constraint firstItem="gg9-ky-7Da" firstAttribute="top" secondItem="K8d-z9-Yqr" secondAttribute="bottom" constant="11" id="n66-6d-jLg"/>
+                    <constraint firstItem="XaD-zu-3Kf" firstAttribute="width" secondItem="2Xw-KR-j2p" secondAttribute="width" id="nJe-H3-Ase"/>
+                    <constraint firstItem="M38-rb-4M2" firstAttribute="leading" secondItem="2Xw-KR-j2p" secondAttribute="trailing" id="qXs-Ke-U8W"/>
+                    <constraint firstItem="XaD-zu-3Kf" firstAttribute="leading" secondItem="K8d-z9-Yqr" secondAttribute="trailing" id="quX-3H-f5P"/>
+                    <constraint firstItem="K8d-z9-Yqr" firstAttribute="leading" secondItem="YDo-HW-ikn" secondAttribute="trailing" id="tdx-u1-QKQ"/>
+                    <constraint firstItem="K8d-z9-Yqr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="uYR-b0-ilk"/>
+                    <constraint firstAttribute="bottom" secondItem="gg9-ky-7Da" secondAttribute="bottom" id="wma-88-n8i"/>
+                    <constraint firstItem="YDo-HW-ikn" firstAttribute="width" secondItem="2Xw-KR-j2p" secondAttribute="width" id="zFV-qO-JYn"/>
+                    <constraint firstItem="M38-rb-4M2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="zXF-RK-CFt"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="infoLabel" destination="M38-rb-4M2" id="SJa-h2-5r0"/>
+                <outlet property="moneyLabel" destination="YDo-HW-ikn" id="XuT-xE-nD2"/>
+                <outlet property="priceLabel" destination="K8d-z9-Yqr" id="yWr-cF-Vwc"/>
+                <outlet property="stateLabel" destination="XaD-zu-3Kf" id="Szc-K3-kWx"/>
+                <outlet property="timeLabel" destination="2Xw-KR-j2p" id="wCR-Ln-1zy"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

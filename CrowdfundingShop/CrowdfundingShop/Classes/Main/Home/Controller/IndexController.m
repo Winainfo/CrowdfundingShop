@@ -21,11 +21,16 @@
 #import "CartModel.h"
 #import "Database.h"
 #import "GroomViewCell.h"
+#import "AccountTool.h"
+#import "LoginController.h"
+#import "MyCouldRecordController.h"
+#import "RechargeServiceController.h"
 @interface IndexController ()<UIScrollViewDelegate,CartCellDelegate,AddCartDelegate>{
      BOOL _blockUserInteraction;
     NSInteger offset1;
     NSInteger offset2;
     NSInteger offset3;
+    AccountModel *account;
 }
 @property (strong, nonatomic) IBOutlet UITableView *mytableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewWidth;
@@ -684,113 +689,44 @@
     
 }
 /**
- *  微信支付
+ *  云购记录
  *
  *  @param sender <#sender description#>
  */
-- (IBAction)payWithWeChatPay:(UIButton *)sender {
-    //这里调用我自己写的catagoary中的方法，方法里集成了微信支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
-    //这里填写的两个参数是后台会返回给你的
-    [self payTheMoneyUseWeChatPayWithPrepay_id:@"这里填写后台返回的Prepay_id" nonce_str:@"这里填写后台给你返回的nonce_str"];
-    //所以这里添加一个监听，用来接收是否成功的消息
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPayResultNoti:) name:WX_PAY_RESULT object:nil];
+- (IBAction)recodeClick:(UIButton *)sender {
+     account=[AccountTool account];
+    if(account){
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        MyCouldRecordController *controller=[storyboard instantiateViewControllerWithIdentifier:@"MyCouldRecord"];
+        [self.navigationController pushViewController:controller animated:YES];
+    }else{
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LoginController *controller=[storyboard instantiateViewControllerWithIdentifier:@"loginView"];
+        controller.type=@"recode";
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 /**
- *  支付宝支付
+ *  充值
  *
  *  @param sender <#sender description#>
  */
-- (IBAction)payWithAliPay:(id)sender {
-    //    NSLog(@"AliPay MoneyNum Is %@",self.moneyTextField.text);
-    //这里调用我自己写的catagoary中的方法，方法里集成了支付宝支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
-    [self payTHeMoneyUseAliPayWithOrderId:@"1234311123" totalMoney:@"0.01" payTitle:@"这里告诉客户花钱买了啥，力求简短"];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AliPayResultNoti:) name:ALI_PAY_RESULT object:nil];
-}
-
-//微信支付付款成功失败
--(void)weChatPayResultNoti:(NSNotification *)noti{
-    NSLog(@"%@",noti);
-    if ([[noti object] isEqualToString:IS_SUCCESSED]) {
-        [self showMessage:@"支付成功"];
-        //在这里填写支付成功之后你要做的事情
-        
+- (IBAction)rechareClick:(UIButton *)sender {
+     account=[AccountTool account];
+    if(account){
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        RechargeServiceController *controller=[storyboard instantiateViewControllerWithIdentifier:@"RechargeService"];
+        [self.navigationController pushViewController:controller animated:YES];
     }else{
-        [self showMessage:@"支付失败"];
+        //设置故事板为第一启动
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        LoginController *controller=[storyboard instantiateViewControllerWithIdentifier:@"loginView"];
+        controller.type=@"rechare";
+        [self.navigationController pushViewController:controller animated:YES];
     }
-    //上边添加了监听，这里记得移除
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:WX_PAY_RESULT object:nil];
-}
-
-
-//支付宝支付成功失败
--(void)AliPayResultNoti:(NSNotification *)noti
-{
-    NSLog(@"%@",noti);
-    if ([[noti object] isEqualToString:ALIPAY_SUCCESSED]) {
-        [self showMessage:@"支付成功"];
-        //在这里填写支付成功之后你要做的事情
-        
-    }else{
-        [self showMessage:@"支付失败"];
-    }
-    //上边添加了监听，这里记得移除
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:ALI_PAY_RESULT object:nil];
-}
-
-- (void) showMessage:(NSString*)message{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
-    [alert show];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [alert dismissWithClickedButtonIndex:alert.cancelButtonIndex animated:YES];
-    });
-}
-/**
- *   缓存大小
- */
-- (void)fileSize{
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    NSArray *files = [manager subpathsOfDirectoryAtPath:cachePath error:nil]; // 递归所有子路径
-    NSInteger totalSize = 0;
-    for (NSString *filePath in files) {
-        NSString *path = [cachePath stringByAppendingPathComponent:filePath];
-        // 判断是否为文件
-        BOOL isDir = NO;
-        [manager fileExistsAtPath:path isDirectory:&isDir];
-        if (!isDir) {
-            NSDictionary *attrs = [manager attributesOfItemAtPath:path error:nil];
-            totalSize += [attrs[NSFileSize] integerValue];
-        }
-    }
-    NSLog(@"%ld",(long)totalSize);
-}
-
-#pragma mark - 计算缓存大小
-/**
- *  计算缓存大小
- *
- *  @return
- */
-- (NSString *)getCacheSize
-{
-    //定义变量存储总的缓存大小
-    long long sumSize = 0;
-    //01.获取当前图片缓存路径
-    NSString *cacheFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches"];
-    //02.创建文件管理对象
-    NSFileManager *filemanager = [NSFileManager defaultManager];
-    //获取当前缓存路径下的所有子路径
-    NSArray *subPaths = [filemanager subpathsOfDirectoryAtPath:cacheFilePath error:nil];
-    //遍历所有子文件
-    for (NSString *subPath in subPaths) {
-        //1）.拼接完整路径
-        NSString *filePath = [cacheFilePath stringByAppendingFormat:@"/%@",subPath];//2）.计算文件的大小
-        long long fileSize = [[filemanager attributesOfItemAtPath:filePath error:nil]fileSize];
-        //3）.加载到文件的大小
-        sumSize += fileSize;
-    }
-    float size_m = sumSize/(1000*1000);
-    return [NSString stringWithFormat:@"%.2fM",size_m];
 }
 #pragma mark -- 实现添加购物车点击代理事件
 /**

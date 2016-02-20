@@ -45,7 +45,7 @@
     self.navigationItem.leftBarButtonItem=left;
     self.saveBtn.layer.cornerRadius=4.0;
     self.saveBtn.layer.masksToBounds=YES;
-     self.phoneLabel.text=self.phone;
+    self.phoneLabel.text=self.phone;
     NSString *phoneString = [self.phoneLabel.text substringWithRange:NSMakeRange(5,4)];
     self.phoneLabel.text=[self.phoneLabel.text stringByReplacingOccurrencesOfString:phoneString withString:@"****"];
    

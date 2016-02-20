@@ -707,11 +707,35 @@
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
     mgr.responseSerializer = [AFHTTPResponseSerializer serializer];
     //设置参数
-    NSDictionary *params=@{@"uid":data[@"uid"],@"username":data[@"username"],@"qianming":data[@"qianming"]};
+    NSDictionary *params=@{@"uid":data[@"uid"],@"username":data[@"username"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/usermodify/",URL];
     NSLog(@"对象%@",params);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        block(responseObject);
+        NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSDictionary *dict=[RequestData dictionaryWithJsonString:str];
+        block(dict);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *  修改签名
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)updateQianMingSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    mgr.responseSerializer = [AFHTTPResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"qianming":data[@"qianming"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/usermodify/",URL];
+    NSLog(@"对象%@",params);
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSDictionary *dict=[RequestData dictionaryWithJsonString:str];
+        block(dict);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
     }];
@@ -836,6 +860,98 @@
     //设置参数
     NSDictionary *params=@{@"uid":data[@"uid"],@"banktype":data[@"banktype"],@"money":data[@"money"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/cart/addmoney/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   好友列表
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)friendsSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/invite/friends/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   佣金列表
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)commissionsSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/invite/commissions/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   第三方登录
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)thirdLodigSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"b_code":data[@"b_code"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/finduser/openid_login/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   邀请码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)inviteManageSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/invite/friends_code/",URL];
+    NSLog(@"%@",url);
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   获取UnionID
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)userinfoSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"access_token":data[@"access_token"],@"openid":data[@"openid"]};
+    NSString *url=@"https://api.weixin.qq.com/sns/userinfo";
+    NSLog(@"%@",url);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

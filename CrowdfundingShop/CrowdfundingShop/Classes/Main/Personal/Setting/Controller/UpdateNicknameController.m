@@ -73,15 +73,18 @@
 -(void)requestData:(NSString *)username{
     //沙盒路径
     AccountModel *account=[AccountTool account];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",username,@"username",@"",@"qianming",nil];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",username,@"username",nil];
     //声明对象；
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
     //显示的文本；
     hud.labelText = @"正在修改";
     [RequestData updateNikenameSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"]intValue];
-        NSLog(@"%@",data);
+        NSLog(@"%@",data[@"code"]);
         if (code==0) {
+            account.username=username;
+             [AccountTool saveAccount:account];
+            self.nickName.text=[NSString stringWithFormat:@"%@",username];
             //加载成功，先移除原来的HUD；
             hud.removeFromSuperViewOnHide = true;
             [hud hide:true afterDelay:0];
@@ -105,7 +108,6 @@
             [failHUD hide:true afterDelay:1];
         }
     }andFailure:^(NSError *error) {
-        NSLog(@"错误:%@",error);
         hud.removeFromSuperViewOnHide = true;
         [hud hide:true afterDelay:0];
         //显示失败的提示；

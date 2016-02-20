@@ -71,21 +71,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
-/**
- *  该方法在视图跳转时被触发
- *
- *  @param segue  <#segue description#>
- *  @param sender <#sender description#>
- */
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([segue.identifier isEqualToString:@"balanceDetailSegue"]){
-        id theSegue=segue.destinationViewController;
-        [theSegue setValue:self.sumNum forKey:@"sumNum"];
-        [theSegue setValue:self.sumPrice forKey:@"sumPrice"];
-    }
-}
 #pragma mark 数据
 -(void)getData{
     self.countLabel.text=[NSString stringWithFormat:@"%@件",self.sumNum];

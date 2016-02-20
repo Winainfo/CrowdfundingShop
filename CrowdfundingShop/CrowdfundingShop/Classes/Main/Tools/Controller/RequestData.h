@@ -235,6 +235,12 @@
  */
 +(void)updateNikenameSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
+ *  修改签名
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)updateQianMingSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
  *  获取验证码
  *  @param data  传入字典
  *  @param block 返回块值
@@ -276,5 +282,35 @@
  *  @param block 返回块值
  */
 +(void)rechargeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   好友列表
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)friendsSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   佣金列表
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)commissionsSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   第三方登录
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)thirdLodigSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   邀请码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)inviteManageSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   获取UnionID
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)userinfoSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 @end
 
