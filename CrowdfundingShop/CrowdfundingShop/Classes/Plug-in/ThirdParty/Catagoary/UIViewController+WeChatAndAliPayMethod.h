@@ -1,9 +1,9 @@
 //
 //  UIViewController+WeChatAndAliPayMethod.h
-//  CrowdfundingShop
+//  WeChatAndAliPayDemo
 //
-//  Created by 吴金林 on 16/1/12.
-//  Copyright © 2016年 吴金林. All rights reserved.
+//  Created by 李政 on 15/10/21.
+//  Copyright © 2015年 Leon李政. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
