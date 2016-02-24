@@ -74,12 +74,14 @@
         account=[AccountTool account];
         offset=1;
         NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+        //佣金
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"2",@"type",pageIndex,@"pageIndex",@"10",@"pageSize",nil];
+        
         //声明对象；
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
         //显示的文本；
         hud.labelText = @"正在加载...";
-        [RequestData friendsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        [RequestData commissionsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];
             [self.myTableView.mj_header endRefreshing];
             if (code==0) {
@@ -128,8 +130,8 @@
         account=[AccountTool account];
         offset=1;
         NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
-        [RequestData friendsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"2",@"type",pageIndex,@"pageIndex",@"10",@"pageSize",nil];
+        [RequestData commissionsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];
             [self.myTableView.mj_header endRefreshing];
             if (code==0) {
@@ -156,8 +158,8 @@
     account=[AccountTool account];
     offset+=1;
     NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
-    [RequestData friendsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"2",@"type",pageIndex,@"pageIndex",@"10",@"pageSize",nil];
+    [RequestData commissionsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"] intValue];
         [self.myTableView.mj_footer endRefreshing];
         if (code==0) {

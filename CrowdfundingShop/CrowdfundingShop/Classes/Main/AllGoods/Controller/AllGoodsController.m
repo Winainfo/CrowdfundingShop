@@ -110,6 +110,7 @@
                 successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
                 successHUD.removeFromSuperViewOnHide = true;
                 [successHUD hide:true afterDelay:1];
+                
                 [self.allGoodsArray removeAllObjects];
                 NSArray *array=data[@"content"];
                 [self.allGoodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];

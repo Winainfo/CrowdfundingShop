@@ -20,6 +20,10 @@
 @property (weak, nonatomic) IBOutlet ARLabel *phoneLabel;
 /**邮箱*/
 @property (weak, nonatomic) IBOutlet ARLabel *emailLabel;
+/**手机*/
+@property (weak, nonatomic) IBOutlet UIImageView *phoneImage;
+/**邮箱*/
+@property (weak, nonatomic) IBOutlet UIImageView *emailImage;
 
 @end
 
@@ -70,6 +74,18 @@
         self.emailLabel.text=account.email;
     }else{
         self.emailLabel.text=@"未绑定";
+    }
+    int phoneCode=[account.mobilecode intValue];
+    if (phoneCode==1) {
+        self.phoneImage.image=[UIImage imageNamed:@"buy_suc_ic"];
+    }else{
+         self.phoneImage.image=[UIImage imageNamed:@"buy_fail_ic"];
+    }
+    int emailCode=[account.emailcode intValue];
+    if (emailCode==1) {
+        self.emailImage.image=[UIImage imageNamed:@"buy_suc_ic"];
+    }else{
+        self.emailImage.image=[UIImage imageNamed:@"buy_fail_ic"];
     }
 }
 /**
@@ -136,11 +152,11 @@
     int phoneCode=[account.mobilecode intValue];
     if (phoneCode==1) {
         //设置故事板为第一启动
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        VerifyPhoneController1 *phoneController=[storyboard instantiateViewControllerWithIdentifier:@"VerifyPhoneView1"];
-        phoneController.phone=account.mobile;
-        phoneController.uid=account.uid;
-        [self.navigationController pushViewController:phoneController animated:YES];
+//        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        VerifyPhoneController1 *phoneController=[storyboard instantiateViewControllerWithIdentifier:@"VerifyPhoneView1"];
+//        phoneController.phone=account.mobile;
+//        phoneController.uid=account.uid;
+//        [self.navigationController pushViewController:phoneController animated:YES];
     }else{
         //设置故事板为第一启动
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -158,11 +174,11 @@
     AccountModel *account=[AccountTool account];
     int emailCode=[account.emailcode intValue];
     if (emailCode==1) {
-        //设置故事板为第一启动
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        VerifyEmailController1 *emailController=[storyboard instantiateViewControllerWithIdentifier:@"VerifyEmailView1"];
-        emailController.email=account.email;
-        [self.navigationController pushViewController:emailController animated:YES];
+//        //设置故事板为第一启动
+//        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        VerifyEmailController1 *emailController=[storyboard instantiateViewControllerWithIdentifier:@"VerifyEmailView1"];
+//        emailController.email=account.email;
+//        [self.navigationController pushViewController:emailController animated:YES];
     }else{
         //设置故事板为第一启动
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];

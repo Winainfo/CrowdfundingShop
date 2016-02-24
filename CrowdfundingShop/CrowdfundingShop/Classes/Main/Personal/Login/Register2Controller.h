@@ -9,11 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface Register2Controller : UIViewController
-/**验证码*/
-@property (weak, nonatomic) IBOutlet UITextField *numberTextField;
 /**下一步*/
-@property (weak, nonatomic) IBOutlet UIButton *nextBtn;
-/**重新发送*/
-@property (weak, nonatomic) IBOutlet UIButton *sendBtn;
-
+@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
+@property (retain,nonatomic) NSString *uid;
+@property (retain,nonatomic) NSString *mobile;
 @end

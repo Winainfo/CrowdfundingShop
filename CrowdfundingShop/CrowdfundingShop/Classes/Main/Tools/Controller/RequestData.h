@@ -115,7 +115,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)search:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block;
++(void)search:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
  *   获取用户信息
  *
@@ -312,5 +312,47 @@
  *  @param block 返回块值
  */
 +(void)userinfoSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   用户注册
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)userRegisterSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   获取验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)getCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   核对验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)checkCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   一键转入云购账户
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)cashMoneySerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   绑定手机
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)bindMobileSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   发送手机验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)sendMobileCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   发送邮箱验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)sendEmalCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 @end
 

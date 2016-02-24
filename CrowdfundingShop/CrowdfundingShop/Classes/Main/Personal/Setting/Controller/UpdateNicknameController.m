@@ -80,7 +80,7 @@
     hud.labelText = @"正在修改";
     [RequestData updateNikenameSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"]intValue];
-        NSLog(@"%@",data[@"code"]);
+        NSLog(@"%@",data);
         if (code==0) {
             account.username=username;
              [AccountTool saveAccount:account];

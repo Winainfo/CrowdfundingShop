@@ -43,7 +43,6 @@
     self.navigationItem.leftBarButtonItem=left;
     self.saveBtn.layer.cornerRadius=4.0;
     self.saveBtn.layer.masksToBounds=YES;
-    
     self.emailLabel.text=self.email;
 }
 /**

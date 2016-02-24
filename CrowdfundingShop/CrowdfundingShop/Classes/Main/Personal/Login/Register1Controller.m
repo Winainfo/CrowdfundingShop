@@ -108,10 +108,18 @@
         NSLog(@"%@",data);
         int code=[data[@"content"][@"state"] intValue];
         if(code==0){
-            //设置故事板为第一启动
-            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            Register2Controller *controller=[storyboard instantiateViewControllerWithIdentifier:@"register2View"];
-            [self.navigationController pushViewController:controller animated:YES];
+            [RequestData getCodeSerivce:params FinishCallbackBlock:^(NSDictionary *json) {
+                int code1=[json[@"code"] intValue];
+                NSLog(@"验证码：%@",json);
+                if (code1==0) {
+                    //设置故事板为第一启动
+                    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                    Register2Controller *controller=[storyboard instantiateViewControllerWithIdentifier:@"register2View"];
+                    [self.navigationController pushViewController:controller animated:YES];
+                }
+            } andFailure:^(NSError *error) {
+                
+            }];
         }else{
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示"message:@"改手机号码已被注册"preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault handler:nil];

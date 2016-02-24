@@ -75,6 +75,7 @@
     hud.labelText = @"正在加载...";
     [RequestData lotteryGoodsDetail:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"] intValue];
+        NSLog(@"===%@",data[@"content"][@"user_ip"]);
         if (code==0) {
             //加载成功，先移除原来的HUD；
             hud.removeFromSuperViewOnHide = true;
@@ -94,10 +95,14 @@
             /**晒单次数*/
             NSArray *array1=data[@"content"][@"shaidan"];
             self.shareNumLabel.text=[NSString stringWithFormat:@"(%lu)",(unsigned long)array1.count];
-            //截取城市
-            NSString *string =data[@"content"][@"user_ip"];
-            NSArray *strArray=[string componentsSeparatedByString:@","];
-            self.peopleCityLabel.text=[NSString stringWithFormat:@"(%@)",strArray[0]];
+            if([data[@"content"][@"user_ip"] isEqualToString:@""]||[data[@"content"][@"user_ip"] isEqual:@"<null>"]){
+                self.peopleCityLabel.text=@"";
+            }else{
+                //截取城市
+                NSString *string =data[@"content"][@"user_ip"];
+                NSArray *strArray=[string componentsSeparatedByString:@","];
+                self.peopleCityLabel.text=[NSString stringWithFormat:@"(%@)",strArray[0]];
+            }
             /**揭晓时间*/
               long time=[data[@"content"][@"q_end_time"] integerValue];
             self.time1Label.text=[DidAnnounceController timeFromTimestamp:time formtter:@"YYYY-MM-dd HH:mm:ss"];

@@ -59,9 +59,9 @@
     [self.myTableView  registerNib:nib forCellReuseIdentifier:@"CommisionCell"];
     [self setExtraCellLineHidden:self.myTableView];
     /**未晒单数据*/
-    //    self.myTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
-    //    [self.myTableView.mj_header beginRefreshing];
-    //    self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+        self.myTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
+        [self.myTableView.mj_header beginRefreshing];
+        self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     offset=1;
 
 }
@@ -75,12 +75,14 @@
         account=[AccountTool account];
         offset=1;
         NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+        //佣金
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"1",@"type",pageIndex,@"pageIndex",@"10",@"pageSize",nil];
+
         //声明对象；
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
         //显示的文本；
         hud.labelText = @"正在加载...";
-        [RequestData gainGoodsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+        [RequestData commissionsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];
             [self.myTableView.mj_header endRefreshing];
             if (code==0) {
@@ -129,8 +131,8 @@
         account=[AccountTool account];
         offset=1;
         NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
-        [RequestData gainGoodsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+      NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"1",@"type",pageIndex,@"pageIndex",@"10",@"pageSize",nil];
+        [RequestData commissionsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];
             [self.myTableView.mj_header endRefreshing];
             if (code==0) {
@@ -157,8 +159,8 @@
     account=[AccountTool account];
     offset+=1;
     NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"ing",@"state",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
-    [RequestData gainGoodsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"1",@"type",pageIndex,@"pageIndex",@"10",@"pageSize",nil];
+    [RequestData commissionsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"] intValue];
         [self.myTableView.mj_footer endRefreshing];
         if (code==0) {
@@ -205,7 +207,7 @@
  */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return self.goodsArray.count;
 }
 /**
  *  设置单元格内容
@@ -221,9 +223,93 @@
     if (cell==nil) {
         cell=[[CommisionCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellStr];
     }
-    //取消Cell选中时背景
+    //取消Cell选中时背景/**用户*/
     cell.selectionStyle=UITableViewCellSelectionStyleNone;
+    [cell.userButton setTitle:[NSString stringWithFormat:@"%@",_goodsArray[indexPath.row][@"uid"]] forState:UIControlStateNormal];
+    cell.contentLabel.text=_goodsArray[indexPath.row][@"content"];
+    cell.priceLabel.text=_goodsArray[indexPath.row][@"ygmoney"];
+    cell.commisionLabel.text=[NSString stringWithFormat:@"+%@",_goodsArray[indexPath.row][@"money"]];
+    //时间戳转换时间
+    long time=[_goodsArray[indexPath.row][@"time"] integerValue];//时间戳
+    cell.timeLabel.text=[CommisionController timeFromTimestamp:time formtter:@"yyyy.MM.dd HH:mm:ss"];
     return cell;
 }
-
+#define mark - 时间
+/**
+ *  时间戳转成字符串
+ *
+ *  @param timestamp 时间戳
+ *
+ *  @return 格式化后的字符串
+ */
++ (NSString *)timeFromTimestamp:(NSInteger)timestamp{
+    NSDateFormatter *dateFormtter =[[NSDateFormatter alloc] init];
+    NSDate *d = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSTimeInterval late=[d timeIntervalSince1970]*1;	//转记录的时间戳
+    NSDate* dat = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval now=[dat timeIntervalSince1970]*1;   //获取当前时间戳
+    NSString *timeString=@"";
+    NSTimeInterval cha=now-late;
+    // 发表在一小时之内
+    if (cha/3600<1) {
+        if (cha/60<1) {
+            timeString = @"1";
+        }
+        else
+        {
+            timeString = [NSString stringWithFormat:@"%f", cha/60];
+            timeString = [timeString substringToIndex:timeString.length-7];
+        }
+        timeString=[NSString stringWithFormat:@"%@分钟前", timeString];
+    }
+    // 在一小时以上24小以内
+    else if (cha/3600>1&&cha/86400<1) {
+        timeString = [NSString stringWithFormat:@"%f", cha/3600];
+        timeString = [timeString substringToIndex:timeString.length-7];
+        timeString=[NSString stringWithFormat:@"%@小时前", timeString];
+    }
+    // 发表在24以上10天以内
+    else if (cha/86400>1&&cha/86400*3<1)	 //86400 = 60(分)*60(秒)*24(小时)   3天内
+    {
+        timeString = [NSString stringWithFormat:@"%f", cha/86400];
+        timeString = [timeString substringToIndex:timeString.length-7];
+        timeString=[NSString stringWithFormat:@"%@天前", timeString];
+    }
+    // 发表时间大于10天
+    else
+    {
+        [dateFormtter setDateFormat:@"yyyy-MM-dd"];
+        timeString = [dateFormtter stringFromDate:d];
+    }
+    return timeString;
+}
+/**
+ *  根据格式将时间戳转换成时间
+ *
+ *  @param timestamp	时间戳
+ *  @param dateFormtter 日期格式
+ *
+ *  @return 带格式的日期
+ */
++ (NSString *)timeFromTimestamp:(NSInteger)timestamp formtter:(NSString *)formtter{
+    NSDateFormatter *dataFormtter =[[NSDateFormatter alloc] init];
+    [dataFormtter setDateFormat:formtter];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timestamp];
+    NSString *time = [dataFormtter stringFromDate:date];
+    return time;
+}
+/**
+ *  获取当前时间戳
+ */
++ (NSString *)timeIntervalGetFromNow{
+    // 获取时间（非本地时区，需转换）
+    NSDate * today = [NSDate date];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate:today];
+    // 转换成当地时间
+    NSDate *localeDate = [today dateByAddingTimeInterval:interval];
+    // 时间转换成时间戳
+    NSString *timeSp = [NSString stringWithFormat:@"%ld",(long)[localeDate timeIntervalSince1970]];
+    return timeSp;
+}
 @end

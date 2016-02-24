@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface VerifyPhoneController3 : UIViewController
-
+/**手机号*/
+@property(retain,nonatomic) NSString *mobile;
+/**用户id*/
+@property(retain,nonatomic) NSString *uid;
 @end

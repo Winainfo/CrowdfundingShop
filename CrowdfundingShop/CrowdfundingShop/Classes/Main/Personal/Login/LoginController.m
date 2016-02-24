@@ -14,7 +14,7 @@
 
 #import "LoginMethod.h"
 #import "IndexController.h"
-@interface LoginController ()<LoginMethodDelegate>
+@interface LoginController ()<LoginMethodDelegate,UITextFieldDelegate>
 @property (nonatomic ,strong) LoginMethod * myLoginMethod;
 /**登录按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *loginBtn;
@@ -53,7 +53,41 @@
     //只需要初始化LoginMethod这个类的对象，然后让当前控制器遵守他的协议
     self.myLoginMethod = [[LoginMethod alloc]init];
     self.myLoginMethod.delegate = self;
-
+    //监听文本输入框的改变
+    //1.拿到通知中心
+    NSNotificationCenter *center=[NSNotificationCenter defaultCenter];
+    //2.注册监听
+    [center addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.userTextField];
+    [center addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.pwdTextField];
+}
+-(void)dealloc
+{
+    //移除监听
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+/**
+ *  文本改变事件
+ */
+-(void)textChange{
+    //1.同时改变文本值，登录才可用
+    if (self.userTextField.text.length>0&&self.pwdTextField.text.length>0) {
+        //改变btn背景颜色
+        self.loginBtn.backgroundColor=[UIColor colorWithRed:251.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1.0];
+        //改变字体颜色
+        [self.loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.loginBtn addTarget:self action:@selector(loginClick) forControlEvents:UIControlEventTouchUpInside];
+        //关闭交互
+        self.loginBtn.userInteractionEnabled=YES;
+        
+    }else if (self.userTextField.text.length<1&&self.pwdTextField.text.length<1)
+    {
+        //改变btn背景颜色
+        self.loginBtn.backgroundColor=[UIColor colorWithRed:204.0/255.0 green:204.0/255.0 blue:204.0/255.0 alpha:1];
+        //改变字体颜色
+        [self.loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        //关闭交互
+        self.loginBtn.userInteractionEnabled=NO;
+    }
 }
 -(void)searchClick{
     [self.navigationController popViewControllerAnimated:YES];
@@ -143,7 +177,7 @@
  *
  *  @param sender <#sender description#>
  */
-- (IBAction)loginClick:(UIButton *)sender {
+- (void)loginClick {
     [self requestData:self.userTextField.text andpassword:self.pwdTextField.text];
 }
 /**

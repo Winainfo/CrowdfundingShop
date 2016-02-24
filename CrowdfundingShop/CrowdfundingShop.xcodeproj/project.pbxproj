@@ -96,6 +96,8 @@
 		01747E101C1D6BA60051086C /* InAnnounceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01747E0F1C1D6BA60051086C /* InAnnounceController.m */; };
 		01747E141C1D76CC0051086C /* ComputeDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01747E121C1D76CC0051086C /* ComputeDetailCell.m */; };
 		01747E151C1D76CC0051086C /* ComputeDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01747E131C1D76CC0051086C /* ComputeDetailCell.xib */; };
+		0177BF761C7D7B730044084C /* FLVerifyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0177BF751C7D7B730044084C /* FLVerifyButton.m */; };
+		0177BF7A1C7D96530044084C /* GBverifyButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0177BF791C7D96530044084C /* GBverifyButton.m */; };
 		01782B721C05EF850028768F /* PerTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01782B711C05EF850028768F /* PerTableController.m */; };
 		017F6BE11C02BE050040385A /* Plug_Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 017F6BE01C02BE050040385A /* Plug_Controller.m */; };
 		017F6BE31C02BE2D0040385A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 017F6BE21C02BE2D0040385A /* Main.storyboard */; };
@@ -141,6 +143,7 @@
 		019E09721C173C730022593A /* NewGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 019E09701C173C730022593A /* NewGoodsCell.m */; };
 		019E09731C173C730022593A /* NewGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019E09711C173C730022593A /* NewGoodsCell.xib */; };
 		019E09751C1741C70022593A /* IMG_0066.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 019E09741C1741C70022593A /* IMG_0066.JPG */; };
+		01A5447B1C7B6C5B0045F545 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A5447A1C7B6C5B0045F545 /* RegisterController.m */; };
 		01A56FDD1C45EE3600D16D93 /* InAnnounceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A56FDC1C45EE3600D16D93 /* InAnnounceView.m */; };
 		01A56FE01C45F71600D16D93 /* DidAnnounceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A56FDF1C45F71600D16D93 /* DidAnnounceView.m */; };
 		01AB379B1C2707EE0065C902 /* goodsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01AB37991C2707EE0065C902 /* goodsViewCell.m */; };
@@ -460,6 +463,10 @@
 		01747E111C1D76CC0051086C /* ComputeDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComputeDetailCell.h; sourceTree = "<group>"; };
 		01747E121C1D76CC0051086C /* ComputeDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComputeDetailCell.m; sourceTree = "<group>"; };
 		01747E131C1D76CC0051086C /* ComputeDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComputeDetailCell.xib; sourceTree = "<group>"; };
+		0177BF741C7D7B730044084C /* FLVerifyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLVerifyButton.h; sourceTree = "<group>"; };
+		0177BF751C7D7B730044084C /* FLVerifyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLVerifyButton.m; sourceTree = "<group>"; };
+		0177BF781C7D96530044084C /* GBverifyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBverifyButton.h; sourceTree = "<group>"; };
+		0177BF791C7D96530044084C /* GBverifyButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBverifyButton.m; sourceTree = "<group>"; };
 		01782B701C05EF850028768F /* PerTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerTableController.h; sourceTree = "<group>"; };
 		01782B711C05EF850028768F /* PerTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerTableController.m; sourceTree = "<group>"; };
 		017F6BDF1C02BE050040385A /* Plug_Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plug_Controller.h; sourceTree = "<group>"; };
@@ -540,6 +547,8 @@
 		019E09701C173C730022593A /* NewGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGoodsCell.m; sourceTree = "<group>"; };
 		019E09711C173C730022593A /* NewGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewGoodsCell.xib; sourceTree = "<group>"; };
 		019E09741C1741C70022593A /* IMG_0066.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0066.JPG; sourceTree = "<group>"; };
+		01A544791C7B6C5B0045F545 /* RegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterController.h; sourceTree = "<group>"; };
+		01A5447A1C7B6C5B0045F545 /* RegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterController.m; sourceTree = "<group>"; };
 		01A56FDB1C45EE3600D16D93 /* InAnnounceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InAnnounceView.h; sourceTree = "<group>"; };
 		01A56FDC1C45EE3600D16D93 /* InAnnounceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InAnnounceView.m; sourceTree = "<group>"; };
 		01A56FDE1C45F71600D16D93 /* DidAnnounceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DidAnnounceView.h; sourceTree = "<group>"; };
@@ -1353,6 +1362,8 @@
 				01DC45161C31A90B006E478F /* Register1Controller.m */,
 				01DC45181C31A915006E478F /* Register2Controller.h */,
 				01DC45191C31A915006E478F /* Register2Controller.m */,
+				01A544791C7B6C5B0045F545 /* RegisterController.h */,
+				01A5447A1C7B6C5B0045F545 /* RegisterController.m */,
 			);
 			name = "Login(登录注册)";
 			path = Login;
@@ -1365,6 +1376,15 @@
 				014FEFAF1C060B9C00C247C5 /* ARLabel.m */,
 			);
 			path = ARLabel;
+			sourceTree = "<group>";
+		};
+		0177BF771C7D96530044084C /* GBverifyButton */ = {
+			isa = PBXGroup;
+			children = (
+				0177BF781C7D96530044084C /* GBverifyButton.h */,
+				0177BF791C7D96530044084C /* GBverifyButton.m */,
+			);
+			path = GBverifyButton;
 			sourceTree = "<group>";
 		};
 		017F6BD81C02BC200040385A /* Classes */ = {
@@ -1391,6 +1411,9 @@
 		017F6BDA1C02BCCA0040385A /* Plug-in(插件) */ = {
 			isa = PBXGroup;
 			children = (
+				0177BF771C7D96530044084C /* GBverifyButton */,
+				0177BF741C7D7B730044084C /* FLVerifyButton.h */,
+				0177BF751C7D7B730044084C /* FLVerifyButton.m */,
 				011DE6D71C75941D006887B6 /* ThirdParty */,
 				011DE7651C75941D006887B6 /* WXPay */,
 				01CB33631C6CD3AB008CA4AE /* area.plist */,
@@ -2033,6 +2056,7 @@
 				01DC45171C31A90B006E478F /* Register1Controller.m in Sources */,
 				0185F0E91C2A3CB500A75980 /* RequestData.m in Sources */,
 				011E37521C1E64830032FB13 /* SelectCloudNumController.m in Sources */,
+				01A5447B1C7B6C5B0045F545 /* RegisterController.m in Sources */,
 				017F75BC1C3C2BAE0047B260 /* KTSelectPickerView.m in Sources */,
 				019C1DF51C39911B000A0778 /* SeetingController.m in Sources */,
 				01A56FE01C45F71600D16D93 /* DidAnnounceView.m in Sources */,
@@ -2097,9 +2121,11 @@
 				01BB02811C7555C20066A3A2 /* RechargeServiceController.m in Sources */,
 				01ACDE721C2A6D9700A9466B /* AFURLRequestSerialization.m in Sources */,
 				0192AF101C74483300CF4821 /* InvitationRecordCell.m in Sources */,
+				0177BF7A1C7D96530044084C /* GBverifyButton.m in Sources */,
 				0132802E1C2800C100339038 /* ShareOrderDetailView.m in Sources */,
 				01FA8E1B1C3AC51E00E7E00B /* UpdateNicknameController.m in Sources */,
 				019703AD1C391FB400A53526 /* LXDSegmentControl.m in Sources */,
+				0177BF761C7D7B730044084C /* FLVerifyButton.m in Sources */,
 				01ACDE731C2A6D9700A9466B /* AFURLResponseSerialization.m in Sources */,
 				019703B91C3940D800A53526 /* VOIndicatorAnimation.m in Sources */,
 				011DE78D1C75941E006887B6 /* WXUtil.mm in Sources */,

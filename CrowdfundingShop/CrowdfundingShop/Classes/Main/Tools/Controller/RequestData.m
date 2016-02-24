@@ -326,7 +326,7 @@
  *  @param data  传入字典
  *  @param block 返回块值
  */
-+(void)search:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block
++(void)search:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure
 {
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
@@ -894,7 +894,7 @@
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
     //设置参数
-    NSDictionary *params=@{@"uid":data[@"uid"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSDictionary *params=@{@"uid":data[@"uid"],@"type":data[@"type"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/invite/commissions/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         block(responseObject);
@@ -932,7 +932,6 @@
     //设置参数
     NSDictionary *params=@{@"uid":data[@"uid"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/invite/friends_code/",URL];
-    NSLog(@"%@",url);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -958,4 +957,133 @@
         failure(error);
     }];
 }
+/**
+ *   用户注册
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)userRegisterSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"user":data[@"user"],@"password":data[@"password"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/userRegister/",URL];
+    NSLog(@"%@",url);
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   获取验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)getCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"user":data[@"user"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/sendmobile/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   核对验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)checkCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"checkcodes":data[@"checkcodes"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/mobileregsn/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   一键转入云购账户
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)cashMoneySerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"txtCZMoney":data[@"txtCZMoney"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/invite/cashout/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+  *   绑定手机
+  *  @param data  传入字典
+  *  @param block 返回块值
+  */
++(void)bindMobileSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"mobile":data[@"mobile"],@"checkcodes":data[@"checkcodes"]};
+//    NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/mobile_send/",URL];
+     NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/mobilecheck/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   发送手机验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)sendMobileCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"mobile":data[@"mobile"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/mobile_send/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   发送邮箱验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)sendEmalCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"email":data[@"email"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/send_mail/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+
 @end
