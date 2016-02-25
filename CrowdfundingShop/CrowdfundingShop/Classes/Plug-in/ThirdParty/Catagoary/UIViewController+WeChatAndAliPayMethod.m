@@ -8,8 +8,6 @@
 
 #import "UIViewController+WeChatAndAliPayMethod.h"
 #import "WXApi.h"
-#import <AlipaySDK/AlipaySDK.h>
-#import "DataSigner.h"
 
 @implementation UIViewController (WeChatAndAliPayMethod)
 
@@ -66,41 +64,4 @@
 
 //===========================分割线==========================================================
 
-//支付宝支付
--(void)payTHeMoneyUseAliPayWithOrderId:(NSString *)orderId totalMoney:(NSString *)totalMoney payTitle:(NSString *)payTitle
-{
-    NSMutableString *orderString = [NSMutableString string];
-    [orderString appendFormat:@"service=\"%@\"", @"mobile.securitypay.pay"]; //
-    [orderString appendFormat:@"&partner=\"%@\"", AliPartnerID];          //
-    [orderString appendFormat:@"&_input_charset=\"%@\"", @"utf-8"];    //
-    
-    [orderString appendFormat:@"&notify_url=\"%@\"", AliNotifyURL];       //
-    [orderString appendFormat:@"&out_trade_no=\"%@\"", orderId];   //
-    [orderString appendFormat:@"&subject=\"%@\"", payTitle];        //
-    [orderString appendFormat:@"&payment_type=\"%@\"", @"1"];          //
-    [orderString appendFormat:@"&seller_id=\"%@\"", AliSellerID];         //
-    [orderString appendFormat:@"&total_fee=\"%@\"", totalMoney];         //
-    [orderString appendFormat:@"&body=\"%@\"", payTitle];              //
-    [orderString appendFormat:@"&showUrl =\"%@\"", @"m.alipay.com"];
-    
-    
-    id<DataSigner> signer = CreateRSADataSigner(AliPartnerPrivKey);
-    NSString *signedString = [signer signString:orderString];
-    
-    [orderString appendFormat:@"&sign=\"%@\"", signedString];
-    [orderString appendFormat:@"&sign_type=\"%@\"", @"RSA"];
-    
-    [[AlipaySDK defaultService] payOrder:orderString fromScheme:kAliPayURLScheme callback:^(NSDictionary *resultDic)
-     {
-         NSLog(@"reslut = %@",resultDic);
-         if ([[resultDic objectForKey:@"resultStatus"] isEqual:@"9000"]) {
-             //支付成功
-             [[NSNotificationCenter defaultCenter] postNotificationName:ALI_PAY_RESULT object:ALIPAY_SUCCESSED];
-             
-         }else{
-             [[NSNotificationCenter defaultCenter] postNotificationName:ALI_PAY_RESULT object:ALIPAY_FAILED];
-         }
-     }];
-
-}
 @end

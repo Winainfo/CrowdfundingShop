@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "payRequsestHandler.h"
-#import "AliPayNeedDEF.h"
 @interface UIViewController (WeChatAndAliPayMethod)
 /**
  *  微信支付调用方法

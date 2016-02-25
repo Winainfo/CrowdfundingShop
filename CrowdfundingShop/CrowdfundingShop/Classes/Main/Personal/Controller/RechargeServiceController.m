@@ -9,6 +9,7 @@
 #import "RechargeServiceController.h"
 #import "AccountTool.h"
 #import "UIViewController+WeChatAndAliPayMethod.h"
+#import "AlipayHelper.h"
 @interface RechargeServiceController ()<UITextFieldDelegate>
 /**余额*/
 @property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
@@ -272,13 +273,35 @@
             //所以这里添加一个监听，用来接收是否成功的消息
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPayResultNoti:) name:WX_PAY_RESULT object:nil];
         }break;
-        case 2:{//支付宝
-            [self payTHeMoneyUseAliPayWithOrderId:@"12343111231" totalMoney:[NSString stringWithFormat:@"%@",price] payTitle:@"这里告诉客户花钱买了啥，力求简短"];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AliPayResultNoti:) name:ALI_PAY_RESULT object:nil];
+        case 2:{
+            NSDictionary *dict = @{@"tradeNO":[self generateTradeNO],@"productName":@"云购充值",@"productDescription":@"可大可小",@"amount":price};
+            
+            [AlipayHelper orderDetialInfo:dict Success:^{
+                NSLog(@"成功了吗");
+            } Failure:^{
+                NSLog(@"失败了吗");
+            } Ispaying:^{
+                NSLog(@"没有支付");
+            }];
         }break;
         default:
             break;
     }
+}
+- (NSString *)generateTradeNO
+{
+    static int kNumber = 15;
+    
+    NSString *sourceStr = @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    NSMutableString *resultStr = [[NSMutableString alloc] init];
+    srand(time(0));
+    for (int i = 0; i < kNumber; i++)
+    {
+        unsigned index = rand() % [sourceStr length];
+        NSString *oneStr = [sourceStr substringWithRange:NSMakeRange(index, 1)];
+        [resultStr appendString:oneStr];
+    }
+    return resultStr;
 }
 #pragma mark 支付代理
 //微信支付付款成功失败
@@ -297,21 +320,6 @@
 }
 
 
-//支付宝支付成功失败
--(void)AliPayResultNoti:(NSNotification *)noti
-{
-    NSLog(@"%@",noti);
-    if ([[noti object] isEqualToString:ALIPAY_SUCCESSED]) {
-        [self showMessage:@"支付成功"];
-        //在这里填写支付成功之后你要做的事情
-        NSLog(@"a--asdasd");
-    }else{
-        [self showMessage:@"支付失败"];
-        NSLog(@"支付失败");
-    }
-    //上边添加了监听，这里记得移除
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:ALI_PAY_RESULT object:nil];
-}
 
 - (void) showMessage:(NSString*)message{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];

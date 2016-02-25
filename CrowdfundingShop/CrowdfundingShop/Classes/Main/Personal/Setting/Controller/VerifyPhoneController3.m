@@ -13,7 +13,6 @@
 #import <MJRefresh.h>
 #import "RequestData.h"
 #import "AccountTool.h"
-#import "FLVerifyButton.h"
 #import "GBverifyButton.h"
 @interface VerifyPhoneController3 ()<UITextFieldDelegate>
 /**验证码*/
@@ -22,8 +21,6 @@
 @property (weak, nonatomic) IBOutlet ARLabel *phoneLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *saveBtn;
-
-@property (weak, nonatomic) IBOutlet FLVerifyButton *againBtn;
 
 @property(nonatomic,retain)GBverifyButton*button;
 @end

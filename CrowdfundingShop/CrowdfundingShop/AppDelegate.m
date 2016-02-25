@@ -71,8 +71,21 @@
         return  [WXApi handleOpenURL:url delegate:self];
         //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
     }else{
-        return [ShareSDK handleOpenURL:url
-                            wxDelegate:self];
+//        return [ShareSDK handleOpenURL:url
+//                            wxDelegate:self];
+        //如果极简 SDK 不可用,会跳转支付宝钱包进行支付,需要将支付宝钱包的支付结果回传给 SDK if ([url.host isEqualToString:@"safepay"]) {
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayResult" object:[resultDic objectForKey:@"resultStatus"]];
+            
+        }];
+        if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
+            [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
+                NSLog(@"result = %@",resultDic);
+            }];
+        }
+        return YES;
     }
     
 }
@@ -85,8 +98,21 @@
         return  [WXApi handleOpenURL:url delegate:self];
         //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
     }else{
-        return [ShareSDK handleOpenURL:url
-                            wxDelegate:self];
+        //如果极简 SDK 不可用,会跳转支付宝钱包进行支付,需要将支付宝钱包的支付结果回传给 SDK if ([url.host isEqualToString:@"safepay"]) {
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+            NSLog(@"result = %@",resultDic);
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayResult" object:[resultDic objectForKey:@"resultStatus"]];
+            
+        }];
+        if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
+            [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
+                NSLog(@"result = %@",resultDic);
+            }];
+        }
+        return YES;
+//        return [ShareSDK handleOpenURL:url
+//                            wxDelegate:self];
     }
 }
 - (BOOL)application:(UIApplication *)application
@@ -95,24 +121,30 @@
          annotation:(id)annotation
 {
     
-    //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
-//    if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",APP_ID]].location != NSNotFound) {
-//        return  [WXApi handleOpenURL:url delegate:self];
-//    }else
-//    {
+//    这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
+    if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",APP_ID]].location != NSNotFound) {
+        return  [WXApi handleOpenURL:url delegate:self];
+    }else
+    {
 //        //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
 //        return [ShareSDK handleOpenURL:url
 //                     sourceApplication:sourceApplication
 //                            annotation:annotation
 //                            wxDelegate:self];
-//    }
-    if ([url.host isEqualToString:@"safepay"]) {
-        //跳转支付宝钱包进行支付，处理支付结果
+        //如果极简 SDK 不可用,会跳转支付宝钱包进行支付,需要将支付宝钱包的支付结果回传给 SDK if ([url.host isEqualToString:@"safepay"]) {
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
             NSLog(@"result = %@",resultDic);
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayResult" object:[resultDic objectForKey:@"resultStatus"]];
+            
         }];
+        if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
+            [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
+                NSLog(@"result = %@",resultDic);
+            }];
+        }
+        return YES;
     }
-    return YES;
 }
 
 //微信SDK自带的方法，处理从微信客户端完成操作后返回程序之后的回调方法
@@ -157,5 +189,19 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+//    //如果极简 SDK 不可用,会跳转支付宝钱包进行支付,需要将支付宝钱包的支付结果回传给 SDK if ([url.host isEqualToString:@"safepay"]) {
+//    [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
+//        NSLog(@"result = %@",resultDic);
+//        
+//        [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayResult" object:[resultDic objectForKey:@"resultStatus"]];
+//        
+//    }];
+//    if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
+//        [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
+//            NSLog(@"result = %@",resultDic);
+//        }];
+//    }
+//    return YES;
+//}
 @end

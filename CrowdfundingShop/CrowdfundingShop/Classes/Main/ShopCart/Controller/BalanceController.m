@@ -181,8 +181,6 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPayResultNoti:) name:WX_PAY_RESULT object:nil];
         }break;
         case 4:{//支付宝
-            [self payTHeMoneyUseAliPayWithOrderId:@"12343111231" totalMoney:[NSString stringWithFormat:@"%@",self.sumPrice] payTitle:@"这里告诉客户花钱买了啥，力求简短"];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(AliPayResultNoti:) name:ALI_PAY_RESULT object:nil];
         }break;
         default:
             break;
@@ -204,20 +202,6 @@
 }
 
 
-//支付宝支付成功失败
--(void)AliPayResultNoti:(NSNotification *)noti
-{
-    NSLog(@"%@",noti);
-    if ([[noti object] isEqualToString:ALIPAY_SUCCESSED]) {
-        [self showMessage:@"支付成功"];
-        //在这里填写支付成功之后你要做的事情
-        
-    }else{
-        [self showMessage:@"支付失败"];
-    }
-    //上边添加了监听，这里记得移除
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:ALI_PAY_RESULT object:nil];
-}
 
 - (void) showMessage:(NSString*)message{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
