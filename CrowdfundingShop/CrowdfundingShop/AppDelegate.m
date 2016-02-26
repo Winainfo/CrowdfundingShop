@@ -85,7 +85,7 @@
                 NSLog(@"result = %@",resultDic);
             }];
         }
-        return YES;
+        return [ShareSDK handleOpenURL:url wxDelegate:self];;
     }
     
 }

@@ -354,5 +354,23 @@
  *  @param block 返回块值
  */
 +(void)sendEmalCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   找回密码发送验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)forgetCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   找回密码绑定验证码
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)forgetBindCodeSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   找回密码修改
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)forgetUpdateSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 @end
 

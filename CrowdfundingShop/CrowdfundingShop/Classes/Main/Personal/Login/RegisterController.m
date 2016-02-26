@@ -22,6 +22,15 @@
 @end
 
 @implementation RegisterController
+//隐藏和显示底部标签栏
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = NO;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
