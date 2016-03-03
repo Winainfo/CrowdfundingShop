@@ -10,6 +10,7 @@
 #import "AccountTool.h"
 #import "UIViewController+WeChatAndAliPayMethod.h"
 #import "AlipayHelper.h"
+#import "RequestData.h"
 @interface RechargeServiceController ()<UITextFieldDelegate>
 /**余额*/
 @property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
@@ -69,6 +70,8 @@
     self.button1.layer.borderWidth=2.0;
     self.button1.layer.cornerRadius=5.0;
     self.button1.layer.borderColor=[[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1.0]CGColor];
+    AccountModel *accout=[AccountTool account];
+    self.moneyLabel.text=accout.money;
 }
 /**
  *  返回
@@ -264,7 +267,6 @@
     }else{
         price=self.money;
     }
-    NSLog(@"价格:%@",price);
     switch (self.type) {
         case 1:{//微信支付
             //这里调用我自己写的catagoary中的方法，方法里集成了微信支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
@@ -277,6 +279,21 @@
             NSDictionary *dict = @{@"tradeNO":[self generateTradeNO],@"productName":@"云购充值",@"productDescription":@"可大可小",@"amount":price};
             
             [AlipayHelper orderDetialInfo:dict Success:^{
+                AccountModel *account=[AccountTool account];
+                NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",price,@"money",@"wapalipay",@"type",nil];
+                [RequestData rechargeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+                    int code=[data[@"code"] intValue];
+                    if (code==0) {
+                        int a_money=[account.money intValue];
+                        int b_money=[price intValue];
+                        account.money=[NSString stringWithFormat:@"%i",a_money+b_money];
+                        self.moneyLabel.text=[NSString stringWithFormat:@"%i",a_money+b_money];
+                        [AccountTool saveAccount:account];
+                    }
+                    NSLog(@"---%@",data);
+                } andFailure:^(NSError *error) {
+                    
+                }];
                 NSLog(@"成功了吗");
             } Failure:^{
                 NSLog(@"失败了吗");

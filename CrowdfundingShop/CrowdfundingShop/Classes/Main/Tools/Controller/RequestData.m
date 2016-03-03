@@ -850,6 +850,7 @@
 }
 /**
  *   充值服务
+ *  type:wxpay_web-微信支付 wapalipay-支付宝
  *  @param data  传入字典
  *  @param block 返回块值
  */
@@ -858,7 +859,7 @@
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
     //设置参数
-    NSDictionary *params=@{@"uid":data[@"uid"],@"banktype":data[@"banktype"],@"money":data[@"money"]};
+    NSDictionary *params=@{@"uid":data[@"uid"],@"money":data[@"money"],@"type":data[@"type"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/cart/addmoney/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         block(responseObject);

@@ -10,6 +10,7 @@
 #import "BalanceTableController.h"
 #import "AccountTool.h"
 #import "UIViewController+WeChatAndAliPayMethod.h"
+#import "AlipayHelper.h"
 @interface BalanceController ()
 /**结算按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *balanceBtn;
@@ -181,6 +182,15 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPayResultNoti:) name:WX_PAY_RESULT object:nil];
         }break;
         case 4:{//支付宝
+            NSDictionary *dict = @{@"tradeNO":[self generateTradeNO],@"productName":@"云购充值",@"productDescription":@"可大可小",@"amount":self.sumPrice};
+            
+            [AlipayHelper orderDetialInfo:dict Success:^{
+                NSLog(@"成功了吗");
+            } Failure:^{
+                NSLog(@"失败了吗");
+            } Ispaying:^{
+                NSLog(@"没有支付");
+            }];
         }break;
         default:
             break;
@@ -201,7 +211,21 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:WX_PAY_RESULT object:nil];
 }
 
-
+- (NSString *)generateTradeNO
+{
+    static int kNumber = 15;
+    
+    NSString *sourceStr = @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    NSMutableString *resultStr = [[NSMutableString alloc] init];
+    srand(time(0));
+    for (int i = 0; i < kNumber; i++)
+    {
+        unsigned index = rand() % [sourceStr length];
+        NSString *oneStr = [sourceStr substringWithRange:NSMakeRange(index, 1)];
+        [resultStr appendString:oneStr];
+    }
+    return resultStr;
+}
 
 - (void) showMessage:(NSString*)message{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
