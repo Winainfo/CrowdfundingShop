@@ -372,5 +372,29 @@
  *  @param block 返回块值
  */
 +(void)forgetUpdateSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   余额支付
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)moneyPaySerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   支付宝支付
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)AliPaySerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   积分支付
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)ScorePaySerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   微信支付
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)WxPaySerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 @end
 

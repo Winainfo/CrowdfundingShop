@@ -23,6 +23,8 @@
 -(NSMutableArray *)getList;
 /**删除数据*/
 -(BOOL)deleteList:(int)bid;
+/**删除所有数据*/
+-(BOOL)deleteDataList;
 /**查询数据库，searchID为要查询数据的ID，返回数据为查询到的数据*/
 -(NSMutableArray*)searchTestList:(NSString*)searchString;
 @end

@@ -13,4 +13,6 @@
 @property (retain,nonatomic)NSString *sumNum;
 /**总价格*/
 @property (retain,nonatomic)NSString *sumPrice;
+/**商品信息*/
+@property(retain,nonatomic)NSString *jsonStr;
 @end

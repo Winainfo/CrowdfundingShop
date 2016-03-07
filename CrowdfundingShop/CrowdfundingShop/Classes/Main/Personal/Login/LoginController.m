@@ -297,6 +297,7 @@
 -(void)recieveTheUserInfo:(NSDictionary *)userInfo errorMsg:(NSString *)errorMsg
 {
     if (!errorMsg) {
+        
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:userInfo[@"uid"],@"b_code",nil];
         [RequestData thirdLodigSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];

@@ -81,6 +81,7 @@
 		0136CE4D1C32E81C00BDF538 /* MyAddressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0136CE4B1C32E81C00BDF538 /* MyAddressCell.xib */; };
 		0136CE501C32E82F00BDF538 /* MyAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0136CE4F1C32E82F00BDF538 /* MyAddressController.m */; };
 		0136CE561C32FC9A00BDF538 /* AddMyAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0136CE551C32FC9A00BDF538 /* AddMyAddressController.m */; };
+		0139A0891C8C7D0A00E107FA /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0139A0881C8C7D0A00E107FA /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		014FEFAA1C06018300C247C5 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 014FEFA91C06018300C247C5 /* LoginController.m */; };
 		014FEFB01C060B9C00C247C5 /* ARLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 014FEFAF1C060B9C00C247C5 /* ARLabel.m */; };
 		01545DA71C609D270029A0AB /* 112.png in Resources */ = {isa = PBXBuildFile; fileRef = 01545DA61C609D270029A0AB /* 112.png */; };
@@ -442,6 +443,8 @@
 		0136CE541C32FC9A00BDF538 /* AddMyAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMyAddressController.h; sourceTree = "<group>"; };
 		0136CE551C32FC9A00BDF538 /* AddMyAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMyAddressController.m; sourceTree = "<group>"; };
 		013737D21C47E1290040A569 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		0139A0871C8C7D0A00E107FA /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		0139A0881C8C7D0A00E107FA /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		014FEFA81C06018300C247C5 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		014FEFA91C06018300C247C5 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		014FEFAE1C060B9C00C247C5 /* ARLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARLabel.h; sourceTree = "<group>"; };
@@ -1323,6 +1326,7 @@
 		013280181C27C7EC00339038 /* Tools(工具类、请求数据) */ = {
 			isa = PBXGroup;
 			children = (
+				0139A0861C8C7CFD00E107FA /* JSONKit */,
 				013280191C27C80A00339038 /* Controller(控制) */,
 			);
 			name = "Tools(工具类、请求数据)";
@@ -1370,6 +1374,15 @@
 			);
 			name = "View(视图)";
 			path = View;
+			sourceTree = "<group>";
+		};
+		0139A0861C8C7CFD00E107FA /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				0139A0871C8C7D0A00E107FA /* JSONKit.h */,
+				0139A0881C8C7D0A00E107FA /* JSONKit.m */,
+			);
+			name = JSONKit;
 			sourceTree = "<group>";
 		};
 		014FEFA71C06015B00C247C5 /* Login(登录注册) */ = {
@@ -2146,6 +2159,7 @@
 				015B58C21C215EB9008EF7A1 /* ShareOrderCell.m in Sources */,
 				019703B81C3940D800A53526 /* VOContentLayer.m in Sources */,
 				01FA8E341C3AE66600E7E00B /* VerifyEmailController1.m in Sources */,
+				0139A0891C8C7D0A00E107FA /* JSONKit.m in Sources */,
 				019C1DE81C3978C0000A0778 /* DoShareOrderCell.m in Sources */,
 				0192AF181C746B9C00CF4821 /* CommisionCell.m in Sources */,
 				01BB02811C7555C20066A3A2 /* RechargeServiceController.m in Sources */,

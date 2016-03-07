@@ -308,5 +308,39 @@
     }
     return NO;
 }
-
+/**删除所有数据*/
+-(BOOL)deleteDataList{
+    if ([self openDB]) {
+        
+        sqlite3_stmt *stmt;
+        //sql语句
+        NSString *sql=[NSString stringWithFormat:@"delete from cart_table"];
+        //将SQL语句放入sqlite3_stmt中
+        int success = sqlite3_prepare_v2(_database, [sql UTF8String], -1, &stmt, NULL);
+        if (success != SQLITE_OK) {
+            NSLog(@"Error: 错误的删除语句");
+            sqlite3_close(_database);
+            return NO;
+        }
+        
+        //这里的数字1，2，3代表第几个问号。这里只有1个问号，这是一个相对比较简单的数据库操作，真正的项目中会远远比这个复杂
+//        sqlite3_bind_int(stmt, 1, bid);
+        //执行SQL语句。这里是更新数据库
+        success = sqlite3_step(stmt);
+        //释放statement
+        sqlite3_finalize(stmt);
+        
+        //如果执行失败
+        if (success == SQLITE_ERROR) {
+            NSLog(@"Error: 删除失败");
+            //关闭数据库
+            sqlite3_close(_database);
+            return NO;
+        }
+        //执行成功后依然要关闭数据库
+        sqlite3_close(_database);
+        return YES;
+    }
+    return NO;
+}
 @end

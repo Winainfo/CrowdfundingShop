@@ -15,6 +15,7 @@
 #import "CartModel.h"
 #import "Database.h"
 #import "UITabBar+badge.h"
+#import "JSONKit.h"
 @interface ShopCartController ()<CartCellDelegate>{
     NSInteger sumPrice;
 }
@@ -28,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 /**购物车数组*/
 @property (retain,nonatomic) NSMutableArray *shopCartArray;
+@property (retain,nonatomic) NSMutableArray *shopArray;
+@property (retain,nonatomic) NSString *strData;
 @property(retain,nonatomic)UIAlertView *alert;
 /**商品数量*/
 @property (weak, nonatomic) IBOutlet UILabel *numLabel;
@@ -50,6 +53,14 @@
         _shopCartArray=[NSMutableArray array];
     }
     return _shopCartArray;
+}
+-(NSMutableArray *)shopArray
+{
+    if (_shopArray==nil)
+    {
+        _shopArray=[NSMutableArray array];
+    }
+    return _shopArray;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -80,6 +91,7 @@
  */
 -(void)flagLogin
 {
+    self.strData= @"";
     //初始化
     sumPrice=0;
     //数据
@@ -95,10 +107,18 @@
     if(account)
     {
         if (_shopCartArray.count>0) {
+            _shopArray=[[NSMutableArray alloc]initWithCapacity:0];
             for (int i=0; i<_shopCartArray.count; i++) {
                 CartModel *cartList=_shopCartArray[i];
                 sumPrice=sumPrice+cartList.price;
+                NSString *shopidStr=[[_shopCartArray objectAtIndex:i]valueForKey:@"shopId"];
+                NSString *numStr=[[_shopCartArray objectAtIndex:i]valueForKey:@"num"];
+                NSDictionary *Dic=[NSDictionary dictionaryWithObjectsAndKeys:shopidStr,@"shopid",numStr,@"num",nil];
+                [_shopArray addObject:Dic];
             }
+            NSData *strData=[NSJSONSerialization dataWithJSONObject:_shopArray options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *str = [[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding];
+            self.strData = [self.strData stringByAppendingString:str];
             self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%lu",(unsigned long)self.shopCartArray.count];
             [self.navigationController.tabBarController.tabBar showBadgeWithIndex:self.navigationController.tabBarController.selectedIndex];
             self.priceLabel.text=[NSString stringWithFormat:@"%lu",(unsigned long)sumPrice];
@@ -202,6 +222,7 @@
         id theSegue=segue.destinationViewController;
         [theSegue setValue:self.numLabel.text forKey:@"sumNum"];
         [theSegue setValue:self.priceLabel.text forKey:@"sumPrice"];
+        [theSegue setValue:self.strData forKey:@"jsonStr"];
     }
 }
 #pragma mark 数据库操作
@@ -237,9 +258,7 @@
     {
         //删除方法
        CartModel *cartList=_shopCartArray[indexPath.row];
-        NSLog(@"%@",_shopCartArray[indexPath.row]);
         int row=cartList.pk_id;
-        NSLog(@"row:%i",row);
         Database *db=[[Database alloc]init];
         if([db deleteList:row])
         {

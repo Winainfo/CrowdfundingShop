@@ -11,6 +11,11 @@
 #import "AccountTool.h"
 #import "UIViewController+WeChatAndAliPayMethod.h"
 #import "AlipayHelper.h"
+#import "RequestData.h"
+#import <MBProgressHUD.h>
+#import "CartModel.h"
+#import "Database.h"
+#import "RechargeServiceController.h"
 @interface BalanceController ()
 /**结算按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *balanceBtn;
@@ -64,7 +69,6 @@
     /**设置圆角*/
     self.balanceBtn.layer.cornerRadius=4.0;
     self.balanceBtn.layer.masksToBounds=YES;
-    
     [self getData];
 }
 //返回
@@ -97,6 +101,7 @@
         self.wxPayBtn.hidden=NO;
         self.type=3;
     }
+
 }
 /**
  *  积分支付
@@ -104,12 +109,24 @@
  *  @param sender <#sender description#>
  */
 - (IBAction)scoreClick:(UIButton *)sender {
-    [self.scoreBtn setImage:[UIImage imageNamed:@"pay_way_select"] forState:UIControlStateNormal];
-    [self.moneyBtn setImage:[UIImage imageNamed:@"pay_way_unselect"] forState:UIControlStateNormal];
-    self.wxPayBtn.hidden=YES;
-    self.aliPayBtn.hidden=YES;
-    self.moneyTextLabel.text=@"余额支付";
-    self.type=1;
+    //沙盒路径
+    AccountModel *account=[AccountTool account];
+    int score=[account.score intValue];
+    if (score>=100) {
+        [self.scoreBtn setImage:[UIImage imageNamed:@"pay_way_select"] forState:UIControlStateNormal];
+        [self.moneyBtn setImage:[UIImage imageNamed:@"pay_way_unselect"] forState:UIControlStateNormal];
+        self.wxPayBtn.hidden=YES;
+        self.aliPayBtn.hidden=YES;
+        self.moneyTextLabel.text=@"余额支付";
+        self.type=1;
+    }else{
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"您的福分不足，加油赚取福分吧" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alert animated:YES completion:^{
+        }];
+    }
+
 }
 /**
  *   余额支付
@@ -120,17 +137,27 @@
     //沙盒路径
     AccountModel *account=[AccountTool account];
     int money=[self.sumPrice intValue]-[account.money intValue];
-    if (money>0) {
+    if (money>1) {
         self.shenyuPrice.text=[NSString stringWithFormat:@"¥%d",money];
+        [self.scoreBtn setImage:[UIImage imageNamed:@"pay_way_unselect"] forState:UIControlStateNormal];
+        [self.moneyBtn setImage:[UIImage imageNamed:@"pay_way_select"] forState:UIControlStateNormal];
+        self.moneyTextLabel.text=[NSString stringWithFormat:@"可使用余额支付¥%0.2f",[account.money floatValue]];
+        self.wxPayBtn.hidden=YES;
+        self.aliPayBtn.hidden=YES;
+        self.type=2;
     }else{
         self.shenyuPrice.text=@"¥0.0";
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"您的余额不足快去充值吧" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //设置故事板为第一启动
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            RechargeServiceController *controller=[storyboard instantiateViewControllerWithIdentifier:@"RechargeService"];
+            [self.navigationController pushViewController:controller animated:YES];
+        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {}]];
+        [self presentViewController:alert animated:YES completion:^{
+        }];
     }
-    [self.scoreBtn setImage:[UIImage imageNamed:@"pay_way_unselect"] forState:UIControlStateNormal];
-    [self.moneyBtn setImage:[UIImage imageNamed:@"pay_way_select"] forState:UIControlStateNormal];
-     self.moneyTextLabel.text=[NSString stringWithFormat:@"可使用余额支付¥%0.2f",[account.money floatValue]];
-    self.wxPayBtn.hidden=YES;
-    self.aliPayBtn.hidden=YES;
-    self.type=2;
 }
 /**
  *  微信支付
@@ -166,13 +193,114 @@
  *  @param sender <#sender description#>
  */
 - (IBAction)payClick:(UIButton *)sender {
-    NSLog(@"支付类型:%d",self.type);
+    //沙盒路径
+    AccountModel *account=[AccountTool account];
+    Database *db=[[Database alloc]init];
     switch (self.type) {
         case 1:{//积分支付
-            
+            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"您确定使用福分支付?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+            //声明对象；
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            //显示的文本；
+            hud.labelText = @"正在提交...";
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0.5];
+            [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",self.jsonStr,@"shop",nil];
+                [RequestData ScorePaySerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+                    int code=[data[@"code"] intValue];
+                    if (code==0) {
+                        //加载成功，先移除原来的HUD；
+                        hud.removeFromSuperViewOnHide = true;
+                        [hud hide:true afterDelay:0];
+                        //然后显示一个成功的提示；
+                        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                        successHUD.labelText = @"支付成功";
+                        successHUD.mode = MBProgressHUDModeCustomView;
+                        //可以设置对应的图片；
+                        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+                        successHUD.removeFromSuperViewOnHide = true;
+                        [successHUD hide:true afterDelay:1];
+                        [db deleteDataList];
+                        int score=[account.score intValue];//账户余额
+                        int price=[self.sumPrice intValue]*100;//消费金额
+                        account.score=[NSString stringWithFormat:@"%d",score-price];
+                        [AccountTool saveAccount:account];
+
+                    }else{
+                        
+                    }
+                } andFailure:^(NSError *error) {
+                    hud.removeFromSuperViewOnHide = true;
+                    [hud hide:true afterDelay:0];
+                    //显示失败的提示；
+                    MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                    failHUD.labelText = @"支付失败";
+                    failHUD.mode = MBProgressHUDModeCustomView;
+                    failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+                    failHUD.removeFromSuperViewOnHide = true;
+                    [failHUD hide:true afterDelay:1];
+                }];
+            }]];
+            [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:0.5];
+            }]];
+            [self presentViewController:alert animated:YES completion:^{
+            }];
         }break;
         case 2:{//余额支付
-            
+            UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"您确定使用余额支付?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+            //声明对象；
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            //显示的文本；
+            hud.labelText = @"正在提交...";
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0.5];
+            [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                 NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",self.jsonStr,@"shop",nil];
+                [RequestData moneyPaySerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+                    int code=[data[@"code"] intValue];
+                    NSLog(@"%@",data);
+                    if (code==0) {
+                        //加载成功，先移除原来的HUD；
+                        hud.removeFromSuperViewOnHide = true;
+                        [hud hide:true afterDelay:0];
+                        //然后显示一个成功的提示；
+                        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                        successHUD.labelText = @"支付成功";
+                        successHUD.mode = MBProgressHUDModeCustomView;
+                        //可以设置对应的图片；
+                        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+                        successHUD.removeFromSuperViewOnHide = true;
+                        [successHUD hide:true afterDelay:1];
+                        [db deleteDataList];
+                        int money=[account.money intValue];//账户余额
+                        int price=[self.sumPrice intValue];//消费金额
+                        account.money=[NSString stringWithFormat:@"%d",money-price];
+                        [AccountTool saveAccount:account];
+                    }else{
+                        
+                    }
+                } andFailure:^(NSError *error) {
+                    hud.removeFromSuperViewOnHide = true;
+                    [hud hide:true afterDelay:0];
+                    //显示失败的提示；
+                    MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                    failHUD.labelText = @"支付失败";
+                    failHUD.mode = MBProgressHUDModeCustomView;
+                    failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+                    failHUD.removeFromSuperViewOnHide = true;
+                    [failHUD hide:true afterDelay:1];
+                }];
+            }]];
+            [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:0.5];
+            }]];
+            [self presentViewController:alert animated:YES completion:^{
+            }];
+
         }break;
         case 3:{//微信支付
             //这里调用我自己写的catagoary中的方法，方法里集成了微信支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
@@ -182,12 +310,33 @@
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPayResultNoti:) name:WX_PAY_RESULT object:nil];
         }break;
         case 4:{//支付宝
-            NSDictionary *dict = @{@"tradeNO":[self generateTradeNO],@"productName":@"云购充值",@"productDescription":@"可大可小",@"amount":self.sumPrice};
+            NSDictionary *dict = @{@"tradeNO":[self generateTradeNO],@"productName":@"购买商品",@"productDescription":@"可大可小",@"amount":self.sumPrice};
             
             [AlipayHelper orderDetialInfo:dict Success:^{
-                NSLog(@"成功了吗");
+              NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",self.jsonStr,@"shop",nil];
+                [RequestData AliPaySerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+                    int code=[data[@"code"] intValue];
+                    if (code==0) {
+                        //声明对象；
+                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                        hud.mode=MBProgressHUDModeText;
+                        //显示的文本；
+                        hud.labelText = @"支付成功";
+                        hud.removeFromSuperViewOnHide = true;
+                        [hud hide:true afterDelay:1];
+                        [db deleteDataList];
+                    }
+                } andFailure:^(NSError *error) {
+                    
+                }];
             } Failure:^{
-                NSLog(@"失败了吗");
+                //声明对象；
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                hud.mode=MBProgressHUDModeText;
+                //显示的文本；
+                hud.labelText = @"支付失败";
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:1];
             } Ispaying:^{
                 NSLog(@"没有支付");
             }];
@@ -202,10 +351,12 @@
     NSLog(@"%@",noti);
     if ([[noti object] isEqualToString:IS_SUCCESSED]) {
         [self showMessage:@"支付成功"];
+        NSLog(@"支付成功");
         //在这里填写支付成功之后你要做的事情
         
     }else{
         [self showMessage:@"支付失败"];
+        NSLog(@"支付失败");
     }
     //上边添加了监听，这里记得移除
     [[NSNotificationCenter defaultCenter] removeObserver:self name:WX_PAY_RESULT object:nil];
