@@ -7,7 +7,6 @@
 //
 
 #import "BalanceController.h"
-#import "BalanceTableController.h"
 #import "AccountTool.h"
 #import "UIViewController+WeChatAndAliPayMethod.h"
 #import "AlipayHelper.h"
@@ -16,6 +15,7 @@
 #import "CartModel.h"
 #import "Database.h"
 #import "RechargeServiceController.h"
+#import "ResultController.h"
 @interface BalanceController ()
 /**结算按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *balanceBtn;
@@ -226,6 +226,10 @@
                         int price=[self.sumPrice intValue]*100;//消费金额
                         account.score=[NSString stringWithFormat:@"%d",score-price];
                         [AccountTool saveAccount:account];
+                        //设置故事板为第一启动
+                        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                        ResultController *controller=[storyboard instantiateViewControllerWithIdentifier:@"resultView"];
+                        [self.navigationController pushViewController:controller animated:YES];
 
                     }else{
                         
@@ -279,6 +283,10 @@
                         int price=[self.sumPrice intValue];//消费金额
                         account.money=[NSString stringWithFormat:@"%d",money-price];
                         [AccountTool saveAccount:account];
+                        //设置故事板为第一启动
+                        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                        ResultController *controller=[storyboard instantiateViewControllerWithIdentifier:@"resultView"];
+                        [self.navigationController pushViewController:controller animated:YES];
                     }else{
                         
                     }
@@ -325,6 +333,10 @@
                         hud.removeFromSuperViewOnHide = true;
                         [hud hide:true afterDelay:1];
                         [db deleteDataList];
+                        //设置故事板为第一启动
+                        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                        ResultController *controller=[storyboard instantiateViewControllerWithIdentifier:@"resultView"];
+                        [self.navigationController pushViewController:controller animated:YES];
                     }
                 } andFailure:^(NSError *error) {
                     

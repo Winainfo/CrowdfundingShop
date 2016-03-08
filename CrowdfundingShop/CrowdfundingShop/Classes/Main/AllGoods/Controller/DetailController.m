@@ -224,16 +224,7 @@
         cartList.price=[_dic[@"yunjiage"]intValue];
         if([db insertList:cartList])
         {
-            //设置故事板为第一启动
-//            [self.navigationController.tabBarController.tabBar ]
-//             [self.navigationController.tabBarController.tabBar hideBadgeWithIndex:self.navigationController.tabBarController.selectedIndex];
-//            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//            ShopCartController *controller=[storyboard instantiateViewControllerWithIdentifier:@"ShopCart"];
-//            [self presentViewController:controller animated:YES completion:nil];
-////            [self.navigationController pushViewController:controller animated:YES];
-////            [self.navigationController pushViewController:controller animated:YES];
-////            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-////            [alert show];
+
         }else
         {
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加失败" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

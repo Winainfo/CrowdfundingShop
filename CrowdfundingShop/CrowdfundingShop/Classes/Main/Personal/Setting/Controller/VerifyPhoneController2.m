@@ -12,6 +12,7 @@
 #import "RequestData.h"
 #import "AccountTool.h"
 #import "VerifyPhoneController3.h"
+#import "PersonalController.h"
 @interface VerifyPhoneController2 ()<UITextFieldDelegate>
 /**手机号*/
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
@@ -60,7 +61,13 @@
  *  返回
  */
 -(void)backClick{
-    [self.navigationController popViewControllerAnimated:YES];
+    //popToViewController
+    for (UIViewController *temp in self.navigationController.viewControllers) {
+        NSLog(@"%@",temp);
+        if ([temp isKindOfClass:[PersonalController class]]) {
+            [self.navigationController popToViewController:temp animated:YES];
+        }
+    }
 }
 /**
  *  文本改变事件

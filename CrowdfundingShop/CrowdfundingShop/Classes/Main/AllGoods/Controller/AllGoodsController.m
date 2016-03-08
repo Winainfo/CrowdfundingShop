@@ -35,6 +35,12 @@
 /**所有商品数组*/
 @property (retain,nonatomic)NSMutableArray *allGoodsArray;
 @property (retain,nonatomic)NSMutableArray *array;
+/**分类ID*/
+@property (retain,nonatomic)NSString *categoryId;
+/**排序ID*/
+@property (retain,nonatomic)NSString *sortId;
+/**排序ID数组*/
+@property (retain,nonatomic)NSArray *sortIdArray;
 @end
 @implementation AllGoodsController
 -(void)viewWillAppear:(BOOL)animated{
@@ -50,6 +56,14 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //初始化
+    [self initStyle];
+}
+#pragma mark 初始化
+/**
+ *  初始化
+ */
+-(void)initStyle{
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Menlo" size:16.0],NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.title=@"所有商品";
@@ -69,17 +83,18 @@
     [self.sortTableView registerNib:sortNib forCellReuseIdentifier:@"GoodsSortCell"];
     [self setExtraCellLineHidden:self.sortTableView];
     //分类名字
-    self.categoryNameArray= @[ @"全部分类", @"手机数码", @"电脑办公", @"家用电器", @"化妆个性" , @"钟表首饰" , @"其他商品" ];
     self.unselectImageArray=@[@"category_2130837504_unselect",@"category_2130837505_unselect",@"category_2130837507_unselect",@"category_2130837506_unselect",@"category_2130837509_unselect",@"category_2130837508_unselect",@"category_2130837510_unselect"];
     self.selectImageArray=@[@"category_2130837504_select",@"category_2130837505_select",@"category_2130837507_select",@"category_2130837506_select",@"category_2130837509_select",@"category_2130837508_select",@"category_2130837510_select"];
     self.sortNameArray=@[@"即将揭晓",@"人气",@"价值(由高到低)",@"价值(由低到高)",@"最新"];
+    self.sortIdArray=@[@"10",@"20",@"50",@"60",@"40"];
     /**所有商品数据源*/
-//    [self requestData:@"" andSort:@"" andIndex:@"1" andpagesize:@"8"];
-    
     self.myTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     [self.myTableView.mj_header beginRefreshing];
     self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     offset=1;
+    self.categoryId=@"";
+    self.sortId=@"";
+    [self requestData];
 }
 #pragma mark - 加载新数据
 /**
@@ -90,7 +105,7 @@
     if (self.allGoodsArray.count==0) {
         offset=1;
         NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"",@"sort",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.categoryId,@"categoryId",self.sortId,@"sort",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
         //声明对象；
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
         //显示的文本；
@@ -143,7 +158,7 @@
     }else{
         offset=1;
         NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"",@"sort",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.categoryId,@"categoryId",self.sortId,@"sort",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
         [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];
             [self.myTableView.mj_header endRefreshing];
@@ -169,7 +184,7 @@
 {
     offset+=1;
     NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"",@"sort",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.categoryId,@"categoryId",self.sortId,@"sort",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
     [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"] intValue];
         [self.myTableView.mj_footer endRefreshing];
@@ -188,10 +203,26 @@
 
 #pragma mark 数据请求
 /**
+ *  请求所有分类
+ */
+-(void)requestData{
+    [RequestData shopCategorySerivce:nil FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            _categoryNameArray=data[@"content"];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.categoryTableView reloadData];
+            });
+        }
+    } andFailure:^(NSError *error) {
+        
+    }];
+}
+/**
  *  请求所有商品
  */
--(void)requestData:(NSString *)categoryid andSort:(NSString *)sortid andIndex:(NSString *)pageindex andpagesize:(NSString *)pagesize{
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:categoryid,@"categoryId",sortid,@"sort",pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+-(void)requestData:(NSString *)categoryid andSort:(NSString *)sortid {
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:categoryid,@"categoryId",sortid,@"sort",@"",@"pageIndex",@"",@"pageSize",nil];
     //声明对象；
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
     //显示的文本；
@@ -238,7 +269,6 @@
         [failHUD hide:true afterDelay:1];
     }];
 }
-
 /**
  *  去掉多余的分割线
  *
@@ -323,7 +353,7 @@
         }
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
-        cell.CategoryLabel.text=_categoryNameArray[indexPath.row];
+        cell.CategoryLabel.text=_categoryNameArray[indexPath.row][@"name"];
         cell.imageView.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@",_unselectImageArray[indexPath.row]]];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -388,7 +418,7 @@
  *  @param indexPath <#indexPath description#>
  */
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(tableView==self.categoryTableView){
+    if(tableView==self.categoryTableView){ //商品分类
         //取出上次出现的 checkmark 的所在行
         GoodsCategoryCell *cellLast = [tableView cellForRowAtIndexPath:_lastIndexPath];
         cellLast.accessoryType = UITableViewCellAccessoryNone;
@@ -397,18 +427,20 @@
         //将新点击的行加上 checkmark 的标记
         GoodsCategoryCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        cell.CategoryLabel.textColor=[UIColor colorWithRed:252.0/255.0 green:102.0/255.0 blue:33.0/255.0 alpha:1];
+        cell.CategoryLabel.textColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
         cell.imageView.image=[UIImage imageNamed:[NSString stringWithFormat:@"%@",_selectImageArray[indexPath.row]]];
         _lastIndexPath = indexPath;
         //切换图标
         [_categoryBtn setImage:[UIImage imageNamed:@"product_pull_down_bg"] forState:UIControlStateNormal];
         [_sortBtn setImage:[UIImage imageNamed:@"product_pull_down_bg"] forState:UIControlStateNormal];
-        [self.categoryBtn setTitle:[NSString stringWithFormat:@"%@",_categoryNameArray[indexPath.row]] forState:UIControlStateNormal];
+        [self.categoryBtn setTitle:[NSString stringWithFormat:@"%@",_categoryNameArray[indexPath.row][@"name"]] forState:UIControlStateNormal];
         self.categoryTableView.hidden=YES;
         self.sortTableView.hidden=YES;
         self.myTableView.hidden=NO;
         _flag=NO;
-    }else if(tableView==self.sortTableView){
+        self.categoryId=_categoryNameArray[indexPath.row][@"cateid"];
+        [self loadNewData];
+    }else if(tableView==self.sortTableView){ //商品排序
         //取出上次出现的 checkmark 的所在行
         GoodsSortCell *cellLast = [tableView cellForRowAtIndexPath:_sortIndexPath];
         cellLast.accessoryType = UITableViewCellAccessoryNone;
@@ -416,7 +448,7 @@
         //将新点击的行加上 checkmark 的标记
         GoodsSortCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        cell.sortLabel.textColor=[UIColor colorWithRed:252.0/255.0 green:102.0/255.0 blue:33.0/255.0 alpha:1];
+        cell.sortLabel.textColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
         _sortIndexPath = indexPath;
         //切换图标
         [_categoryBtn setImage:[UIImage imageNamed:@"product_pull_down_bg"] forState:UIControlStateNormal];
@@ -425,7 +457,22 @@
         self.categoryTableView.hidden=YES;
         self.sortTableView.hidden=YES;
         self.myTableView.hidden=NO;
-        //        [self requestData:@"" andSort:@"40" andPageSize:@"1" andpageIndex:@"6"];
+        self.sortId=self.sortIdArray[indexPath.row];
+        [self loadNewData];
+        NSUInteger lenth=[_sortNameArray[indexPath.row] length];
+        switch (lenth) {
+            case 2:{
+                self.sortBtn.imageEdgeInsets=UIEdgeInsetsMake(0, 75, 0, 0);
+            }break;
+            case 4:{
+                self.sortBtn.imageEdgeInsets=UIEdgeInsetsMake(0, 109, 0, 0);
+            }break;
+            case 8:{
+                self.sortBtn.imageEdgeInsets=UIEdgeInsetsMake(0, 124, 0, 0);
+            }break;
+            default:
+                break;
+        }
         [self.myTableView reloadData];
         _flag1=NO;
     }else{

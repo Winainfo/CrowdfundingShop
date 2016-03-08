@@ -295,6 +295,12 @@
  */
 +(void)commissionsSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
+ *   提现记录列表
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)cashRecordSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
  *   第三方登录
  *  @param data  传入字典
  *  @param block 返回块值
@@ -396,5 +402,11 @@
  *  @param block 返回块值
  */
 +(void)WxPaySerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   商品分类
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)shopCategorySerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 @end
 

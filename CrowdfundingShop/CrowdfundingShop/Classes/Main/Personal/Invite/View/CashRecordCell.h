@@ -11,12 +11,8 @@
 @interface CashRecordCell : UITableViewCell
 /**时间*/
 @property (weak, nonatomic) IBOutlet ARLabel *timeLabel;
-/**银行信息*/
-@property (weak, nonatomic) IBOutlet ARLabel *infoLabel;
 /**提现金额*/
 @property (weak, nonatomic) IBOutlet ARLabel *moneyLabel;
-/**手续费*/
-@property (weak, nonatomic) IBOutlet ARLabel *priceLabel;
 /**审核状态*/
 @property (weak, nonatomic) IBOutlet ARLabel *stateLabel;
 

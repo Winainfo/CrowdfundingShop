@@ -905,6 +905,24 @@
     }];
 }
 /**
+ *   提现记录列表
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)cashRecordSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"type":data[@"type"],@"pageIndex":data[@"pageIndex"],@"pageSize":data[@"pageSize"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/invite/record/",URL];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
  *   第三方登录
  *  @param data  传入字典
  *  @param block 返回块值
@@ -1209,6 +1227,24 @@
     NSDictionary *params=@{@"uid":data[@"uid"],@"shop":data[@"shop"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/cart/paysubmit/wxPay/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   商品分类
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)shopCategorySerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+//    NSDictionary *params=@{@"uid":data[@"uid"],@"shop":data[@"shop"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ios/index/category/",URL];
+    [mgr GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);

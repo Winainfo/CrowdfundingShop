@@ -12,7 +12,7 @@
 #import "ShareOrderController.h"
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
-@interface GoodsDetailController ()
+@interface GoodsDetailController ()<UITabBarControllerDelegate>
 /**所有云购记录*/
 @property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell1;
 /**图文详情*/
@@ -20,6 +20,7 @@
 /**商品晒单*/
 @property (weak, nonatomic) IBOutlet UITableViewCell *tableViewCell3;
 @property (retain,nonatomic)NSDictionary *goodsDictionary;
+
 @end
 
 @implementation GoodsDetailController
@@ -64,6 +65,7 @@
     hud.labelText = @"正在加载...";
     [RequestData goodsDetail:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"] intValue];
+        NSLog(@"数据:%@",data[@"content"]);
         if (code==0) {
             //加载成功，先移除原来的HUD；
             hud.removeFromSuperViewOnHide = true;

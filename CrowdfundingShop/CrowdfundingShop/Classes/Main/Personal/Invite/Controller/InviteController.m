@@ -75,9 +75,9 @@
     NSDictionary *param=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"1",@"type",@"",@"pageIndex",@"",@"pageSize",nil];
     [RequestData commissionsSerivce:param FinishCallbackBlock:^(NSDictionary *data) {
         NSArray *array=[[NSArray alloc]init];
-        NSLog(@"佣金:%@",data);
+        NSLog(@"佣金:%@",data[@"yjye"]);
         array=data[@"content"];
-//        self.moneyLabel.text=[NSString stringWithFormat:@"¥%lu",(unsigned long)array.count];
+        self.moneyLabel.text=[NSString stringWithFormat:@"¥%@",data[@"yjye"]];
     }andFailure:^(NSError *error) {}];
     
      NSDictionary *params1=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",nil];
@@ -175,50 +175,72 @@
  *  @param sender <#sender description#>
  */
 - (IBAction)cashActionClick:(UIButton *)sender {
-    account=[AccountTool account];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",@"2",@"txtCZMoney",nil];
-    //声明对象；
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-    //显示的文本；
-    hud.labelText = @"正在转入中...";
-    [RequestData cashMoneySerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-        int code=[data[@"code"] intValue];
-        if (code==0) {
-            account.money=data[@"content"];
-             [AccountTool saveAccount:account];
-            //加载成功，先移除原来的HUD；
-            hud.removeFromSuperViewOnHide = true;
-            [hud hide:true afterDelay:0];
-            //然后显示一个成功的提示；
-            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-            successHUD.labelText = @"转入成功";
-            successHUD.mode = MBProgressHUDModeCustomView;
-            //可以设置对应的图片；
-            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
-            successHUD.removeFromSuperViewOnHide = true;
-            [successHUD hide:true afterDelay:1];
-        }else{
+    
+    
+    NSString *string =self.moneyLabel.text;
+    string=[string substringFromIndex:1];//截取掉下标1之前的字符串
+    int money=[string intValue];
+    NSString *moneyStr=[NSString stringWithFormat:@"%d",money];
+    if (money>=1) {
+        account=[AccountTool account];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",moneyStr,@"txtCZMoney",nil];
+        //声明对象；
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        //显示的文本；
+        hud.labelText = @"正在转入中...";
+        [RequestData cashMoneySerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+            int code=[data[@"code"] intValue];
+            if (code==0) {
+                account.money=data[@"content"];
+                [AccountTool saveAccount:account];
+                //加载成功，先移除原来的HUD；
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:0];
+                //然后显示一个成功的提示；
+                MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                successHUD.labelText = @"转入成功";
+                successHUD.mode = MBProgressHUDModeCustomView;
+                //可以设置对应的图片；
+                successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+                successHUD.removeFromSuperViewOnHide = true;
+                [successHUD hide:true afterDelay:1];
+            }else{
+                hud.removeFromSuperViewOnHide = true;
+                [hud hide:true afterDelay:0];
+                //显示失败的提示；
+                MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                failHUD.labelText = @"转入失败";
+                failHUD.mode = MBProgressHUDModeCustomView;
+                failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+                failHUD.removeFromSuperViewOnHide = true;
+                [failHUD hide:true afterDelay:1];
+            }
+        } andFailure:^(NSError *error) {
             hud.removeFromSuperViewOnHide = true;
             [hud hide:true afterDelay:0];
             //显示失败的提示；
             MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-            failHUD.labelText = @"转入失败";
+            failHUD.labelText = @"网络异常";
             failHUD.mode = MBProgressHUDModeCustomView;
             failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
             failHUD.removeFromSuperViewOnHide = true;
             [failHUD hide:true afterDelay:1];
-        }
-    } andFailure:^(NSError *error) {
-        hud.removeFromSuperViewOnHide = true;
-        [hud hide:true afterDelay:0];
-        //显示失败的提示；
-        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-        failHUD.labelText = @"网络异常";
-        failHUD.mode = MBProgressHUDModeCustomView;
-        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
-        failHUD.removeFromSuperViewOnHide = true;
-        [failHUD hide:true afterDelay:1];
-    }];
-}
+        }];
+    }else{
+        UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"您的佣金不足，快去邀请好友赚取佣金" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        }]];
+        [self presentViewController:alert animated:YES completion:^{
+        }];
 
+    }
+   }
+- (IBAction)cashBankClick:(UIButton *)sender {
+    UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"敬请期待" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    }]];
+    [self presentViewController:alert animated:YES completion:^{
+    }];
+
+}
 @end
