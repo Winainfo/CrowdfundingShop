@@ -11,5 +11,10 @@
 #import <ShareSDK/ShareSDK.h>
 @interface LoginController : UIViewController
 @property (retain,nonatomic) NSString *type;
+@property (weak, nonatomic) IBOutlet UIImageView *view1;
+@property (weak, nonatomic) IBOutlet UIView *view2;
+@property (weak, nonatomic) IBOutlet UIView *view3;
+@property (weak, nonatomic) IBOutlet UIView *view4;
+@property (weak, nonatomic) IBOutlet UIView *view5;
 
 @end

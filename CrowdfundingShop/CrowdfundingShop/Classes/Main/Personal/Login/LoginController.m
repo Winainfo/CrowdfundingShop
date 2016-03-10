@@ -11,9 +11,11 @@
 #import "PersonalController.h"
 #import "ShopCartController.h"
 #import "CommentaryController.h"
-
 #import "LoginMethod.h"
 #import "IndexController.h"
+#import <ShareSDK/ShareSDK.h>
+#import "WXApi.h"
+#import <TencentOpenAPI/QQApi.h>
 @interface LoginController ()<LoginMethodDelegate,UITextFieldDelegate>
 @property (nonatomic ,strong) LoginMethod * myLoginMethod;
 /**登录按钮*/
@@ -59,6 +61,33 @@
     //2.注册监听
     [center addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.userTextField];
     [center addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.pwdTextField];
+    if ([WXApi isWXAppInstalled]) {
+        self.view1.hidden=NO;
+        self.view2.hidden=NO;
+        self.view3.hidden=NO;
+        self.view4.hidden=NO;
+        self.view5.hidden=NO;
+    }else{
+        self.view1.hidden=YES;
+        self.view2.hidden=YES;
+        self.view3.hidden=YES;
+        self.view4.hidden=YES;
+        self.view5.hidden=YES;
+    }
+    if ([QQApi isQQInstalled]) {
+        self.view1.hidden=NO;
+        self.view2.hidden=NO;
+        self.view3.hidden=NO;
+        self.view4.hidden=NO;
+        self.view5.hidden=NO;
+    }else{
+        self.view1.hidden=YES;
+        self.view2.hidden=YES;
+        self.view3.hidden=YES;
+        self.view4.hidden=YES;
+        self.view5.hidden=YES;
+    }
+
 }
 -(void)dealloc
 {

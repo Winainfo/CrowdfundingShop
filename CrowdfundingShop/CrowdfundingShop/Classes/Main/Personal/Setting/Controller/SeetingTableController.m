@@ -10,6 +10,7 @@
 #import "PersonalController.h"
 #import "AccountTool.h"
 #import <MBProgressHUD.h>
+#import "UIImageView+WebCache.h"
 @interface SeetingTableController ()
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
 @property (retain,nonatomic) UIView *footerView;
@@ -41,7 +42,7 @@
     addBtn.layer.masksToBounds=YES;
     [self.footerView addSubview:addBtn];
     self.myTableView.tableFooterView=self.footerView;
-    self.sizeLabel.text=[self getCacheSize];
+    self.sizeLabel.text=[self fileSize];
 }
 /**
  *  判断是否有登录
@@ -137,6 +138,27 @@
  *
  *  @return
  */
+- (NSString *)fileSize{
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSArray *files = [manager subpathsOfDirectoryAtPath:cachePath error:nil]; // 递归所有子路径
+    float totalSize = 0;
+    for (NSString *filePath in files) {
+        NSString *path = [cachePath stringByAppendingPathComponent:filePath];
+        // 判断是否为文件
+        BOOL isDir = NO;
+        [manager fileExistsAtPath:path isDirectory:&isDir];
+        if (!isDir) {
+            NSDictionary *attrs = [manager attributesOfItemAtPath:path error:nil];
+            totalSize += [attrs[NSFileSize] integerValue];
+        }
+    }
+    totalSize=totalSize/(1000*1000);
+    float size = [[SDImageCache sharedImageCache] getSize] / 1000.0 / 1000.0;//图片缓存
+    float sizeCache=size+totalSize;
+    return [NSString stringWithFormat:@"%.2fM",sizeCache];
+}
+
 - (NSString *)getCacheSize
 {
     
@@ -144,6 +166,7 @@
     long long sumSize = 0;
     //01.获取当前图片缓存路径
     NSString *cacheFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches"];
+    NSLog(@"缓存目录:%@",cacheFilePath);
     //02.创建文件管理对象
     NSFileManager *filemanager = [NSFileManager defaultManager];
     //获取当前缓存路径下的所有子路径
@@ -157,24 +180,24 @@
         sumSize += fileSize;
     }
     float size_m = sumSize/(1000*1000);
+    NSLog(@"缓存大小%f",size_m);
     return [NSString stringWithFormat:@"%.2fM",size_m];
 }
+
 - (IBAction)clearBtn:(id)sender {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *cacheFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches"];
     [fileManager removeItemAtPath:cacheFilePath error:nil];
-//    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:3 inSection:0];
-//      [_myTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//    [_myTableView reloadData];
     //声明对象；
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
     //显示的文本；
     hud.labelText = @"正在清除";
-    //加载成功，先移除原来的HUD；
-    hud.removeFromSuperViewOnHide = true;
-    [hud hide:true afterDelay:2];
-    self.sizeLabel.text=@"0M";
-    
+    [[SDImageCache sharedImageCache] clearDiskOnCompletion:^{
+        //加载成功，先移除原来的HUD；
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        self.sizeLabel.text=@"0M";
+    }];
 }
 
 @end

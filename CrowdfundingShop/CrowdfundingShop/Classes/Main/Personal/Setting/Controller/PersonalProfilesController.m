@@ -7,32 +7,21 @@
 //
 
 #import "PersonalProfilesController.h"
-#import <AVFoundation/AVFoundation.h>
-#import <FSMediaPicker.h>
 #import "UpdateNicknameController.h"
-#import "UIView+RGSize.h"
-#import "DBManager.h"
-#import "Province.h"
-#import "City.h"
-#import "KTSelectDatePicker.h"
 #import "AccountTool.h"
 #import <UIImageView+WebCache.h>
+#import "AFNetworking.h"
 #define kScreen_Height      ([UIScreen mainScreen].bounds.size.height)
 #define kScreen_Width       ([UIScreen mainScreen].bounds.size.width)
 #define kScreen_Frame       (CGRectMake(0, 0 ,kScreen_Width,kScreen_Height))
-@interface PersonalProfilesController ()<UIPickerViewDataSource,UIPickerViewDelegate,FSMediaPickerDelegate>
+@interface PersonalProfilesController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>{
+    UIImagePickerController *pickerController;
+     AFHTTPRequestOperationManager *manager;
+}
 
 @property (strong, nonatomic) IBOutlet UITableView *myTableView;
-@property (nonatomic, strong) UIView *maskView; // 遮罩层
-@property (nonatomic, strong) UIView *supPickerView; // 装载pickerView
-@property (nonatomic, strong) UIPickerView *myPickerView; // pickerView
-@property (nonatomic, strong) UIView *smallView; // 装载button
-@property (nonatomic, strong) Province *currentProvince;
-@property (nonatomic,strong)  NSString *cityName;
-@property (nonatomic,strong)  NSString *oldCityName;
 @property (assign,nonatomic) BOOL flag;
 
-@property (strong, nonatomic) KTSelectDatePicker *selectPick;//日期
 @end
 
 @implementation PersonalProfilesController
@@ -63,10 +52,9 @@
     //头像圆角
     self.userImageView.layer.cornerRadius=self.userImageView.frame.size.height/2.0;
     self.userImageView.layer.masksToBounds=YES;
-    
-    [self initViews];
-    [self getData];
     [self flagLogin];
+    //初始化pickerController
+    [self createData];
 }
 
 /**
@@ -120,13 +108,21 @@
     if ([segue.identifier isEqualToString:@"updateNickname"]) {
         id theSegue=segue.destinationViewController;
         [theSegue setValue:self.userNameLabel.text forKey:@"nickname"];
-    }else if ([segue.identifier isEqualToString:@"updateQQNumber"]){
-        id theSegue=segue.destinationViewController;
-        [theSegue setValue:self.userQQLabel.text forKey:@"qqNumber"];
     }else if ([segue.identifier isEqualToString:@"updateAutograph"]){
         id theSegue=segue.destinationViewController;
         [theSegue setValue:self.userAutographLabel.text forKey:@"autograph"];
     }
+}
+/**
+ *  初始化pickerController
+ */
+- (void)createData
+{
+    //初始化pickerController
+    pickerController = [[UIImagePickerController alloc]init];
+    pickerController.view.backgroundColor = [UIColor orangeColor];
+    pickerController.delegate = self;
+    pickerController.allowsEditing = YES;
 }
 /**
  *  修改头像
@@ -134,222 +130,220 @@
  *  @param sender <#sender description#>
  */
 - (IBAction)updateHeadClick:(UIButton *)sender {
-    FSMediaPicker *mediaPicker = [[FSMediaPicker alloc] init];
-    mediaPicker.mediaType = 0;
-    mediaPicker.editMode = 0;
-    mediaPicker.delegate = self;
-    [mediaPicker showFromView:sender];
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]initWithTitle:@"选择头像" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"相册",@"图库", nil];
+    [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
 }
-- (void)mediaPicker:(FSMediaPicker *)mediaPicker didFinishWithMediaInfo:(NSDictionary *)mediaInfo
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (mediaPicker.editMode == FSEditModeNone) {
-        [self.userImageView setImage:mediaInfo.originalImage];
-    }else {
-        [self.userImageView setImage:mediaInfo.originalImage];
-    }
-}
-
-/**
- *  修改性别
- *
- *  @param sender <#sender description#>
- */
-- (IBAction)updateSexClick:(UIButton *)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
-    }];
-    
-    UIAlertAction *maleAction = [UIAlertAction actionWithTitle:@"男" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        self.userSexLabel.text=@"男";
-    }];
-    UIAlertAction *femaleAction = [UIAlertAction actionWithTitle:@"女" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        self.userSexLabel.text=@"女";
-    }];
-    UIAlertAction *secrecyAction = [UIAlertAction actionWithTitle:@"保密" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        self.userSexLabel.text=@"保密";
-    }];
-    [alertController addAction:cancelAction];
-    [alertController addAction:maleAction];
-    [alertController addAction:femaleAction];
-    [alertController addAction:secrecyAction];
-    
-    [self presentViewController:alertController animated:YES completion:nil];
-}
-#pragma mark 城市
-/**城市选择*/
-- (IBAction)chooseCity:(UIButton *)sender {
-    UIButton *btn = (UIButton *)sender;
-    switch (btn.tag) {
-        case 100:{
-            _flag=true;
-            [self.supPickerView addSubview:self.smallView];
-            [self.view addSubview:self.maskView];
-            [self.view addSubview:self.supPickerView];
-            self.maskView.alpha = 0;
-            self.supPickerView.top = self.view.height;
-            
-            [UIView animateWithDuration:0.3 animations:^{
-                self.maskView.alpha = 0.3;
-                self.supPickerView.bottom = self.view.height;
-            }];
-        }break;
-        case 101:{
-            _flag=false;
-            [self.supPickerView addSubview:self.smallView];
-            [self.view addSubview:self.maskView];
-            [self.view addSubview:self.supPickerView];
-            self.maskView.alpha = 0;
-            self.supPickerView.top = self.view.height;
-            [UIView animateWithDuration:0.3 animations:^{
-                self.maskView.alpha = 0.3;
-                self.supPickerView.bottom = self.view.height;
-            }];
-        }break;
-            
-        default:break;
-    }
-}
-
-- (void) getData
-{
-    [[DBManager sharedDBManager] openDB];
-    [[DBManager sharedDBManager] disposeProData];
-    [[DBManager sharedDBManager] closeDB];
-    self.currentProvince = [[DBManager sharedDBManager].allData objectAtIndex:0];
-}
-- (void) initViews
-{
-    self.maskView = [[UIView alloc] initWithFrame:kScreen_Frame];
-    self.maskView.backgroundColor = [UIColor blackColor];
-    self.maskView.alpha = 0;
-    [self.maskView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideMyPicker)]];
-    
-    self.supPickerView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreen_Height * 0.6, kScreen_Width, kScreen_Height * 0.45)];
-    self.supPickerView.backgroundColor = [UIColor whiteColor];
-    
-    self.myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 50, kScreen_Width, 200)];
-    self.myPickerView.delegate = self;
-    self.myPickerView.dataSource = self;
-    [self.supPickerView addSubview:_myPickerView];
-    
-    self.smallView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, 50)];
-    self.smallView.backgroundColor = [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:1];
-    
-    UIButton *sureButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    sureButton.frame = CGRectMake(kScreen_Width - 60, 0, 50, 50);
-    sureButton.titleLabel.font = [UIFont systemFontOfSize: 22];
-    [sureButton setTitle:@"确定" forState:UIControlStateNormal];
-    [sureButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [sureButton addTarget:self action:@selector(makeSure) forControlEvents:UIControlEventTouchUpInside];
-    [self.smallView addSubview:sureButton];
-    
-    UIButton *cancleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancleButton.frame = CGRectMake(10, 0, 50, 50);
-    cancleButton.titleLabel.font = [UIFont systemFontOfSize: 22];
-    [cancleButton setTitle:@"取消" forState:UIControlStateNormal];
-    [cancleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [cancleButton addTarget:self action:@selector(makeCancel) forControlEvents:UIControlEventTouchUpInside];
-    [self.smallView addSubview:cancleButton];
-    
-}
-
-- (void) hideMyPicker
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        self.maskView.alpha = 0;
-        self.supPickerView.top = self.view.height;
-    } completion:^(BOOL finished) {
-        [self.maskView removeFromSuperview];
-        [self.supPickerView removeFromSuperview];
-    }];
-}
-
-- (void) makeSure
-{
-    if (_flag) {
-        self.userDomicileLabel.text=[NSString stringWithFormat:@"%@ %@",self.currentProvince.proName,self.cityName];
-    }else{
-        self.userHometownLabel.text=[NSString stringWithFormat:@"%@ %@",self.currentProvince.proName,self.cityName];
-    }
-     self.currentProvince = [[DBManager sharedDBManager].allData objectAtIndex:0];
-    [self hideMyPicker];
-}
-
-- (void) makeCancel
-{
-    [self hideMyPicker];
-}
-
-#pragma mark - UIPickerViewDelegate
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    
-    return 2;
-    
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    
-    if (component == 0) {
-        return [DBManager sharedDBManager].allData.count;
-    }
-    else
-    {
-        if (self.currentProvince.citys.count == 1) {
-            return ((City *)[self.currentProvince.citys objectAtIndex:0]).zones.count;
+    if (buttonIndex == 0) {//相机
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        {
+            NSLog(@"支持相机");
+            [self makePhoto];
         }else{
-            return self.currentProvince.citys.count;
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请在设置-->隐私-->相机，中开启本应用的相机访问权限！！" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"我知道了", nil];
+            [alert show];
+        }
+    }else if (buttonIndex == 1){//相片
+        if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
+        {
+            NSLog(@"支持相册");
+            [self choosePicture];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请在设置-->隐私-->照片，中开启本应用的相机访问权限！！" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"我知道了", nil];
+            [alert show];
+        }
+    }else if (buttonIndex == 2){//图册
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum])
+        {
+            NSLog(@"支持图库");
+            [self pictureLibrary];
+            //            [self presentViewController:picker animated:YES completion:nil];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请在设置-->隐私-->照片，中开启本应用的相机访问权限！！" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"我知道了", nil];
+            [alert show];
+        }
+    }else if (buttonIndex == 3){
+        
+    }
+}
+//跳转到imagePicker里
+- (void)makePhoto
+{
+    pickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    [self presentViewController:pickerController animated:YES completion:nil];
+}
+//跳转到相册
+- (void)choosePicture
+{
+    pickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    [self presentViewController:pickerController animated:YES completion:nil];
+}
+//跳转图库
+- (void)pictureLibrary
+{
+    pickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:pickerController animated:YES completion:nil];
+}
+//用户取消退出picker时候调用
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    NSLog(@"%@",picker);
+    [pickerController dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+//用户选中图片之后的回调
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    NSLog(@"相册：%s,info == %@",__func__,info);
+    
+    UIImage *userImage = [self fixOrientation:[info objectForKey:@"UIImagePickerControllerOriginalImage"]];
+    
+    userImage = [self scaleImage:userImage toScale:0.3];
+    
+    [pickerController dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    [self.userImageView setImage:userImage];
+    self.userImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.userImageView.clipsToBounds = YES;
+    //照片上传
+    [self upDateHeadIcon:userImage];
+}
+
+- (void)upDateHeadIcon:(UIImage *)photo
+{
+    //两种方式上传头像
+    /*方式一：使用NSData数据流传图片*/
+    NSString *imageURl = @"";
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    manager.responseSerializer.acceptableContentTypes =[NSSet setWithObject:@"text/html"];
+    [manager POST:imageURl parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+        [formData appendPartWithFileData:UIImageJPEGRepresentation(photo, 1.0) name:@"text" fileName:@"test.jpg" mimeType:@"image/jpg"];
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    /*方式二：使用Base64字符串传图片*/
+    NSData *data = UIImageJPEGRepresentation(photo, 1.0);
+    
+    NSString *pictureDataString=[data base64Encoding];
+    NSDictionary * dic  = @{@"verbId":@"modifyUserInfo",@"deviceType":@"ios",@"userId":@"",@"photo":pictureDataString,@"mobileTel":@""};
+    [manager POST:@"" parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([[responseObject objectForKey:@"flag"] intValue] == 0) {
+            
+        }else{
+            
         }
     }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          }];
 }
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (component == 0) {
-        return ((Province *)[[DBManager sharedDBManager].allData objectAtIndex:row]).proName;
-    }
-    else
-    {
-        if (self.currentProvince.citys.count == 1) {
-            self.cityName=[((City *)[self.currentProvince.citys objectAtIndex:0]).zones objectAtIndex:row];
-            return [((City *)[self.currentProvince.citys objectAtIndex:0]).zones objectAtIndex:row];
-        }else{
-            self.cityName=((City *)[self.currentProvince.citys objectAtIndex:row]).cityName;
-            return ((City *)[self.currentProvince.citys objectAtIndex:row]).cityName;
-        }
-    }
-}
-
-- (void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+//保存照片到沙盒路径(保存)
+- (void)saveImage:(UIImage *)image name:(NSString *)iconName
 {
-    if (component == 0) {
-        self.currentProvince = [[DBManager sharedDBManager].allData objectAtIndex:row];
-        [pickerView reloadComponent:1];
-        [pickerView selectRow:0 inComponent:1 animated:YES];
-    }
-}
-#pragma date 出生年月
-/**
- *  日期
- *
- *  @param sender <#sender description#>
- */
-- (IBAction)chooseDateTime:(id)sender {
-    
-    _selectPick = [[KTSelectDatePicker alloc] init];
-    _selectPick.isBeforeTime = YES;
-    _selectPick.datePickerMode = UIDatePickerModeDate;
-    __weak typeof(self) weakSelf = self;
-    [_selectPick didFinishSelectedDate:^(NSDate *selectedDate) {
-        //实例化一个NSDateFormatter对象
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        //设定时间格式,这里可以设置成自己需要的格式
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        //用[NSDate date]可以获取系统当前时间
-        NSString *currentDateStr = [dateFormatter stringFromDate:selectedDate];
-        NSString *string = [NSString stringWithFormat:@"%@",currentDateStr];
-        weakSelf.userBrithdayLabel.text = string;
-    }];
-}
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    //写入文件
+    NSString *icomImage = iconName;
+    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.png", icomImage]];
+    //沙盒路径
+    AccountModel *account=[AccountTool account];
+    account.img=filePath;
+    [AccountTool saveAccount:account];
+    [UIImagePNGRepresentation(image)writeToFile: filePath  atomically:YES];
 
+}
+//缩放图片
+- (UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
+    [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    NSLog(@"%@",NSStringFromCGSize(scaledImage.size));
+    return scaledImage;
+}
+//修正照片方向(手机转90度方向拍照)
+- (UIImage *)fixOrientation:(UIImage *)aImage {
+    
+    // No-op if the orientation is already correct
+    if (aImage.imageOrientation == UIImageOrientationUp)
+        return aImage;
+    
+    // We need to calculate the proper transformation to make the image upright.
+    // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, aImage.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        default:
+            break;
+    }
+    
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationUpMirrored:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+            
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, aImage.size.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+        default:
+            break;
+    }
+    
+    // Now we draw the underlying CGImage into a new context, applying the transform
+    // calculated above.
+    CGContextRef ctx = CGBitmapContextCreate(NULL, aImage.size.width, aImage.size.height,
+                                             CGImageGetBitsPerComponent(aImage.CGImage), 0,
+                                             CGImageGetColorSpace(aImage.CGImage),
+                                             CGImageGetBitmapInfo(aImage.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (aImage.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            // Grr...
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.height,aImage.size.width), aImage.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,aImage.size.width,aImage.size.height), aImage.CGImage);
+            break;
+    }
+    
+    // And now we just create a new UIImage from the drawing context
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
+}
 @end

@@ -32,7 +32,6 @@
 		011DE77F1C75941D006887B6 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011DE7461C75941D006887B6 /* MOBFoundation.framework */; };
 		011DE7801C75941D006887B6 /* Resource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 011DE7471C75941D006887B6 /* Resource.bundle */; };
 		011DE7811C75941D006887B6 /* ShareSDKCoreService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011DE7481C75941D006887B6 /* ShareSDKCoreService.framework */; };
-		011DE7821C75941D006887B6 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 011DE74C1C75941D006887B6 /* TencentOpenAPI.framework */; };
 		011DE7831C75941D006887B6 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 011DE74D1C75941D006887B6 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		011DE7841C75941D006887B6 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 011DE74F1C75941D006887B6 /* libWeiboSDK.a */; };
 		011DE7851C75941D006887B6 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 011DE7591C75941D006887B6 /* WeiboSDK.bundle */; };
@@ -91,6 +90,7 @@
 		015B58C31C215EB9008EF7A1 /* ShareOrderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 015B58C11C215EB9008EF7A1 /* ShareOrderCell.xib */; };
 		015B58C61C216BCB008EF7A1 /* ShareOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 015B58C51C216BCB008EF7A1 /* ShareOrderController.m */; };
 		01652BC31C19E1B700310880 /* GoodsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01652BC21C19E1B700310880 /* GoodsDetailController.m */; };
+		01656A591C907713003FA41D /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01656A581C907713003FA41D /* TencentOpenAPI.framework */; };
 		0172A0DE1C3BCD0F000DA4DB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0172A0DD1C3BCD0F000DA4DB /* AVFoundation.framework */; };
 		01747DFC1C1D54270051086C /* CloudNumberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01747DFA1C1D54270051086C /* CloudNumberCell.m */; };
 		01747DFD1C1D54270051086C /* CloudNumberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01747DFB1C1D54270051086C /* CloudNumberCell.xib */; };
@@ -273,7 +273,6 @@
 		011DE7471C75941D006887B6 /* Resource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Resource.bundle; sourceTree = "<group>"; };
 		011DE7481C75941D006887B6 /* ShareSDKCoreService.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKCoreService.framework; sourceTree = "<group>"; };
 		011DE7491C75941D006887B6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ShareSDKLocalizable.strings"; sourceTree = "<group>"; };
-		011DE74C1C75941D006887B6 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		011DE74D1C75941D006887B6 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		011DE74F1C75941D006887B6 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
 		011DE7501C75941D006887B6 /* WBHttpRequest+WeiboGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboGame.h"; sourceTree = "<group>"; };
@@ -461,6 +460,7 @@
 		015B58C51C216BCB008EF7A1 /* ShareOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareOrderController.m; sourceTree = "<group>"; };
 		01652BC11C19E1B700310880 /* GoodsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoodsDetailController.h; sourceTree = "<group>"; };
 		01652BC21C19E1B700310880 /* GoodsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoodsDetailController.m; sourceTree = "<group>"; };
+		01656A581C907713003FA41D /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		0172A0DD1C3BCD0F000DA4DB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		01747DF91C1D54270051086C /* CloudNumberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudNumberCell.h; sourceTree = "<group>"; };
 		01747DFA1C1D54270051086C /* CloudNumberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudNumberCell.m; sourceTree = "<group>"; };
@@ -718,12 +718,12 @@
 				01BE47F11C47A62700450CB1 /* ImageIO.framework in Frameworks */,
 				011DE7891C75941E006887B6 /* ShareSDKFlatShareViewUI.framework in Frameworks */,
 				01BE47EF1C47A61E00450CB1 /* AdSupport.framework in Frameworks */,
+				01656A591C907713003FA41D /* TencentOpenAPI.framework in Frameworks */,
 				011DE7811C75941D006887B6 /* ShareSDKCoreService.framework in Frameworks */,
 				011DE7791C75941D006887B6 /* QZoneConnection.framework in Frameworks */,
 				011DE77F1C75941D006887B6 /* MOBFoundation.framework in Frameworks */,
 				0121BBED1C7F522C001D8186 /* libcrypto.a in Frameworks */,
 				01BE47ED1C47A60200450CB1 /* libsqlite3.tbd in Frameworks */,
-				011DE7821C75941D006887B6 /* TencentOpenAPI.framework in Frameworks */,
 				01BE47EB1C47A5BE00450CB1 /* CoreGraphics.framework in Frameworks */,
 				01BE47E91C47A5A500450CB1 /* MessageUI.framework in Frameworks */,
 				011DE7781C75941D006887B6 /* QQConnection.framework in Frameworks */,
@@ -1080,7 +1080,7 @@
 		011DE74B1C75941D006887B6 /* QQConnectSDK */ = {
 			isa = PBXGroup;
 			children = (
-				011DE74C1C75941D006887B6 /* TencentOpenAPI.framework */,
+				01656A581C907713003FA41D /* TencentOpenAPI.framework */,
 				011DE74D1C75941D006887B6 /* TencentOpenApi_IOS_Bundle.bundle */,
 			);
 			path = QQConnectSDK;

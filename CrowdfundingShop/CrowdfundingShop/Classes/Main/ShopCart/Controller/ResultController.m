@@ -9,6 +9,8 @@
 #import "ResultController.h"
 #import "ARLabel.h"
 #import "MyCouldRecordController.h"
+#import "HomeNavController.h"
+#import "IndexController.h"
 @interface ResultController ()
 /**商品数量*/
 @property (weak, nonatomic) IBOutlet ARLabel *numLabel;
@@ -70,5 +72,20 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (IBAction)buyShopClick:(UIButton *)sender {
+    
+    //设置故事板为第一启动
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    IndexController *controller=[storyboard instantiateViewControllerWithIdentifier:@"HomeView"];
+    UINavigationController *navController=[[UINavigationController alloc]initWithRootViewController:controller];
+    navController.navigationBar.tintColor=[UIColor colorWithRed:62/255.0 green:173/255.0 blue:176/255.0 alpha:1.0];
+    navController.navigationBarHidden=NO;
+    //设置首页选中和非选中状态下的图片
+    UITabBarItem *homeItem=[[UITabBarItem alloc ] initWithTitle:@"首页" image:[UIImage imageNamed:@"tab_home_page_nomal"] selectedImage:[[UIImage imageNamed:@"tab_home_page_pressed"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    controller.tabBarItem=homeItem;
+    [self presentViewController:navController animated:true completion:^{
+        
+    }];
+}
 
 @end

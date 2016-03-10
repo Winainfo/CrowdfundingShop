@@ -14,16 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 /**用户昵称*/
 @property (weak, nonatomic) IBOutlet ARLabel *userNameLabel;
-/**用户性别*/
-@property (weak, nonatomic) IBOutlet ARLabel *userSexLabel;
-/**用户生日*/
-@property (weak, nonatomic) IBOutlet ARLabel *userBrithdayLabel;
-/**用户QQ*/
-@property (weak, nonatomic) IBOutlet ARLabel *userQQLabel;
-/**居住地*/
-@property (weak, nonatomic) IBOutlet ARLabel *userDomicileLabel;
-/**家乡*/
-@property (weak, nonatomic) IBOutlet ARLabel *userHometownLabel;
 /**个性签名*/
 @property (weak, nonatomic) IBOutlet ARLabel *userAutographLabel;
 

@@ -1654,6 +1654,9 @@
                                 <state key="normal" title="继续购物">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="buyShopClick:" destination="cA7-5g-9lk" eventType="touchUpInside" id="8MU-vP-yy1"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96862745098039216" green="0.96862745098039216" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
@@ -2033,21 +2036,21 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_line" translatesAutoresizingMaskIntoConstraints="NO" id="amu-FY-Txb">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_line" translatesAutoresizingMaskIntoConstraints="NO" id="amu-FY-Txb">
                                 <rect key="frame" x="159" y="270" width="1.5" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="8nf-ra-MlS"/>
                                     <constraint firstAttribute="width" constant="2" id="aR4-g9-N2z"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VVB-LD-Qh4" userLabel="lineView">
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VVB-LD-Qh4" userLabel="lineView">
                                 <rect key="frame" x="29" y="263" width="78" height="1"/>
                                 <color key="backgroundColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="eCM-yG-4Bg"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2fv-LS-87h">
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2fv-LS-87h">
                                 <rect key="frame" x="118" y="252" width="84" height="21"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择登录方式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZh-Og-bMV">
@@ -2066,14 +2069,14 @@
                                     <constraint firstAttribute="bottom" secondItem="UZh-Og-bMV" secondAttribute="bottom" id="wUm-xg-Til"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FA5-YK-OBO" userLabel="lineView">
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FA5-YK-OBO" userLabel="lineView">
                                 <rect key="frame" x="213" y="263" width="78" height="1"/>
                                 <color key="backgroundColor" red="0.87058823529999996" green="0.87058823529999996" blue="0.87058823529999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="oqJ-6D-AzV"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FEc-fW-4Kv">
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FEc-fW-4Kv">
                                 <rect key="frame" x="75" y="358" width="171" height="48"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gt9-aS-Jvj" userLabel="qqButton">
@@ -2153,6 +2156,11 @@
                         <outlet property="loginBtn" destination="s5D-eS-BAK" id="6zf-tF-xj6"/>
                         <outlet property="pwdTextField" destination="V1M-fh-8Ak" id="Bbe-mB-n4h"/>
                         <outlet property="userTextField" destination="flB-Zg-b59" id="Y2K-hy-qxt"/>
+                        <outlet property="view1" destination="amu-FY-Txb" id="mvL-11-Byn"/>
+                        <outlet property="view2" destination="VVB-LD-Qh4" id="keM-li-yru"/>
+                        <outlet property="view3" destination="2fv-LS-87h" id="rlW-jn-xN8"/>
+                        <outlet property="view4" destination="FA5-YK-OBO" id="pYX-kD-i7l"/>
+                        <outlet property="view5" destination="FEc-fW-4Kv" id="2X9-my-bcP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vIs-wk-ttQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2719,46 +2727,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p2s-aH-crR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1506" y="2820"/>
-        </scene>
-        <!--QQ号修改View-->
-        <scene sceneID="zpE-7R-FgG">
-            <objects>
-                <viewController storyboardIdentifier="UpdateQQNumberView" title="QQ号修改View" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pEs-n6-dUj" customClass="UpdateQQNumberController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="8Ls-RZ-e10"/>
-                        <viewControllerLayoutGuide type="bottom" id="frr-NT-nY4"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="hht-nR-gR2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" background="login_tf_bg" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1xz-fR-btx">
-                                <rect key="frame" x="10" y="79" width="300" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="lTY-48-gxc"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
-                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="1xz-fR-btx" firstAttribute="top" secondItem="8Ls-RZ-e10" secondAttribute="bottom" constant="15" id="KH2-bI-WOs"/>
-                            <constraint firstItem="1xz-fR-btx" firstAttribute="leading" secondItem="hht-nR-gR2" secondAttribute="leading" constant="10" id="e0k-aj-h3r"/>
-                            <constraint firstAttribute="trailing" secondItem="1xz-fR-btx" secondAttribute="trailing" constant="10" id="m3N-cX-WaD"/>
-                        </constraints>
-                    </view>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <outlet property="qqNumberText" destination="1xz-fR-btx" id="cgI-jA-XBS"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ye0-S6-XnG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1851" y="2820"/>
+            <point key="canvasLocation" x="2166" y="2212"/>
         </scene>
         <!--修改签名View-->
         <scene sceneID="TXS-kT-56t">
@@ -2798,7 +2767,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9vq-sp-uYO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2206" y="2820"/>
+            <point key="canvasLocation" x="2626" y="2792"/>
         </scene>
         <!--绑定手机View2-->
         <scene sceneID="BND-kT-U4X">
@@ -6319,7 +6288,7 @@
         <!--Index Controller-->
         <scene sceneID="Wdv-A6-Q8h">
             <objects>
-                <tableViewController storyboardIdentifier="HomeView" id="2RH-fH-aks" customClass="IndexController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="HomeView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2RH-fH-aks" customClass="IndexController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="28" id="1s1-he-inR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -9981,8 +9950,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="kSS-X4-A1N"/>
-        <segue reference="khB-jX-qBn"/>
-        <segue reference="vit-O0-Fd9"/>
+        <segue reference="bKk-DI-Wea"/>
         <segue reference="JuE-GY-Y3f"/>
+        <segue reference="vit-O0-Fd9"/>
     </inferredMetricsTieBreakers>
 </document>
