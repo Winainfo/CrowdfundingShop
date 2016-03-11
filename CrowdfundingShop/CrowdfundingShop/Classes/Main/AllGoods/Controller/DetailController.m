@@ -160,6 +160,7 @@
 }
 
 - (IBAction)addCartClick:(id)sender {
+
     //初始化数据库
     Database *db=[Database new];
     _array=[db searchTestList:_dic[@"id"]];
@@ -171,6 +172,10 @@
         cartList.price=cartList.price+1;
         cartList.pk_id=pkid;
         if ([db updateList:cartList]) {
+            //创建通知
+            NSNotification *notification =[NSNotification notificationWithName:@"addCart" object:nil userInfo:nil];
+            //通过通知中心发送通知
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
         }else{
             NSLog(@"失败");
         }
@@ -185,6 +190,10 @@
         cartList.price=[_dic[@"yunjiage"]intValue];
         if([db insertList:cartList])
         {
+            //创建通知
+            NSNotification *notification =[NSNotification notificationWithName:@"addCart" object:nil userInfo:nil];
+            //通过通知中心发送通知
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
         }else
@@ -195,21 +204,21 @@
     }
 }
 - (IBAction)BuyClick:(UIButton *)sender {
+     NSDictionary *dict =[[NSDictionary alloc] initWithObjectsAndKeys:@"3",@"Index", nil];
     //初始化数据库
     Database *db=[Database new];
     _array=[db searchTestList:_dic[@"id"]];
     if (_array.count>0) {
         CartModel *cartList=_array[0];
         int pkid=cartList.pk_id;
-        NSLog(@"%i",pkid);
         cartList.num=cartList.num+1;
         cartList.price=cartList.price+1;
         cartList.pk_id=pkid;
         if ([db updateList:cartList]) {
-            //设置故事板为第一启动
-            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            ShopCartController *controller=[storyboard instantiateViewControllerWithIdentifier:@"ShopCart"];
-            [self.navigationController pushViewController:controller animated:YES];
+            //创建通知
+            NSNotification *notification =[NSNotification notificationWithName:@"tongzhi" object:nil userInfo:dict];
+            //通过通知中心发送通知
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
         }else{
             
         }
@@ -224,7 +233,10 @@
         cartList.price=[_dic[@"yunjiage"]intValue];
         if([db insertList:cartList])
         {
-
+            //创建通知
+            NSNotification *notification =[NSNotification notificationWithName:@"tongzhi" object:nil userInfo:dict];
+            //通过通知中心发送通知
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
         }else
         {
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加失败" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];

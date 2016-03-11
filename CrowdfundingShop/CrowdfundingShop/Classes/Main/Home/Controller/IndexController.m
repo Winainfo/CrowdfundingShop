@@ -25,7 +25,8 @@
 #import "LoginController.h"
 #import "MyCouldRecordController.h"
 #import "RechargeServiceController.h"
-@interface IndexController ()<UIScrollViewDelegate,CartCellDelegate,AddCartDelegate>{
+#import "AnnNavController.h"
+@interface IndexController ()<UIScrollViewDelegate,CartCellDelegate,AddCartDelegate,UITabBarControllerDelegate>{
      BOOL _blockUserInteraction;
     NSInteger offset1;
     NSInteger offset2;
@@ -47,9 +48,10 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *groomCollectionView;
 /**人气推荐数组*/
 @property (retain,nonatomic) NSMutableArray *groomArray;
-/**限购专区*/
+/**最新商品*/
 @property (weak, nonatomic) IBOutlet UICollectionView *limitCollectionView;
-
+/**最新商品数组*/
+@property (retain,nonatomic) NSMutableArray *limitArray;
 @property (weak, nonatomic) IBOutlet UIScrollView *myScrollView;//滚动视图
 @property (weak, nonatomic) IBOutlet UIPageControl *myPageControl;
 @property (retain,nonatomic) NSTimer *time;//定时器对象s
@@ -85,6 +87,14 @@
     }
     return _groomArray;
 }
+-(NSMutableArray *)limitArray
+{
+    if (_limitArray==nil)
+    {
+        _limitArray=[NSMutableArray array];
+    }
+    return _limitArray;
+}
 - (void)viewDidLoad {
     //设置导航栏标题颜色和字体大小UITextAttributeFont:[UIFont fontWithName:@"Heiti TC" size:0.0]
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont fontWithName:@"Menlo" size:16.0],NSForegroundColorAttributeName:[UIColor whiteColor]}];
@@ -114,6 +124,10 @@
     [self requestHotData:@"1" andpageSize:@"8"];
     self.groomCollectionView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadHotMoreData)];
     offset2=1;
+    //最新商品数据请求
+    [self requestLimitData:@"1" andpageSize:@"8"];
+    self.limitCollectionView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadLimitMoreData)];
+    offset3=1;
     //最新揭晓数据请求
     [self requestAnnouncedData];
     //定时触发数据
@@ -175,7 +189,7 @@
 {
     offset1+=1;
     NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset1];
-     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageIndex,@"pageIndex",@"8",@"pageSize",nil];
     [RequestData beginRevealed:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"] intValue];
         [self.goodsCollectionView.mj_footer endRefreshing];
@@ -210,6 +224,28 @@
         }else{}
     }andFailure:^(NSError *error) {
         [self.groomCollectionView.mj_footer endRefreshing];
+    }];
+}
+/**
+ *  最新商品上拉加载
+ */
+-(void)loadLimitMoreData
+{
+    offset3+=1;
+    NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset3];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"40",@"sort",pageIndex,@"pageIndex",@"",@"pageSize",nil];
+    [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        [self.limitCollectionView.mj_footer endRefreshing];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.limitArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.limitArray.count, array.count)]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.limitCollectionView reloadData];
+            });
+        }else{}
+    }andFailure:^(NSError *error) {
+        [self.limitCollectionView.mj_footer endRefreshing];
     }];
 }
 /**
@@ -281,6 +317,30 @@
             //更新主线程
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.groomCollectionView reloadData];
+            });
+        }else{
+            
+        }
+    }andFailure:^(NSError *error) {
+        
+    }];
+}
+/**
+ *  请求最新商品
+ *
+ *  @param pageindex 当前页
+ *  @param pagesize  当前有几条
+ */
+-(void)requestLimitData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"40",@"sort",@"",@"pageIndex",@"",@"pageSize",nil];
+    [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            NSArray *array=data[@"content"];
+            [self.limitArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+            //更新主线程
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.limitCollectionView reloadData];
             });
         }else{
             
@@ -434,14 +494,6 @@
     [self.myScrollView setContentOffset:CGPointMake(currentpage*kScreenWidth, 0)];//控制偏移量
 }
 
-
-/**
- *  点击滚动视图图片进入详情页
- */
--(void)scrollViewClick
-{
-}
-
 #pragma mark 实现代理方法
 //每个section的item个数
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -451,7 +503,7 @@
     }else if(collectionView==self.groomCollectionView){ //人气推荐
         return self.groomArray.count;
     } else if(collectionView==self.limitCollectionView){ //限购专区
-        return 2;
+        return self.limitArray.count;
     }else{
         return self.revealedArray.count; //即将揭晓
     }
@@ -475,7 +527,7 @@
             int time=[self.times[indexPath.row] intValue];
             if (time>0) {
                 //倒计时
-                cell.timeLabel.text=[NSString stringWithFormat:@"%02d:%02d",(time%3600/60),(time%60)];
+                cell.timeLabel.text=[NSString stringWithFormat:@"%02d:%02d:%03d",(time%3600/60),(time%60),(time%60/1000)];
             }else{
                 cell.timeLabel.text=@"已揭晓";
             }
@@ -527,8 +579,27 @@
         cell.progressView.progress=curreNum/countNum;
         cell.delegate=self;
         return cell;
-    }else if(collectionView==self.limitCollectionView){//限购专区
+    }else if(collectionView==self.limitCollectionView){//最新商品
         goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
+        /**商品名称*/
+        cell.goodsTitle.text=self.limitArray[indexPath.row][@"title"];
+        /**总人数*/
+        cell.numLabel1.text=self.limitArray[indexPath.row][@"zongrenshu"];
+        /**参与人数*/
+        cell.numLabel2.text=self.limitArray[indexPath.row][@"shenyurenshu"];
+        /**商品id*/
+        cell.goodsID.text=self.limitArray[indexPath.row][@"id"];
+        /**商品图片*/
+        //拼接图片网址·
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.limitArray[indexPath.row][@"thumb"]];
+        //转换成url
+        NSURL *imgUrl = [NSURL URLWithString:urlStr];
+        [cell.goodsImageView sd_setImageWithURL:imgUrl];
+        /**进度条*/
+        float curreNum=[self.limitArray[indexPath.row][@"canyurenshu"] floatValue];
+        float countNum=[self.limitArray[indexPath.row][@"zongrenshu"] floatValue];
+        cell.progressView.progress=curreNum/countNum;
+        cell.delegate=self;
         return cell;
     }
     return nil;
@@ -573,10 +644,10 @@
             [self.navigationController pushViewController:controller animated:YES];
         }else{
             //设置故事板为第一启动
-            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            InAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"inAnnounceView"];
-            controller.goodsID=self.announcedArray[indexPath.row][@"id"];
-            [self.navigationController pushViewController:controller animated:YES];
+//            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//            InAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"inAnnounceView"];
+//            controller.goodsID=self.announcedArray[indexPath.row][@"id"];
+//            [self.navigationController pushViewController:controller animated:YES];
         }
         
     }else if(collectionView==self.goodsCollectionView){ //即将揭晓
@@ -593,11 +664,12 @@
         detailController.goodsID=self.groomArray[indexPath.row][@"id"];
         detailController.dic=self.groomArray[indexPath.row];
         [self.navigationController pushViewController:detailController animated:YES];
-    }else if(collectionView==self.limitCollectionView){//推荐专区
+    }else if(collectionView==self.limitCollectionView){//最新商品
         //设置故事板为第一启动
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
         DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
-        detailController.goodsID=@"21";
+        detailController.goodsID=self.limitArray[indexPath.row][@"id"];
+        detailController.dic=self.limitArray[indexPath.row];
         [self.navigationController pushViewController:detailController animated:YES];
     }
 }
@@ -615,7 +687,7 @@
     if (section==2) {
         UIView *view=[[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, 40)];
         self.btnView=[[UIView alloc]initWithFrame:CGRectMake(0,0 , kScreenWidth, 40)];
-        NSArray *arr=@[@"即将揭晓",@"人气推荐",@"限购专区"];
+        NSArray *arr=@[@"即将揭晓",@"人气推荐",@"最新商品"];
         for(int i=0;i<3;i++)
         {
             [self creatButton:arr[i] andTag:i+1];
@@ -751,7 +823,10 @@
                 cartList.price=cartList.price+1;
                 cartList.pk_id=pkid;
                 if ([db updateList:cartList]) {
-                    NSLog(@"成功");
+                    //创建通知
+                    NSNotification *notification =[NSNotification notificationWithName:@"addCart" object:nil userInfo:nil];
+                    //通过通知中心发送通知
+                    [[NSNotificationCenter defaultCenter] postNotification:notification];
                 }else{
                     NSLog(@"失败");
                 }
@@ -766,6 +841,10 @@
                 cartList.price=[_revealedArray[index.row][@"yunjiage"]intValue];
                 if([db insertList:cartList])
                 {
+                    //创建通知
+                    NSNotification *notification =[NSNotification notificationWithName:@"addCart" object:nil userInfo:nil];
+                    //通过通知中心发送通知
+                    [[NSNotificationCenter defaultCenter] postNotification:notification];
                     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alert show];
                 }else
@@ -824,5 +903,14 @@
         }
     }
 
+}
+/**
+ *  新品
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)newShopClick:(UIButton *)sender {
+    [self.delegate nsdd:1];
+    NSLog(@"点击");
 }
 @end

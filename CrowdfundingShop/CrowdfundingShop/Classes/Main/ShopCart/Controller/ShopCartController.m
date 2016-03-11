@@ -74,6 +74,7 @@
     [self setExtraCellLineHidden:self.myTableView];
     //判断
     [self flagLogin];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(delCart:) name:@"delCart" object:nil];
 }
 /**
  *  去掉多余的分割线
@@ -126,14 +127,14 @@
             self.view2.hidden=YES;
             self.view3.hidden=NO;
         }else{
-//            [self.navigationController.tabBarController.tabBar hideBadgeWithIndex:self.navigationController.tabBarController.selectedIndex];
-             self.priceLabel.text=@"0";
+            self.priceLabel.text=@"0";
             self.view1.hidden=YES;
             self.view2.hidden=NO;
             self.view3.hidden=YES;
         }
-    }else
-    {
+        //注册通知
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(delCart:) name:@"delCart" object:nil];
+    }else{
         self.view1.hidden=NO;
         self.view2.hidden=YES;
         self.view3.hidden=YES;
@@ -262,7 +263,6 @@
         Database *db=[[Database alloc]init];
         if([db deleteList:row])
         {
-            
             _alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"删除商品成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [_alert show];
             //删除成功后重新获取数据更新列表
@@ -277,6 +277,10 @@
                 self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%lu",(unsigned long)self.shopCartArray.count];
                 [self.navigationController.tabBarController.tabBar showBadgeWithIndex:self.navigationController.tabBarController.selectedIndex];
             }else{
+                //创建通知
+                NSNotification *notification =[NSNotification notificationWithName:@"delCart" object:nil userInfo:nil];
+                //通过通知中心发送通知
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
                 [self.navigationController.tabBarController.tabBar hideBadgeWithIndex:self.navigationController.tabBarController.selectedIndex];
             }
         }else
@@ -340,6 +344,39 @@
     //刷新表格
     [_myTableView reloadData];
     
+}
+#pragma mark 监听通知
+/**
+ *  监听通知
+ *
+ *  @param text <#text description#>
+ */
+- (void)delCart:(NSNotification *)text{
+    if (_shopCartArray.count>0) {
+        _shopArray=[[NSMutableArray alloc]initWithCapacity:0];
+        for (int i=0; i<_shopCartArray.count; i++) {
+            CartModel *cartList=_shopCartArray[i];
+            sumPrice=sumPrice+cartList.price;
+            NSString *shopidStr=[[_shopCartArray objectAtIndex:i]valueForKey:@"shopId"];
+            NSString *numStr=[[_shopCartArray objectAtIndex:i]valueForKey:@"num"];
+            NSDictionary *Dic=[NSDictionary dictionaryWithObjectsAndKeys:shopidStr,@"shopid",numStr,@"num",nil];
+            [_shopArray addObject:Dic];
+        }
+        NSData *strData=[NSJSONSerialization dataWithJSONObject:_shopArray options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *str = [[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding];
+        self.strData = [self.strData stringByAppendingString:str];
+        self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%lu",(unsigned long)self.shopCartArray.count];
+        [self.navigationController.tabBarController.tabBar showBadgeWithIndex:self.navigationController.tabBarController.selectedIndex];
+        self.priceLabel.text=[NSString stringWithFormat:@"%lu",(unsigned long)sumPrice];
+        self.view1.hidden=YES;
+        self.view2.hidden=YES;
+        self.view3.hidden=NO;
+    }else{
+        self.priceLabel.text=@"0";
+        self.view1.hidden=YES;
+        self.view2.hidden=NO;
+        self.view3.hidden=YES;
+    }
 }
 
 @end

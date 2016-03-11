@@ -10,8 +10,17 @@
 #import <IQKeyboardManager.h>
 #import "payRequsestHandler.h"
 #import <AlipaySDK/AlipaySDK.h>
-@interface AppDelegate ()<WXApiDelegate>
 
+#import "IndexController.h"
+#import "AnnounceController.h"
+#import "AllGoodsController.h"
+#import "ShopCartController.h"
+#import "PersonalController.h"
+#import "Database.h"
+@interface AppDelegate ()<WXApiDelegate,ontdelegater>
+@property(retain,nonatomic)UITabBarController *arr;
+@property (retain,nonatomic) NSMutableArray *shopCartArray;
+@property (retain,nonatomic) UITabBarItem *shopCartItem;
 @end
 
 @implementation AppDelegate
@@ -30,10 +39,82 @@
     manager.enableAutoToolbar = YES;
     //APP_ID 这里我写成了宏的形式，如果你按照我的文档方法添加了WXPay的文件夹，你这里可以直接点击宏进去查看里面其他的宏
     [WXApi registerApp:APP_ID withDescription:@"1元商城"];
-    
     [ShareSDK registerApp:@"dade7bf06aaa"];
     [self initShareSDKRegisit];
+    //创建通知
+    NSNotification *notification =[NSNotification notificationWithName:@"loginAction" object:nil userInfo:nil];
+    //通过通知中心发送通知
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    //tab
+    //修改选中后的字体
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1],UITextAttributeTextColor, nil]forState:UIControlStateSelected];
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    IndexController *indexController = [storyboard instantiateViewControllerWithIdentifier:@"HomeView"];//首页
+     UINavigationController *indexNav=[[UINavigationController alloc]initWithRootViewController:indexController];
+    indexNav.navigationBar.barTintColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
+    indexController.delegate=self;
+     AllGoodsController *allController = [storyboard instantiateViewControllerWithIdentifier:@"AllGoodsView"];//所有商品
+    UINavigationController *allNav=[[UINavigationController alloc]initWithRootViewController:allController];
+    allNav.navigationBar.barTintColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
+    AnnounceController *announceController = [storyboard instantiateViewControllerWithIdentifier:@"Announce"];//最新揭晓
+    UINavigationController *annNav=[[UINavigationController alloc]initWithRootViewController:announceController];
+    annNav.navigationBar.barTintColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
+    ShopCartController *shopCartController = [storyboard instantiateViewControllerWithIdentifier:@"ShopCart"];//购物车
+    UINavigationController *shopCartNav=[[UINavigationController alloc]initWithRootViewController:shopCartController];
+    shopCartNav.navigationBar.barTintColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
+    PersonalController *perController = [storyboard instantiateViewControllerWithIdentifier:@"PersonalView"];//个人中心
+    UINavigationController *perNav=[[UINavigationController alloc]initWithRootViewController:perController];
+    perNav.navigationBar.barTintColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
+    //设置首页选中和非选中状态下的图片
+    UITabBarItem *homeItem=[[UITabBarItem alloc ] initWithTitle:@"首页" image:[UIImage imageNamed:@"tab_home_page_nomal"] selectedImage:[[UIImage imageNamed:@"tab_home_page_pressed"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    indexController.tabBarItem=homeItem;
+    //设置所有商品选中和非选中状态下的图片
+    UITabBarItem *goodsItem=[[UITabBarItem alloc ] initWithTitle:@"所有商品" image:[UIImage imageNamed:@"tab_product_list_nomal"] selectedImage:[[UIImage imageNamed:@"tab_product_list_pressed"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    allController.tabBarItem=goodsItem;
+    //设置最新揭晓选中和非选中状态下的图片
+    UITabBarItem *annItem=[[UITabBarItem alloc ] initWithTitle:@"最新揭晓" image:[UIImage imageNamed:@"tab_latest_ann_nomal"] selectedImage:[[UIImage imageNamed:@"tab_latest_ann_pressed"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    announceController.tabBarItem=annItem;
+    //设置购物车选中和非选中状态下的图片
+    self.shopCartItem=[[UITabBarItem alloc ] initWithTitle:@"购物车" image:[UIImage imageNamed:@"tab_shopping_cart_nomal"] selectedImage:[[UIImage imageNamed:@"tab_shopping_cart_pressed"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    shopCartController.tabBarItem=_shopCartItem;
+    //数据
+    Database *db=[[Database alloc]init];
+    _shopCartArray=[db getList];
+    if (_shopCartArray.count>0) {
+        _shopCartItem.badgeValue=[NSString stringWithFormat:@"%lu",(unsigned long)_shopCartArray.count];
+    }
+    //设置个人中心选中和非选中状态下的图片
+    UITabBarItem *perItem=[[UITabBarItem alloc ] initWithTitle:@"我的云购" image:[UIImage imageNamed:@"tab_my_cloud_nomal"] selectedImage:[[UIImage imageNamed:@"tab_my_cloud_pressed"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    perController.tabBarItem=perItem;
+    self.arr =[[UITabBarController alloc]init];
+    self.arr.tabBar.tintColor=[UIColor redColor];
+    self.arr.viewControllers=@[indexNav,allNav,annNav,shopCartNav,perNav];
+    self.window.rootViewController=self.arr;
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"tongzhi" object:nil];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addCart:) name:@"addCart" object:nil];
     return YES;
+}
+#pragma mark 监听通知
+- (void)tongzhi:(NSNotification *)data{
+    self.arr.selectedIndex=[data.userInfo[@"Index"] intValue];
+}
+-(void)addCart:(NSNotification *)data{
+    //数据
+    Database *db=[[Database alloc]init];
+    _shopCartArray=[db getList];
+    _shopCartItem.badgeValue=[NSString stringWithFormat:@"%lu",(unsigned long)_shopCartArray.count];
+}
+/**
+ *  tab跳转代理
+ *
+ *  @param a <#a description#>
+ */
+-(void)nsdd:(int)a
+{
+    self.arr.selectedIndex=a;
 }
 - (void)initShareSDKRegisit
 {

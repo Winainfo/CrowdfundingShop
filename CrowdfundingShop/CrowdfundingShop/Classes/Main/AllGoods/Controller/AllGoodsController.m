@@ -553,7 +553,10 @@
                 cartList.price=cartList.price+1;
                 cartList.pk_id=pkid;
                 if ([db updateList:cartList]) {
-                    NSLog(@"成功");
+                    //创建通知
+                    NSNotification *notification =[NSNotification notificationWithName:@"addCart" object:nil userInfo:nil];
+                    //通过通知中心发送通知
+                    [[NSNotificationCenter defaultCenter] postNotification:notification];
                 }else{
                     NSLog(@"失败");
                 }
@@ -568,6 +571,10 @@
                 cartList.price=[_allGoodsArray[index.row][@"yunjiage"]intValue];
                 if([db insertList:cartList])
                 {
+                    //创建通知
+                    NSNotification *notification =[NSNotification notificationWithName:@"addCart" object:nil userInfo:nil];
+                    //通过通知中心发送通知
+                    [[NSNotificationCenter defaultCenter] postNotification:notification];
                     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"添加成功" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
                     [alert show];
                 }else

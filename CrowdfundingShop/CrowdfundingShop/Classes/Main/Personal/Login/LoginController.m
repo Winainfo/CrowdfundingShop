@@ -231,6 +231,10 @@
             [RequestData thirdLodigSerivce:params1 FinishCallbackBlock:^(NSDictionary *data) {
                 int code=[data[@"code"] intValue];
                 if (code==0) {
+                    //创建通知
+                    NSNotification *notification =[NSNotification notificationWithName:@"loginAction" object:nil userInfo:nil];
+                    //通过通知中心发送通知
+                    [[NSNotificationCenter defaultCenter] postNotification:notification];
                     //存储账号信息
                     AccountModel *account=[AccountModel new];
                     account.uid=data[@"content"][@"uid"];

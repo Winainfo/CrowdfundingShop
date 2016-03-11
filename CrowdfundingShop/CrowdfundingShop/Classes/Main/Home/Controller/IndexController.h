@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol ontdelegater <NSObject>
 
+-(void)nsdd:(int )a;
+
+@end
 @interface IndexController : UITableViewController
-
+@property(assign,nonatomic)id<ontdelegater>delegate;
 @end

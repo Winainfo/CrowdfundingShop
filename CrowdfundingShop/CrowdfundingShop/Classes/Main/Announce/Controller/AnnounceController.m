@@ -140,6 +140,7 @@
                         NSCalendar *cal=[NSCalendar currentCalendar];
                         unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
                         NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
+                        NSLog(@"揭晓时间:%@",self.announcedArray[i][@"q_end_time"]);
                         long m=[d minute];
                         long s=[d second];
                         long time=m*60+s;
@@ -245,6 +246,7 @@
                     NSCalendar *cal=[NSCalendar currentCalendar];
                     unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
                     NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
+                    NSLog(@"揭晓时间:%@",self.announcedArray[i][@"q_end_time"]);
                     long m=[d minute];
                     long s=[d second];
                     long time=m*60+s;
@@ -317,12 +319,11 @@
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView2 sd_setImageWithURL:imgUrl];
         int time=[self.times[indexPath.row] intValue];
+        NSLog(@"秒:%d",time);
         if (time>0) {
             //倒计时
             cell.timeLabel2.text=[NSString stringWithFormat:@"%02d:%02d",(time%3600/60),(time%60)];
         }else if(time==0){
-            //最新揭晓数据请求
-//            [self requestAnnouncedData:@"1" andpageSize:@"6"];
             //更新主线程
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.myTableView reloadData];
@@ -370,11 +371,11 @@
         controller.goodsID=self.announcedArray[indexPath.row][@"sid"];
         [self.navigationController pushViewController:controller animated:YES];
     }else{
-        //设置故事板为第一启动
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        InAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"inAnnounceView"];
-        controller.goodsID=self.announcedArray[indexPath.row][@"sid"];
-        [self.navigationController pushViewController:controller animated:YES];
+//        //设置故事板为第一启动
+//        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        InAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"inAnnounceView"];
+//        controller.goodsID=self.announcedArray[indexPath.row][@"sid"];
+//        [self.navigationController pushViewController:controller animated:YES];
         }
 }
 /**
