@@ -23,5 +23,7 @@
  */
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UIView *timeView;
+/**已揭晓*/
+@property (weak, nonatomic) IBOutlet UILabel *strLabel;
 
 @end

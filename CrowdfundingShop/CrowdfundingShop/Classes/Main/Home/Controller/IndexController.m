@@ -7,31 +7,15 @@
 //
 
 #import "IndexController.h"
-#import "PopularGoodsCell.h"
-#import "goodsViewCell.h"
-#import "AppDelegate.h"
-#import "DetailController.h"
-#import "DidAnnounceView.h"
-#import "InAnnounceView.h"
-#import "RequestData.h"
-#import <UIImageView+WebCache.h>
-#import <MJRefresh.h>
-#import <MBProgressHUD.h>
-#import "UIViewController+WeChatAndAliPayMethod.h"
-#import "CartModel.h"
-#import "Database.h"
-#import "GroomViewCell.h"
-#import "AccountTool.h"
-#import "LoginController.h"
-#import "MyCouldRecordController.h"
-#import "RechargeServiceController.h"
-#import "AnnNavController.h"
-@interface IndexController ()<UIScrollViewDelegate,CartCellDelegate,AddCartDelegate,UITabBarControllerDelegate>{
+#import "PersonalController.h"
+static NSString *cellIdentifier = @"PopularGoodsCell";
+@interface IndexController ()<UIScrollViewDelegate,CartCellDelegate,AddCartDelegate,UITabBarControllerDelegate,MZTimerLabelDelegate>{
      BOOL _blockUserInteraction;
     NSInteger offset1;
     NSInteger offset2;
     NSInteger offset3;
     AccountModel *account;
+    MZTimerLabel *timer3;
 }
 @property (strong, nonatomic) IBOutlet UITableView *mytableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewWidth;
@@ -103,7 +87,7 @@
     table.size.height=800;
     self.mytableView.frame=table;
     //注册Cell
-    [self.myCollectionView registerClass:[PopularGoodsCell class] forCellWithReuseIdentifier:@"PopularGoodsCell"];
+     [self.myCollectionView registerNib:[UINib nibWithNibName:@"PopularGoodsCell" bundle:nil] forCellWithReuseIdentifier:cellIdentifier];
     //即将揭晓
     [self.goodsCollectionView registerClass:[goodsViewCell class] forCellWithReuseIdentifier:@"goodsViewCell"];
     //人气推荐
@@ -373,10 +357,11 @@
                 NSCalendar *cal=[NSCalendar currentCalendar];
                 unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
                 NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
-                NSLog(@"%ld分钟%ld秒",(long)[d minute],(long)[d second]);
+//                NSLog(@"%ld分钟%ld秒",(long)[d minute],(long)[d second]);
                 long m=[d minute];
                 long s=[d second];
                 long time=m*60+s;
+                  NSLog(@"揭晓时间:%ld",time);
                 [_times addObject:@(time)];
             }
         }
@@ -513,7 +498,10 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (collectionView==self.myCollectionView) {
-        PopularGoodsCell *cell = (PopularGoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"PopularGoodsCell" forIndexPath:indexPath];
+        //重用cell
+        PopularGoodsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+//        static NSString *ID = @"PopularGoodsCell";
+//        PopularGoodsCell *cell = (PopularGoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
         /**商品名字*/
         cell.goodsNameLabel.text=self.announcedArray[indexPath.row][@"title"];
         /**商品图片*/
@@ -524,15 +512,20 @@
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
         
         if ([self.announcedArray[indexPath.row][@"q_showtime"]isEqualToString:@"Y"]) {
+            cell.timeLabel.hidden=NO;
+            cell.strLabel.hidden=YES;
             int time=[self.times[indexPath.row] intValue];
-            if (time>0) {
-                //倒计时
-                cell.timeLabel.text=[NSString stringWithFormat:@"%02d:%02d:%03d",(time%3600/60),(time%60),(time%60/1000)];
-            }else{
-                cell.timeLabel.text=@"已揭晓";
-            }
+            timer3 = [[MZTimerLabel alloc] initWithLabel:cell.timeLabel andTimerType:MZTimerLabelTypeTimer];
+            [timer3 setCountDownTime:time];
+            timer3.timeFormat = @"mm:ss:SS";
+            [timer3 startWithEndingBlock:^(NSTimeInterval countTime) {
+                cell.timeLabel.hidden=YES;
+                cell.strLabel.hidden=NO;
+            }];
+            [timer3 start];
         }else{
-            cell.timeLabel.text=@"已揭晓";
+            cell.timeLabel.hidden=YES;
+            cell.strLabel.hidden=NO;
         }
         return cell;
     }else if(collectionView==self.goodsCollectionView){ //即将揭晓
@@ -828,7 +821,7 @@
                     //通过通知中心发送通知
                     [[NSNotificationCenter defaultCenter] postNotification:notification];
                 }else{
-                    NSLog(@"失败");
+//                    NSLog(@"失败");
                 }
             }else{
                 CartModel *cartList=[CartModel new];
@@ -879,9 +872,9 @@
         cartList.price=cartList.price+1;
         cartList.pk_id=pkid;
         if ([db updateList:cartList]) {
-            NSLog(@"成功");
+//            NSLog(@"成功");
         }else{
-            NSLog(@"失败");
+//            NSLog(@"失败");
         }
     }else{
         CartModel *cartList=[CartModel new];
@@ -911,6 +904,6 @@
  */
 - (IBAction)newShopClick:(UIButton *)sender {
     [self.delegate nsdd:1];
-    NSLog(@"点击");
 }
+
 @end

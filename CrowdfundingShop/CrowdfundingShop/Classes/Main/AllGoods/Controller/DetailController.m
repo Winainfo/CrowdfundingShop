@@ -14,6 +14,7 @@
 #import "CartModel.h"
 #import "ShopCartController.h"
 #import "UITabBar+badge.h"
+#import "AppDelegate.h"
 @interface DetailController ()
 /**立即购买*/
 @property (weak, nonatomic) IBOutlet UIButton *buyGoodsBtn;
@@ -215,6 +216,8 @@
         cartList.price=cartList.price+1;
         cartList.pk_id=pkid;
         if ([db updateList:cartList]) {
+            AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+            [appDelegate tabRootView];
             //创建通知
             NSNotification *notification =[NSNotification notificationWithName:@"tongzhi" object:nil userInfo:dict];
             //通过通知中心发送通知
@@ -233,6 +236,8 @@
         cartList.price=[_dic[@"yunjiage"]intValue];
         if([db insertList:cartList])
         {
+            AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+            [appDelegate tabRootView];
             //创建通知
             NSNotification *notification =[NSNotification notificationWithName:@"tongzhi" object:nil userInfo:dict];
             //通过通知中心发送通知

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -46,7 +46,13 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXr-sA-LLY">
                         <rect key="frame" x="5" y="126" width="97" height="18"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03:48:36" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cz0-gd-X0P">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="03:48:36" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cz0-gd-X0P">
+                                <rect key="frame" x="0.0" y="0.0" width="97" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已揭晓" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMQ-ZO-jNr">
                                 <rect key="frame" x="0.0" y="0.0" width="97" height="18"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -55,9 +61,13 @@
                         </subviews>
                         <color key="backgroundColor" red="0.90588235294117647" green="0.22352941176470587" blue="0.35686274509803922" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="fMQ-ZO-jNr" secondAttribute="bottom" id="1gl-ve-Kjd"/>
+                            <constraint firstAttribute="trailing" secondItem="fMQ-ZO-jNr" secondAttribute="trailing" id="Fn4-17-Tkp"/>
                             <constraint firstItem="cz0-gd-X0P" firstAttribute="top" secondItem="XXr-sA-LLY" secondAttribute="top" id="GcU-bc-hI7"/>
+                            <constraint firstItem="fMQ-ZO-jNr" firstAttribute="leading" secondItem="XXr-sA-LLY" secondAttribute="leading" id="HuX-dC-fVP"/>
                             <constraint firstAttribute="bottom" secondItem="cz0-gd-X0P" secondAttribute="bottom" id="Xas-av-cVR"/>
                             <constraint firstItem="cz0-gd-X0P" firstAttribute="leading" secondItem="XXr-sA-LLY" secondAttribute="leading" id="fkM-Wf-C8e"/>
+                            <constraint firstItem="fMQ-ZO-jNr" firstAttribute="top" secondItem="XXr-sA-LLY" secondAttribute="top" id="hOZ-1C-nqo"/>
                             <constraint firstAttribute="trailing" secondItem="cz0-gd-X0P" secondAttribute="trailing" id="wu3-ou-hlg"/>
                         </constraints>
                     </view>
@@ -87,6 +97,7 @@
             <connections>
                 <outlet property="goodsImageView" destination="x8T-Wj-iuL" id="Ds2-nK-njs"/>
                 <outlet property="goodsNameLabel" destination="U7n-C0-Hjr" id="xO1-Ji-duN"/>
+                <outlet property="strLabel" destination="fMQ-ZO-jNr" id="vlM-zM-GdQ"/>
                 <outlet property="timeLabel" destination="cz0-gd-X0P" id="Cwr-Yy-Qh4"/>
                 <outlet property="timeView" destination="XXr-sA-LLY" id="XFi-f2-56Q"/>
             </connections>

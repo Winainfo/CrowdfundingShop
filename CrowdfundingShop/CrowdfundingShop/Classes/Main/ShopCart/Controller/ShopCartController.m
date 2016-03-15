@@ -40,12 +40,12 @@
 
 @implementation ShopCartController
 -(void)viewWillAppear:(BOOL)animated{
-        [self flagLogin];
+    //创建通知
+    NSNotification *notificationLogin =[NSNotification notificationWithName:@"loginAction" object:nil userInfo:nil];
+    //通过通知中心发送通知
+    [[NSNotificationCenter defaultCenter] postNotification:notificationLogin];
 }
--(void)viewWillDisappear:(BOOL)animated
-{
-   [self flagLogin];
-}
+
 -(NSMutableArray *)shopCartArray
 {
     if (_shopCartArray==nil)
@@ -73,8 +73,10 @@
     [self.myTableView  registerNib:nib forCellReuseIdentifier:@"shopCartCell"];
     [self setExtraCellLineHidden:self.myTableView];
     //判断
-    [self flagLogin];
+//    [self flagLogin];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(delCart:) name:@"delCart" object:nil];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginAction:) name:@"loginAction" object:nil];
 }
 /**
  *  去掉多余的分割线
@@ -378,5 +380,58 @@
         self.view3.hidden=YES;
     }
 }
-
+/**
+ *  监听通知
+ *
+ *  @param text <#text description#>
+ */
+- (void)loginAction:(NSNotification *)text{
+    self.strData= @"";
+    //初始化
+    sumPrice=0;
+    //数据
+    Database *db=[[Database alloc]init];
+    _shopCartArray=[db getList];
+    //总数量
+    self.numLabel.text=[NSString stringWithFormat:@"共%lu件商品",(unsigned long)self.shopCartArray.count];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_myTableView reloadData];
+    });
+    //沙盒路径
+    AccountModel *account=[AccountTool account];
+    if(account)
+    {
+        if (_shopCartArray.count>0) {
+            _shopArray=[[NSMutableArray alloc]initWithCapacity:0];
+            for (int i=0; i<_shopCartArray.count; i++) {
+                CartModel *cartList=_shopCartArray[i];
+                sumPrice=sumPrice+cartList.price;
+                NSString *shopidStr=[[_shopCartArray objectAtIndex:i]valueForKey:@"shopId"];
+                NSString *numStr=[[_shopCartArray objectAtIndex:i]valueForKey:@"num"];
+                NSDictionary *Dic=[NSDictionary dictionaryWithObjectsAndKeys:shopidStr,@"shopid",numStr,@"num",nil];
+                [_shopArray addObject:Dic];
+            }
+            NSData *strData=[NSJSONSerialization dataWithJSONObject:_shopArray options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *str = [[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding];
+            self.strData = [self.strData stringByAppendingString:str];
+            self.navigationController.tabBarItem.badgeValue = [NSString stringWithFormat:@"%lu",(unsigned long)self.shopCartArray.count];
+            [self.navigationController.tabBarController.tabBar showBadgeWithIndex:self.navigationController.tabBarController.selectedIndex];
+            self.priceLabel.text=[NSString stringWithFormat:@"%lu",(unsigned long)sumPrice];
+            self.view1.hidden=YES;
+            self.view2.hidden=YES;
+            self.view3.hidden=NO;
+        }else{
+            self.priceLabel.text=@"0";
+            self.view1.hidden=YES;
+            self.view2.hidden=NO;
+            self.view3.hidden=YES;
+        }
+        //注册通知
+        //        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(delCart:) name:@"delCart" object:nil];
+    }else{
+        self.view1.hidden=NO;
+        self.view2.hidden=YES;
+        self.view3.hidden=YES;
+    }
+}
 @end

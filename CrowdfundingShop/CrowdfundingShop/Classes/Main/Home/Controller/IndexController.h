@@ -7,6 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PopularGoodsCell.h"
+#import "goodsViewCell.h"
+#import "AppDelegate.h"
+#import "DetailController.h"
+#import "DidAnnounceView.h"
+#import "InAnnounceView.h"
+#import "RequestData.h"
+#import <UIImageView+WebCache.h>
+#import <MJRefresh.h>
+#import <MBProgressHUD.h>
+#import "UIViewController+WeChatAndAliPayMethod.h"
+#import "CartModel.h"
+#import "Database.h"
+#import "GroomViewCell.h"
+#import "AccountTool.h"
+#import "LoginController.h"
+#import "MyCouldRecordController.h"
+#import "RechargeServiceController.h"
+#import "AnnNavController.h"
+#import "MZTimerLabel.h"
 @protocol ontdelegater <NSObject>
 
 -(void)nsdd:(int )a;

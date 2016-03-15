@@ -9,14 +9,15 @@
 #import "BalanceController.h"
 #import "AccountTool.h"
 #import "UIViewController+WeChatAndAliPayMethod.h"
-#import "AlipayHelper.h"
 #import "RequestData.h"
 #import <MBProgressHUD.h>
 #import "CartModel.h"
 #import "Database.h"
 #import "RechargeServiceController.h"
 #import "ResultController.h"
-@interface BalanceController ()
+#import <CommonCrypto/CommonDigest.h>
+@interface BalanceController ()<UIWebViewDelegate>
+@property (nonatomic,strong) UIWebView *webView;
 /**结算按钮*/
 @property (weak, nonatomic) IBOutlet UIButton *balanceBtn;
 /**商品数量*/
@@ -33,14 +34,13 @@
 @property (weak, nonatomic) IBOutlet UIButton *moneyBtn;
 /**积分btn*/
 @property (weak, nonatomic) IBOutlet UIButton *scoreBtn;
-/**微信支付*/
-@property (weak, nonatomic) IBOutlet UIButton *wxPayBtn;
-/**支付宝*/
-@property (weak, nonatomic) IBOutlet UIButton *aliPayBtn;
 @property (weak, nonatomic) IBOutlet ARLabel *scoreTextLabel;
 @property (weak, nonatomic) IBOutlet ARLabel *moneyTextLabel;
 /**支付类型1.代表积分，2.代表余额 3.代表微信支付 4.代表支付宝 */
 @property (assign,nonatomic) int type;
+
+@property (weak, nonatomic) IBOutlet UIButton *yunBtn;
+
 @end
 
 @implementation BalanceController
@@ -98,7 +98,6 @@
         }
     }else{
         self.shenyuPrice.text=[NSString stringWithFormat:@"¥%0.2f",[self.sumPrice floatValue]];
-        self.wxPayBtn.hidden=NO;
         self.type=3;
     }
 
@@ -115,10 +114,9 @@
     if (score>=100) {
         [self.scoreBtn setImage:[UIImage imageNamed:@"pay_way_select"] forState:UIControlStateNormal];
         [self.moneyBtn setImage:[UIImage imageNamed:@"pay_way_unselect"] forState:UIControlStateNormal];
-        self.wxPayBtn.hidden=YES;
-        self.aliPayBtn.hidden=YES;
         self.moneyTextLabel.text=@"余额支付";
         self.type=1;
+         self.yunBtn.hidden=YES;
     }else{
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"您的福分不足，加油赚取福分吧" message:nil preferredStyle:UIAlertControllerStyleAlert];
         [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -136,15 +134,14 @@
 - (IBAction)moneyClick:(UIButton *)sender {
     //沙盒路径
     AccountModel *account=[AccountTool account];
-    int money=[self.sumPrice intValue]-[account.money intValue];
+    int money=[account.money intValue]-[self.sumPrice intValue];
     if (money>1) {
         self.shenyuPrice.text=[NSString stringWithFormat:@"¥%d",money];
         [self.scoreBtn setImage:[UIImage imageNamed:@"pay_way_unselect"] forState:UIControlStateNormal];
         [self.moneyBtn setImage:[UIImage imageNamed:@"pay_way_select"] forState:UIControlStateNormal];
         self.moneyTextLabel.text=[NSString stringWithFormat:@"可使用余额支付¥%0.2f",[account.money floatValue]];
-        self.wxPayBtn.hidden=YES;
-        self.aliPayBtn.hidden=YES;
         self.type=2;
+        self.yunBtn.hidden=YES;
     }else{
         self.shenyuPrice.text=@"¥0.0";
         UIAlertController *alert=[UIAlertController alertControllerWithTitle:@"您的余额不足快去充值吧" message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -160,32 +157,17 @@
     }
 }
 /**
- *  微信支付
+ *  云支付
  *
  *  @param sender <#sender description#>
  */
-- (IBAction)wxPayClick:(id)sender {
+- (IBAction)yunPayClick:(UIButton *)sender {
     self.shenyuPrice.text=[NSString stringWithFormat:@"¥%@",self.sumPrice];
     [self.scoreBtn setImage:[UIImage imageNamed:@"pay_way_unselect"] forState:UIControlStateNormal];
     [self.moneyBtn setImage:[UIImage imageNamed:@"pay_way_unselect"] forState:UIControlStateNormal];
-    self.wxPayBtn.hidden=NO;
-    self.aliPayBtn.hidden=YES;
     self.moneyTextLabel.text=@"余额支付";
+    self.yunBtn.hidden=NO;
     self.type=3;
-}
-/**
- *  支付宝支付
- *
- *  @param sender <#sender description#>
- */
-- (IBAction)aliPayClick:(id)sender {
-    self.shenyuPrice.text=[NSString stringWithFormat:@"¥%@",self.sumPrice];
-    [self.scoreBtn setImage:[UIImage imageNamed:@"pay_way_unselect"] forState:UIControlStateNormal];
-    [self.moneyBtn setImage:[UIImage imageNamed:@"pay_way_unselect"] forState:UIControlStateNormal];
-    self.wxPayBtn.hidden=YES;
-    self.aliPayBtn.hidden=NO;
-    self.moneyTextLabel.text=@"余额支付";
-    self.type=4;
 }
 /**
  *  支付
@@ -310,68 +292,30 @@
             }];
 
         }break;
-        case 3:{//微信支付
-            //这里调用我自己写的catagoary中的方法，方法里集成了微信支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
-            //这里填写的两个参数是后台会返回给你的
-            [self payTheMoneyUseWeChatPayWithPrepay_id:@"这里填写后台返回的Prepay_id" nonce_str:@"这里填写后台给你返回的nonce_str"];
-            //所以这里添加一个监听，用来接收是否成功的消息
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPayResultNoti:) name:WX_PAY_RESULT object:nil];
-        }break;
-        case 4:{//支付宝
-            NSDictionary *dict = @{@"tradeNO":[self generateTradeNO],@"productName":@"购买商品",@"productDescription":@"可大可小",@"amount":self.sumPrice};
-            
-            [AlipayHelper orderDetialInfo:dict Success:^{
-              NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",self.jsonStr,@"shop",nil];
-                [RequestData AliPaySerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-                    int code=[data[@"code"] intValue];
-                    if (code==0) {
-                        //声明对象；
-                        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-                        hud.mode=MBProgressHUDModeText;
-                        //显示的文本；
-                        hud.labelText = @"支付成功";
-                        hud.removeFromSuperViewOnHide = true;
-                        [hud hide:true afterDelay:1];
-                        [db deleteDataList];
-                        //设置故事板为第一启动
-                        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                        ResultController *controller=[storyboard instantiateViewControllerWithIdentifier:@"resultView"];
-                        [self.navigationController pushViewController:controller animated:YES];
-                    }
-                } andFailure:^(NSError *error) {
-                    
-                }];
-            } Failure:^{
-                //声明对象；
-                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-                hud.mode=MBProgressHUDModeText;
-                //显示的文本；
-                hud.labelText = @"支付失败";
-                hud.removeFromSuperViewOnHide = true;
-                [hud hide:true afterDelay:1];
-            } Ispaying:^{
-                NSLog(@"没有支付");
-            }];
+        case 3:{//云支付
+            NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"9373145767627127",@"partner",@"1144775900@qq.com",@"seller_email",[self generateTradeNO],@"out_trade_no",@"1元商城",@"subject",@"1",@"total_fee",@"",@"body",@"",@"nourl",@"",@"reurl",@"",@"orurl",@"",@"orimg",nil];
+            NSArray * array = [[NSArray alloc]initWithObjects:@"9373145767627127",@"1144775900@qq.com",[self generateTradeNO],@"1元商城",@"1",@"",@"www.baidu.com",@"www.baidu.com",@"",@"",nil];
+            NSString *str= [array componentsJoinedByString:@""];//字符串拼接
+            NSLog(@"字符串拼接:%@",str);
+            NSString *parStr=[self getMD5StrMethod:str andData:@"i2eapi" andAppKey:@"gYXBYNgn9ntyi98vjkSxqSRm6psyRivQ"];
+            NSLog(@"加密后:%@",parStr);
+            //http://www.i2e.cn/weiorder/yunpay.php?sing=gSUsCYGuD9Cm%2BErFbsI9y71DnB4Iff8U8s4
+            NSString *string=@"%2B";
+            NSString *urlStr=[NSString stringWithFormat:@"http://www.i2e.cn/weiorder/yunpay.php?sing=gSUsCYGuD9Cm%@ErFbsI9y71DnB4Iff8U8s4",string];
+            NSLog(@"请求url%@",urlStr);
+            [[UIApplication sharedApplication] openURL: [ NSURL URLWithString:urlStr]];
+//            self.webView=[[UIWebView alloc]initWithFrame:CGRectMake(0, 10, kScreenWidth, kScreenHeight)];
+//            [self.webView setUserInteractionEnabled:YES];//是否支持交互
+//            self.webView.delegate=self;
+//            [self.webView setOpaque:NO];//opaque是不透明的意思
+//            [self.webView setScalesPageToFit:YES];//自动缩放以适应屏幕
+//            [self.view addSubview:self.webView];
+//            //加载网页
+//            [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlStr]]];
         }break;
         default:
             break;
     }
-}
-#pragma mark 支付代理
-//微信支付付款成功失败
--(void)weChatPayResultNoti:(NSNotification *)noti{
-    NSLog(@"%@",noti);
-    if ([[noti object] isEqualToString:IS_SUCCESSED]) {
-        [self showMessage:@"支付成功"];
-        NSLog(@"支付成功");
-        //在这里填写支付成功之后你要做的事情
-        
-    }else{
-        [self showMessage:@"支付失败"];
-        NSLog(@"支付失败");
-    }
-    //上边添加了监听，这里记得移除
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:WX_PAY_RESULT object:nil];
 }
 
 - (NSString *)generateTradeNO
@@ -389,7 +333,58 @@
     }
     return resultStr;
 }
-
+/**
+ *  获得md5加密后的字符串
+ *
+ *  @param method <#method description#>
+ *  @param data   <#data description#>
+ *  @param appid  <#appid description#>
+ *  @param appkey <#appkey description#>
+ *
+ *  @return <#return value description#>
+ */
+-(NSString*) getMD5StrMethod:(NSString*) method andData:(NSString*) data andAppKey:(NSString*) appkey
+{
+    //设置需要加密的字符串
+    NSMutableString * str = [NSMutableString stringWithCapacity:3];
+    [str appendString:method];
+    [str appendString:data];
+    [str appendString:appkey];
+    
+    //去除空格和\n
+    NSString *resString =
+    [[str stringByReplacingOccurrencesOfString:@" " withString:@""]
+     stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    const char *cStr = [resString UTF8String];
+    unsigned char result[16];
+    CC_MD5(cStr, strlen(cStr), result); // This is the md5 call
+    return [NSString stringWithFormat:
+            @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+            result[0], result[1], result[2], result[3],
+            result[4], result[5], result[6], result[7],
+            result[8], result[9], result[10], result[11],
+            result[12], result[13], result[14], result[15]
+            ];
+}
+/**
+ *  字典转字符串工具类
+ *
+ *  @param dic <#dic description#>
+ *
+ *  @return <#return value description#>
+ */
+-(NSString*)getJsonStr:(NSDictionary*)dic{
+    NSError *error = nil;
+    NSData *jsonData=[NSJSONSerialization dataWithJSONObject:dic
+                                                     options:NSJSONWritingPrettyPrinted
+                                                       error:&error];
+    if ([jsonData length] > 0 && error == nil){
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        return jsonString;
+    }else{
+        return nil;
+    }
+}
 - (void) showMessage:(NSString*)message{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
     [alert show];

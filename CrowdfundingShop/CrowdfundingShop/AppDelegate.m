@@ -7,9 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import <ShareSDK/ShareSDK.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+#import <TencentOpenAPI/TencentOAuth.h>
+#import "WXApi.h"
+#import "WeiboSDK.h"
 #import <IQKeyboardManager.h>
 #import "payRequsestHandler.h"
-#import <AlipaySDK/AlipaySDK.h>
 
 #import "IndexController.h"
 #import "AnnounceController.h"
@@ -41,20 +45,21 @@
     [WXApi registerApp:APP_ID withDescription:@"1元商城"];
     [ShareSDK registerApp:@"dade7bf06aaa"];
     [self initShareSDKRegisit];
-    //创建通知
-    NSNotification *notification =[NSNotification notificationWithName:@"loginAction" object:nil userInfo:nil];
-    //通过通知中心发送通知
-    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    [self tabRootView];
+    return YES;
+}
+
+-(void)tabRootView{
     //tab
     //修改选中后的字体
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1],UITextAttributeTextColor, nil]forState:UIControlStateSelected];
     UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     IndexController *indexController = [storyboard instantiateViewControllerWithIdentifier:@"HomeView"];//首页
-     UINavigationController *indexNav=[[UINavigationController alloc]initWithRootViewController:indexController];
+    UINavigationController *indexNav=[[UINavigationController alloc]initWithRootViewController:indexController];
     indexNav.navigationBar.barTintColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
     indexController.delegate=self;
-     AllGoodsController *allController = [storyboard instantiateViewControllerWithIdentifier:@"AllGoodsView"];//所有商品
+    AllGoodsController *allController = [storyboard instantiateViewControllerWithIdentifier:@"AllGoodsView"];//所有商品
     UINavigationController *allNav=[[UINavigationController alloc]initWithRootViewController:allController];
     allNav.navigationBar.barTintColor=[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1];
     AnnounceController *announceController = [storyboard instantiateViewControllerWithIdentifier:@"Announce"];//最新揭晓
@@ -95,7 +100,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"tongzhi" object:nil];
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addCart:) name:@"addCart" object:nil];
-    return YES;
+    
 }
 #pragma mark 监听通知
 - (void)tongzhi:(NSNotification *)data{
@@ -135,15 +140,6 @@
                      qqApiInterfaceCls:[QQApiInterface class]
                        tencentOAuthCls:[TencentOAuth class]];
     
-    //短信
-    
-    [ShareSDK connectSMS];
-    
-    //新浪微博
-    [ShareSDK connectSinaWeiboWithAppKey:@"微博开放平台的appkey"
-                               appSecret:@"微博开放平台的appSecret"
-                             redirectUri:@"http://www.sydoil.com"];//注意，这是回调网址，回调网址一定要跟微博开放平台上填写的回调网址一致才行。另外，如果应用没有上架，你想测试的话，要在微博开放平台上添加测试微博账号才可以
-    
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
 {
@@ -155,17 +151,6 @@
 //        return [ShareSDK handleOpenURL:url
 //                            wxDelegate:self];
         //如果极简 SDK 不可用,会跳转支付宝钱包进行支付,需要将支付宝钱包的支付结果回传给 SDK if ([url.host isEqualToString:@"safepay"]) {
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayResult" object:[resultDic objectForKey:@"resultStatus"]];
-            
-        }];
-        if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
-            [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
-                NSLog(@"result = %@",resultDic);
-            }];
-        }
         return [ShareSDK handleOpenURL:url wxDelegate:self];;
     }
     
@@ -179,21 +164,9 @@
         return  [WXApi handleOpenURL:url delegate:self];
         //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
     }else{
-        //如果极简 SDK 不可用,会跳转支付宝钱包进行支付,需要将支付宝钱包的支付结果回传给 SDK if ([url.host isEqualToString:@"safepay"]) {
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayResult" object:[resultDic objectForKey:@"resultStatus"]];
-            
-        }];
-        if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
-            [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
-                NSLog(@"result = %@",resultDic);
-            }];
-        }
-        return YES;
-//        return [ShareSDK handleOpenURL:url
-//                            wxDelegate:self];
+
+        return [ShareSDK handleOpenURL:url
+                            wxDelegate:self];
     }
 }
 - (BOOL)application:(UIApplication *)application
@@ -208,23 +181,10 @@
     }else
     {
 //        //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
-//        return [ShareSDK handleOpenURL:url
-//                     sourceApplication:sourceApplication
-//                            annotation:annotation
-//                            wxDelegate:self];
-        //如果极简 SDK 不可用,会跳转支付宝钱包进行支付,需要将支付宝钱包的支付结果回传给 SDK if ([url.host isEqualToString:@"safepay"]) {
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayResult" object:[resultDic objectForKey:@"resultStatus"]];
-            
-        }];
-        if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
-            [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
-                NSLog(@"result = %@",resultDic);
-            }];
-        }
-        return YES;
+        return [ShareSDK handleOpenURL:url
+                     sourceApplication:sourceApplication
+                            annotation:annotation
+                            wxDelegate:self];
     }
 }
 

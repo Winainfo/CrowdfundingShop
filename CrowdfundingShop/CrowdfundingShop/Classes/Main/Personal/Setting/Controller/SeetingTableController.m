@@ -77,6 +77,10 @@
     [alertController addAction:cancelAction];
     [alertController addAction:okAction];
     [self presentViewController:alertController animated:YES completion:nil];
+    //创建通知
+    NSNotification *notificationLogin =[NSNotification notificationWithName:@"loginAction" object:nil userInfo:nil];
+    //通过通知中心发送通知
+    [[NSNotificationCenter defaultCenter] postNotification:notificationLogin];
 }
 /**
  *删除沙盒里的文件

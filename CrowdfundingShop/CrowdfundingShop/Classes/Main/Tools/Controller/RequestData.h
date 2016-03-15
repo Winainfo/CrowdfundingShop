@@ -408,5 +408,11 @@
  *  @param block 返回块值
  */
 +(void)shopCategorySerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   头像上传
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)uplodPhotoSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 @end
 

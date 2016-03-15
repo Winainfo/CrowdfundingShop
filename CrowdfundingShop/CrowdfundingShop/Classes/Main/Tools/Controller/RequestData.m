@@ -1250,4 +1250,22 @@
         failure(error);
     }];
 }
+/**
+ *   头像上传
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)uplodPhotoSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"uid":data[@"uid"],@"photo":data[@"photo"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/userphotoup/",URL];
+    [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
 @end

@@ -11,6 +11,8 @@
 #import "AccountTool.h"
 #import <UIImageView+WebCache.h>
 #import "AFNetworking.h"
+#import "RequestData.h"
+#import <MBProgressHUD.h>
 #define kScreen_Height      ([UIScreen mainScreen].bounds.size.height)
 #define kScreen_Width       ([UIScreen mainScreen].bounds.size.width)
 #define kScreen_Frame       (CGRectMake(0, 0 ,kScreen_Width,kScreen_Height))
@@ -197,7 +199,6 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     
-    NSLog(@"相册：%s,info == %@",__func__,info);
     
     UIImage *userImage = [self fixOrientation:[info objectForKey:@"UIImagePickerControllerOriginalImage"]];
     
@@ -215,35 +216,57 @@
 
 - (void)upDateHeadIcon:(UIImage *)photo
 {
-    //两种方式上传头像
-    /*方式一：使用NSData数据流传图片*/
-    NSString *imageURl = @"";
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    manager.responseSerializer.acceptableContentTypes =[NSSet setWithObject:@"text/html"];
-    [manager POST:imageURl parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        
-        [formData appendPartWithFileData:UIImageJPEGRepresentation(photo, 1.0) name:@"text" fileName:@"test.jpg" mimeType:@"image/jpg"];
-        
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    /*方式二：使用Base64字符串传图片*/
-    NSData *data = UIImageJPEGRepresentation(photo, 1.0);
-    
-    NSString *pictureDataString=[data base64Encoding];
-    NSDictionary * dic  = @{@"verbId":@"modifyUserInfo",@"deviceType":@"ios",@"userId":@"",@"photo":pictureDataString,@"mobileTel":@""};
-    [manager POST:@"" parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if ([[responseObject objectForKey:@"flag"] intValue] == 0) {
-            
+    /*使用Base64字符串传图片*/
+    NSData *data = UIImageJPEGRepresentation(photo, 1.0f);
+    NSString *format=[self typeForImageData:data];
+    NSString *pictureDataString=[NSString stringWithFormat:@"data:%@;base64,%@",format,[data base64EncodedStringWithOptions:0]];
+    AccountModel *account=[AccountTool account];
+    NSDictionary * dic  = @{@"uid":account.uid,@"photo":pictureDataString};
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在上传";
+    [RequestData uplodPhotoSerivce:dic FinishCallbackBlock:^(NSDictionary *data) {
+        int code=[data[@"code"] intValue];
+        if (code==0) {
+            account.img=data[@"content"];
+            [AccountTool saveAccount:account];
+            //加载成功，先移除原来的HUD；
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //然后显示一个成功的提示；
+            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            successHUD.labelText = @"上传成功";
+            successHUD.mode = MBProgressHUDModeCustomView;
+            //可以设置对应的图片；
+            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+            successHUD.removeFromSuperViewOnHide = true;
+            [successHUD hide:true afterDelay:1];
+
         }else{
-            
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //显示失败的提示；
+            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            failHUD.labelText = @"上传失败";
+            failHUD.mode = MBProgressHUDModeCustomView;
+            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+            failHUD.removeFromSuperViewOnHide = true;
+            [failHUD hide:true afterDelay:1];
+
         }
-    }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-          }];
+    } andFailure:^(NSError *error) {
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"网络异常";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
+
+    }];
 }
 //保存照片到沙盒路径(保存)
 - (void)saveImage:(UIImage *)image name:(NSString *)iconName
@@ -266,7 +289,6 @@
     [image drawInRect:CGRectMake(0, 0, image.size.width * scaleSize, image.size.height *scaleSize)];
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    NSLog(@"%@",NSStringFromCGSize(scaledImage.size));
     return scaledImage;
 }
 //修正照片方向(手机转90度方向拍照)
@@ -345,5 +367,45 @@
     CGContextRelease(ctx);
     CGImageRelease(cgimg);
     return img;
+}
+/**
+ *  判断图片格式
+ *
+ *  @param data <#data description#>
+ *
+ *  @return <#return value description#>
+ */
+-(NSString *)typeForImageData:(NSData *)data {
+    
+    
+    uint8_t c;
+    
+    [data getBytes:&c length:1];
+    
+    
+    
+    switch (c) {
+            
+        case 0xFF:
+            
+            return @"image/jpeg";
+            
+        case 0x89:
+            
+            return @"image/png";
+        case 0x47:
+            
+            return @"image/gif";
+            
+        case 0x49:
+            
+        case 0x4D:
+            
+            return @"image/tiff";
+            
+    }
+    
+    return nil;
+    
 }
 @end

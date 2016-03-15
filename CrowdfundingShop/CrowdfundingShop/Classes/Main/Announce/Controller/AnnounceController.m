@@ -16,8 +16,10 @@
 #import <UIImageView+WebCache.h>
 #import <MJRefresh.h>
 #import <MBProgressHUD.h>
-@interface AnnounceController ()<UITableViewDataSource,UITableViewDelegate>{
+#import "MZTimerLabel.h"
+@interface AnnounceController ()<UITableViewDataSource,UITableViewDelegate,MZTimerLabelDelegate>{
     NSInteger offset;
+     MZTimerLabel *timer3;
 }
 @property (assign,nonatomic)BOOL flag;
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -133,17 +135,18 @@
                         //实例化一个NSDateFormatter对象
                         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
                         NSDate *currentDate = [NSDate date];//获取当前时间，日期
-                        [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                        [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss.SS"];
                         NSString *dateString = [dateFormatter stringFromDate:currentDate];
                         NSDateFormatter *date=[[NSDateFormatter alloc] init];
-                        [date setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+                        [date setDateFormat:@"YYYY-MM-dd HH:mm:ss.SS"];
                         NSCalendar *cal=[NSCalendar currentCalendar];
                         unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
                         NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
-                        NSLog(@"揭晓时间:%@",self.announcedArray[i][@"q_end_time"]);
+                        //                NSLog(@"%ld分钟%ld秒",(long)[d minute],(long)[d second]);
                         long m=[d minute];
                         long s=[d second];
                         long time=m*60+s;
+                        NSLog(@"揭晓时间:%ld",time);
                         [_times addObject:@(time)];
                     }
                 }
@@ -202,6 +205,7 @@
                         long m=[d minute];
                         long s=[d second];
                         long time=m*60+s;
+                         NSLog(@"揭晓时间:%ld",time);
                         [_times addObject:@(time)];
                     }
                 }
@@ -246,10 +250,11 @@
                     NSCalendar *cal=[NSCalendar currentCalendar];
                     unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
                     NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
-                    NSLog(@"揭晓时间:%@",self.announcedArray[i][@"q_end_time"]);
+                    
                     long m=[d minute];
                     long s=[d second];
                     long time=m*60+s;
+                    NSLog(@"揭晓时间:%ld",time);
                     [_times addObject:@(time)];
                 }
             }
@@ -319,17 +324,13 @@
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView2 sd_setImageWithURL:imgUrl];
         int time=[self.times[indexPath.row] intValue];
-        NSLog(@"秒:%d",time);
-        if (time>0) {
-            //倒计时
-            cell.timeLabel2.text=[NSString stringWithFormat:@"%02d:%02d",(time%3600/60),(time%60)];
-        }else if(time==0){
-            //更新主线程
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.myTableView reloadData];
-            });
+        timer3 = [[MZTimerLabel alloc] initWithLabel:cell.timeLabel2 andTimerType:MZTimerLabelTypeTimer];
+        [timer3 setCountDownTime:time];
+        timer3.timeFormat = @"mm:ss:SS";
+        [timer3 startWithEndingBlock:^(NSTimeInterval countTime) {
             cell.timeLabel2.text=@"正在计算结果";
-        }
+        }];
+        [timer3 start];
         return cell;
     }else{
         cell.view1.hidden=NO;

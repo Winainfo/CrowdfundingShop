@@ -38,5 +38,5 @@
 /**商品价格*/
 @property (weak, nonatomic) IBOutlet ARLabel *priceLabel2;
 /**揭晓倒计时*/
-@property (weak, nonatomic) IBOutlet ARLabel *timeLabel2;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel2;
 @end

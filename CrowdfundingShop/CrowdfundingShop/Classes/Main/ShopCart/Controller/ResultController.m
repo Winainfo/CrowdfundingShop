@@ -11,6 +11,7 @@
 #import "MyCouldRecordController.h"
 #import "HomeNavController.h"
 #import "IndexController.h"
+#import "AppDelegate.h"
 @interface ResultController ()
 /**商品数量*/
 @property (weak, nonatomic) IBOutlet ARLabel *numLabel;
@@ -77,6 +78,8 @@
 }
 
 - (IBAction)buyShopClick:(UIButton *)sender {
+    AppDelegate *appDelegate=(AppDelegate *)[UIApplication sharedApplication].delegate;
+    [appDelegate tabRootView];
      NSDictionary *dict =[[NSDictionary alloc] initWithObjectsAndKeys:@"0",@"Index", nil];
     //创建通知
     NSNotification *notification =[NSNotification notificationWithName:@"tongzhi" object:nil userInfo:dict];

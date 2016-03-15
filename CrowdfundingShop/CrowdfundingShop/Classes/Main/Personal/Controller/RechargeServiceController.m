@@ -9,7 +9,6 @@
 #import "RechargeServiceController.h"
 #import "AccountTool.h"
 #import "UIViewController+WeChatAndAliPayMethod.h"
-#import "AlipayHelper.h"
 #import "RequestData.h"
 @interface RechargeServiceController ()<UITextFieldDelegate>
 /**余额*/
@@ -26,10 +25,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *button5;
 /**金额文本*/
 @property (weak, nonatomic) IBOutlet UITextField *moenyTextField;
-/**微信*/
-@property (weak, nonatomic) IBOutlet UIButton *wxPayButton;
-/**支付宝*/
-@property (weak, nonatomic) IBOutlet UIButton *aliPayButton;
+/**云支付*/
+@property (weak, nonatomic) IBOutlet UIButton *yunPayButton;
 /**确认*/
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 /**支付类型 1.微信 2.支付宝*/
@@ -63,7 +60,7 @@
     self.navigationItem.leftBarButtonItem=left;
     self.moenyTextField.delegate=self;
     [self initStyle];
-    self.wxPayButton.hidden=NO;
+    self.yunPayButton.hidden=NO;
     self.type=1;
     self.money=@"50";
     //50
@@ -240,20 +237,9 @@
  *
  *  @param sender <#sender description#>
  */
-- (IBAction)wxPayClick:(id)sender {
-    self.wxPayButton.hidden=NO;
-    self.aliPayButton.hidden=YES;
+- (IBAction)yunPayClick:(id)sender {
+    self.yunPayButton.hidden=NO;
     self.type=1;
-}
-/**
- *  支付宝支付
- *
- *  @param sender <#sender description#>
- */
-- (IBAction)aliPayClick:(id)sender {
-    self.wxPayButton.hidden=YES;
-    self.aliPayButton.hidden=NO;
-    self.type=2;
 }
 /**
  *  支付
@@ -268,39 +254,10 @@
         price=self.money;
     }
     switch (self.type) {
-        case 1:{//微信支付
-            //这里调用我自己写的catagoary中的方法，方法里集成了微信支付的步骤，并会发送一个通知，用来传递是否支付成功的信息
-            //这里填写的两个参数是后台会返回给你的
-            [self payTheMoneyUseWeChatPayWithPrepay_id:@"这里填写后台返回的Prepay_id" nonce_str:@"这里填写后台给你返回的nonce_str"];
-            //所以这里添加一个监听，用来接收是否成功的消息
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPayResultNoti:) name:WX_PAY_RESULT object:nil];
+        case 1:{//云支付
+            [[UIApplication sharedApplication] openURL: [ NSURL URLWithString:@"http://pay.yunpay.net.cn/i2eorder/yunpay/?sing=hCB9W9H8CNWm%2BErFbsI9y7xOmBoIe%2FsX9cM" ]];
         }break;
-        case 2:{
-            NSDictionary *dict = @{@"tradeNO":[self generateTradeNO],@"productName":@"云购充值",@"productDescription":@"可大可小",@"amount":price};
-            
-            [AlipayHelper orderDetialInfo:dict Success:^{
-                AccountModel *account=[AccountTool account];
-                NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",price,@"money",@"wapalipay",@"type",nil];
-                [RequestData rechargeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-                    int code=[data[@"code"] intValue];
-                    if (code==0) {
-                        int a_money=[account.money intValue];
-                        int b_money=[price intValue];
-                        account.money=[NSString stringWithFormat:@"%i",a_money+b_money];
-                        self.moneyLabel.text=[NSString stringWithFormat:@"%i",a_money+b_money];
-                        [AccountTool saveAccount:account];
-                    }
-                    NSLog(@"---%@",data);
-                } andFailure:^(NSError *error) {
-                    
-                }];
-                NSLog(@"成功了吗");
-            } Failure:^{
-                NSLog(@"失败了吗");
-            } Ispaying:^{
-                NSLog(@"没有支付");
-            }];
-        }break;
+
         default:
             break;
     }
@@ -320,31 +277,7 @@
     }
     return resultStr;
 }
-#pragma mark 支付代理
-//微信支付付款成功失败
--(void)weChatPayResultNoti:(NSNotification *)noti{
-    NSLog(@"%@",noti);
-    if ([[noti object] isEqualToString:IS_SUCCESSED]) {
-        [self showMessage:@"支付成功"];
-        //在这里填写支付成功之后你要做的事情
-        
-    }else{
-        [self showMessage:@"支付失败"];
-        NSLog(@"支付失败");
-    }
-    //上边添加了监听，这里记得移除
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:WX_PAY_RESULT object:nil];
-}
 
-
-
-- (void) showMessage:(NSString*)message{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
-    [alert show];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [alert dismissWithClickedButtonIndex:alert.cancelButtonIndex animated:YES];
-    });
-}
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     //写你要实现的：页面跳转的相关代码
     //50
