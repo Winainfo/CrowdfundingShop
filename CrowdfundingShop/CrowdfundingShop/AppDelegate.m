@@ -13,7 +13,6 @@
 #import "WXApi.h"
 #import "WeiboSDK.h"
 #import <IQKeyboardManager.h>
-#import "payRequsestHandler.h"
 
 #import "IndexController.h"
 #import "AnnounceController.h"
@@ -21,6 +20,9 @@
 #import "ShopCartController.h"
 #import "PersonalController.h"
 #import "Database.h"
+
+#define APP_ID @"wx45545349bdecda11"
+#define APP_SECRET @"8a49acc6b23cbfc280ec338eee9a376b"
 @interface AppDelegate ()<WXApiDelegate,ontdelegater>
 @property(retain,nonatomic)UITabBarController *arr;
 @property (retain,nonatomic) NSMutableArray *shopCartArray;
@@ -42,7 +44,6 @@
     //控制是否显示键盘上的工具条
     manager.enableAutoToolbar = YES;
     //APP_ID 这里我写成了宏的形式，如果你按照我的文档方法添加了WXPay的文件夹，你这里可以直接点击宏进去查看里面其他的宏
-    [WXApi registerApp:APP_ID withDescription:@"1元商城"];
     [ShareSDK registerApp:@"dade7bf06aaa"];
     [self initShareSDKRegisit];
     [self tabRootView];
@@ -143,7 +144,7 @@
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
 {
-    //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
+//    这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
     if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",APP_ID]].location != NSNotFound) {
         return  [WXApi handleOpenURL:url delegate:self];
         //不是上面的情况的话，就正常用shareSDK调起相应的分享页面
@@ -188,25 +189,47 @@
     }
 }
 
-//微信SDK自带的方法，处理从微信客户端完成操作后返回程序之后的回调方法
--(void) onResp:(BaseResp*)resp
+////微信SDK自带的方法，处理从微信客户端完成操作后返回程序之后的回调方法
+//-(void) onResp:(BaseResp*)resp
+//{
+//    //这里判断回调信息是否为 支付
+//    if([resp isKindOfClass:[PayResp class]]){
+//        switch (resp.errCode) {
+//            case WXSuccess:{
+//               NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"0",@"code",nil];
+//                //如果支付成功的话，全局发送一个通知，支付成功
+//                [[NSNotificationCenter defaultCenter]postNotificationName:@"weixin_pay_result" object:nil userInfo:params];
+//            }
+//                break;
+//                
+//            default:{
+//                //如果支付失败的话，全局发送一个通知，支付失败
+//                NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"-1",@"code",nil];
+//                [[NSNotificationCenter defaultCenter]postNotificationName:@"weixin_pay_result" object:nil userInfo:params];
+//            }
+//                break;
+//        }
+//    }
+//}
+- (void)onResp:(BaseResp *)resp
 {
-    //这里判断回调信息是否为 支付
-    if([resp isKindOfClass:[PayResp class]]){
-        switch (resp.errCode) {
-            case WXSuccess:
-                //如果支付成功的话，全局发送一个通知，支付成功
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"weixin_pay_result" object:@"成功"];
-                break;
-                
-            default:
-                //如果支付失败的话，全局发送一个通知，支付失败
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"weixin_pay_result" object:@"失败"];
-                break;
-        }
+    if ([resp isKindOfClass:[PayResp class]]) {
+        
+//        NSString *strTitle = [NSString stringWithFormat:@"支付结果"];
+//        NSString *strMsg = [NSString stringWithFormat:@"errcode:%d", resp.errCode];
+        NSString *code=[NSString stringWithFormat:@"%d",resp.errCode];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:code,@"code",nil];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle
+//                                                        message:strMsg
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil, nil];
+//        [alert show];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"HUDDismissNotification" object:nil userInfo:params];
+        //        这里可以向外面跑消息
     }
 }
-
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -230,19 +253,5 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-//    //如果极简 SDK 不可用,会跳转支付宝钱包进行支付,需要将支付宝钱包的支付结果回传给 SDK if ([url.host isEqualToString:@"safepay"]) {
-//    [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-//        NSLog(@"result = %@",resultDic);
-//        
-//        [[NSNotificationCenter defaultCenter]postNotificationName:@"alipayResult" object:[resultDic objectForKey:@"resultStatus"]];
-//        
-//    }];
-//    if ([url.host isEqualToString:@"platformapi"]){//支付宝钱包快登授权返回 authCode
-//        [[AlipaySDK defaultService] processAuthResult:url standbyCallback:^(NSDictionary *resultDic) {
-//            NSLog(@"result = %@",resultDic);
-//        }];
-//    }
-//    return YES;
-//}
+
 @end

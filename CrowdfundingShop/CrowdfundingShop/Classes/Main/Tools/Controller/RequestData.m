@@ -205,7 +205,7 @@
  *  @param data  <#data description#>
  *  @param block <#block description#>
  */
-+(void)login:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block{
++(void)login:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void (^)(NSError *))failure{
     //1.请求管理者
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
@@ -216,7 +216,7 @@
         NSLog(@"登录请求成功-----%@",responseObject);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //        NSLog(@"登录请求失败-%@",error);
+        failure(error);
     }];
 }
 /**

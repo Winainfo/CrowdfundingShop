@@ -17,7 +17,6 @@
 #import <UIImageView+WebCache.h>
 #import <MJRefresh.h>
 #import <MBProgressHUD.h>
-#import "UIViewController+WeChatAndAliPayMethod.h"
 #import "CartModel.h"
 #import "Database.h"
 #import "GroomViewCell.h"

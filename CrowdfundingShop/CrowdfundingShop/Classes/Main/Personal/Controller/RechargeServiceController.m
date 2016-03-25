@@ -8,7 +8,6 @@
 
 #import "RechargeServiceController.h"
 #import "AccountTool.h"
-#import "UIViewController+WeChatAndAliPayMethod.h"
 #import "RequestData.h"
 @interface RechargeServiceController ()<UITextFieldDelegate>
 /**余额*/
@@ -255,7 +254,10 @@
     }
     switch (self.type) {
         case 1:{//云支付
-            [[UIApplication sharedApplication] openURL: [ NSURL URLWithString:@"http://pay.yunpay.net.cn/i2eorder/yunpay/?sing=hCB9W9H8CNWm%2BErFbsI9y7xOmBoIe%2FsX9cM" ]];
+            RechargeServiceController * __weak weakSelf = self;
+            
+           NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"NBA",@"商品",@"¥0.01",@"运费",nil];
+//            [[UIApplication sharedApplication] openURL: [ NSURL URLWithString:@"http://pay.yunpay.net.cn/i2eorder/yunpay/?sing=hCB9W9H8CNWm%2BErFbsI9y7xOmBoIe%2FsX9cM" ]];
         }break;
 
         default:

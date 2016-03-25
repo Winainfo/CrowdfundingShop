@@ -12,6 +12,7 @@
 #import "HomeNavController.h"
 #import "IndexController.h"
 #import "AppDelegate.h"
+
 @interface ResultController ()
 /**商品数量*/
 @property (weak, nonatomic) IBOutlet ARLabel *numLabel;

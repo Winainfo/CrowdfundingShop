@@ -16,6 +16,7 @@
 #import <ShareSDK/ShareSDK.h>
 #import "WXApi.h"
 #import <TencentOpenAPI/QQApi.h>
+#import <MBProgressHUD.h>
 @interface LoginController ()<LoginMethodDelegate,UITextFieldDelegate>
 @property (nonatomic ,strong) LoginMethod * myLoginMethod;
 /**登录按钮*/
@@ -128,9 +129,24 @@
  */
 -(void)requestData:(NSString *)user andpassword:(NSString *)pwd{
     NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:user,@"user",pwd,@"password",nil];
+    //声明对象；
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    //显示的文本；
+    hud.labelText = @"正在登录...";
     [RequestData login:params FinishCallbackBlock:^(NSDictionary *data) {
         int code=[data[@"code"] intValue];
         if (code==0) {
+            //加载成功，先移除原来的HUD；
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //然后显示一个成功的提示；
+            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            successHUD.labelText = @"登录成功";
+            successHUD.mode = MBProgressHUDModeCustomView;
+            //可以设置对应的图片；
+            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+            successHUD.removeFromSuperViewOnHide = true;
+            [successHUD hide:true afterDelay:1];
             //存储账号信息
             AccountModel *account=[AccountModel new];
             account.uid=data[@"content"][@"uid"];
@@ -197,8 +213,28 @@
                 }
             }
         }else{
-           
+            hud.removeFromSuperViewOnHide = true;
+            [hud hide:true afterDelay:0];
+            //显示失败的提示；
+            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+            failHUD.labelText = @"登录失败";
+            failHUD.mode = MBProgressHUDModeCustomView;
+            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+            failHUD.removeFromSuperViewOnHide = true;
+            [failHUD hide:true afterDelay:1];
+
         }
+    }andFailure:^(NSError *error) {
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"网络异常";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
+
     }];
 }
 /**
@@ -221,7 +257,7 @@
         
         [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
         
-        NSLog(@"用户资料：%@", [userInfo uid]);
+        NSLog(@"用户资料：%@", userInfo);
         //        // 获取token
         id <ISSPlatformCredential> Cred = [userInfo credential];
         NSLog(@"%@", [Cred token]);

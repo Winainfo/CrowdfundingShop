@@ -13,7 +13,6 @@
 #import "DetailController.h"
 #import "RequestData.h"
 #import <MJRefresh.h>
-#import <SVPullToRefresh.h>
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
 #import "CartModel.h"
