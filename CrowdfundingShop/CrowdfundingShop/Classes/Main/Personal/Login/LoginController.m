@@ -17,6 +17,7 @@
 #import "WXApi.h"
 #import <TencentOpenAPI/QQApi.h>
 #import <MBProgressHUD.h>
+#import <UIImageView+WebCache.h>
 @interface LoginController ()<LoginMethodDelegate,UITextFieldDelegate>
 @property (nonatomic ,strong) LoginMethod * myLoginMethod;
 /**登录按钮*/
@@ -254,17 +255,15 @@
 //    [self.myLoginMethod getUserInfoDicWithThirdPartyLoginType:LoginTypeWechat];
     //设置授权选项
     [ShareSDK getUserInfoWithType:ShareTypeWeixiSession authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error) {
-        
         [ShareSDK cancelAuthWithType:ShareTypeWeixiSession];
-        
-        NSLog(@"用户资料：%@", userInfo);
-        //        // 获取token
+        // 获取token
         id <ISSPlatformCredential> Cred = [userInfo credential];
-        NSLog(@"%@", [Cred token]);
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:[Cred token],@"access_token",[userInfo uid],@"openid",nil];
-        [RequestData userinfoSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
-            NSDictionary *params1=[NSDictionary dictionaryWithObjectsAndKeys:data[@"unionid"],@"b_code",nil];
+        [RequestData userinfoSerivce:params FinishCallbackBlock:^(NSDictionary *data1) {
+            NSDictionary *params1=[NSDictionary dictionaryWithObjectsAndKeys:data1[@"unionid"],@"b_code",nil];
+            NSLog(@"用户资料:%@",data1);
             [RequestData thirdLodigSerivce:params1 FinishCallbackBlock:^(NSDictionary *data) {
+                NSLog(@"返回:%@",data);
                 int code=[data[@"code"] intValue];
                 if (code==0) {
                     //创建通知
@@ -337,7 +336,93 @@
                         }
                     }
                 }else{
+                    //下载图片
+                    NSString * imageURL = data1[@"headimgurl"];
+                   int flag= [self downLoadImageFromURL:imageURL withName:@"image"];
+                    NSLog(@"返回值:%d",flag);
                     
+                    NSString * filePath = [DOCUMENT_PATH stringByAppendingPathComponent:@"image"];
+                    filePath = [NSString stringWithFormat:@"%@.jpg", filePath];
+                    UIImage * image =[UIImage imageNamed:filePath];
+                    if (flag==0) {
+                        /*使用Base64字符串传图片*/
+                        NSData *data = UIImageJPEGRepresentation(image, 1.0f);
+                        NSString *format=[self typeForImageData:data];
+                        NSString *pictureDataString=[NSString stringWithFormat:@"data:%@;base64,%@",format,[data base64EncodedStringWithOptions:0]];
+                        NSDictionary *reparams=[NSDictionary dictionaryWithObjectsAndKeys:data1[@"nickname"],@"user",@"123456",@"password",@"weixin",@"type",data1[@"unionid"],@"openid",pictureDataString,@"photo",nil];
+                        [RequestData thirdRegisterSerivce:reparams FinishCallbackBlock:^(NSDictionary *data) {
+                            NSLog(@"注册返回:%@",data);
+                            int recode=[data[@"code"] intValue];
+                            if (recode==0) {
+                                //存储账号信息
+                                AccountModel *account=[AccountModel new];
+                                account.uid=data[@"content"][@"uid"];
+                                account.username=data[@"content"][@"username"];
+                                account.email=data[@"content"][@"email"];
+                                account.mobile=data[@"content"][@"mobile"];
+                                account.user_ip=data[@"content"][@"user_ip"];
+                                account.img=data[@"content"][@"img"];
+                                account.qianming=data[@"content"][@"qianming"];
+                                account.groupid=data[@"content"][@"groupid"];
+                                account.addgroup=data[@"content"][@"addgroup"];
+                                account.money=data[@"content"][@"money"];
+                                account.emailcode=data[@"content"][@"emailcode"];
+                                account.mobilecode=data[@"content"][@"mobilecode"];
+                                account.passcode=data[@"content"][@"passcode"];
+                                account.reg_key=data[@"content"][@"reg_key"];
+                                account.score=data[@"content"][@"score"];
+                                account.jingyan=data[@"content"][@"jingyan"];
+                                account.yaoqing=data[@"content"][@"yaoqing"];
+                                account.band=data[@"content"][@"band"];
+                                account.time=data[@"content"][@"time"];
+                                account.login_time=data[@"content"][@"login_time"];
+                                account.sign_in_time=data[@"content"][@"sign_in_time"];
+                                account.sign_in_date=data[@"content"][@"sign_in_date"];
+                                account.sign_in_time_all=data[@"content"][@"sign_in_time_all"];
+                                account.auto_user=data[@"content"][@"auto_user"];
+                                account.yungoudj=data[@"content"][@"yungoudj"];
+                                account.icon=data[@"content"][@"icon"];
+                                [AccountTool saveAccount:account];
+                                if ([self.type isEqualToString:@"shopCart"]) {
+                                    //popToViewController
+                                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                                        if ([temp isKindOfClass:[ShopCartController class]]) {
+                                            [self.navigationController popToViewController:temp animated:YES];
+                                        }
+                                    }
+                                }else if([self.type isEqualToString:@"commentary"]){
+                                    //popToViewController
+                                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                                        if ([temp isKindOfClass:[IndexController class]]) {
+                                            [self.navigationController popToViewController:temp animated:YES];
+                                        }
+                                    }
+                                }else if([self.type isEqualToString:@"recode"]){
+                                    //popToViewController
+                                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                                        if ([temp isKindOfClass:[IndexController class]]) {
+                                            [self.navigationController popToViewController:temp animated:YES];
+                                        }
+                                    }
+                                }else if([self.type isEqualToString:@"rechare"]){
+                                    //popToViewController
+                                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                                        if ([temp isKindOfClass:[CommentaryController class]]) {
+                                            [self.navigationController popToViewController:temp animated:YES];
+                                        }
+                                    }
+                                }else{
+                                    //popToViewController
+                                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                                        if ([temp isKindOfClass:[PersonalController class]]) {
+                                            [self.navigationController popToViewController:temp animated:YES];
+                                        }
+                                    }
+                                }
+                            }
+                        } andFailure:^(NSError *error) {
+                        }];
+                    }
                 }
             } andFailure:^(NSError *error) {
                 
@@ -366,11 +451,10 @@
 -(void)recieveTheUserInfo:(NSDictionary *)userInfo errorMsg:(NSString *)errorMsg
 {
     if (!errorMsg) {
-        
+        NSLog(@"用户资料:%@",userInfo);
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:userInfo[@"uid"],@"b_code",nil];
         [RequestData thirdLodigSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];
-            NSLog(@"%d",code);
             if (code==0) {
                 //存储账号信息
                 AccountModel *account=[AccountModel new];
@@ -446,6 +530,92 @@
     }else{
         NSLog(@"%@",errorMsg);
     }
+    
+}
+
+#pragma mark 图片下载
+-(int) downLoadImageFromURL:(NSString *)fileURL withName:(NSString *)imageName
+{
+    //Check Image Is Exists
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString * filePath = [DOCUMENT_PATH stringByAppendingPathComponent:imageName];
+    filePath = [NSString stringWithFormat:@"%@.jpg", filePath];
+    if ([fileManager fileExistsAtPath:filePath])
+    {
+        return 0;
+    }
+    
+    //Get Image From URL
+    UIImage * imageFromURL = [self getImageFromURL:fileURL];
+    
+    //Save Image to Directory
+    [self saveImage:imageFromURL withFileName:imageName ofType:@"jpg" inDirectory:DOCUMENT_PATH];
+    
+    //Get Document Path All Files
+    NSArray *file = [[[NSFileManager alloc] init] subpathsAtPath:DOCUMENT_PATH];
+    NSLog(@"---- %@",file);
+    return -1;
+}
+
+-(UIImage *) getImageFromURL:(NSString *)fileURL
+{
+    NSData * data = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileURL]];
+    return [UIImage imageWithData:data];
+}
+
+-(void) saveImage:(UIImage *)image withFileName:(NSString *)imageName ofType:(NSString *)extension inDirectory:(NSString *)directoryPath
+{
+    if ([[extension lowercaseString] isEqualToString:@"png"])
+    {
+        [UIImagePNGRepresentation(image) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"png"]] options:NSAtomicWrite error:nil];
+    }
+    else if ([[extension lowercaseString] isEqualToString:@"jpg"] || [[extension lowercaseString] isEqualToString:@"jpeg"])
+    {
+        [UIImageJPEGRepresentation(image, 1.0) writeToFile:[directoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@", imageName, @"jpg"]] options:NSAtomicWrite error:nil];
+    }
+    else
+    {
+        NSLog(@"文件后缀不认识");
+    }
+}
+/**
+ *  判断图片格式
+ *
+ *  @param data <#data description#>
+ *
+ *  @return <#return value description#>
+ */
+-(NSString *)typeForImageData:(NSData *)data {
+    
+    
+    uint8_t c;
+    
+    [data getBytes:&c length:1];
+    
+    
+    
+    switch (c) {
+            
+        case 0xFF:
+            
+            return @"image/jpeg";
+            
+        case 0x89:
+            
+            return @"image/png";
+        case 0x47:
+            
+            return @"image/gif";
+            
+        case 0x49:
+            
+        case 0x4D:
+            
+            return @"image/tiff";
+            
+    }
+    
+    return nil;
     
 }
 @end

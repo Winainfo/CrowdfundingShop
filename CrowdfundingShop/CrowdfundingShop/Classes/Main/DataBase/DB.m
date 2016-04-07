@@ -25,7 +25,7 @@ static sqlite3 *db=nil;//静态连接对象，创建之后不再反复创建，�
         NSString *path=array1[0];
         //往路径添加文件
         NSString *target=[path stringByAppendingPathComponent:@"HITORY.sqlite"];
-        NSLog(@"%@",path);
+//        NSLog(@"%@",path);
         //文件管理器
         NSFileManager *file=[NSFileManager defaultManager];
         if (![file fileExistsAtPath:target]) {//判断是否不存在这份文档

@@ -307,6 +307,12 @@
  */
 +(void)thirdLodigSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
 /**
+ *   第三方注册
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)thirdRegisterSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
  *   邀请码
  *  @param data  传入字典
  *  @param block 返回块值

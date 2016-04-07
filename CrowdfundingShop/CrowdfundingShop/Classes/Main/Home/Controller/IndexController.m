@@ -247,14 +247,14 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
             //加载成功，先移除原来的HUD；
             hud.removeFromSuperViewOnHide = true;
             [hud hide:true afterDelay:0];
-            //然后显示一个成功的提示；
-            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-            successHUD.labelText = @"加载成功";
-            successHUD.mode = MBProgressHUDModeCustomView;
-            //可以设置对应的图片；
-            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
-            successHUD.removeFromSuperViewOnHide = true;
-            [successHUD hide:true afterDelay:1];
+//            //然后显示一个成功的提示；
+//            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+//            successHUD.labelText = @"加载成功";
+//            successHUD.mode = MBProgressHUDModeCustomView;
+//            //可以设置对应的图片；
+//            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+//            successHUD.removeFromSuperViewOnHide = true;
+//            [successHUD hide:true afterDelay:1];
             NSArray *array=data[@"content"];
             [self.revealedArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
             //更新主线程
@@ -416,8 +416,8 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
         //为图片添加Tag值
         imageV.tag = (int)([self.scrollImageTags[i] intValue]+100);
         imageV.userInteractionEnabled = YES;
-        UITapGestureRecognizer *scrollTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(scrollViewClick)];
-        [imageV addGestureRecognizer:scrollTap];
+//        UITapGestureRecognizer *scrollTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(scrollViewClick)];
+//        [imageV addGestureRecognizer:scrollTap];
         
         
     }

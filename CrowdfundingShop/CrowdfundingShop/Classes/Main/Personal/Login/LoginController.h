@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AccountTool.h"
 #import <ShareSDK/ShareSDK.h>
+#define DOCUMENT_PATH   [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 @interface LoginController : UIViewController
 @property (retain,nonatomic) NSString *type;
 @property (weak, nonatomic) IBOutlet UIImageView *view1;

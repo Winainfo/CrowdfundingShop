@@ -77,7 +77,13 @@
         NSArray *array=[[NSArray alloc]init];
         NSLog(@"佣金:%@",data[@"yjye"]);
         array=data[@"content"];
-        self.moneyLabel.text=[NSString stringWithFormat:@"¥%@",data[@"yjye"]];
+        int money=[data[@"yiye"] intValue];
+        if (money>0) {
+            self.moneyLabel.text=[NSString stringWithFormat:@"¥%@",data[@"yjye"]];
+        }else{
+            self.moneyLabel.text=@"¥0.00";
+        }
+        
     }andFailure:^(NSError *error) {}];
     
      NSDictionary *params1=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",nil];

@@ -18,7 +18,7 @@ NSString * const WXAppId = @"wx45545349bdecda11";
 NSString * const WXPartnerId = @"1323446201";
 
 /** API密钥 去微信商户平台设置--->账户设置--->API安全， 参与签名使用 */
-NSString * const WXAPIKey = @"D623360D8142C4ACADC4078521824A90";
+NSString * const WXAPIKey = @"195f534515b76682a55fa2eac5c87b06";
 
 /** 获取prePayId的url, 这是官方给的接口 */
 NSString * const getPrePayIdUrl = @"https://api.mch.weixin.qq.com/pay/unifiedorder";

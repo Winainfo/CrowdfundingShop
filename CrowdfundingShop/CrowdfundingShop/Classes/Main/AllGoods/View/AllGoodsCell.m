@@ -7,7 +7,6 @@
 //
 
 #import "AllGoodsCell.h"
-
 @implementation AllGoodsCell
 
 - (void)awakeFromNib {
@@ -36,5 +35,17 @@
     [self.delegate btnClick:self andFlag:(int)sender.tag];
 }
 
+-(void)updateConstraints{
+    [super updateConstraints];
+    if (IS_IPHONE_4_OR_LESS) {
+        self.progressLeading.constant=110;
+    }else if(IS_IPHONE_6){
+        self.progressLeading.constant=165;
+    }else if(IS_IPHONE_6P){
+        self.progressLeading.constant=205;
+    }else{
+        self.progressLeading.constant=110;
+    }
+}
 
 @end

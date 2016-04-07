@@ -9,6 +9,9 @@
 #import "RechargeServiceController.h"
 #import "AccountTool.h"
 #import "RequestData.h"
+#import "WechatPayManager.h"
+#import <CommonCrypto/CommonDigest.h>
+#import <MBProgressHUD.h>
 @interface RechargeServiceController ()<UITextFieldDelegate>
 /**余额*/
 @property (weak, nonatomic) IBOutlet UILabel *moneyLabel;
@@ -26,12 +29,17 @@
 @property (weak, nonatomic) IBOutlet UITextField *moenyTextField;
 /**云支付*/
 @property (weak, nonatomic) IBOutlet UIButton *yunPayButton;
+/***微信支付*/
+@property (weak, nonatomic) IBOutlet UIButton *wxPayButton;
+
 /**确认*/
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 /**支付类型 1.微信 2.支付宝*/
 @property (assign,nonatomic) int type;
 /**金额*/
 @property (retain,nonatomic) NSString *money;
+
+@property (retain,nonatomic) NSString *price;
 @end
 
 @implementation RechargeServiceController
@@ -59,8 +67,8 @@
     self.navigationItem.leftBarButtonItem=left;
     self.moenyTextField.delegate=self;
     [self initStyle];
-    self.yunPayButton.hidden=NO;
-    self.type=1;
+    self.wxPayButton.hidden=NO;
+    self.type=2;
     self.money=@"50";
     //50
     self.button1.layer.borderWidth=2.0;
@@ -232,37 +240,158 @@
     
 }
 /**
- *  微信支付
+ *  云支付
  *
  *  @param sender <#sender description#>
  */
 - (IBAction)yunPayClick:(id)sender {
     self.yunPayButton.hidden=NO;
+    self.wxPayButton.hidden=YES;
     self.type=1;
 }
+/**
+ *  微信支付
+ *
+ *  @param sender <#sender description#>
+ */
+- (IBAction)wxPayClick:(id)sender {
+    self.wxPayButton.hidden=NO;
+    self.yunPayButton.hidden=YES;
+    self.type=2;
+}
+
 /**
  *  支付
  *
  *  @param sender <#sender description#>
  */
 - (IBAction)payClick:(UIButton *)sender {
-    NSString *price=@"";
+    self.price=@"";
     if ([self.money isEqualToString:@""]) {
-        price=[NSString stringWithFormat:@"%@",self.moenyTextField.text];
+        self.price=[NSString stringWithFormat:@"%@",self.moenyTextField.text];
     }else{
-        price=self.money;
+        self.price=self.money;
     }
     switch (self.type) {
         case 1:{//云支付
-            RechargeServiceController * __weak weakSelf = self;
-            
-           NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"NBA",@"商品",@"¥0.01",@"运费",nil];
-//            [[UIApplication sharedApplication] openURL: [ NSURL URLWithString:@"http://pay.yunpay.net.cn/i2eorder/yunpay/?sing=hCB9W9H8CNWm%2BErFbsI9y7xOmBoIe%2FsX9cM" ]];
+              AccountModel *account=[AccountTool account];
+            NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",self.price,@"money",@"appyunpay",@"type",nil];
+            [RequestData rechargeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+                NSLog(@"---%@",data);
+                int code=[data[@"code"] intValue];
+                if (code==0) {
+                      [[UIApplication sharedApplication] openURL: [ NSURL URLWithString:data[@"content"]]];
+                    //注册通知
+                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(YunPayResult:) name:@"YunPayNotification" object:nil];
+                }
+            } andFailure:^(NSError *error) {
+                
+            }];
         }break;
-
+        case 2:{ //微信充值
+            NSString *nonce_str=[self getNonceStr:[NSString stringWithFormat:@"%d",arc4random()%10000]];
+            nonce_str=[nonce_str uppercaseString];
+            WechatPayManager *wxPayManager=[WechatPayManager new];
+            NSString *price1=[NSString stringWithFormat:@"%d",[self.price intValue]*100];
+            [wxPayManager getWeChatPayWithOrderName:@"1元商城" price:price1];
+            //注册通知
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(result:) name:@"HUDDismissNotification" object:nil];
+        }
         default:
             break;
     }
+}
+#pragma mark 监听通知
+/**
+ *  微信支付 回调
+ *
+ *  @param data <#data description#>
+ */
+- (void)result:(NSNotification *)data{
+    int codeStr=[data.userInfo[@"code"] intValue];
+    AccountModel *account=[AccountTool account];
+    if (codeStr==0) {
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",self.price,@"money",@"wxpay_web",@"type",nil];
+        [RequestData rechargeSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
+            int code=[data[@"code"] intValue];
+            if (code==0) {
+                //然后显示一个成功的提示；
+                MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+                successHUD.labelText = @"充值成功";
+                successHUD.mode = MBProgressHUDModeCustomView;
+                //可以设置对应的图片；
+                successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+                successHUD.removeFromSuperViewOnHide = true;
+                [successHUD hide:true afterDelay:1];
+                int a_money=[account.money intValue];
+                int b_money=[self.price intValue];
+                account.money=[NSString stringWithFormat:@"%i",a_money+b_money];
+                self.moneyLabel.text=[NSString stringWithFormat:@"%i",a_money+b_money];
+                [AccountTool saveAccount:account];
+            }
+        } andFailure:^(NSError *error) {
+            
+        }];
+    }else{
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"充值失败";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
+    }
+}
+/**
+ *  云支付 回调
+ *
+ *  @param data <#data description#>
+ */
+- (void)YunPayResult:(NSNotification *)data{
+   int codeStr=[data.userInfo[@"code"] intValue];
+    AccountModel *account=[AccountTool account];
+    if (codeStr==0) {
+        int a_money=[account.money intValue];
+        int b_money=[self.price intValue];
+        account.money=[NSString stringWithFormat:@"%i",a_money+b_money];
+        self.moneyLabel.text=[NSString stringWithFormat:@"%i",a_money+b_money];
+        [AccountTool saveAccount:account];
+        //然后显示一个成功的提示；
+        MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        successHUD.labelText = @"充值成功";
+        successHUD.mode = MBProgressHUDModeCustomView;
+        //可以设置对应的图片；
+        successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+        successHUD.removeFromSuperViewOnHide = true;
+        [successHUD hide:true afterDelay:1];
+
+    }else{
+        //显示失败的提示；
+        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+        failHUD.labelText = @"充值异常";
+        failHUD.mode = MBProgressHUDModeCustomView;
+        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+        failHUD.removeFromSuperViewOnHide = true;
+        [failHUD hide:true afterDelay:1];
+    }
+}
+/**
+ *  生成NonceStr
+ *
+ *  @param inPutText <#inPutText description#>
+ *
+ *  @return <#return value description#>
+ */
+-(NSString *)getNonceStr:(NSString *)inPutText{
+    const char *cStr=[inPutText UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(cStr, strlen(cStr), result);
+    return [[NSString stringWithFormat:@"%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+             result[0], result[1], result[2], result[3],
+             result[4], result[5], result[6], result[7],
+             result[8], result[9], result[10], result[11],
+             result[12], result[13], result[14], result[15]
+             ] lowercaseString];
 }
 - (NSString *)generateTradeNO
 {
@@ -279,6 +408,7 @@
     }
     return resultStr;
 }
+
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     //写你要实现的：页面跳转的相关代码

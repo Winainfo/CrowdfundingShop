@@ -863,6 +863,7 @@
     NSDictionary *params=@{@"uid":data[@"uid"],@"money":data[@"money"],@"type":data[@"type"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/cart/addmoney/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+          NSLog(@"%@",operation.request);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);
@@ -941,6 +942,30 @@
     }];
 }
 /**
+ *  第三方注册
+ *
+ *  @param data                <#data description#>
+ *  @param block               <#block description#>
+ *  @param inviteManageSerivce <#inviteManageSerivce description#>
+ *  @param data                <#data description#>
+ *  @param block               <#block description#>
+ *  @param failure             <#failure description#>
+ */
++(void)thirdRegisterSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"user":data[@"user"],@"password":data[@"password"],@"type":data[@"type"],@"openid":data[@"openid"],@"photo":data[@"photo"]};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/openRegister/",URL];
+    [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"链接:%@",operation.request);
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
  *   邀请码
  *  @param data  传入字典
  *  @param block 返回块值
@@ -970,7 +995,6 @@
     //设置参数
     NSDictionary *params=@{@"access_token":data[@"access_token"],@"openid":data[@"openid"]};
     NSString *url=@"https://api.weixin.qq.com/sns/userinfo";
-    NSLog(@"%@",url);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -1188,9 +1212,10 @@
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer=[AFJSONResponseSerializer serializer];
     //设置参数
-    NSDictionary *params=@{@"uid":data[@"uid"],@"shop":data[@"shop"]};
+    NSDictionary *params=@{@"uid":data[@"uid"],@"shop":data[@"shop"],@"type":data[@"type"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/cart/paysubmit/aliPay/",URL];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         NSLog(@"%@",operation.request);
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failure(error);

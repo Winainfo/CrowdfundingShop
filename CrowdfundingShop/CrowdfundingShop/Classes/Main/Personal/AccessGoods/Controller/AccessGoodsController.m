@@ -81,6 +81,7 @@
         hud.labelText = @"正在加载...";
         [RequestData gainGoodsSerivce:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];
+            NSLog(@"数据:%@",data);
             [self.myTableView.mj_header endRefreshing];
             if (code==0) {
                 //加载成功，先移除原来的HUD；

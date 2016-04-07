@@ -34,4 +34,7 @@
 /**进度条*/
 @property (weak, nonatomic) IBOutlet UIProgressView *ProgressView;
 @property(assign,nonatomic)id<CartCellDelegate>delegate;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *progressLeading;
+
 @end

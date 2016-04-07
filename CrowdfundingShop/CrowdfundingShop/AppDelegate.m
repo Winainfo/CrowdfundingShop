@@ -144,6 +144,7 @@
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
 {
+    
 //    这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
     if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",APP_ID]].location != NSNotFound) {
         return  [WXApi handleOpenURL:url delegate:self];
@@ -152,6 +153,12 @@
 //        return [ShareSDK handleOpenURL:url
 //                            wxDelegate:self];
         //如果极简 SDK 不可用,会跳转支付宝钱包进行支付,需要将支付宝钱包的支付结果回传给 SDK if ([url.host isEqualToString:@"safepay"]) {
+        //截取
+        NSString *string =[[url absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSArray *strArray=[string componentsSeparatedByString:@"="];
+        NSString *code=[NSString stringWithFormat:@"%@",strArray[1]];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:code,@"code",nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"YunPayNotification" object:nil userInfo:params];
         return [ShareSDK handleOpenURL:url wxDelegate:self];;
     }
     
@@ -160,6 +167,7 @@
 #pragma mark - IOS9.0以后废弃了这两个方法的调用  改用上边这个方法了，请注意、
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
+//    NSLog(@"返回:%@",url);
     //这里判断是否发起的请求为微信支付，如果是的话，用WXApi的方法调起微信客户端的支付页面（://pay 之前的那串字符串就是你的APPID，）
     if ([[NSString stringWithFormat:@"%@",url] rangeOfString:[NSString stringWithFormat:@"%@://pay",APP_ID]].location != NSNotFound) {
         return  [WXApi handleOpenURL:url delegate:self];
@@ -253,5 +261,6 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
 
 @end

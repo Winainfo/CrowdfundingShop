@@ -337,7 +337,7 @@
 //调用编辑方法,修改数据
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView==self.hitoryTable) {
+    if (tableView!=self.searchTableView) {
         if (editingStyle==UITableViewCellEditingStyleDelete) {
             //删除方法
             HistoryClass *his=self.hisArr[(self.hisArr.count-1-indexPath.row)];

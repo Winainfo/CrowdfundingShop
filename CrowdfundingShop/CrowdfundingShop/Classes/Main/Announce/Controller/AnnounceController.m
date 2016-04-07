@@ -111,6 +111,7 @@
         hud.labelText = @"正在加载...";
         [RequestData newAnnounced:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];
+            NSLog(@"数据:%@",data);
             [self.myTableView.mj_header endRefreshing];
             if (code==0) {
                 //加载成功，先移除原来的HUD；
@@ -124,7 +125,6 @@
                 successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
                 successHUD.removeFromSuperViewOnHide = true;
                 [successHUD hide:true afterDelay:1];
-
                 [self.announcedArray removeAllObjects];
                 NSArray *array=data[@"content"];
                 [self.announcedArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
@@ -338,7 +338,15 @@
         //姓名
         cell.nameLabel.text=self.announcedArray[indexPath.row][@"username"];
         cell.priceLabel.text=[NSString stringWithFormat:@"¥%@",self.announcedArray[indexPath.row][@"money"]];
-        cell.numLabel.text=self.announcedArray[indexPath.row][@"gonumber"];
+        //参数次数
+        NSString *numStr=self.announcedArray[indexPath.row][@"gonumber"];
+         cell.numLabel.text=[NSString stringWithFormat:@"%@",self.announcedArray[indexPath.row][@"gonumber"]];
+//        NSLog(@"次数:%@",numStr);
+//        if ([numStr isEqualToString:@"<null>"]||[numStr isEqualToString:@""]) {
+//            cell.numLabel.text=@"10";
+//        }else{
+//       
+//        }
         cell.timeLabel.text=self.announcedArray[indexPath.row][@"q_end_time"];
         /**商品图片*/
         //拼接图片网址·
@@ -369,7 +377,7 @@
         //设置故事板为第一启动
         UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
         DidAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"didAnnounceView"];
-        controller.goodsID=self.announcedArray[indexPath.row][@"sid"];
+        controller.goodsID=self.announcedArray[indexPath.row][@"id"];
         [self.navigationController pushViewController:controller animated:YES];
     }else{
 //        //设置故事板为第一启动

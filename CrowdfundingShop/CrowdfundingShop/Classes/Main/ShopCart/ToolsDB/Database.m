@@ -18,7 +18,7 @@
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory=[paths objectAtIndex:0];
-    NSLog(@"路径====%@",documentsDirectory);
+//    NSLog(@"路径====%@",documentsDirectory);
     return [documentsDirectory stringByAppendingPathComponent:@"CartDB.sqlite"];
 }
 #pragma mark创建数据库
@@ -38,12 +38,12 @@
     
     //如果数据库存在，则用sqlite3_open直接打开（不要担心，如果数据库不存在sqlite3_open会自动创建）
     if (find) {
-        NSLog(@"数据库已存在");
+//        NSLog(@"数据库已存在");
         //打开数据库，这里的[path UTF8String]是将NSString转换为C字符串，因为SQLite3是采用可移植的C(而不是Objective-C)编写的，它不知道什么是NSString.
         if (sqlite3_open([path UTF8String], &_database)!=SQLITE_OK) {
             //如果打开数据库失败则关闭数据库
             sqlite3_close(_database);
-            NSLog(@"Error：打开数据库失败.");
+//            NSLog(@"Error：打开数据库失败.");
             return NO;
         }
         //创建一个新表

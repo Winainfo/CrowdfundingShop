@@ -117,7 +117,6 @@
 		019E096A1C17342A0022593A /* AnnNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 019E09691C17342A0022593A /* AnnNavController.m */; };
 		019E09721C173C730022593A /* NewGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 019E09701C173C730022593A /* NewGoodsCell.m */; };
 		019E09731C173C730022593A /* NewGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 019E09711C173C730022593A /* NewGoodsCell.xib */; };
-		01A04BB41C8DD09E00BE0770 /* IMG_1399.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 01A04BB31C8DD09E00BE0770 /* IMG_1399.PNG */; };
 		01A04BB71C8DD73F00BE0770 /* ResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A04BB61C8DD73F00BE0770 /* ResultController.m */; };
 		01A456D01C96FAAD008E97A6 /* testViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A456CF1C96FAAD008E97A6 /* testViewController.m */; };
 		01A5447B1C7B6C5B0045F545 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01A5447A1C7B6C5B0045F545 /* RegisterController.m */; };
@@ -408,7 +407,6 @@
 		019E096F1C173C730022593A /* NewGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewGoodsCell.h; sourceTree = "<group>"; };
 		019E09701C173C730022593A /* NewGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGoodsCell.m; sourceTree = "<group>"; };
 		019E09711C173C730022593A /* NewGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewGoodsCell.xib; sourceTree = "<group>"; };
-		01A04BB31C8DD09E00BE0770 /* IMG_1399.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = IMG_1399.PNG; sourceTree = "<group>"; };
 		01A04BB51C8DD73F00BE0770 /* ResultController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultController.h; sourceTree = "<group>"; };
 		01A04BB61C8DD73F00BE0770 /* ResultController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultController.m; sourceTree = "<group>"; };
 		01A456CE1C96FAAD008E97A6 /* testViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testViewController.h; sourceTree = "<group>"; };
@@ -1159,7 +1157,6 @@
 		017F6BD91C02BC820040385A /* View(视图) */ = {
 			isa = PBXGroup;
 			children = (
-				01A04BB31C8DD09E00BE0770 /* IMG_1399.PNG */,
 				017F6BE21C02BE2D0040385A /* Main.storyboard */,
 				0111BA211C0372D700DDC2EA /* MainTabBarController.h */,
 				0111BA221C0372D700DDC2EA /* MainTabBarController.m */,
@@ -1671,7 +1668,6 @@
 				011DE7851C75941D006887B6 /* WeiboSDK.bundle in Resources */,
 				011DE77E1C75941D006887B6 /* ShareSDKLocalizable.strings in Resources */,
 				017FA8061C33D27700B4AA6F /* MyShareOrderCell.xib in Resources */,
-				01A04BB41C8DD09E00BE0770 /* IMG_1399.PNG in Resources */,
 				01E43F781C71BB1F006440F0 /* GroomViewCell.xib in Resources */,
 				01CB33641C6CD3AB008CA4AE /* area.plist in Resources */,
 				01747E151C1D76CC0051086C /* ComputeDetailCell.xib in Resources */,
@@ -2057,6 +2053,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.winainfo.Crowdfunding;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
 			};
 			name = Debug;
@@ -2137,6 +2134,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.winainfo.Crowdfunding;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
