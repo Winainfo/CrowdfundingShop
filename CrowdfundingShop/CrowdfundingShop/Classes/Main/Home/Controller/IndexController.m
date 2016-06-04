@@ -23,7 +23,7 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
 /**最新揭晓*/
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
 /**最新揭晓数组*/
-@property (retain,nonatomic) NSMutableArray *announcedArray;
+@property (retain,nonatomic) NSArray *announcedArray;
 /**即将揭晓*/
 @property (weak, nonatomic) IBOutlet UICollectionView *goodsCollectionView;
 /**即将揭晓数组*/
@@ -121,7 +121,6 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
     self.times=[[NSMutableArray alloc]init];
     [self addTimer];
      _blockUserInteraction = YES;
-
 }
 
 /**
@@ -173,18 +172,15 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
 {
     offset1+=1;
     NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset1];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageIndex,@"pageIndex",@"8",@"pageSize",nil];
-    [RequestData beginRevealed:params FinishCallbackBlock:^(NSDictionary *data) {
-        int code=[data[@"code"] intValue];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"surplus20",@"id",@"",@"tid",pageIndex,@"pageNo",@"8",@"pageSize",nil];
+    [RequestData goodsList:params FinishCallbackBlock:^(NSArray *data) {
         [self.goodsCollectionView.mj_footer endRefreshing];
-        if (code==0) {
-            NSArray *array=data[@"content"];
-            [self.revealedArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.revealedArray.count, array.count)]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.goodsCollectionView reloadData];
-            });
-        }else{}
-    }andFailure:^(NSError *error) {
+        NSArray *array=data;
+        [self.revealedArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.revealedArray.count, array.count)]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.goodsCollectionView reloadData];
+        });
+    } andFailure:^(NSError *error) {
         [self.goodsCollectionView.mj_footer endRefreshing];
     }];
 }
@@ -195,18 +191,15 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
 {
     offset2+=1;
     NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset2];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageIndex,@"pageIndex",@"8",@"pageSize",nil];
-    [RequestData hotGoods:params FinishCallbackBlock:^(NSDictionary *data) {
-        int code=[data[@"code"] intValue];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"hot20",@"id",@"",@"tid",pageIndex,@"pageNo",@"8",@"pageSize",nil];
+    [RequestData goodsList:params FinishCallbackBlock:^(NSArray *data) {
         [self.groomCollectionView.mj_footer endRefreshing];
-        if (code==0) {
-            NSArray *array=data[@"content"];
-            [self.groomArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.groomArray.count, array.count)]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.groomCollectionView reloadData];
-            });
-        }else{}
-    }andFailure:^(NSError *error) {
+        NSArray *array=data;
+        [self.groomArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.groomArray.count, array.count)]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.groomCollectionView reloadData];
+        });
+    } andFailure:^(NSError *error) {
         [self.groomCollectionView.mj_footer endRefreshing];
     }];
 }
@@ -217,18 +210,15 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
 {
     offset3+=1;
     NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset3];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"40",@"sort",pageIndex,@"pageIndex",@"",@"pageSize",nil];
-    [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
-        int code=[data[@"code"] intValue];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"date20",@"id",@"",@"tid",pageIndex,@"pageNo",@"8",@"pageSize",nil];
+    [RequestData goodsList:params FinishCallbackBlock:^(NSArray *data) {
         [self.limitCollectionView.mj_footer endRefreshing];
-        if (code==0) {
-            NSArray *array=data[@"content"];
-            [self.limitArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.limitArray.count, array.count)]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.limitCollectionView reloadData];
-            });
-        }else{}
-    }andFailure:^(NSError *error) {
+        NSArray *array=data;
+        [self.limitArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.limitArray.count, array.count)]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.limitCollectionView reloadData];
+        });
+    } andFailure:^(NSError *error) {
         [self.limitCollectionView.mj_footer endRefreshing];
     }];
 }
@@ -236,42 +226,22 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
  *  请求即将揭晓商品
  */
 -(void)requestData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"surplus20",@"id",@"",@"tid",pageindex,@"pageNo",pagesize,@"pageSize",nil];
     //声明对象；
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
     //显示的文本；
     hud.labelText = @"正在加载...";
-    [RequestData beginRevealed:params FinishCallbackBlock:^(NSDictionary *data) {
-        int code=[data[@"code"] intValue];
-        if (code==0) {
-            //加载成功，先移除原来的HUD；
-            hud.removeFromSuperViewOnHide = true;
-            [hud hide:true afterDelay:0];
-//            //然后显示一个成功的提示；
-//            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-//            successHUD.labelText = @"加载成功";
-//            successHUD.mode = MBProgressHUDModeCustomView;
-//            //可以设置对应的图片；
-//            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
-//            successHUD.removeFromSuperViewOnHide = true;
-//            [successHUD hide:true afterDelay:1];
-            NSArray *array=data[@"content"];
-            [self.revealedArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
-            //更新主线程
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.goodsCollectionView reloadData];
-            });
-        }else{
-            hud.removeFromSuperViewOnHide = true;
-            [hud hide:true afterDelay:0];
-            //显示失败的提示；
-            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-            failHUD.labelText = @"暂无数据";
-            failHUD.mode = MBProgressHUDModeCustomView;
-            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
-            failHUD.removeFromSuperViewOnHide = true;
-            [failHUD hide:true afterDelay:1];
-        }
+    [RequestData goodsList:params FinishCallbackBlock:^(NSArray *data) {
+//        NSLog(@"数据:%@",data);
+        //加载成功，先移除原来的HUD；
+        hud.removeFromSuperViewOnHide = true;
+        [hud hide:true afterDelay:0];
+        NSArray *array=data;
+        [self.revealedArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.goodsCollectionView reloadData];
+        });
     } andFailure:^(NSError *error) {
         hud.removeFromSuperViewOnHide = true;
         [hud hide:true afterDelay:0];
@@ -292,21 +262,16 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
  *  @param pagesize  当前有几条
  */
 -(void)requestHotData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:pageindex,@"pageIndex",pagesize,@"pageSize",nil];
-    [RequestData hotGoods:params FinishCallbackBlock:^(NSDictionary *data) {
-        int code=[data[@"code"] intValue];
-        if (code==0) {
-            NSArray *array=data[@"content"];
-            [self.groomArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
-            //更新主线程
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.groomCollectionView reloadData];
-            });
-        }else{
-            
-        }
-    }andFailure:^(NSError *error) {
-        
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"hot20",@"id",@"",@"tid",pageindex,@"pageNo",pagesize,@"pageSize",nil];
+    [RequestData goodsList:params FinishCallbackBlock:^(NSArray *data) {
+        NSArray *array=data;
+         NSLog(@"数据:%@",data);
+        [self.groomArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.groomCollectionView reloadData];
+        });
+    } andFailure:^(NSError *error) {
     }];
 }
 /**
@@ -316,22 +281,17 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
  *  @param pagesize  当前有几条
  */
 -(void)requestLimitData:(NSString *)pageindex andpageSize:(NSString *)pagesize{
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"",@"categoryId",@"40",@"sort",@"",@"pageIndex",@"",@"pageSize",nil];
-    [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
-        int code=[data[@"code"] intValue];
-        if (code==0) {
-            NSArray *array=data[@"content"];
-            [self.limitArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
-            //更新主线程
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.limitCollectionView reloadData];
-            });
-        }else{
-            
-        }
-    }andFailure:^(NSError *error) {
-        
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"date20",@"id",@"",@"tid",pageindex,@"pageNo",pagesize,@"pageSize",nil];
+    [RequestData goodsList:params FinishCallbackBlock:^(NSArray *data) {
+        NSArray *array=data;
+        [self.limitArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+        //更新主线程
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.limitCollectionView reloadData];
+        });
+    } andFailure:^(NSError *error) {
     }];
+    
 }
 /**
  *  请求最新揭晓商品
@@ -340,38 +300,47 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
  *  @param pagesize  当前有几条
  */
 -(void)requestAnnouncedData{
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"pageIndex",@"6",@"pageSize",nil];
-    [RequestData newAnnounced:params FinishCallbackBlock:^(NSDictionary *data) {
-        self.announcedArray=data[@"content"];
-        //时间差
-        for (int i=0; i<self.announcedArray.count; i++) {
-            if ([self.announcedArray[i][@"q_showtime"]isEqualToString:@"Y"]) {
-                //获取当前时间
-                //实例化一个NSDateFormatter对象
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                NSDate *currentDate = [NSDate date];//获取当前时间，日期
-                [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss.SS"];
-                NSString *dateString = [dateFormatter stringFromDate:currentDate];
-                NSDateFormatter *date=[[NSDateFormatter alloc] init];
-                [date setDateFormat:@"YYYY-MM-dd HH:mm:ss.SS"];
-                NSCalendar *cal=[NSCalendar currentCalendar];
-                unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
-                NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
-//                NSLog(@"%ld分钟%ld秒",(long)[d minute],(long)[d second]);
-                long m=[d minute];
-                long s=[d second];
-                long time=m*60+s;
-                  NSLog(@"揭晓时间:%ld",time);
-                [_times addObject:@(time)];
-            }
-        }
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:@"1",@"pageNo",@"6",@"pageSize",nil];
+    [RequestData getLotteryList:params FinishCallbackBlock:^(NSArray *data) {
+        self.announcedArray=data;
         //更新主线程
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.myCollectionView reloadData];
         });
-    }andFailure:^(NSError *error) {
+    } andFailure:^(NSError *error) {
         
     }];
+//    [RequestData newAnnounced:params FinishCallbackBlock:^(NSDictionary *data) {
+//        self.announcedArray=data[@"content"];
+//        //时间差
+//        for (int i=0; i<self.announcedArray.count; i++) {
+//            if ([self.announcedArray[i][@"q_showtime"]isEqualToString:@"Y"]) {
+//                //获取当前时间
+//                //实例化一个NSDateFormatter对象
+//                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//                NSDate *currentDate = [NSDate date];//获取当前时间，日期
+//                [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss.SS"];
+//                NSString *dateString = [dateFormatter stringFromDate:currentDate];
+//                NSDateFormatter *date=[[NSDateFormatter alloc] init];
+//                [date setDateFormat:@"YYYY-MM-dd HH:mm:ss.SS"];
+//                NSCalendar *cal=[NSCalendar currentCalendar];
+//                unsigned int unitFlags=NSYearCalendarUnit| NSMonthCalendarUnit| NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
+//                NSDateComponents *d = [cal components:unitFlags fromDate:[date dateFromString:dateString] toDate:[date dateFromString:self.announcedArray[i][@"q_end_time"]] options:0];
+////                NSLog(@"%ld分钟%ld秒",(long)[d minute],(long)[d second]);
+//                long m=[d minute];
+//                long s=[d second];
+//                long time=m*60+s;
+//                  NSLog(@"揭晓时间:%ld",time);
+//                [_times addObject:@(time)];
+//            }
+//        }
+//        //更新主线程
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.myCollectionView reloadData];
+//        });
+//    }andFailure:^(NSError *error) {
+//        
+//    }];
 }
 
 #pragma mark 图片滚动
@@ -404,8 +373,6 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
     for (int i=0; i<images.count; i++) {
         //拼接图片网址·
         NSString *urlStr =[NSString stringWithFormat:@"%@",images[i][@"src"]];
-        //        //获取图片的ID存入tag值数组
-        //        [self.scrollImageTags addObject:images[i][@"id"]];
         
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
@@ -416,9 +383,6 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
         //为图片添加Tag值
         imageV.tag = (int)([self.scrollImageTags[i] intValue]+100);
         imageV.userInteractionEnabled = YES;
-//        UITapGestureRecognizer *scrollTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(scrollViewClick)];
-//        [imageV addGestureRecognizer:scrollTap];
-        
         
     }
 }
@@ -500,97 +464,101 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
     if (collectionView==self.myCollectionView) {
         //重用cell
         PopularGoodsCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-//        static NSString *ID = @"PopularGoodsCell";
-//        PopularGoodsCell *cell = (PopularGoodsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
         /**商品名字*/
-        cell.goodsNameLabel.text=self.announcedArray[indexPath.row][@"title"];
+        cell.goodsNameLabel.text=self.announcedArray[indexPath.row][@"productName"];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.announcedArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.announcedArray[indexPath.row][@"productImg"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
         
-        if ([self.announcedArray[indexPath.row][@"q_showtime"]isEqualToString:@"Y"]) {
-            cell.timeLabel.hidden=NO;
-            cell.strLabel.hidden=YES;
-            int time=[self.times[indexPath.row] intValue];
-            timer3 = [[MZTimerLabel alloc] initWithLabel:cell.timeLabel andTimerType:MZTimerLabelTypeTimer];
-            [timer3 setCountDownTime:time];
-            timer3.timeFormat = @"mm:ss:SS";
-            [timer3 startWithEndingBlock:^(NSTimeInterval countTime) {
-                cell.timeLabel.hidden=YES;
-                cell.strLabel.hidden=NO;
-            }];
-            [timer3 start];
-        }else{
+//        if ([self.announcedArray[indexPath.row][@"q_showtime"]isEqualToString:@"Y"]) {
+//            cell.timeLabel.hidden=NO;
+//            cell.strLabel.hidden=YES;
+//            int time=[self.times[indexPath.row] intValue];
+//            timer3 = [[MZTimerLabel alloc] initWithLabel:cell.timeLabel andTimerType:MZTimerLabelTypeTimer];
+//            [timer3 setCountDownTime:time];
+//            timer3.timeFormat = @"mm:ss:SS";
+//            [timer3 startWithEndingBlock:^(NSTimeInterval countTime) {
+//                cell.timeLabel.hidden=YES;
+//                cell.strLabel.hidden=NO;
+//            }];
+//            [timer3 start];
+//        }else{
             cell.timeLabel.hidden=YES;
             cell.strLabel.hidden=NO;
-        }
+//        }
         return cell;
     }else if(collectionView==self.goodsCollectionView){ //即将揭晓
         goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
         /**商品名称*/
-        cell.goodsTitle.text=self.revealedArray[indexPath.row][@"title"];
+        cell.goodsTitle.text=self.revealedArray[indexPath.row][@"productName"];
         /**总人数*/
-        cell.numLabel1.text=self.revealedArray[indexPath.row][@"zongrenshu"];
-        /**参与人数*/
-        cell.numLabel2.text=self.revealedArray[indexPath.row][@"shenyurenshu"];
+        cell.numLabel1.text=[NSString stringWithFormat:@"%@",self.revealedArray[indexPath.row][@"productPrice"]];
+        /**剩余人数*/
+         int curreNum1=[self.revealedArray[indexPath.row][@"currentBuyCount"] intValue];
+         int countNum1=[self.revealedArray[indexPath.row][@"productPrice"] intValue];
+        cell.numLabel2.text=[NSString stringWithFormat:@"%d",countNum1-curreNum1];
         /**商品id*/
-        cell.goodsID.text=self.revealedArray[indexPath.row][@"id"];
+        cell.goodsID.text=[NSString stringWithFormat:@"%@",self.revealedArray[indexPath.row][@"productId"]];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.revealedArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.revealedArray[indexPath.row][@"headImage"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
         /**进度条*/
-        float curreNum=[self.revealedArray[indexPath.row][@"canyurenshu"] floatValue];
-        float countNum=[self.revealedArray[indexPath.row][@"zongrenshu"] floatValue];
+        float curreNum=[self.revealedArray[indexPath.row][@"currentBuyCount"] floatValue];
+        float countNum=[self.revealedArray[indexPath.row][@"productPrice"] floatValue];
         cell.progressView.progress=curreNum/countNum;
         cell.delegate=self;
         return cell;
     }else if(collectionView==self.groomCollectionView){//人气推荐
         GroomViewCell *cell = (GroomViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"GroomViewCell" forIndexPath:indexPath];
         /**商品名称*/
-        cell.goodsTitle.text=self.groomArray[indexPath.row][@"title"];
+        cell.goodsTitle.text=self.groomArray[indexPath.row][@"productName"];
         /**总人数*/
-        cell.numLabel1.text=self.groomArray[indexPath.row][@"zongrenshu"];
-        /**参与人数*/
-        cell.numLabel2.text=self.groomArray[indexPath.row][@"shenyurenshu"];
+        cell.numLabel1.text=[NSString stringWithFormat:@"%@",self.groomArray[indexPath.row][@"productPrice"]];
+        /**剩余人数*/
+        int curreNum1=[self.groomArray[indexPath.row][@"currentBuyCount"] intValue];
+        int countNum1=[self.groomArray[indexPath.row][@"productPrice"] intValue];
+        cell.numLabel2.text=[NSString stringWithFormat:@"%d",countNum1-curreNum1];
         /**商品id*/
-        cell.goodsID.text=self.groomArray[indexPath.row][@"id"];
+        cell.goodsID.text=[NSString stringWithFormat:@"%@",self.groomArray[indexPath.row][@"productId"]];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.groomArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.groomArray[indexPath.row][@"headImage"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
         /**进度条*/
-        float curreNum=[self.groomArray[indexPath.row][@"canyurenshu"] floatValue];
-        float countNum=[self.groomArray[indexPath.row][@"zongrenshu"] floatValue];
+        float curreNum=[self.groomArray[indexPath.row][@"currentBuyCount"] floatValue];
+        float countNum=[self.groomArray[indexPath.row][@"productPrice"] floatValue];
         cell.progressView.progress=curreNum/countNum;
         cell.delegate=self;
         return cell;
     }else if(collectionView==self.limitCollectionView){//最新商品
         goodsViewCell *cell = (goodsViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"goodsViewCell" forIndexPath:indexPath];
         /**商品名称*/
-        cell.goodsTitle.text=self.limitArray[indexPath.row][@"title"];
+        cell.goodsTitle.text=self.limitArray[indexPath.row][@"productName"];
         /**总人数*/
-        cell.numLabel1.text=self.limitArray[indexPath.row][@"zongrenshu"];
-        /**参与人数*/
-        cell.numLabel2.text=self.limitArray[indexPath.row][@"shenyurenshu"];
+        cell.numLabel1.text=[NSString stringWithFormat:@"%@",self.limitArray[indexPath.row][@"productPrice"]];
+        /**剩余人数*/
+        int curreNum1=[self.limitArray[indexPath.row][@"currentBuyCount"] intValue];
+        int countNum1=[self.limitArray[indexPath.row][@"productPrice"] intValue];
+        cell.numLabel2.text=[NSString stringWithFormat:@"%d",countNum1-curreNum1];
         /**商品id*/
-        cell.goodsID.text=self.limitArray[indexPath.row][@"id"];
+        cell.goodsID.text=[NSString stringWithFormat:@"%@",self.limitArray[indexPath.row][@"productId"]];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.limitArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.limitArray[indexPath.row][@"headImage"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
         /**进度条*/
-        float curreNum=[self.limitArray[indexPath.row][@"canyurenshu"] floatValue];
-        float countNum=[self.limitArray[indexPath.row][@"zongrenshu"] floatValue];
+        float curreNum=[self.limitArray[indexPath.row][@"currentBuyCount"] floatValue];
+        float countNum=[self.limitArray[indexPath.row][@"productPrice"] floatValue];
         cell.progressView.progress=curreNum/countNum;
         cell.delegate=self;
         return cell;
@@ -627,44 +595,44 @@ static NSString *cellIdentifier = @"PopularGoodsCell";
  *  @param indexPath      <#indexPath description#>
  */
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
-    if (collectionView==self.myCollectionView) {
-        if([self.announcedArray[indexPath.row][@"q_showtime"] isEqualToString:@"N"]){
-            //设置故事板为第一启动
-            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            DidAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"didAnnounceView"];
-            controller.goodsID=self.announcedArray[indexPath.row][@"id"];
-            controller.dic=self.announcedArray[indexPath.row];
-            [self.navigationController pushViewController:controller animated:YES];
-        }else{
-            //设置故事板为第一启动
+//    if (collectionView==self.myCollectionView) {
+//        if([self.announcedArray[indexPath.row][@"q_showtime"] isEqualToString:@"N"]){
+//            //设置故事板为第一启动
 //            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//            InAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"inAnnounceView"];
+//            DidAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"didAnnounceView"];
 //            controller.goodsID=self.announcedArray[indexPath.row][@"id"];
+//            controller.dic=self.announcedArray[indexPath.row];
 //            [self.navigationController pushViewController:controller animated:YES];
-        }
-        
-    }else if(collectionView==self.goodsCollectionView){ //即将揭晓
-        //设置故事板为第一启动
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
-        detailController.goodsID=self.revealedArray[indexPath.row][@"id"];
-        detailController.dic=self.revealedArray[indexPath.row];
-        [self.navigationController pushViewController:detailController animated:YES];
-    }else if(collectionView==self.groomCollectionView){//人气推荐
-        //设置故事板为第一启动
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
-        detailController.goodsID=self.groomArray[indexPath.row][@"id"];
-        detailController.dic=self.groomArray[indexPath.row];
-        [self.navigationController pushViewController:detailController animated:YES];
-    }else if(collectionView==self.limitCollectionView){//最新商品
-        //设置故事板为第一启动
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
-        detailController.goodsID=self.limitArray[indexPath.row][@"id"];
-        detailController.dic=self.limitArray[indexPath.row];
-        [self.navigationController pushViewController:detailController animated:YES];
-    }
+//        }else{
+//            //设置故事板为第一启动
+////            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+////            InAnnounceView *controller=[storyboard instantiateViewControllerWithIdentifier:@"inAnnounceView"];
+////            controller.goodsID=self.announcedArray[indexPath.row][@"id"];
+////            [self.navigationController pushViewController:controller animated:YES];
+//        }
+//        
+//    }else if(collectionView==self.goodsCollectionView){ //即将揭晓
+//        //设置故事板为第一启动
+//        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+//        detailController.goodsID=self.revealedArray[indexPath.row][@"id"];
+//        detailController.dic=self.revealedArray[indexPath.row];
+//        [self.navigationController pushViewController:detailController animated:YES];
+//    }else if(collectionView==self.groomCollectionView){//人气推荐
+//        //设置故事板为第一启动
+//        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+//        detailController.goodsID=self.groomArray[indexPath.row][@"id"];
+//        detailController.dic=self.groomArray[indexPath.row];
+//        [self.navigationController pushViewController:detailController animated:YES];
+//    }else if(collectionView==self.limitCollectionView){//最新商品
+//        //设置故事板为第一启动
+//        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//        DetailController *detailController=[storyboard instantiateViewControllerWithIdentifier:@"DetailControllerView"];
+//        detailController.goodsID=self.limitArray[indexPath.row][@"id"];
+//        detailController.dic=self.limitArray[indexPath.row];
+//        [self.navigationController pushViewController:detailController animated:YES];
+//    }
 }
 
 #pragma mark 表头

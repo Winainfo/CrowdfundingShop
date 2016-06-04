@@ -16,7 +16,7 @@
 #import "Database.h"
 #import "UITabBar+badge.h"
 #import "JSONKit.h"
-@interface ShopCartController ()<CartCellDelegate>{
+@interface ShopCartController ()<CartCellDelegate,UITextFieldDelegate>{
     NSInteger sumPrice;
 }
 /**未登陆View*/
@@ -177,6 +177,13 @@
     cell.goodsPriceLabel.text=[NSString stringWithFormat:@"¥%d",cartList.price];
     cell.numLabel.text=[NSString stringWithFormat:@"剩余%@人次",cartList.shenyurenshu];
     cell.numTextField.text=[NSString stringWithFormat:@"%i",cartList.num];
+    //代理监听
+    cell.numTextField.delegate=self;
+    // 二 添加文本框改变事件
+    [cell.numTextField addTarget:self action:@selector(textChange) forControlEvents:
+     UIControlEventEditingChanged];
+    // 三 添加文本框改变通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:nil];
     /**商品图片*/
     //拼接图片网址·
     NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,cartList.thumb];
@@ -433,5 +440,23 @@
         self.view2.hidden=YES;
         self.view3.hidden=YES;
     }
+}
+
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range
+replacementString:(NSString *)string {
+    
+    NSLog(@"调用了代理方法");
+    return YES;    //如果NO就不会显示文本内容
+    
+}
+
+- (void)textChange {
+    NSLog(@"改变改变！！");
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    //移除监听
 }
 @end

@@ -420,5 +420,30 @@
  *  @param block 返回块值
  */
 +(void)uplodPhotoSerivce:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   隐藏和显示
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)hideShowView:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   商品列表
+ *  @param data  传入字典
+ *  @param block 返回块值
+ *  id:排序ID
+ *  tid:分类ID
+ *  pageSize:页数
+ *  pageNo:页码
+ */
++(void)goodsList:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSArray *))block andFailure:(void(^)(NSError *))failure;
+/**
+ *   揭晓列表
+ *  @param data  传入字典
+ *  @param block 返回块值
+ *  pageSize:页数
+ *  pageNo:页码
+ *  
+ */
++(void)getLotteryList:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSArray *))block andFailure:(void(^)(NSError *))failure;
 @end
 

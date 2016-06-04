@@ -85,14 +85,14 @@
     self.unselectImageArray=@[@"category_2130837504_unselect",@"category_2130837505_unselect",@"category_2130837507_unselect",@"category_2130837506_unselect",@"category_2130837509_unselect",@"category_2130837508_unselect",@"category_2130837510_unselect"];
     self.selectImageArray=@[@"category_2130837504_select",@"category_2130837505_select",@"category_2130837507_select",@"category_2130837506_select",@"category_2130837509_select",@"category_2130837508_select",@"category_2130837510_select"];
     self.sortNameArray=@[@"即将揭晓",@"人气",@"价值(由高到低)",@"价值(由低到高)",@"最新"];
-    self.sortIdArray=@[@"10",@"20",@"50",@"60",@"40"];
+    self.sortIdArray=@[@"surplus20",@"hot20",@"price20",@"priceAsc20",@"date20"];
     /**所有商品数据源*/
     self.myTableView.mj_header=[MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewData)];
     [self.myTableView.mj_header beginRefreshing];
     self.myTableView.mj_footer=[MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     offset=1;
     self.categoryId=@"";
-    self.sortId=@"";
+    self.sortId=@"date20";
     [self requestData];
 }
 #pragma mark - 加载新数据
@@ -104,15 +104,13 @@
     if (self.allGoodsArray.count==0) {
         offset=1;
         NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.categoryId,@"categoryId",self.sortId,@"sort",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.sortId,@"id",@"",@"tid",pageIndex,@"pageNo",@"8",@"pageSize",nil];
         //声明对象；
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
         //显示的文本；
         hud.labelText = @"正在加载...";
-        [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
-            int code=[data[@"code"] intValue];
-            [self.myTableView.mj_header endRefreshing];
-            if (code==0) {
+        [RequestData goodsList:params FinishCallbackBlock:^(NSArray *data) {
+                [self.myTableView.mj_header endRefreshing];
                 //加载成功，先移除原来的HUD；
                 hud.removeFromSuperViewOnHide = true;
                 [hud hide:true afterDelay:0];
@@ -126,23 +124,12 @@
                 [successHUD hide:true afterDelay:1];
                 
                 [self.allGoodsArray removeAllObjects];
-                NSArray *array=data[@"content"];
+                NSArray *array=data;
                 [self.allGoodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.myTableView reloadData];
                 });
-            }else{
-                hud.removeFromSuperViewOnHide = true;
-                [hud hide:true afterDelay:0];
-                //显示失败的提示；
-                MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-                failHUD.labelText = @"暂无数据";
-                failHUD.mode = MBProgressHUDModeCustomView;
-                failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
-                failHUD.removeFromSuperViewOnHide = true;
-                [failHUD hide:true afterDelay:1];
-            }
-        }andFailure:^(NSError *error) {
+        } andFailure:^(NSError *error) {
             hud.removeFromSuperViewOnHide = true;
             [hud hide:true afterDelay:0];
             //显示失败的提示；
@@ -157,21 +144,16 @@
     }else{
         offset=1;
         NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.categoryId,@"categoryId",self.sortId,@"sort",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
-        [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
-            int code=[data[@"code"] intValue];
+        NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.sortId,@"id",@"",@"tid",pageIndex,@"pageNo",@"8",@"pageSize",nil];
+        [RequestData goodsList:params FinishCallbackBlock:^(NSArray *data) {
             [self.myTableView.mj_header endRefreshing];
-            if (code==0) {
-                [self.allGoodsArray removeAllObjects];
-                NSArray *array=data[@"content"];
-                [self.allGoodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.myTableView reloadData];
-                });
-            }else{
-                
-            }
-        }andFailure:^(NSError *error) {
+            [self.allGoodsArray removeAllObjects];
+            NSArray *array=data;
+            [self.allGoodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, array.count)]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.myTableView reloadData];
+            });
+        } andFailure:^(NSError *error) {
             [self.myTableView.mj_header endRefreshing];
         }];
     }
@@ -183,19 +165,16 @@
 {
     offset+=1;
     NSString *pageIndex=[NSString stringWithFormat:@"%li",(long)offset];
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.categoryId,@"categoryId",self.sortId,@"sort",pageIndex,@"pageIndex",@"8",@"pageSize",nil];
-    [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
-        int code=[data[@"code"] intValue];
+    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:self.sortId,@"id",@"",@"tid",pageIndex,@"pageNo",@"8",@"pageSize",nil];
+    [RequestData goodsList:params FinishCallbackBlock:^(NSArray *data) {
         [self.myTableView.mj_footer endRefreshing];
-        if (code==0) {
-            NSArray *array=data[@"content"];
-            [self.allGoodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.allGoodsArray.count, array.count)]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.myTableView reloadData];
-            });
-        }else{}
-    }andFailure:^(NSError *error) {
-        [self.myTableView.mj_footer endRefreshing];
+        NSArray *array=data;
+        [self.allGoodsArray insertObjects:array atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(self.allGoodsArray.count, array.count)]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myTableView reloadData];
+        });
+    } andFailure:^(NSError *error) {
+        [self.myTableView.mj_header endRefreshing];
     }];
 }
 
@@ -220,54 +199,54 @@
 /**
  *  请求所有商品
  */
--(void)requestData:(NSString *)categoryid andSort:(NSString *)sortid {
-    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:categoryid,@"categoryId",sortid,@"sort",@"",@"pageIndex",@"",@"pageSize",nil];
-    //声明对象；
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-    //显示的文本；
-    hud.labelText = @"正在加载...";
-    [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
-        int code=[data[@"code"] intValue];
-        [self.myTableView.mj_header endRefreshing];
-        if (code==0) {
-            self.allGoodsArray =data[@"content"];
-            //加载成功，先移除原来的HUD；
-            hud.removeFromSuperViewOnHide = true;
-            [hud hide:true afterDelay:0];
-            //然后显示一个成功的提示；
-            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-            successHUD.labelText = @"加载成功";
-            successHUD.mode = MBProgressHUDModeCustomView;
-            //可以设置对应的图片；
-            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
-            successHUD.removeFromSuperViewOnHide = true;
-            [successHUD hide:true afterDelay:1];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.myTableView reloadData];
-            });
-        }else{
-            hud.removeFromSuperViewOnHide = true;
-            [hud hide:true afterDelay:0];
-            //显示失败的提示；
-            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-            failHUD.labelText = @"暂无数据";
-            failHUD.mode = MBProgressHUDModeCustomView;
-            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
-            failHUD.removeFromSuperViewOnHide = true;
-            [failHUD hide:true afterDelay:1];
-        }
-    }andFailure:^(NSError *error) {
-        hud.removeFromSuperViewOnHide = true;
-        [hud hide:true afterDelay:0];
-        //显示失败的提示；
-        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
-        failHUD.labelText = @"数据加载异常";
-        failHUD.mode = MBProgressHUDModeCustomView;
-        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
-        failHUD.removeFromSuperViewOnHide = true;
-        [failHUD hide:true afterDelay:1];
-    }];
-}
+//-(void)requestData:(NSString *)categoryid andSort:(NSString *)sortid {
+//    NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:categoryid,@"categoryId",sortid,@"sort",@"",@"pageIndex",@"",@"pageSize",nil];
+//    //声明对象；
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+//    //显示的文本；
+//    hud.labelText = @"正在加载...";
+//    [RequestData allGoods:params FinishCallbackBlock:^(NSDictionary *data) {
+//        int code=[data[@"code"] intValue];
+//        [self.myTableView.mj_header endRefreshing];
+//        if (code==0) {
+//            self.allGoodsArray =data[@"content"];
+//            //加载成功，先移除原来的HUD；
+//            hud.removeFromSuperViewOnHide = true;
+//            [hud hide:true afterDelay:0];
+//            //然后显示一个成功的提示；
+//            MBProgressHUD *successHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+//            successHUD.labelText = @"加载成功";
+//            successHUD.mode = MBProgressHUDModeCustomView;
+//            //可以设置对应的图片；
+//            successHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_success"]];
+//            successHUD.removeFromSuperViewOnHide = true;
+//            [successHUD hide:true afterDelay:1];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self.myTableView reloadData];
+//            });
+//        }else{
+//            hud.removeFromSuperViewOnHide = true;
+//            [hud hide:true afterDelay:0];
+//            //显示失败的提示；
+//            MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+//            failHUD.labelText = @"暂无数据";
+//            failHUD.mode = MBProgressHUDModeCustomView;
+//            failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+//            failHUD.removeFromSuperViewOnHide = true;
+//            [failHUD hide:true afterDelay:1];
+//        }
+//    }andFailure:^(NSError *error) {
+//        hud.removeFromSuperViewOnHide = true;
+//        [hud hide:true afterDelay:0];
+//        //显示失败的提示；
+//        MBProgressHUD *failHUD = [MBProgressHUD showHUDAddedTo:self.view animated:true];
+//        failHUD.labelText = @"数据加载异常";
+//        failHUD.mode = MBProgressHUDModeCustomView;
+//        failHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jg_hud_error"]];
+//        failHUD.removeFromSuperViewOnHide = true;
+//        [failHUD hide:true afterDelay:1];
+//    }];
+//}
 /**
  *  去掉多余的分割线
  *
@@ -322,25 +301,27 @@
         //取消Cell选中时背景
         cell.selectionStyle=UITableViewCellSelectionStyleNone;
         /**商品名称*/
-        cell.goodsLabel.text=[NSString stringWithFormat:@"(第%@期)%@",self.allGoodsArray[indexPath.row][@"qishu"],self.allGoodsArray[indexPath.row][@"title"]]
+        cell.goodsLabel.text=[NSString stringWithFormat:@"(第%@期)%@",self.allGoodsArray[indexPath.row][@"productPeriod"],self.allGoodsArray[indexPath.row][@"productName"]]
         ;
         /**商品价格*/
-        cell.goodsPriceLabel.text=self.allGoodsArray[indexPath.row][@"money"];
+        cell.goodsPriceLabel.text=[NSString stringWithFormat:@"%@",self.allGoodsArray[indexPath.row][@"productPrice"]];
         /**总需人次*/
-        cell.goodsLabel2.text=self.allGoodsArray[indexPath.row][@"zongrenshu"];
+        cell.goodsLabel2.text=[NSString stringWithFormat:@"%@",self.allGoodsArray[indexPath.row][@"productPrice"]];
         /**参与人次*/
-        cell.goodsLabel1.text=self.allGoodsArray[indexPath.row][@"canyurenshu"];
+        cell.goodsLabel1.text=[NSString stringWithFormat:@"%@",self.allGoodsArray[indexPath.row][@"currentBuyCount"]];
         /**剩余人次*/
-        cell.goodsLabel3.text=self.allGoodsArray[indexPath.row][@"shenyurenshu"];
+        int curreNum1=[self.allGoodsArray[indexPath.row][@"currentBuyCount"] intValue];
+        int countNum1=[self.allGoodsArray[indexPath.row][@"productPrice"] intValue];
+        cell.goodsLabel3.text=[NSString stringWithFormat:@"%d",countNum1-curreNum1];
         /**商品图片*/
         //拼接图片网址·
-        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.allGoodsArray[indexPath.row][@"thumb"]];
+        NSString *urlStr =[NSString stringWithFormat:@"%@%@",imgURL,self.allGoodsArray[indexPath.row][@"headImage"]];
         //转换成url
         NSURL *imgUrl = [NSURL URLWithString:urlStr];
         [cell.goodsImageView sd_setImageWithURL:imgUrl];
         /**进度条*/
-        float curreNum=[self.allGoodsArray[indexPath.row][@"canyurenshu"] floatValue];
-        float countNum=[self.allGoodsArray[indexPath.row][@"zongrenshu"] floatValue];
+        float curreNum=[self.allGoodsArray[indexPath.row][@"currentBuyCount"] floatValue];
+        float countNum=[self.allGoodsArray[indexPath.row][@"productPrice"] floatValue];
         cell.ProgressView.progress=curreNum/countNum;
         cell.delegate=self;
         return cell;

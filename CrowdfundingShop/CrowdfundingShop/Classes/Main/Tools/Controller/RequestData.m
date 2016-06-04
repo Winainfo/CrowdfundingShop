@@ -10,7 +10,7 @@
 #import "AFNetworking.h"
 #import <EGOCache.h>
 #import "JSONKit.h"
-#define URL @"http://www.yiydb.cn"
+#define URL @"http://www.god-store.com"
 @implementation RequestData
 /**
  *  字典转字符串工具类
@@ -1287,6 +1287,67 @@
     //设置参数
     NSDictionary *params=@{@"uid":data[@"uid"],@"photo":data[@"photo"]};
     NSString *url=[NSString stringWithFormat:@"%@/?/ios/home/userphotoup/",URL];
+    [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   隐藏和显示
+ *  @param data  传入字典
+ *  @param block 返回块值
+ */
++(void)hideShowView:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSDictionary *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+//    NSDictionary *params=@{};
+    NSString *url=[NSString stringWithFormat:@"%@/?/ios/ajax/resCode/",URL];
+    [mgr GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   商品列表
+ *  @param data  传入字典
+ *  @param block 返回块值
+ *  id:排序ID
+ *  tid:分类ID
+ *  pageSize:页数
+ *  pageNo:页码
+ */
++(void)goodsList:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSArray *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"id":data[@"id"],@"tid":data[@"tid"],@"pageNo":data[@"pageNo"],@"pageSize":data[@"pageSize"]};
+    NSString *url=[NSString stringWithFormat:@"http://weixin.yiydb.cn/list/goodsList.action"];
+    [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        block(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failure(error);
+    }];
+}
+/**
+ *   揭晓列表
+ *  @param data  传入字典
+ *  @param block 返回块值
+ *  pageSize:页数
+ *  pageNo:页码
+ *
+ */
++(void)getLotteryList:(NSDictionary *)data FinishCallbackBlock:(void(^)(NSArray *))block andFailure:(void(^)(NSError *))failure{
+    //1.请求管理者
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    mgr.responseSerializer=[AFJSONResponseSerializer serializer];
+    //设置参数
+    NSDictionary *params=@{@"pageNo":data[@"pageNo"],@"pageSize":data[@"pageSize"]};
+    NSString *url=[NSString stringWithFormat:@"http://weixin.yiydb.cn/lottery/getLotteryList.action"];
     [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         block(responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

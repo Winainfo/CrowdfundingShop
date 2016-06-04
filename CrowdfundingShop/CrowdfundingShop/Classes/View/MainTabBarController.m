@@ -54,24 +54,14 @@
     annNavController.tabBarItem=annItem;
     //设置购物车选中和非选中状态下的图片
     UITabBarItem *shopCartItem=[[UITabBarItem alloc ] initWithTitle:@"购物车" image:[UIImage imageNamed:@"tab_shopping_cart_nomal"] selectedImage:[[UIImage imageNamed:@"tab_shopping_cart_pressed"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-//    shopCartNavController.tabBarItem=shopCartItem;
-//    //数据
-//    Database *db=[[Database alloc]init];
-//    _shopCartArray=[db getList];
-//    if (_shopCartArray.count>0) {
-//        shopCartItem.badgeValue=[NSString stringWithFormat:@"%lu",(unsigned long)_shopCartArray.count];
-//    }
+
     //设置个人中心选中和非选中状态下的图片
     UITabBarItem *perItem=[[UITabBarItem alloc ] initWithTitle:@"我的云购" image:[UIImage imageNamed:@"tab_my_cloud_nomal"] selectedImage:[[UIImage imageNamed:@"tab_my_cloud_pressed"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     perNavController.tabBarItem=perItem;
-//    self.arr =[[UITabBarController alloc]init];
-    
-//    self.arr.viewControllers=@[homeNavController,goodsNavController,annNavController,shopCartNavController,perNavController];
+
     self.viewControllers=[[NSArray alloc]initWithObjects:homeNavController,goodsNavController,annNavController,shopCartNavController,perNavController,nil];
     //设置默认选中
-//    self.selectedViewController=homeNavController;
     self.selectedIndex=0;
-//    self.arr.selectedIndex=0;
 }
 -(void)nsdd:(int)a
 {

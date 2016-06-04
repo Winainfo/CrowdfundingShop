@@ -43,6 +43,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *wxBtn;
 
 @property (assign,nonatomic) int codeStr;
+
+@property (weak, nonatomic) IBOutlet UIView *payView;
+@property (weak, nonatomic) IBOutlet UIView *wxPayView;
+
 @end
 
 @implementation BalanceController
@@ -72,6 +76,19 @@
     self.balanceBtn.layer.cornerRadius=4.0;
     self.balanceBtn.layer.masksToBounds=YES;
     [self getData];
+    [RequestData hideShowView:nil FinishCallbackBlock:^(NSDictionary *data) {
+         int code=[data[@"code"] intValue];
+        if (code==0) {
+            self.payView.hidden=YES;
+            self.wxPayView.frame=CGRectMake(0, 128, kScreenWidth, 124);
+            self.payView.frame=CGRectMake(0, 252, kScreenWidth, 96);
+        }else{
+            self.payView.hidden=NO;
+        }
+    } andFailure:^(NSError *error) {
+        
+    }];
+    
 }
 //返回
 -(void)backClick{
@@ -100,7 +117,7 @@
         }
     }else{
         self.shenyuPrice.text=[NSString stringWithFormat:@"¥%0.2f",[self.sumPrice floatValue]];
-        self.wxBtn.hidden=NO;
+        self.wxBtn.hidden=YES;
         self.type=4;
     }
 
@@ -366,7 +383,6 @@
         NSDictionary *params=[NSDictionary dictionaryWithObjectsAndKeys:account.uid,@"uid",self.jsonStr,@"shop",nil];
         [RequestData WxPaySerivce:params FinishCallbackBlock:^(NSDictionary *data) {
             int code=[data[@"code"] intValue];
-            NSLog(@"---%@",data);
             if (code==0) {
                 [db deleteDataList];
                 //设置故事板为第一启动
