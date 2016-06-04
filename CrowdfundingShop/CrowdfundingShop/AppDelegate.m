@@ -51,7 +51,6 @@
 }
 
 -(void)tabRootView{
-    //tab
     //修改选中后的字体
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:231.0/255.0 green:57.0/255.0 blue:91.0/255.0 alpha:1],UITextAttributeTextColor, nil]forState:UIControlStateSelected];
     UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
